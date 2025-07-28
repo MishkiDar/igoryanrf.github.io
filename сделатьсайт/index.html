@@ -82,7 +82,31 @@
         padding: 1.5rem;
       }
     }
-  </style>
+  
+.video-section {
+  margin: 2rem 0;
+  background-color: var(--section-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+</style>
 </head>
 <body>
   <div class="container">
@@ -94,16 +118,18 @@
     <section class="cta">
       <a href="https://t.me/gargaross/">Оставить заявку</a>
     </section>
+<section class="video-section">
+  <div class="video-container">
+    <video controls poster="https://игорян.рф/сделатьсайт/poster.jpg">
+      <source src="https://игорян.рф/сделатьсайт/IgoryanRF.mp4" type="video/mp4">
+      Ваш браузер не поддерживает видео.
+    </video>
+  </div>
+</section>
+
    
 
-<div>
-  <video controls>
-    <center>
-    <source src="https://игорян.рф/сделатьсайт/IgoryanRF.mp4" type="video/mp4">
-    Ваш браузер не поддерживает тег video.
-   </center>
-  </video>
-</div>
+
 
   <section class="cta">
       <a href="https://t.me/gargaross/">Узнать детали</a>
