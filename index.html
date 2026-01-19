@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]function(){(m[i].a=m[i].a[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(99150786, 'init', {webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+<!-- Top.Mail.Ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = "https://top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "tmr-code");
+</script>
+<noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3734723;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZT97LVP36"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9ZT97LVP36');
+</script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Игорян.рф — личный сайт Игоря, эксперта с нейроотличием (СДВГ, черты РАС). Опыт, знания и практики для жизни с нестандартным мышлением." />
+<title>Игорян.рф — Опыт жизни с нейроотличием</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: radial-gradient(circle at 50% 0%, #0a1a33, #020617 70%);
+    color: #d6e4ff;
+  }
+
+  /* Верхнее меню */
+  .header-menu {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding: 16px 10px;
+    background: rgba(10, 25, 55, 0.6);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,150,255,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .header-menu a {
+    color: #d6e4ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+
+  .header-menu a:hover {
+    color: #4fd6ff;
+    text-shadow: 0 0 8px #4fd6ff;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 10px 80px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(0,150,255,0.3);
+    box-shadow: 0 0 20px rgba(0,150,255,0.25);
+    margin: 30px 0;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Навигация под заголовком */
+  .categories-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 40px;
+  }
+
+  .line {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 200px;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    border-radius: 2px;
+    box-shadow: 0 0 12px rgba(0,150,255,0.7);
+    pointer-events: none;
+  }
+
+  .categories-left,
+  .categories-right {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 42%;
+    font-size: 16px;
+  }
+
+  .categories-left { text-align: right; padding-right: 20px; }
+  .categories-right { text-align: left; padding-left: 20px; }
+
+  .category {
+    background: rgba(10,30,60,0.6);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,150,255,0.25);
+    transition: 0.3s ease;
+  }
+
+  .category a {
+    color: #cfe8ff;
+    text-decoration: none;
+    display: block;
+  }
+
+  .category:hover {
+    background: rgba(0,150,255,0.15);
+    box-shadow: 0 0 12px rgba(0,150,255,0.5);
+  }
+
+  .category:hover a { color: #4fd6ff; }
+
+  .content {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    line-height: 1.7;
+  }
+
+  .content h1 {
+    font-size: 32px;
+    margin: 30px 0 20px;
+    text-align: center;
+    color: #4fd6ff;
+  }
+
+  .content h2 {
+    font-size: 24px;
+    margin: 30px 0 15px;
+    color: #7fc8ff;
+  }
+
+  .content p { margin: 15px 0; }
+
+  .intro {
+    font-size: 18px;
+    margin: 20px 0 30px;
+    text-align: center;
+    color: #cfe8ff;
+  }
+
+  .cta {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(0,150,255,0.1);
+    border: 1px solid rgba(0,150,255,0.3);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  /* Подвал */
+  .site-footer {
+    margin-top: 40px;
+    padding: 18px 10px;
+    text-align: center;
+    color: #9fcaff;
+    font-size: 13px;
+    background: rgba(10, 25, 55, 0.35);
+    border-top: 1px solid rgba(0,150,255,0.25);
+    backdrop-filter: blur(6px);
+    line-height: 1.5;
+  }
+
+  .site-footer a {
+    color: #4fd6ff;
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    text-shadow: 0 0 6px #4fd6ff;
+  }
+
+  @media (max-width: 480px) {
+    .line { height: 160px; }
+    .categories-left, .categories-right { width: 45%; font-size: 14px; }
+    .category { padding: 10px 12px; font-size: 14px; }
+    .avatar { width: 90px; height: 90px; }
+    .content h1 { font-size: 26px; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Верхнее меню -->
+  <div class="header-menu">
+    <a href="/index.html">Главная</a>
+    <a href="/здоровье/index.html">Здоровье</a>
+    <a href="/услуги-продвижения/index.html">Услуги</a>
+    <a href="/музыка/index.html">Музыка</a>
+  </div>
+
+  <div class="container">
+
+    <div class="avatar">
+      <img src="ava.jpg" alt="avatar">
+    </div>
+
+    <div class="content">
+      <h1>Привет, меня зовут Игорь</h1>
+
+      <!-- CTA -->
+      <div class="cta">
+        <p>Изучите разделы сайта, чтобы узнать больше о моих практиках и услугах.</p>
+      </div>
+
+      <!-- Навигация -->
+      <div class="categories-wrapper">
+        <div class="line"></div>
+
+        <div class="categories-left">
+          <div class="category"><a href="/услуги-продвижения/index.html">Услуги продвижения</a></div>
+          <div class="category"><a href="/здоровье/index.html">Здоровье</a></div>
+        </div>
+
+        <div class="categories-right">
+          <div class="category"><a href="/музыка/index.html">Музыка</a></div>
+          <div class="category"><a href="/личный-бренд/index.html">Личный бренд</a></div>
+        </div>
+      </div>
+
+      <p class="intro">Привет, меня зовут Игорь. В 41 год я узнал, что мое мышление нейроотлично — СДВГ и черты РАС стали для меня не диагнозом, а ключом к пониманию себя. Этот сайт — живая карта моего опыта, знаний и практик, которыми я делюсь искренне и по-настоящему.</p>
+
+      <h2>О моем опыте</h2>
+      <p>Жизнь с нейроотличием — это не ограничение, а особый способ восприятия мира. Мой путь показал, что понимание своих особенностей открывает новые возможности для роста, творчества и профессиональной реализации.</p>
+
+      <h2>Что вы найдете здесь</h2>
+      <p>На этом сайте я делюсь практиками здоровья, опытом создания личного бренда, инструментами для продвижения проектов и своими музыкальными работами. Все это — результат реального опыта, без инфобизнес-клише и пустых обещаний.</p>
+
+      <h2>Честный подход</h2>
+      <p>Я не обещаю быстрых результатов и не продаю мечты. Вместо этого — делюсь тем, что действительно работает в моей жизни. Если это резонирует с вами, буду рад поделиться опытом.</p>
+
+    </div>
+
+  </div>
+
+  <!-- Подвал -->
+  <footer class="site-footer">
+    <p>ИНН: 782035015940</p>
+    <p>Кузнецов Игорь Олегович</p>
+    <p><a href="/политика-конфиденциальности.html">Политика конфиденциальности</a></p>
+  </footer>
+
+</body>
+</html>
