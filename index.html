@@ -198,14 +198,30 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
   /* Подвал */
   .site-footer {
     margin-top: 40px;
-    padding: 18px 10px;
+    padding: 25px 10px;
     text-align: center;
     color: #9fcaff;
-    font-size: 13px;
+    font-size: 14px;
     background: rgba(10, 25, 55, 0.35);
     border-top: 1px solid rgba(0,150,255,0.25);
     backdrop-filter: blur(6px);
-    line-height: 1.5;
+  }
+
+  .footer-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .footer-col {
+    min-width: 180px;
+  }
+
+  .footer-col p {
+    margin: 6px 0;
   }
 
   .site-footer a {
@@ -217,12 +233,15 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
     text-shadow: 0 0 6px #4fd6ff;
   }
 
+  /* Мобильная адаптация */
   @media (max-width: 480px) {
-    .line { height: 160px; }
-    .categories-left, .categories-right { width: 45%; font-size: 14px; }
-    .category { padding: 10px 12px; font-size: 14px; }
-    .avatar { width: 90px; height: 90px; }
-    .content h1 { font-size: 26px; }
+    .footer-grid {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .footer-col {
+      min-width: unset;
+    }
   }
 </style>
 </head>
@@ -278,10 +297,24 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
 
   <!-- Подвал -->
   <footer class="site-footer">
-    <p>ИНН: 782035015940</p>
-    <p>Кузнецов Игорь Олегович</p>
-    <p><a href="/политика-конфиденциальности.html">Политика конфиденциальности</a></p>
-    <p><a href="https://игорян.рф/oferta.pdf" target="_blank">Публичная оферта от 19.01.2026</a></p>
+    <div class="footer-grid">
+
+      <div class="footer-col">
+        <p>ИНН: 782035015940</p>
+        <p>Кузнецов Игорь Олегович</p>
+      </div>
+
+      <div class="footer-col">
+        <p><a href="/политика-конфиденциальности.html">Политика конфиденциальности</a></p>
+        <p><a href="https://игорян.рф/oferta.pdf" target="_blank">Публичная оферта 19.01.2026</a></p>
+      </div>
+
+      <div class="footer-col">
+        <p><a href="tel:+79811665458">+7 (981) 166‑54‑58</a></p>
+        <p><a href="mailto:igorkuzja@yandex.ru">igorkuzja@yandex.ru</a></p>
+      </div>
+
+    </div>
   </footer>
 
 </body>
