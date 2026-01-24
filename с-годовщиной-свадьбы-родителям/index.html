@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igoran | Создание сайтов-подарков</title>
+    
+    <!-- Элегантные шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:wght@400;500;600&family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-ivory: #faf9f7;
+            --color-charcoal: #1a1a1a;
+            --color-stone: #6d6d6d;
+            --color-gold: #b89b72;
+            --color-sand: #c4b8a5;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--color-charcoal);
+            background-color: var(--color-ivory);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Шапка */
+        .header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 0;
+            background: rgba(250, 249, 247, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(198, 184, 165, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 500;
+            color: var(--color-charcoal);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        
+        /* Герой */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 8rem;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(26, 26, 26, 0.1), rgba(26, 26, 26, 0.05)),
+                        url('fon1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+            filter: grayscale(30%) brightness(1.05);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 4rem;
+            background: rgba(250, 249, 247, 0.92);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(198, 184, 165, 0.2);
+        }
+        
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5.6rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 2.2rem;
+            color: var(--color-stone);
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--color-gold);
+            color: var(--color-ivory);
+            padding: 1.6rem 4rem;
+            border: none;
+            border-radius: 1px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 3rem;
+        }
+        
+        .cta-button:hover {
+            background: var(--color-charcoal);
+            transform: translateY(-3px);
+        }
+        
+        /* Преимущества */
+        .benefits {
+            padding: 8rem 0;
+            background: url('fon2.jpg') center/cover;
+            position: relative;
+        }
+        
+        .benefits::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 249, 247, 0.95);
+            top: 0;
+            left: 0;
+        }
+        
+        .benefits-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.8rem;
+            text-align: center;
+            margin-bottom: 6rem;
+            font-weight: 500;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .benefit-card {
+            padding: 4rem;
+            background: var(--color-ivory);
+            border: 1px solid rgba(198, 184, 165, 0.2);
+            transition: var(--transition);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-1rem);
+            border-color: var(--color-gold);
+        }
+        
+        .benefit-icon {
+            font-size: 3.5rem;
+            color: var(--color-gold);
+            margin-bottom: 2rem;
+        }
+        
+        .benefit-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .benefit-card p {
+            font-size: 1.7rem;
+            color: var(--color-stone);
+        }
+        
+        /* Примеры работ */
+        .portfolio {
+            padding: 8rem 0;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .portfolio-item {
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease;
+            filter: grayscale(40%);
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
+            padding: 3rem;
+            transform: translateY(100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        
+        .portfolio-overlay h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--color-ivory);
+            margin-bottom: 1rem;
+        }
+        
+        .portfolio-overlay p {
+            font-size: 1.5rem;
+            color: var(--color-sand);
+        }
+        
+        /* Процесс работы */
+        .process {
+            padding: 8rem 0;
+            background: var(--color-charcoal);
+            color: var(--color-ivory);
+        }
+        
+        .process .section-title {
+            color: var(--color-ivory);
+        }
+        
+        .process-steps {
+            max-width: 800px;
+            margin: 6rem auto 0;
+        }
+        
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(250, 249, 247, 0.1);
+        }
+        
+        .step-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.8rem;
+            color: var(--color-gold);
+            font-weight: 500;
+            margin-right: 3rem;
+            min-width: 60px;
+        }
+        
+        .step-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            color: var(--color-ivory);
+        }
+        
+        .step-content p {
+            font-size: 1.7rem;
+            color: rgba(250, 249, 247, 0.8);
+        }
+        
+        /* Призыв к действию */
+        .cta-section {
+            padding: 10rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(26, 26, 26, 0.1), rgba(26, 26, 26, 0.05)),
+                        url('photo1.jpg') center/cover;
+            position: relative;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 249, 247, 0.92);
+            top: 0;
+            left: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.2rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .cta-content p {
+            font-size: 2rem;
+            color: var(--color-stone);
+            margin-bottom: 4rem;
+        }
+        
+        /* Футер */
+        .footer {
+            background: var(--color-charcoal);
+            color: var(--color-ivory);
+            padding: 6rem 0 3rem;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.6rem;
+            color: var(--color-gold);
+            margin-bottom: 2rem;
+        }
+        
+        .footer-heart {
+            display: inline-block;
+            font-size: 4rem;
+            color: var(--color-gold);
+            margin: 3rem 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-heart:hover {
+            transform: scale(1.2);
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(250, 249, 247, 0.1);
+            font-size: 1.4rem;
+            color: rgba(250, 249, 247, 0.6);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Кнопка музыки */
+        .music-btn {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--color-ivory);
+            border: 1px solid rgba(184, 155, 114, 0.3);
+            color: var(--color-gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--color-gold);
+        }
+        
+        .music-btn.playing {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(184, 155, 114, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(184, 155, 114, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(184, 155, 114, 0); }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title { font-size: 4rem; }
+            .section-title { font-size: 3.6rem; }
+            .hero-subtitle { font-size: 1.8rem; }
+            .benefit-card, .portfolio-item { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">Igoran</a>
+            <div style="font-family: 'Inter', sans-serif; font-size: 1.3rem; color: var(--color-stone); letter-spacing: 0.1em;">
+                САЙТЫ-ПОДАРКИ, КОТОРЫЕ ЗАПОМНЯТСЯ
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Подарите эмоции, а не просто открытку</h1>
+                <p class="hero-subtitle">Создаю уникальные сайты-подарки, которые превращают обычные поздравления в незабываемые цифровые впечатления. Представьте — ваш подарок открывают на большом экране, под звуки специально подобранной музыки, и перед близкими разворачивается целая история, созданная только для них.</p>
+                <a href="#cta" class="cta-button">ЗАКАЗАТЬ СВОЙ САЙТ-ПОДАРОК</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="benefits">
+        <div class="container benefits-content">
+            <h2 class="section-title">Почему выбирают именно такой подарок?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Эмоции вместо вещей</h3>
+                    <p>В мире, где у каждого уже есть всё, настоящей ценностью становятся эмоции. Ваш подарок будет пересматриваться, показываться друзьям и храниться в памяти долгие годы.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-gem"></i></div>
+                    <h3>Эксклюзивность</h3>
+                    <p>Каждый сайт создаётся с нуля под конкретного человека и повод. Никаких шаблонов — только уникальный дизайн, отражающий личность того, кому предназначен подарок.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-magic"></i></div>
+                    <h3>Современно и стильно</h3>
+                    <p>Изысканная типографика, утончённые цветовые палитры, плавные анимации. Дизайн, который говорит о вашем вкусе и внимании к деталям.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Примеры работ -->
+    <section class="portfolio">
+        <div class="container">
+            <h2 class="section-title">Примеры моих работ</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="photo1.jpg" alt="Сайт-подарок на годовщину">
+                    <div class="portfolio-overlay">
+                        <h3>Серебряная свадьба</h3>
+                        <p>Сайт-подарок родителям на 25 лет совместной жизни</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="photo2.jpg" alt="Сайт-приглашение на свадьбу">
+                    <div class="portfolio-overlay">
+                        <h3>Свадебное приглашение</h3>
+                        <p>Интерактивное приглашение для гостей свадьбы</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="photo3.jpg" alt="Сайт-поздравление с юбилеем">
+                    <div class="portfolio-overlay">
+                        <h3>Юбилей компании</h3>
+                        <p>Корпоративный подарок на 10-летие бизнеса</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Процесс работы -->
+    <section class="process">
+        <div class="container">
+            <h2 class="section-title">Как это работает</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Вы рассказываете историю</h3>
+                        <p>Мы общаемся о человеке или событии, для которого создаётся подарок. Вы делитесь фотографиями, важными датами, трогательными историями — всем, что должно стать частью сайта.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Я создаю концепцию</h3>
+                        <p>Разрабатываю уникальный дизайн, подбираю цветовую палитру, шрифты и анимации. Каждый элемент работает на создание нужного настроения — от романтичного до торжественного.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Вы получаете готовый шедевр</h3>
+                        <p>Через несколько дней вы получаете ссылку на полностью готовый сайт. Просто откройте её на празднике — и наблюдайте, как у гостей загораются глаза от удивления и восторга.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="cta-section" id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы подарить незабываемые эмоции?</h2>
+                <p>Свяжитесь со мной сейчас, и через несколько дней у вас будет самый необычный и запоминающийся подарок, который только можно представить.</p>
+                <a href="#footer" class="cta-button">СДЕЛАТЬ ЗАКАЗ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-logo">Igoran</div>
+            <p style="font-size: 1.8rem; max-width: 600px; margin: 0 auto 2rem; color: rgba(250, 249, 247, 0.8);">
+                Создаю цифровые эмоции, которые остаются в памяти навсегда
+            </p>
+            
+            <a href="https://игорян.рф" target="_blank" style="text-decoration: none;">
+                <div class="footer-heart">❤️</div>
+            </a>
+            
+            <div style="font-family: 'Inter', sans-serif; font-size: 1.4rem; color: var(--color-sand); letter-spacing: 0.1em; margin: 2rem 0;">
+                Нажмите на сердечко, чтобы узнать больше
+            </div>
+            
+            <div class="copyright">
+                © 2024 Igoran. Все сайты создаются с любовью и вниманием к деталям.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Кнопка музыки -->
+    <button class="music-btn" id="musicBtn">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        class MusicPlayer {
+            constructor() {
+                this.audio = null;
+                this.isPlaying = false;
+                this.userPreference = localStorage.getItem('musicPreference');
+                this.btn = document.getElementById('musicBtn');
+                
+                this.init();
+            }
+            
+            init() {
+                this.audio = new Audio();
+                this.audio.src = 'romantic-music.mp3';
+                this.audio.loop = true;
+                this.audio.volume = 0.5;
+                
+                this.audio.addEventListener('canplaythrough', () => {
+                    console.log('🎵 Музыка готова: "Закажи у Игоряна"');
+                });
+                
+                this.btn.addEventListener('click', () => this.toggleMusic());
+                
+                // Автовоспроизведение с задержкой
+                setTimeout(() => {
+                    if (this.userPreference === 'enabled' || this.userPreference === null) {
+                        this.playMusic();
+                    }
+                }, 2000);
+            }
+            
+            toggleMusic() {
+                if (this.isPlaying) {
+                    this.pauseMusic();
+                } else {
+                    this.playMusic();
+                }
+            }
+            
+            playMusic() {
+                this.audio.play().then(() => {
+                    this.isPlaying = true;
+                    this.btn.classList.add('playing');
+                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    localStorage.setItem('musicPreference', 'enabled');
+                }).catch(error => {
+                    console.log('Ошибка воспроизведения:', error);
+                });
+            }
+            
+            pauseMusic() {
+                this.audio.pause();
+                this.isPlaying = false;
+                this.btn.classList.remove('playing');
+                this.btn.innerHTML = '<i class="fas fa-music"></i>';
+                localStorage.setItem('musicPreference', 'disabled');
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            const musicPlayer = new MusicPlayer();
+            
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Анимация появления элементов
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Наблюдаем за всеми секциями
+            document.querySelectorAll('section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(section);
+            });
+            
+            console.log('🎨 Igoran — создание сайтов-подарков');
+            console.log('🎵 Звучит: "Закажи у Игоряна" в стиле регги');
+            console.log('💝 Нажмите на сердечко внизу страницы!');
+        });
+    </script>
+</body>
+</html>
