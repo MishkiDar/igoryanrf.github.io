@@ -595,6 +595,32 @@
             line-height: 1;
         }
         
+        /* Стили для мобильных инструкций */
+        .mobile-instruction {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            background: var(--color-gold);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 300px;
+            z-index: 1002;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: slideInUp 0.5s ease;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
         /* Адаптивность */
         @media (max-width: 768px) {
             .hero-title {
@@ -639,6 +665,13 @@
                 bottom: 8rem;
                 right: 2rem;
                 width: 250px;
+            }
+            
+            .mobile-instruction {
+                bottom: 100px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
             }
         }
         
@@ -809,7 +842,7 @@
                     <div class="step-number">03</div>
                     <div class="step-content">
                         <h3>Вы получаете готовый подарок</h3>
-                        <p>Через 3-5 дней вы получаете ссылку на полностью готовый сайт. Просто откройте её на празднике — и наблюдайте, как у родителей и гостей загораются глаза от удивления и восторга. Техническая поддержка включена.</p>
+                        <p>Через 3-5 дней у вас есть готовая ссылка на полностью готовый сайт. Просто откройте её на празднике — и наблюдайте, как у родителей и гостей загораются глаза от удивления и восторга. Техническая поддержка включена.</p>
                     </div>
                 </div>
             </div>
@@ -868,9 +901,6 @@
                 // 1. Массив с путями к MP3-файлам
                 this.audioFiles = [
                     'romantic-music.mp3' // Ваш основной файл музыки
-                    // Добавьте другие треки при необходимости:
-                    // 'audio/another-track.mp3',
-                    // 'audio/background-music.mp3'
                 ];
                 
                 // Переменные состояния
@@ -878,6 +908,8 @@
                 this.isPlaying = false;
                 this.userPreference = localStorage.getItem('musicPreference');
                 this.volume = localStorage.getItem('musicVolume') || 0.4;
+                this.hasUserInteracted = false; // Флаг взаимодействия пользователя
+                this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 
                 // DOM элементы
                 this.btn = document.getElementById('musicBtn');
@@ -888,7 +920,7 @@
             }
             
             async init() {
-                console.log('🎵 Начинается предзагрузка музыки...');
+                console.log(`🎵 Инициализация музыки (${this.isMobile ? 'мобильное устройство' : 'десктоп'})...`);
                 
                 // Показываем состояние загрузки
                 this.btn.classList.add('loading');
@@ -905,17 +937,39 @@
                     this.btn.title = 'Включить/выключить музыку';
                     
                     // Настройка кнопки
-                    this.btn.addEventListener('click', () => this.toggleMusic());
+                    this.btn.addEventListener('click', () => {
+                        this.hasUserInteracted = true; // Пользователь взаимодействовал
+                        this.toggleMusic();
+                    });
                     
                     // Настройка закрытия уведомления
                     this.closeNotificationBtn.addEventListener('click', () => {
                         this.hideNotification();
                     });
                     
-                    // Автовоспроизведение, если пользователь ранее включил музыку
-                    if (this.userPreference === 'enabled' || this.userPreference === null) {
-                        // НЕТ задержки 3 секунды - воспроизводим сразу после загрузки
-                        this.playMusic();
+                    // На мобильных устройствах - ждем первого взаимодействия пользователя
+                    if (this.isMobile) {
+                        console.log('📱 Мобильное устройство: ждем взаимодействия пользователя');
+                        this.btn.innerHTML = '<i class="fas fa-play"></i>';
+                        this.btn.title = 'Нажмите, чтобы включить музыку';
+                        
+                        // Слушаем различные события взаимодействия для мобильных
+                        const interactionEvents = ['click', 'touchstart', 'scroll', 'touchend'];
+                        interactionEvents.forEach(eventType => {
+                            document.addEventListener(eventType, () => {
+                                this.hasUserInteracted = true;
+                                // Показываем подсказку на мобильных
+                                if (!this.isPlaying && eventType === 'touchstart') {
+                                    this.showMobileHint();
+                                }
+                            }, { once: true, passive: true });
+                        });
+                        
+                    } else {
+                        // На десктопах - автовоспроизведение, если пользователь ранее включил музыку
+                        if (this.userPreference === 'enabled' || this.userPreference === null) {
+                            this.playMusic();
+                        }
                     }
                     
                     // Сохранение настроек при закрытии страницы
@@ -940,7 +994,7 @@
             preloadAudio(src) {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio();
-                    audio.preload = 'auto'; // Указываем браузеру загрузить файл полностью
+                    audio.preload = 'auto';
                     
                     // Используем oncanplaythrough для гарантии полной загрузки
                     audio.oncanplaythrough = () => {
@@ -967,22 +1021,135 @@
                     player.loop = true;
                     player.volume = parseFloat(this.volume);
                     
-                    // Воспроизводим сразу
-                    await player.play();
+                    // На мобильных устройствах нужно проверять разрешение на воспроизведение
+                    if (this.isMobile && !this.hasUserInteracted) {
+                        console.log('📱 Требуется взаимодействие пользователя для воспроизведения');
+                        return null;
+                    }
                     
-                    console.log(`▶️ Воспроизведение: ${src}`);
+                    // Воспроизводим сразу
+                    const playPromise = player.play();
+                    
+                    // Обрабатываем Promise для отлова ошибок автовоспроизведения
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            console.log(`▶️ Воспроизведение: ${src}`);
+                        }).catch(error => {
+                            console.error('❌ Ошибка автовоспроизведения:', error);
+                            // На мобильных показываем инструкцию
+                            if (this.isMobile) {
+                                this.showMobileInstructions();
+                            }
+                            return null;
+                        });
+                    }
+                    
                     return player;
                     
                 } catch (error) {
                     console.error('Ошибка воспроизведения аудио:', error);
-                    this.showErrorNotification('Для включения музыки нажмите на кнопку');
+                    
+                    // Специальное сообщение для мобильных
+                    if (this.isMobile) {
+                        this.showMobileInstructions();
+                    } else {
+                        this.showErrorNotification('Для включения музыки нажмите на кнопку');
+                    }
+                    
                     return null;
                 }
+            }
+            
+            // Показать инструкцию для мобильных устройств
+            showMobileInstructions() {
+                const mobileNotification = document.createElement('div');
+                mobileNotification.className = 'music-notification';
+                mobileNotification.style.backgroundColor = 'var(--color-gold)';
+                mobileNotification.style.color = 'white';
+                mobileNotification.innerHTML = `
+                    <button class="close-notification" style="color: white;">×</button>
+                    <p><strong>📱 Как включить музыку на телефоне:</strong></p>
+                    <p>1. Нажмите на кнопку музыки внизу экрана</p>
+                    <p>2. Разрешите автовоспроизведение в браузере</p>
+                    <p>3. Если не работает, перезагрузите страницу</p>
+                `;
+                
+                // Позиционируем уведомление
+                mobileNotification.style.position = 'fixed';
+                mobileNotification.style.bottom = '120px';
+                mobileNotification.style.right = '20px';
+                mobileNotification.style.width = '300px';
+                mobileNotification.style.zIndex = '1002';
+                
+                document.body.appendChild(mobileNotification);
+                
+                // Показываем с анимацией
+                setTimeout(() => {
+                    mobileNotification.classList.add('show');
+                }, 100);
+                
+                // Закрытие уведомления
+                mobileNotification.querySelector('.close-notification').addEventListener('click', () => {
+                    mobileNotification.classList.remove('show');
+                    setTimeout(() => {
+                        if (mobileNotification.parentNode) {
+                            mobileNotification.parentNode.removeChild(mobileNotification);
+                        }
+                    }, 400);
+                });
+                
+                // Автоматическое скрытие через 10 секунд
+                setTimeout(() => {
+                    if (mobileNotification.parentNode) {
+                        mobileNotification.classList.remove('show');
+                        setTimeout(() => {
+                            if (mobileNotification.parentNode) {
+                                mobileNotification.parentNode.removeChild(mobileNotification);
+                            }
+                        }, 400);
+                    }
+                }, 10000);
+            }
+            
+            // Показать подсказку на мобильных при первом касании
+            showMobileHint() {
+                const hint = document.createElement('div');
+                hint.innerHTML = '👉 Нажмите на кнопку музыки в правом нижнем углу';
+                hint.style.position = 'fixed';
+                hint.style.bottom = '100px';
+                hint.style.right = '20px';
+                hint.style.background = 'var(--color-gold)';
+                hint.style.color = 'white';
+                hint.style.padding = '10px 15px';
+                hint.style.borderRadius = '5px';
+                hint.style.fontSize = '14px';
+                hint.style.zIndex = '1001';
+                hint.style.maxWidth = '250px';
+                hint.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                
+                document.body.appendChild(hint);
+                
+                setTimeout(() => {
+                    hint.style.opacity = '0';
+                    hint.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        if (hint.parentNode) {
+                            hint.parentNode.removeChild(hint);
+                        }
+                    }, 500);
+                }, 3000);
             }
             
             // Основные методы управления
             async playMusic() {
                 if (this.isPlaying) return;
+                
+                // На мобильных проверяем, было ли взаимодействие
+                if (this.isMobile && !this.hasUserInteracted) {
+                    console.log('📱 Ждем взаимодействия пользователя...');
+                    this.showMobileInstructions();
+                    return;
+                }
                 
                 // Используем первый трек из списка (основную музыку)
                 const src = this.audioFiles[0];
@@ -1038,20 +1205,6 @@
                 this.notification.querySelector('.close-notification').addEventListener('click', () => {
                     this.hideNotification();
                 });
-            }
-            
-            // Метод для смены трека (если будет несколько)
-            async changeTrack(src) {
-                if (this.isPlaying) {
-                    this.pauseMusic();
-                }
-                
-                this.currentAudio = await this.playStableAudio(src);
-                if (this.currentAudio) {
-                    this.isPlaying = true;
-                    this.btn.classList.add('playing');
-                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                }
             }
         }
         
