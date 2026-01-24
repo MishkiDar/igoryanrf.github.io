@@ -522,6 +522,7 @@
             transition: var(--transition);
             box-shadow: 0 5px 20px rgba(42, 42, 42, 0.1);
             z-index: 1000;
+            outline: none; /* Убираем outline */
         }
         
         .music-btn:hover {
@@ -595,24 +596,83 @@
             line-height: 1;
         }
         
-        /* Стили для мобильных инструкций */
-        .mobile-instruction {
+        /* Баннер для iOS */
+        .ios-banner {
             position: fixed;
-            bottom: 120px;
-            right: 20px;
-            background: var(--color-gold);
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--color-gold) 0%, #d4af37 100%);
             color: white;
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 300px;
-            z-index: 1002;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            animation: slideInUp 0.5s ease;
+            padding: 20px;
+            z-index: 1001;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: slideDown 0.6s ease;
+            display: none;
         }
         
-        @keyframes slideInUp {
+        .ios-banner-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .ios-banner h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .ios-banner p {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .ios-activate-btn {
+            background: white;
+            color: var(--color-gold);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .ios-activate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .ios-note {
+            font-size: 1.4rem !important;
+            opacity: 0.9;
+            margin-top: 10px !important;
+        }
+        
+        /* Fallback для iOS */
+        .ios-fallback {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px dashed var(--color-gold);
+            border-radius: 10px;
+            background: rgba(184, 155, 114, 0.05);
+        }
+        
+        @keyframes slideDown {
             from {
-                transform: translateY(50px);
+                transform: translateY(-100%);
                 opacity: 0;
             }
             to {
@@ -667,11 +727,21 @@
                 width: 250px;
             }
             
-            .mobile-instruction {
-                bottom: 100px;
-                right: 10px;
-                left: 10px;
-                max-width: none;
+            .ios-banner {
+                padding: 15px;
+            }
+            
+            .ios-banner h3 {
+                font-size: 2rem;
+            }
+            
+            .ios-banner p {
+                font-size: 1.4rem;
+            }
+            
+            .ios-activate-btn {
+                padding: 12px 30px;
+                font-size: 1.4rem;
             }
         }
         
@@ -704,10 +774,34 @@
             .step-number {
                 margin-bottom: 1rem;
             }
+            
+            .ios-banner {
+                padding: 12px;
+            }
+            
+            .ios-banner h3 {
+                font-size: 1.8rem;
+            }
+            
+            .ios-banner p {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Баннер для iOS (показывается только на iPhone/iPad) -->
+    <div id="iosMusicBanner" class="ios-banner">
+        <div class="ios-banner-content">
+            <h3>🎵 Включите фоновую музыку для полного погружения</h3>
+            <p>Нажмите кнопку ниже, чтобы активировать музыкальное сопровождение</p>
+            <button id="iosActivateMusic" class="ios-activate-btn">
+                <i class="fas fa-play-circle"></i> АКТИВИРОВАТЬ МУЗЫКУ
+            </button>
+            <p class="ios-note">После активации музыка будет играть автоматически</p>
+        </div>
+    </div>
+
     <!-- Шапка -->
     <header class="header">
         <div class="container header-container">
@@ -822,7 +916,7 @@
     <!-- Процесс работы -->
     <section class="process">
         <div class="container">
-            <h2 class="section-title">Как заказать сайт-подарок для родителей</h2>
+            <h2 class="section-title">Как заказать сайт  подарок для родителей</h2>
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">01</div>
@@ -893,6 +987,19 @@
         <p><strong>Фоновая музыка</strong><br>Мелодия будет играть на фоне, создавая атмосферу праздника.</p>
     </div>
 
+    <!-- Fallback для iOS -->
+    <div id="iosFallback" class="ios-fallback">
+        <h3 style="color: var(--color-gold); margin-bottom: 15px; font-size: 2.4rem;">🎵 Музыкальное сопровождение</h3>
+        <p style="margin-bottom: 15px; font-size: 1.6rem;">На iPhone/iPad браузеры ограничивают автоматическое воспроизведение музыки.</p>
+        <p style="margin-bottom: 20px; font-size: 1.6rem;">Вы можете скачать музыку и слушать её отдельно:</p>
+        <a href="romantic-music.mp3" download class="cta-button" style="display: inline-flex; align-items: center; gap: 10px;">
+            <i class="fas fa-download"></i> СКАЧАТЬ МУЗЫКУ
+        </a>
+        <p style="margin-top: 15px; font-size: 1.4rem; color: var(--color-stone);">
+            Откройте скачанный файл в любом плеере во время просмотра сайта
+        </p>
+    </div>
+
     <!-- JavaScript -->
     <script>
         // ===== УЛУЧШЕННАЯ СИСТЕМА ПРЕЛОАДА АУДИО =====
@@ -909,6 +1016,7 @@
                 this.userPreference = localStorage.getItem('musicPreference');
                 this.volume = localStorage.getItem('musicVolume') || 0.4;
                 this.hasUserInteracted = false; // Флаг взаимодействия пользователя
+                this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
                 this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 
                 // DOM элементы
@@ -920,7 +1028,7 @@
             }
             
             async init() {
-                console.log(`🎵 Инициализация музыки (${this.isMobile ? 'мобильное устройство' : 'десктоп'})...`);
+                console.log(`🎵 Инициализация музыки (iOS: ${this.isIOS}, Мобильное: ${this.isMobile})...`);
                 
                 // Показываем состояние загрузки
                 this.btn.classList.add('loading');
@@ -936,8 +1044,10 @@
                     this.btn.classList.remove('loading');
                     this.btn.title = 'Включить/выключить музыку';
                     
-                    // Настройка кнопки
-                    this.btn.addEventListener('click', () => {
+                    // Настройка кнопки - ВАЖНО: предотвращаем прокрутку
+                    this.btn.addEventListener('click', (e) => {
+                        e.preventDefault(); // Предотвращаем стандартное поведение
+                        e.stopPropagation(); // Останавливаем всплытие
                         this.hasUserInteracted = true; // Пользователь взаимодействовал
                         this.toggleMusic();
                     });
@@ -947,30 +1057,16 @@
                         this.hideNotification();
                     });
                     
-                    // На мобильных устройствах - ждем первого взаимодействия пользователя
-                    if (this.isMobile) {
-                        console.log('📱 Мобильное устройство: ждем взаимодействия пользователя');
-                        this.btn.innerHTML = '<i class="fas fa-play"></i>';
-                        this.btn.title = 'Нажмите, чтобы включить музыку';
-                        
-                        // Слушаем различные события взаимодействия для мобильных
-                        const interactionEvents = ['click', 'touchstart', 'scroll', 'touchend'];
-                        interactionEvents.forEach(eventType => {
-                            document.addEventListener(eventType, () => {
-                                this.hasUserInteracted = true;
-                                // Показываем подсказку на мобильных
-                                if (!this.isPlaying && eventType === 'touchstart') {
-                                    this.showMobileHint();
-                                }
-                            }, { once: true, passive: true });
-                        });
-                        
-                    } else {
-                        // На десктопах - автовоспроизведение, если пользователь ранее включил музыку
-                        if (this.userPreference === 'enabled' || this.userPreference === null) {
-                            this.playMusic();
-                        }
+                    // Для iOS показываем специальный баннер
+                    if (this.isIOS) {
+                        this.setupIOSBanner();
                     }
+                    
+                    // Для десктопов - НЕТ автовоспроизведения! Только по нажатию
+                    // Раскомментируйте строку ниже, если хотите включить автовоспроизведение для десктопов
+                    // if (!this.isMobile && (this.userPreference === 'enabled' || this.userPreference === null)) {
+                    //     setTimeout(() => this.playMusic(), 500);
+                    // }
                     
                     // Сохранение настроек при закрытии страницы
                     window.addEventListener('beforeunload', () => {
@@ -982,12 +1078,61 @@
                         localStorage.setItem('musicVolume', this.volume.toString());
                     });
                     
+                    // Сохраняем ссылку на плеер в глобальной области видимости
+                    window.musicPlayer = this;
+                    
                 } catch (error) {
                     console.error('❌ Ошибка загрузки музыки:', error);
                     this.btn.classList.remove('loading');
                     this.btn.title = 'Ошибка загрузки музыки';
                     this.showErrorNotification('Не удалось загрузить музыку');
+                    
+                    // Показываем fallback для iOS
+                    if (this.isIOS) {
+                        document.getElementById('iosFallback').style.display = 'block';
+                    }
                 }
+            }
+            
+            // Настройка iOS баннера
+            setupIOSBanner() {
+                // Показываем баннер для iOS через 2 секунды
+                setTimeout(() => {
+                    const banner = document.getElementById('iosMusicBanner');
+                    banner.style.display = 'block';
+                    
+                    // Активация по кнопке
+                    document.getElementById('iosActivateMusic').addEventListener('click', () => {
+                        this.hasUserInteracted = true;
+                        this.playMusic();
+                        
+                        // Скрываем баннер
+                        banner.style.opacity = '0';
+                        banner.style.transform = 'translateY(-100%)';
+                        banner.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        
+                        setTimeout(() => {
+                            banner.style.display = 'none';
+                        }, 500);
+                    });
+                    
+                    // Скрываем баннер при скролле
+                    let scrollTimer;
+                    window.addEventListener('scroll', () => {
+                        clearTimeout(scrollTimer);
+                        scrollTimer = setTimeout(() => {
+                            if (!this.isPlaying) {
+                                banner.style.opacity = '0';
+                                banner.style.transform = 'translateY(-100%)';
+                                banner.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                                
+                                setTimeout(() => {
+                                    banner.style.display = 'none';
+                                }, 500);
+                            }
+                        }, 1000);
+                    });
+                }, 2000);
             }
             
             // 2. Функция для предварительной загрузки файла
@@ -1021,6 +1166,12 @@
                     player.loop = true;
                     player.volume = parseFloat(this.volume);
                     
+                    // Для iOS важные настройки
+                    if (this.isIOS) {
+                        player.playsInline = true;
+                        player.preload = 'auto';
+                    }
+                    
                     // На мобильных устройствах нужно проверять разрешение на воспроизведение
                     if (this.isMobile && !this.hasUserInteracted) {
                         console.log('📱 Требуется взаимодействие пользователя для воспроизведения');
@@ -1036,9 +1187,9 @@
                             console.log(`▶️ Воспроизведение: ${src}`);
                         }).catch(error => {
                             console.error('❌ Ошибка автовоспроизведения:', error);
-                            // На мобильных показываем инструкцию
-                            if (this.isMobile) {
-                                this.showMobileInstructions();
+                            // На iOS показываем инструкцию
+                            if (this.isIOS) {
+                                this.showIOSInstructions();
                             }
                             return null;
                         });
@@ -1049,9 +1200,9 @@
                 } catch (error) {
                     console.error('Ошибка воспроизведения аудио:', error);
                     
-                    // Специальное сообщение для мобильных
-                    if (this.isMobile) {
-                        this.showMobileInstructions();
+                    // Специальное сообщение для iOS
+                    if (this.isIOS) {
+                        this.showIOSInstructions();
                     } else {
                         this.showErrorNotification('Для включения музыки нажмите на кнопку');
                     }
@@ -1060,84 +1211,51 @@
                 }
             }
             
-            // Показать инструкцию для мобильных устройств
-            showMobileInstructions() {
-                const mobileNotification = document.createElement('div');
-                mobileNotification.className = 'music-notification';
-                mobileNotification.style.backgroundColor = 'var(--color-gold)';
-                mobileNotification.style.color = 'white';
-                mobileNotification.innerHTML = `
-                    <button class="close-notification" style="color: white;">×</button>
-                    <p><strong>📱 Как включить музыку на телефоне:</strong></p>
-                    <p>1. Нажмите на кнопку музыки внизу экрана</p>
-                    <p>2. Разрешите автовоспроизведение в браузере</p>
-                    <p>3. Если не работает, перезагрузите страницу</p>
+            // Показать инструкцию для iOS
+            showIOSInstructions() {
+                const instruction = document.createElement('div');
+                instruction.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: var(--color-gold);
+                        color: white;
+                        padding: 25px;
+                        border-radius: 15px;
+                        max-width: 400px;
+                        z-index: 1003;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        text-align: center;
+                    ">
+                        <h3 style="margin-bottom: 15px; font-size: 2rem;">🎵 Включение музыки на iOS</h3>
+                        <p style="margin-bottom: 10px; font-size: 1.6rem;">1. Убедитесь, что боковая кнопка 🔇 переключена на 🔈</p>
+                        <p style="margin-bottom: 20px; font-size: 1.4rem;">
+                            2. Перезагрузите страницу и нажмите кнопку музыки снова
+                        </p>
+                        <button onclick="this.parentNode.parentNode.remove()" style="
+                            background: white;
+                            color: var(--color-gold);
+                            border: none;
+                            padding: 10px 25px;
+                            font-size: 1.6rem;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        ">
+                            Понятно
+                        </button>
+                    </div>
                 `;
                 
-                // Позиционируем уведомление
-                mobileNotification.style.position = 'fixed';
-                mobileNotification.style.bottom = '120px';
-                mobileNotification.style.right = '20px';
-                mobileNotification.style.width = '300px';
-                mobileNotification.style.zIndex = '1002';
+                document.body.appendChild(instruction);
                 
-                document.body.appendChild(mobileNotification);
-                
-                // Показываем с анимацией
+                // Автоматическое скрытие через 8 секунд
                 setTimeout(() => {
-                    mobileNotification.classList.add('show');
-                }, 100);
-                
-                // Закрытие уведомления
-                mobileNotification.querySelector('.close-notification').addEventListener('click', () => {
-                    mobileNotification.classList.remove('show');
-                    setTimeout(() => {
-                        if (mobileNotification.parentNode) {
-                            mobileNotification.parentNode.removeChild(mobileNotification);
-                        }
-                    }, 400);
-                });
-                
-                // Автоматическое скрытие через 10 секунд
-                setTimeout(() => {
-                    if (mobileNotification.parentNode) {
-                        mobileNotification.classList.remove('show');
-                        setTimeout(() => {
-                            if (mobileNotification.parentNode) {
-                                mobileNotification.parentNode.removeChild(mobileNotification);
-                            }
-                        }, 400);
+                    if (instruction.parentNode) {
+                        instruction.parentNode.removeChild(instruction);
                     }
-                }, 10000);
-            }
-            
-            // Показать подсказку на мобильных при первом касании
-            showMobileHint() {
-                const hint = document.createElement('div');
-                hint.innerHTML = '👉 Нажмите на кнопку музыки в правом нижнем углу';
-                hint.style.position = 'fixed';
-                hint.style.bottom = '100px';
-                hint.style.right = '20px';
-                hint.style.background = 'var(--color-gold)';
-                hint.style.color = 'white';
-                hint.style.padding = '10px 15px';
-                hint.style.borderRadius = '5px';
-                hint.style.fontSize = '14px';
-                hint.style.zIndex = '1001';
-                hint.style.maxWidth = '250px';
-                hint.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                
-                document.body.appendChild(hint);
-                
-                setTimeout(() => {
-                    hint.style.opacity = '0';
-                    hint.style.transition = 'opacity 0.5s ease';
-                    setTimeout(() => {
-                        if (hint.parentNode) {
-                            hint.parentNode.removeChild(hint);
-                        }
-                    }, 500);
-                }, 3000);
+                }, 8000);
             }
             
             // Основные методы управления
@@ -1147,7 +1265,9 @@
                 // На мобильных проверяем, было ли взаимодействие
                 if (this.isMobile && !this.hasUserInteracted) {
                     console.log('📱 Ждем взаимодействия пользователя...');
-                    this.showMobileInstructions();
+                    if (this.isIOS) {
+                        this.showIOSInstructions();
+                    }
                     return;
                 }
                 
@@ -1161,6 +1281,16 @@
                     this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
                     this.showNotification();
                     localStorage.setItem('musicPreference', 'enabled');
+                    
+                    // Скрываем fallback если он показан
+                    document.getElementById('iosFallback').style.display = 'none';
+                } else if (this.isIOS) {
+                    // Если не удалось воспроизвести на iOS, показываем fallback
+                    setTimeout(() => {
+                        if (!this.isPlaying) {
+                            document.getElementById('iosFallback').style.display = 'block';
+                        }
+                    }, 3000);
                 }
             }
             
@@ -1213,8 +1343,11 @@
             // Инициализируем музыкальный плеер
             const musicPlayer = new StableMusicPlayer();
             
-            // Плавная прокрутка
+            // Плавная прокрутка - ИСКЛЮЧАЕМ кнопку музыки
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                // Исключаем кнопку музыки из обработки прокрутки
+                if (anchor.id === 'musicBtn' || anchor.closest('.music-btn')) return;
+                
                 anchor.addEventListener('click', function(e) {
                     if (this.getAttribute('href').startsWith('https://')) return;
                     
@@ -1233,6 +1366,14 @@
                         });
                     }
                 });
+            });
+            
+            // Отключаем прокрутку при нажатии на кнопку музыки
+            const musicBtn = document.getElementById('musicBtn');
+            musicBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
             });
             
             // Анимация появления элементов при скролле
@@ -1261,8 +1402,18 @@
                 observer.observe(block);
             });
             
+            // Проверка для iOS через 8 секунд
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                setTimeout(() => {
+                    if (!musicPlayer.isPlaying) {
+                        // Показываем fallback если музыка не играет
+                        document.getElementById('iosFallback').style.display = 'block';
+                    }
+                }, 8000);
+            }
+            
             console.log('🎨 Игорян.рф — создание сайтов-подарков на годовщину свадьбы родителей');
-            console.log('🎵 Система предзагрузки музыки активирована');
+            console.log('🎵 Система предзагрузки музыки активирована (автовоспроизведение выключено)');
             console.log('💝 Нажмите на сердечко внизу страницы!');
             console.log('📱 Все CTA ведут в Telegram: t.me/nasvadebku');
         });
