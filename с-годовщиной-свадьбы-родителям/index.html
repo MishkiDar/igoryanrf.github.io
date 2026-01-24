@@ -140,7 +140,7 @@
         
         .hero-bg {
             position: absolute;
-            width: 110%; /* Немного больше для плавного движения */
+            width: 110%;
             height: 110%;
             background: linear-gradient(rgba(26, 26, 26, 0.1), rgba(26, 26, 26, 0.05)),
                         url('fon1.jpg');
@@ -150,7 +150,6 @@
             z-index: -1;
             filter: grayscale(30%) brightness(1.05);
             
-            /* Анимация медленного смещения фона */
             animation: slowPan 120s infinite linear;
         }
         
@@ -177,7 +176,7 @@
             margin: 0 auto;
             text-align: center;
             padding: 4rem 2rem;
-            background: rgba(250, 249, 247, 0.92); /* Уменьшена прозрачность с 0.92 до 0.80 */
+            background: rgba(250, 249, 247, 0.92);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(198, 184, 165, 0.2);
             overflow: hidden;
@@ -191,7 +190,6 @@
             line-height: 1.1;
             word-wrap: break-word;
             color: var(--color-charcoal);
-            /* Прозрачность 20% как в старом дизайне */
             opacity: 0.9;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -202,7 +200,7 @@
             margin-bottom: 4rem;
             font-weight: 300;
             line-height: 1.6;
-            opacity: 0.9; /* Прозрачность для гармонии */
+            opacity: 0.9;
         }
         
         .cta-button {
@@ -505,7 +503,7 @@
             letter-spacing: 0.1em;
         }
         
-        /* ВК виджет для музыки */
+        /* Стили для ВК виджета */
         .vk-music-widget {
             position: fixed;
             bottom: 3rem;
@@ -561,6 +559,33 @@
             100% { box-shadow: 0 0 0 0 rgba(184, 155, 114, 0); }
         }
         
+        /* Загрузочный экран для музыки */
+        .music-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            color: var(--color-stone);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4rem;
+            height: 100%;
+        }
+        
+        .music-loading .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(184, 155, 114, 0.2);
+            border-top-color: var(--color-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         /* Адаптивность */
         @media (max-width: 768px) {
             .hero-title { font-size: 4rem; }
@@ -600,32 +625,6 @@
                 bottom: 9rem;
                 right: 2rem;
             }
-        }
-        
-        /* Загрузочный экран для музыки */
-        .music-loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 20px;
-            color: var(--color-stone);
-            font-family: 'Inter', sans-serif;
-            font-size: 1.4rem;
-        }
-        
-        .music-loading .spinner {
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(184, 155, 114, 0.2);
-            border-top-color: var(--color-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 10px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -822,7 +821,7 @@
 
     <!-- JavaScript -->
     <script>
-        // ВК виджет
+        // ВК виджет с вашей песней
         (function() {
             const widgetContainer = document.getElementById('vkMusicWidget');
             const musicToggleBtn = document.getElementById('musicToggleBtn');
@@ -856,15 +855,17 @@
                 const script = document.createElement('script');
                 script.src = 'https://vk.com/js/api/openapi.js?169';
                 script.onload = function() {
-                    // Инициализируем виджет
+                    // Инициализируем виджет с ВАШЕЙ ссылкой на песню
                     if (typeof VK !== 'undefined') {
                         VK.init({
-                            apiId: 0, // Не требуется для виджета
+                            apiId: 0,
                             onlyWidgets: true
                         });
                         
-                        VK.Widgets.Playlist("vk_audio_456239379", 332422, 456239379, '34b1f903c0396c4d49', {
-                            width: widgetContainer.offsetWidth - 2, // Учитываем border
+                        // ВАЖНО: здесь используется ваша ссылка
+                        // ID владельца: -2001297081, ID аудио: 8297081
+                        VK.Widgets.Playlist("vk_audio_456239379", -2001297081, 8297081, '', {
+                            width: widgetContainer.offsetWidth - 2,
                             height: 78
                         });
                         
@@ -874,19 +875,18 @@
                         }, 1000);
                         
                         widgetLoaded = true;
-                        
-                        console.log('🎵 ВК плеер загружен');
+                        console.log('🎵 ВК плеер загружен с вашей песней');
                     }
                 };
                 document.head.appendChild(script);
             }
             
-            // Автоматически показываем виджет через 5 секунд
+            // Автоматически загружаем виджет через 3 секунды (автовоспроизведение)
             setTimeout(() => {
                 if (!widgetLoaded) {
                     loadVKWidget();
                 }
-            }, 5000);
+            }, 3000);
             
             // Изначально виджет виден
             widgetContainer.style.transform = 'translateY(0)';
@@ -945,7 +945,7 @@
             });
             
             console.log('🎨 Игорян.рф — создание сайтов-подарков на годовщину свадьбы родителей');
-            console.log('🎵 ВК плеер загружается автоматически');
+            console.log('🎵 ВК плеер загружается с песней: audio-2001297081_8297081');
             console.log('💝 Нажмите на сердечко внизу страницы!');
             console.log('📱 Все CTA ведут в Telegram: t.me/nasvadebku');
         });
@@ -958,35 +958,6 @@
                 document.body.style.opacity = '1';
             }, 100);
         }, 100);
-    </script>
-    
-    <!-- ВК API скрипт -->
-    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?169"></script>
-    <script type="text/javascript">
-        // Инициализация ВК виджета после полной загрузки
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                if (typeof VK !== 'undefined') {
-                    VK.init({
-                        apiId: 0,
-                        onlyWidgets: true
-                    });
-                    
-                    VK.Widgets.Playlist("vk_audio_456239379", 332422, 456239379, '34b1f903c0396c4d49', {
-                        width: 278,
-                        height: 78
-                    });
-                    
-                    // Скрываем загрузочный экран
-                    const musicLoading = document.getElementById('musicLoading');
-                    if (musicLoading) {
-                        setTimeout(() => {
-                            musicLoading.style.display = 'none';
-                        }, 500);
-                    }
-                }
-            }, 2000);
-        });
     </script>
 </body>
 </html>
