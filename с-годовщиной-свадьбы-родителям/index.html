@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* (Все стили из предыдущей версии кода сохранены без изменений) */
         :root {
             --color-ivory: #faf9f7;
             --color-charcoal: #1a1a1a;
@@ -29,8 +28,18 @@
             --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             --text-max-width: 680px;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { font-size: 62.5%; scroll-behavior: smooth; }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: 'EB Garamond', serif;
             color: var(--color-charcoal);
@@ -39,269 +48,629 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* ФИКСИРОВАННАЯ ШИРИНА ТЕКСТА */
         .text-content {
             max-width: var(--text-max-width);
-            margin-left: auto; margin-right: auto;
+            margin-left: auto;
+            margin-right: auto;
             padding: 0 1rem;
-            overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
         }
+        
         .text-content p {
-            margin-bottom: 2rem; text-align: justify;
-            font-size: 1.8rem; line-height: 1.9;
+            margin-bottom: 2rem;
+            text-align: justify;
+            font-size: 1.8rem;
+            line-height: 1.9;
         }
-        .text-content h2, .text-content h3 {
-            font-family: 'Cormorant Garamond', serif; font-weight: 500;
-            margin-bottom: 2rem; line-height: 1.3;
+        
+        .text-content h2, 
+        .text-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            line-height: 1.3;
         }
+        
         .text-content h2 {
-            font-size: 3.2rem; margin-top: 4rem;
+            font-size: 3.2rem;
+            margin-top: 4rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(184, 155, 114, 0.2);
         }
-        .text-content h3 { font-size: 2.4rem; margin-top: 3rem; color: var(--color-gold); }
+        
+        .text-content h3 {
+            font-size: 2.4rem;
+            margin-top: 3rem;
+            color: var(--color-gold);
+        }
+        
+        /* Шапка */
         .header {
-            position: fixed; width: 100%; z-index: 1000; padding: 2rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 0;
             background: rgba(250, 249, 247, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(198, 184, 165, 0.1);
         }
+        
         .header-container {
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+        
         .logo {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem; font-weight: 500;
-            color: var(--color-charcoal); text-decoration: none;
+            font-size: 2.8rem;
+            font-weight: 500;
+            color: var(--color-charcoal);
+            text-decoration: none;
             letter-spacing: 1px;
         }
+        
         .tagline {
             font-family: 'Inter', sans-serif;
-            font-size: 1.3rem; color: var(--color-stone);
-            letter-spacing: 0.1em; text-align: right;
+            font-size: 1.3rem;
+            color: var(--color-stone);
+            letter-spacing: 0.1em;
+            text-align: right;
         }
+        
+        /* Герой с анимированным фоном и прозрачностью */
         .hero {
-            min-height: 100vh; display: flex; align-items: center;
-            position: relative; padding-top: 8rem; overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 8rem;
+            overflow: hidden;
         }
+        
         .hero-bg {
-            position: absolute; width: 110%; height: 110%;
+            position: absolute;
+            width: 110%;
+            height: 110%;
             background: linear-gradient(rgba(26, 26, 26, 0.1), rgba(26, 26, 26, 0.05)),
                         url('fon1.jpg');
-            background-size: cover; background-position: center 30%;
-            background-attachment: fixed; z-index: -1;
+            background-size: cover;
+            background-position: center 30%;
+            background-attachment: fixed;
+            z-index: -1;
             filter: grayscale(30%) brightness(1.05);
+            
             animation: slowPan 120s infinite linear;
         }
+        
         @keyframes slowPan {
-            0% { transform: scale(1.1) translate(0, 0); }
-            25% { transform: scale(1.1) translate(-1%, -1%); }
-            50% { transform: scale(1.1) translate(0, 0); }
-            75% { transform: scale(1.1) translate(1%, 1%); }
-            100% { transform: scale(1.1) translate(0, 0); }
+            0% {
+                transform: scale(1.1) translate(0, 0);
+            }
+            25% {
+                transform: scale(1.1) translate(-1%, -1%);
+            }
+            50% {
+                transform: scale(1.1) translate(0, 0);
+            }
+            75% {
+                transform: scale(1.1) translate(1%, 1%);
+            }
+            100% {
+                transform: scale(1.1) translate(0, 0);
+            }
         }
+        
         .hero-content {
-            max-width: var(--text-max-width); margin: 0 auto;
-            text-align: center; padding: 4rem 2rem;
+            max-width: var(--text-max-width);
+            margin: 0 auto;
+            text-align: center;
+            padding: 4rem 2rem;
             background: rgba(250, 249, 247, 0.92);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(198, 184, 165, 0.2);
             overflow: hidden;
         }
+        
         .hero-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 5.6rem; margin-bottom: 2rem;
-            font-weight: 500; line-height: 1.1; word-wrap: break-word;
-            color: var(--color-charcoal); opacity: 0.9;
+            font-size: 5.6rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            line-height: 1.1;
+            word-wrap: break-word;
+            color: var(--color-charcoal);
+            opacity: 0.9;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        
         .hero-subtitle {
-            font-size: 2.2rem; color: var(--color-stone);
-            margin-bottom: 4rem; font-weight: 300; line-height: 1.6; opacity: 0.9;
+            font-size: 2.2rem;
+            color: var(--color-stone);
+            margin-bottom: 4rem;
+            font-weight: 300;
+            line-height: 1.6;
+            opacity: 0.9;
         }
+        
         .cta-button {
-            display: inline-block; background: var(--color-gold);
-            color: var(--color-ivory); padding: 1.6rem 4rem;
-            border: none; border-radius: 1px;
-            font-family: 'Inter', sans-serif; font-size: 1.4rem;
-            font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase;
-            text-decoration: none; cursor: pointer; transition: var(--transition);
+            display: inline-block;
+            background: var(--color-gold);
+            color: var(--color-ivory);
+            padding: 1.6rem 4rem;
+            border: none;
+            border-radius: 1px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
             margin-top: 3rem;
         }
-        .cta-button:hover { background: var(--color-charcoal); transform: translateY(-3px); }
-        .benefits { padding: 8rem 0; background: url('fon2.jpg') center/cover; position: relative; }
-        .benefits::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background: rgba(250, 249, 247, 0.95); top: 0; left: 0;
+        
+        .cta-button:hover {
+            background: var(--color-charcoal);
+            transform: translateY(-3px);
         }
-        .benefits-content { position: relative; z-index: 1; }
+        
+        /* Преимущества с фиксированными текстовыми блоками */
+        .benefits {
+            padding: 8rem 0;
+            background: url('fon2.jpg') center/cover;
+            position: relative;
+        }
+        
+        .benefits::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 249, 247, 0.95);
+            top: 0;
+            left: 0;
+        }
+        
+        .benefits-content {
+            position: relative;
+            z-index: 1;
+        }
+        
         .section-title {
-            font-family: 'Cormorant Garamond', serif; font-size: 4.8rem;
-            text-align: center; margin-bottom: 6rem; font-weight: 500;
-            max-width: var(--text-max-width); margin-left: auto; margin-right: auto;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.8rem;
+            text-align: center;
+            margin-bottom: 6rem;
+            font-weight: 500;
+            max-width: var(--text-max-width);
+            margin-left: auto;
+            margin-right: auto;
             padding: 0 1rem;
         }
+        
         .benefits-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 4rem; margin-top: 4rem; padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-top: 4rem;
+            padding: 0 1rem;
         }
+        
         .benefit-card {
-            padding: 4rem 3rem; background: var(--color-ivory);
-            border: 1px solid rgba(198, 184, 165, 0.2); transition: var(--transition);
-            height: 100%; display: flex; flex-direction: column; overflow: hidden;
+            padding: 4rem 3rem;
+            background: var(--color-ivory);
+            border: 1px solid rgba(198, 184, 165, 0.2);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-        .benefit-card:hover { transform: translateY(-1rem); border-color: var(--color-gold); }
-        .benefit-icon { font-size: 3.5rem; color: var(--color-gold); margin-bottom: 2rem; }
+        
+        .benefit-card:hover {
+            transform: translateY(-1rem);
+            border-color: var(--color-gold);
+        }
+        
+        .benefit-icon {
+            font-size: 3.5rem;
+            color: var(--color-gold);
+            margin-bottom: 2rem;
+        }
+        
         .benefit-card h3 {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
-            margin-bottom: 1.5rem; font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
         }
+        
         .benefit-card p {
-            font-size: 1.7rem; color: var(--color-stone);
-            line-height: 1.7; flex-grow: 1; overflow-wrap: break-word;
+            font-size: 1.7rem;
+            color: var(--color-stone);
+            line-height: 1.7;
+            flex-grow: 1;
+            overflow-wrap: break-word;
         }
-        .seo-content { padding: 8rem 0; background: var(--color-ivory); }
+        
+        /* Блок с SEO текстом */
+        .seo-content {
+            padding: 8rem 0;
+            background: var(--color-ivory);
+        }
+        
         .seo-block {
-            margin-bottom: 6rem; padding: 4rem;
+            margin-bottom: 6rem;
+            padding: 4rem;
             background: rgba(250, 249, 247, 0.7);
             border-left: 3px solid var(--color-gold);
         }
-        .portfolio { padding: 8rem 0; }
+        
+        /* Примеры работ */
+        .portfolio {
+            padding: 8rem 0;
+        }
+        
         .portfolio-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem; margin-top: 4rem; padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 0 1rem;
         }
-        .portfolio-item { height: 400px; position: relative; overflow: hidden; }
+        
+        .portfolio-item {
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
         .portfolio-item img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 1s ease; filter: grayscale(40%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease;
+            filter: grayscale(40%);
         }
-        .portfolio-item:hover img { transform: scale(1.05); filter: grayscale(0%); }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        
         .portfolio-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
-            padding: 3rem; transform: translateY(100%); transition: transform 0.6s ease;
+            padding: 3rem;
+            transform: translateY(100%);
+            transition: transform 0.6s ease;
         }
-        .portfolio-item:hover .portfolio-overlay { transform: translateY(0); }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        
         .portfolio-overlay h3 {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
-            color: var(--color-ivory); margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--color-ivory);
+            margin-bottom: 1rem;
         }
-        .portfolio-overlay p { font-size: 1.5rem; color: var(--color-sand); }
-        .process { padding: 8rem 0; background: var(--color-charcoal); color: var(--color-ivory); }
-        .process .section-title { color: var(--color-ivory); }
+        
+        .portfolio-overlay p {
+            font-size: 1.5rem;
+            color: var(--color-sand);
+        }
+        
+        /* Процесс работы */
+        .process {
+            padding: 8rem 0;
+            background: var(--color-charcoal);
+            color: var(--color-ivory);
+        }
+        
+        .process .section-title {
+            color: var(--color-ivory);
+        }
+        
         .process-steps {
-            max-width: var(--text-max-width); margin: 6rem auto 0; padding: 0 1rem;
+            max-width: var(--text-max-width);
+            margin: 6rem auto 0;
+            padding: 0 1rem;
         }
+        
         .process-step {
-            display: flex; align-items: center; margin-bottom: 4rem;
-            padding-bottom: 4rem; border-bottom: 1px solid rgba(250, 249, 247, 0.1);
+            display: flex;
+            align-items: center;
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(250, 249, 247, 0.1);
         }
+        
         .step-number {
-            font-family: 'Cormorant Garamond', serif; font-size: 4.8rem;
-            color: var(--color-gold); font-weight: 500;
-            margin-right: 3rem; min-width: 60px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.8rem;
+            color: var(--color-gold);
+            font-weight: 500;
+            margin-right: 3rem;
+            min-width: 60px;
         }
+        
         .step-content h3 {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
-            margin-bottom: 1rem; color: var(--color-ivory);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            color: var(--color-ivory);
         }
+        
         .step-content p {
-            font-size: 1.7rem; color: rgba(250, 249, 247, 0.8);
+            font-size: 1.7rem;
+            color: rgba(250, 249, 247, 0.8);
             line-height: 1.7;
         }
+        
+        /* Призыв к действию */
         .cta-section {
-            padding: 10rem 0; text-align: center;
+            padding: 10rem 0;
+            text-align: center;
             background: linear-gradient(rgba(26, 26, 26, 0.1), rgba(26, 26, 26, 0.05)),
-                        url('photo1.jpg') center/cover; position: relative;
+                        url('photo1.jpg') center/cover;
+            position: relative;
         }
+        
         .cta-section::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background: rgba(250, 249, 247, 0.92); top: 0; left: 0;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 249, 247, 0.92);
+            top: 0;
+            left: 0;
         }
+        
         .cta-content {
-            position: relative; z-index: 1; max-width: var(--text-max-width);
-            margin: 0 auto; padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+            max-width: var(--text-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
         }
+        
         .cta-content h2 {
-            font-family: 'Cormorant Garamond', serif; font-size: 4.2rem;
-            margin-bottom: 2rem; font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.2rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
         }
+        
         .cta-content p {
-            font-size: 2rem; color: var(--color-stone);
-            margin-bottom: 4rem; line-height: 1.6;
+            font-size: 2rem;
+            color: var(--color-stone);
+            margin-bottom: 4rem;
+            line-height: 1.6;
         }
+        
+        /* Футер */
         .footer {
-            background: var(--color-charcoal); color: var(--color-ivory);
-            padding: 6rem 0 3rem; text-align: center;
+            background: var(--color-charcoal);
+            color: var(--color-ivory);
+            padding: 6rem 0 3rem;
+            text-align: center;
         }
+        
         .footer-logo {
-            font-family: 'Cormorant Garamond', serif; font-size: 3.6rem;
-            color: var(--color-gold); margin-bottom: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.6rem;
+            color: var(--color-gold);
+            margin-bottom: 2rem;
         }
+        
         .footer-heart {
-            display: inline-block; font-size: 4rem; color: var(--color-gold);
-            margin: 3rem 0; cursor: pointer; transition: transform 0.3s ease;
+            display: inline-block;
+            font-size: 4rem;
+            color: var(--color-gold);
+            margin: 3rem 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        .footer-heart:hover { transform: scale(1.2); }
+        
+        .footer-heart:hover {
+            transform: scale(1.2);
+        }
+        
         .copyright {
-            margin-top: 3rem; padding-top: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(250, 249, 247, 0.1);
-            font-size: 1.4rem; color: rgba(250, 249, 247, 0.6);
-            font-family: 'Inter', sans-serif; letter-spacing: 0.1em;
+            font-size: 1.4rem;
+            color: rgba(250, 249, 247, 0.6);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.1em;
         }
+        
+        /* Стили для кнопки музыки */
         .music-btn {
-            position: fixed; bottom: 3rem; right: 3rem; z-index: 1000;
-            width: 60px; height: 60px; border-radius: 50%;
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             background: var(--color-ivory);
             border: 1px solid rgba(184, 155, 114, 0.3);
-            color: var(--color-gold); cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; transition: var(--transition);
+            color: var(--color-gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: var(--transition);
             box-shadow: 0 5px 20px rgba(42, 42, 42, 0.1);
+            z-index: 1000;
         }
-        .music-btn:hover { transform: scale(1.08); border-color: var(--color-gold); }
-        .music-btn.playing { animation: pulse 2s infinite; color: var(--color-umber); }
+        
+        .music-btn:hover {
+            transform: scale(1.08);
+            border-color: var(--color-gold);
+        }
+        
+        .music-btn.playing {
+            animation: pulse 2s infinite;
+            color: var(--color-umber);
+        }
+        
+        .music-btn.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .music-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+        
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(184, 155, 114, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(184, 155, 114, 0); }
             100% { box-shadow: 0 0 0 0 rgba(184, 155, 114, 0); }
         }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .music-notification {
-            position: fixed; bottom: 9rem; right: 3rem;
-            background-color: var(--color-ivory); padding: 2rem;
-            border: 1px solid rgba(184, 155, 114, 0.2); width: 280px;
-            z-index: 1000; opacity: 0; transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none;
+            position: fixed;
+            bottom: 9rem;
+            right: 3rem;
+            background-color: var(--color-ivory);
+            padding: 2rem;
+            border: 1px solid rgba(184, 155, 114, 0.2);
+            width: 280px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
         }
+        
         .music-notification.show {
-            opacity: 1; transform: translateY(0); pointer-events: all;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
         }
+        
         .music-notification p {
-            font-size: 1.4rem; color: var(--color-stone);
-            line-height: 1.6; margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            color: var(--color-stone);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
+        
         .close-notification {
-            position: absolute; top: 1rem; right: 1rem;
-            background: none; border: none; color: var(--color-sand);
-            font-size: 1.8rem; cursor: pointer; padding: 0.5rem; line-height: 1;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--color-sand);
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
         }
+        
+        /* Адаптивность */
         @media (max-width: 768px) {
-            .hero-title { font-size: 4rem; } .section-title { font-size: 3.6rem; }
-            .hero-subtitle { font-size: 1.8rem; }
-            .benefit-card, .portfolio-item { height: auto; min-height: 300px; }
-            .text-content { padding: 0 0.5rem; } .benefit-card { padding: 3rem 2rem; }
-            .hero-content { padding: 3rem 1.5rem; } .seo-block { padding: 3rem 2rem; }
-            .music-btn { bottom: 2rem; right: 2rem; }
-            .music-notification { bottom: 8rem; right: 2rem; }
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 3.6rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .benefit-card, .portfolio-item {
+                height: auto;
+                min-height: 300px;
+            }
+            
+            .text-content {
+                padding: 0 0.5rem;
+            }
+            
+            .benefit-card {
+                padding: 3rem 2rem;
+            }
+            
+            .hero-content {
+                padding: 3rem 1.5rem;
+            }
+            
+            .seo-block {
+                padding: 3rem 2rem;
+            }
+            
+            .music-btn {
+                bottom: 2rem;
+                right: 2rem;
+            }
+            
+            .music-notification {
+                bottom: 8rem;
+                right: 2rem;
+                width: 250px;
+            }
         }
+        
         @media (max-width: 480px) {
-            .hero-title { font-size: 3.2rem; } .section-title { font-size: 2.8rem; }
-            .text-content p { font-size: 1.6rem; }
-            .benefits-grid { grid-template-columns: 1fr; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .process-step { flex-direction: column; align-items: flex-start; }
-            .step-number { margin-bottom: 1rem; }
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .text-content p {
+                font-size: 1.6rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .step-number {
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
@@ -493,12 +862,24 @@
 
     <!-- JavaScript -->
     <script>
-        class MusicPlayer {
+        // ===== УЛУЧШЕННАЯ СИСТЕМА ПРЕЛОАДА АУДИО =====
+        class StableMusicPlayer {
             constructor() {
-                this.audio = null;
+                // 1. Массив с путями к MP3-файлам
+                this.audioFiles = [
+                    'romantic-music.mp3' // Ваш основной файл музыки
+                    // Добавьте другие треки при необходимости:
+                    // 'audio/another-track.mp3',
+                    // 'audio/background-music.mp3'
+                ];
+                
+                // Переменные состояния
+                this.currentAudio = null;
                 this.isPlaying = false;
                 this.userPreference = localStorage.getItem('musicPreference');
                 this.volume = localStorage.getItem('musicVolume') || 0.4;
+                
+                // DOM элементы
                 this.btn = document.getElementById('musicBtn');
                 this.notification = document.getElementById('musicNotification');
                 this.closeNotificationBtn = document.getElementById('closeNotification');
@@ -506,49 +887,125 @@
                 this.init();
             }
             
-            init() {
-                // Создаем аудио элемент
-                this.audio = new Audio();
+            async init() {
+                console.log('🎵 Начинается предзагрузка музыки...');
                 
-                // ВАЖНО: ЗАМЕНИТЕ ЭТУ ССЫЛКУ НА ПРЯМУЮ ССЫЛКУ С ВАШЕГО ЯНДЕКС.ДИСКА
-                // 1. Получите ссылку по инструкции выше
-                // 2. Вставьте её сюда:
-                this.audio.src = 'https://downloader.disk.yandex.ru/disk/.../romantic-music.mp3'; // ← ЗАМЕНИТЕ ЭТУ ССЫЛКУ
+                // Показываем состояние загрузки
+                this.btn.classList.add('loading');
+                this.btn.title = 'Загрузка музыки...';
                 
-                // Альтернативная временная ссылка для проверки работы плеера:
-                // this.audio.src = 'https://files.catbox.moe/zw9r8n.mp3';
-                
-                this.audio.loop = true;
-                this.audio.volume = parseFloat(this.volume);
-                
-                this.audio.addEventListener('canplaythrough', () => {
-                    console.log('🎵 Музыка готова к воспроизведению');
-                });
-                
-                this.audio.addEventListener('error', (e) => {
-                    console.log('Ошибка загрузки музыки:', e);
-                    this.showErrorNotification();
-                });
-                
-                this.btn.addEventListener('click', () => this.toggleMusic());
-                this.closeNotificationBtn.addEventListener('click', () => {
-                    this.hideNotification();
-                });
-                
-                setTimeout(() => {
+                try {
+                    // Предзагрузка всех треков
+                    await this.preloadAllAudio();
+                    
+                    console.log('✅ Музыка полностью загружена в кеш');
+                    
+                    // Убираем состояние загрузки
+                    this.btn.classList.remove('loading');
+                    this.btn.title = 'Включить/выключить музыку';
+                    
+                    // Настройка кнопки
+                    this.btn.addEventListener('click', () => this.toggleMusic());
+                    
+                    // Настройка закрытия уведомления
+                    this.closeNotificationBtn.addEventListener('click', () => {
+                        this.hideNotification();
+                    });
+                    
+                    // Автовоспроизведение, если пользователь ранее включил музыку
                     if (this.userPreference === 'enabled' || this.userPreference === null) {
+                        // НЕТ задержки 3 секунды - воспроизводим сразу после загрузки
                         this.playMusic();
                     }
-                }, 1500);
-                
-                window.addEventListener('beforeunload', () => {
-                    if (this.isPlaying) {
-                        localStorage.setItem('musicPreference', 'enabled');
-                    } else {
-                        localStorage.setItem('musicPreference', 'disabled');
-                    }
-                    localStorage.setItem('musicVolume', this.audio.volume.toString());
+                    
+                    // Сохранение настроек при закрытии страницы
+                    window.addEventListener('beforeunload', () => {
+                        if (this.isPlaying) {
+                            localStorage.setItem('musicPreference', 'enabled');
+                        } else {
+                            localStorage.setItem('musicPreference', 'disabled');
+                        }
+                        localStorage.setItem('musicVolume', this.volume.toString());
+                    });
+                    
+                } catch (error) {
+                    console.error('❌ Ошибка загрузки музыки:', error);
+                    this.btn.classList.remove('loading');
+                    this.btn.title = 'Ошибка загрузки музыки';
+                    this.showErrorNotification('Не удалось загрузить музыку');
+                }
+            }
+            
+            // 2. Функция для предварительной загрузки файла
+            preloadAudio(src) {
+                return new Promise((resolve, reject) => {
+                    const audio = new Audio();
+                    audio.preload = 'auto'; // Указываем браузеру загрузить файл полностью
+                    
+                    // Используем oncanplaythrough для гарантии полной загрузки
+                    audio.oncanplaythrough = () => {
+                        console.log(`✅ Загружен: ${src}`);
+                        resolve();
+                    };
+                    
+                    audio.onerror = reject;
+                    audio.src = src;
                 });
+            }
+            
+            // Предзагрузка всех треков
+            async preloadAllAudio() {
+                const promises = this.audioFiles.map(file => this.preloadAudio(file));
+                await Promise.all(promises);
+            }
+            
+            // 3. Функция для безопасного воспроизведения
+            async playStableAudio(src) {
+                try {
+                    // Создаём новый экземпляр для воспроизведения
+                    const player = new Audio(src);
+                    player.loop = true;
+                    player.volume = parseFloat(this.volume);
+                    
+                    // Воспроизводим сразу
+                    await player.play();
+                    
+                    console.log(`▶️ Воспроизведение: ${src}`);
+                    return player;
+                    
+                } catch (error) {
+                    console.error('Ошибка воспроизведения аудио:', error);
+                    this.showErrorNotification('Для включения музыки нажмите на кнопку');
+                    return null;
+                }
+            }
+            
+            // Основные методы управления
+            async playMusic() {
+                if (this.isPlaying) return;
+                
+                // Используем первый трек из списка (основную музыку)
+                const src = this.audioFiles[0];
+                this.currentAudio = await this.playStableAudio(src);
+                
+                if (this.currentAudio) {
+                    this.isPlaying = true;
+                    this.btn.classList.add('playing');
+                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    this.showNotification();
+                    localStorage.setItem('musicPreference', 'enabled');
+                }
+            }
+            
+            pauseMusic() {
+                if (!this.isPlaying || !this.currentAudio) return;
+                
+                this.currentAudio.pause();
+                this.isPlaying = false;
+                this.btn.classList.remove('playing');
+                this.btn.innerHTML = '<i class="fas fa-music"></i>';
+                localStorage.setItem('musicPreference', 'disabled');
+                this.hideNotification();
             }
             
             toggleMusic() {
@@ -559,28 +1016,7 @@
                 }
             }
             
-            playMusic() {
-                this.audio.play().then(() => {
-                    this.isPlaying = true;
-                    this.btn.classList.add('playing');
-                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    this.showNotification();
-                    localStorage.setItem('musicPreference', 'enabled');
-                }).catch(error => {
-                    console.log('Ошибка воспроизведения:', error);
-                    this.showErrorNotification('Для включения музыки нажмите на кнопку');
-                });
-            }
-            
-            pauseMusic() {
-                this.audio.pause();
-                this.isPlaying = false;
-                this.btn.classList.remove('playing');
-                this.btn.innerHTML = '<i class="fas fa-music"></i>';
-                localStorage.setItem('musicPreference', 'disabled');
-                this.hideNotification();
-            }
-            
+            // Методы уведомлений
             showNotification() {
                 this.notification.classList.add('show');
                 setTimeout(() => {
@@ -598,30 +1034,55 @@
                     <p><strong>${message}</strong><br>Проверьте подключение к интернету</p>
                 `;
                 this.notification.classList.add('show');
+                
                 this.notification.querySelector('.close-notification').addEventListener('click', () => {
                     this.hideNotification();
                 });
             }
+            
+            // Метод для смены трека (если будет несколько)
+            async changeTrack(src) {
+                if (this.isPlaying) {
+                    this.pauseMusic();
+                }
+                
+                this.currentAudio = await this.playStableAudio(src);
+                if (this.currentAudio) {
+                    this.isPlaying = true;
+                    this.btn.classList.add('playing');
+                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
+            }
         }
         
+        // ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ =====
         document.addEventListener('DOMContentLoaded', () => {
-            const musicPlayer = new MusicPlayer();
+            // Инициализируем музыкальный плеер
+            const musicPlayer = new StableMusicPlayer();
             
+            // Плавная прокрутка
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     if (this.getAttribute('href').startsWith('https://')) return;
+                    
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
+                    
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         const headerHeight = document.querySelector('.header').offsetHeight;
                         const targetPosition = targetElement.offsetTop - headerHeight;
-                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
             
+            // Анимация появления элементов при скролле
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -631,6 +1092,7 @@
                 });
             }, { threshold: 0.1 });
             
+            // Наблюдаем за всеми секциями
             document.querySelectorAll('section').forEach(section => {
                 section.style.opacity = '0';
                 section.style.transform = 'translateY(30px)';
@@ -638,6 +1100,7 @@
                 observer.observe(section);
             });
             
+            // Анимация для текстовых блоков
             document.querySelectorAll('.seo-block, .benefit-card').forEach(block => {
                 block.style.opacity = '0';
                 block.style.transform = 'translateY(20px)';
@@ -646,7 +1109,7 @@
             });
             
             console.log('🎨 Игорян.рф — создание сайтов-подарков на годовщину свадьбы родителей');
-            console.log('🎵 Ожидание прямой ссылки на Яндекс.Диск');
+            console.log('🎵 Система предзагрузки музыки активирована');
             console.log('💝 Нажмите на сердечко внизу страницы!');
             console.log('📱 Все CTA ведут в Telegram: t.me/nasvadebku');
         });
