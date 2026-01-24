@@ -522,7 +522,8 @@
             transition: var(--transition);
             box-shadow: 0 5px 20px rgba(42, 42, 42, 0.1);
             z-index: 1000;
-            outline: none; /* Убираем outline */
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .music-btn:hover {
@@ -596,8 +597,8 @@
             line-height: 1;
         }
         
-        /* Баннер для iOS */
-        .ios-banner {
+        /* Стили для iOS инструкции */
+        .ios-music-guide {
             position: fixed;
             top: 0;
             left: 0;
@@ -607,30 +608,29 @@
             padding: 20px;
             z-index: 1001;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            animation: slideDown 0.6s ease;
             display: none;
         }
         
-        .ios-banner-content {
+        .ios-music-guide-content {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
         }
         
-        .ios-banner h3 {
+        .ios-music-guide h3 {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.4rem;
             margin-bottom: 10px;
             font-weight: 500;
         }
         
-        .ios-banner p {
+        .ios-music-guide p {
             font-size: 1.6rem;
             margin-bottom: 15px;
             line-height: 1.5;
         }
         
-        .ios-activate-btn {
+        .ios-music-btn {
             background: white;
             color: var(--color-gold);
             border: none;
@@ -646,9 +646,10 @@
             justify-content: center;
             gap: 10px;
             font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        .ios-activate-btn:hover {
+        .ios-music-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
@@ -659,26 +660,13 @@
             margin-top: 10px !important;
         }
         
-        /* Fallback для iOS */
-        .ios-fallback {
+        /* Скрытый аудио элемент для iOS */
+        #hiddenAudio {
             display: none;
-            text-align: center;
-            padding: 30px;
-            margin: 30px 0;
-            border: 2px dashed var(--color-gold);
-            border-radius: 10px;
-            background: rgba(184, 155, 114, 0.05);
-        }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            width: 0;
+            height: 0;
+            position: absolute;
+            opacity: 0;
         }
         
         /* Адаптивность */
@@ -727,19 +715,19 @@
                 width: 250px;
             }
             
-            .ios-banner {
+            .ios-music-guide {
                 padding: 15px;
             }
             
-            .ios-banner h3 {
+            .ios-music-guide h3 {
                 font-size: 2rem;
             }
             
-            .ios-banner p {
+            .ios-music-guide p {
                 font-size: 1.4rem;
             }
             
-            .ios-activate-btn {
+            .ios-music-btn {
                 padding: 12px 30px;
                 font-size: 1.4rem;
             }
@@ -775,32 +763,38 @@
                 margin-bottom: 1rem;
             }
             
-            .ios-banner {
+            .ios-music-guide {
                 padding: 12px;
             }
             
-            .ios-banner h3 {
+            .ios-music-guide h3 {
                 font-size: 1.8rem;
             }
             
-            .ios-banner p {
+            .ios-music-guide p {
                 font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Баннер для iOS (показывается только на iPhone/iPad) -->
-    <div id="iosMusicBanner" class="ios-banner">
-        <div class="ios-banner-content">
-            <h3>🎵 Включите фоновую музыку для полного погружения</h3>
-            <p>Нажмите кнопку ниже, чтобы активировать музыкальное сопровождение</p>
-            <button id="iosActivateMusic" class="ios-activate-btn">
-                <i class="fas fa-play-circle"></i> АКТИВИРОВАТЬ МУЗЫКУ
+    <!-- iOS инструкция по включению музыки -->
+    <div id="iosMusicGuide" class="ios-music-guide">
+        <div class="ios-music-guide-content">
+            <h3>🎵 Включите фоновую музыку</h3>
+            <p>Для полного погружения в атмосферу праздника нажмите кнопку ниже</p>
+            <button id="iosMusicStarter" class="ios-music-btn">
+                <i class="fas fa-play-circle"></i> ВКЛЮЧИТЬ МУЗЫКУ
             </button>
-            <p class="ios-note">После активации музыка будет играть автоматически</p>
+            <p class="ios-note">Музыка начнет играть после нажатия кнопки</p>
         </div>
     </div>
+
+    <!-- Скрытый аудио элемент для iOS -->
+    <audio id="hiddenAudio" preload="auto" loop>
+        <source src="romantic-music.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
 
     <!-- Шапка -->
     <header class="header">
@@ -916,7 +910,7 @@
     <!-- Процесс работы -->
     <section class="process">
         <div class="container">
-            <h2 class="section-title">Как заказать сайт  подарок для родителей</h2>
+            <h2 class="section-title">Как заказать сайт-подарок для родителей</h2>
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">01</div>
@@ -987,35 +981,11 @@
         <p><strong>Фоновая музыка</strong><br>Мелодия будет играть на фоне, создавая атмосферу праздника.</p>
     </div>
 
-    <!-- Fallback для iOS -->
-    <div id="iosFallback" class="ios-fallback">
-        <h3 style="color: var(--color-gold); margin-bottom: 15px; font-size: 2.4rem;">🎵 Музыкальное сопровождение</h3>
-        <p style="margin-bottom: 15px; font-size: 1.6rem;">На iPhone/iPad браузеры ограничивают автоматическое воспроизведение музыки.</p>
-        <p style="margin-bottom: 20px; font-size: 1.6rem;">Вы можете скачать музыку и слушать её отдельно:</p>
-        <a href="romantic-music.mp3" download class="cta-button" style="display: inline-flex; align-items: center; gap: 10px;">
-            <i class="fas fa-download"></i> СКАЧАТЬ МУЗЫКУ
-        </a>
-        <p style="margin-top: 15px; font-size: 1.4rem; color: var(--color-stone);">
-            Откройте скачанный файл в любом плеере во время просмотра сайта
-        </p>
-    </div>
-
     <!-- JavaScript -->
     <script>
-        // ===== УЛУЧШЕННАЯ СИСТЕМА ПРЕЛОАДА АУДИО =====
-        class StableMusicPlayer {
+        // ===== УЛУЧШЕННАЯ СИСТЕМА ПРЕЛОАДА АУДИО ДЛЯ ВСЕХ УСТРОЙСТВ =====
+        class UniversalMusicPlayer {
             constructor() {
-                // 1. Массив с путями к MP3-файлам
-                this.audioFiles = [
-                    'romantic-music.mp3' // Ваш основной файл музыки
-                ];
-                
-                // Переменные состояния
-                this.currentAudio = null;
-                this.isPlaying = false;
-                this.userPreference = localStorage.getItem('musicPreference');
-                this.volume = localStorage.getItem('musicVolume') || 0.4;
-                this.hasUserInteracted = false; // Флаг взаимодействия пользователя
                 this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
                 this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 
@@ -1023,198 +993,330 @@
                 this.btn = document.getElementById('musicBtn');
                 this.notification = document.getElementById('musicNotification');
                 this.closeNotificationBtn = document.getElementById('closeNotification');
+                this.iosGuide = document.getElementById('iosMusicGuide');
+                this.iosStarterBtn = document.getElementById('iosMusicStarter');
+                this.hiddenAudio = document.getElementById('hiddenAudio');
+                
+                // Состояние
+                this.isPlaying = false;
+                this.hasUserInteracted = false;
+                this.userPreference = localStorage.getItem('musicPreference');
+                this.volume = localStorage.getItem('musicVolume') || 0.4;
                 
                 this.init();
             }
             
             async init() {
-                console.log(`🎵 Инициализация музыки (iOS: ${this.isIOS}, Мобильное: ${this.isMobile})...`);
+                console.log(`🎵 Инициализация (iOS: ${this.isIOS}, Мобильное: ${this.isMobile})...`);
                 
                 // Показываем состояние загрузки
                 this.btn.classList.add('loading');
                 this.btn.title = 'Загрузка музыки...';
                 
                 try {
-                    // Предзагрузка всех треков
-                    await this.preloadAllAudio();
+                    // Загружаем музыку
+                    await this.loadMusic();
                     
-                    console.log('✅ Музыка полностью загружена в кеш');
-                    
-                    // Убираем состояние загрузки
+                    console.log('✅ Музыка загружена');
                     this.btn.classList.remove('loading');
                     this.btn.title = 'Включить/выключить музыку';
                     
-                    // Настройка кнопки - ВАЖНО: предотвращаем прокрутку
-                    this.btn.addEventListener('click', (e) => {
-                        e.preventDefault(); // Предотвращаем стандартное поведение
-                        e.stopPropagation(); // Останавливаем всплытие
-                        this.hasUserInteracted = true; // Пользователь взаимодействовал
-                        this.toggleMusic();
-                    });
+                    // Настройка кнопки
+                    this.setupButtonListeners();
                     
-                    // Настройка закрытия уведомления
-                    this.closeNotificationBtn.addEventListener('click', () => {
-                        this.hideNotification();
-                    });
-                    
-                    // Для iOS показываем специальный баннер
+                    // Настройка для iOS
                     if (this.isIOS) {
-                        this.setupIOSBanner();
+                        this.setupIOS();
                     }
                     
-                    // Для десктопов - НЕТ автовоспроизведения! Только по нажатию
-                    // Раскомментируйте строку ниже, если хотите включить автовоспроизведение для десктопов
-                    // if (!this.isMobile && (this.userPreference === 'enabled' || this.userPreference === null)) {
-                    //     setTimeout(() => this.playMusic(), 500);
-                    // }
+                    // Сохранение настроек
+                    this.setupStorage();
                     
-                    // Сохранение настроек при закрытии страницы
-                    window.addEventListener('beforeunload', () => {
-                        if (this.isPlaying) {
-                            localStorage.setItem('musicPreference', 'enabled');
-                        } else {
-                            localStorage.setItem('musicPreference', 'disabled');
-                        }
-                        localStorage.setItem('musicVolume', this.volume.toString());
-                    });
-                    
-                    // Сохраняем ссылку на плеер в глобальной области видимости
+                    // Сохраняем ссылку глобально
                     window.musicPlayer = this;
                     
                 } catch (error) {
                     console.error('❌ Ошибка загрузки музыки:', error);
                     this.btn.classList.remove('loading');
                     this.btn.title = 'Ошибка загрузки музыки';
-                    this.showErrorNotification('Не удалось загрузить музыку');
-                    
-                    // Показываем fallback для iOS
-                    if (this.isIOS) {
-                        document.getElementById('iosFallback').style.display = 'block';
-                    }
+                    this.showError('Не удалось загрузить музыку');
                 }
             }
             
-            // Настройка iOS баннера
-            setupIOSBanner() {
-                // Показываем баннер для iOS через 2 секунды
-                setTimeout(() => {
-                    const banner = document.getElementById('iosMusicBanner');
-                    banner.style.display = 'block';
-                    
-                    // Активация по кнопке
-                    document.getElementById('iosActivateMusic').addEventListener('click', () => {
-                        this.hasUserInteracted = true;
-                        this.playMusic();
+            async loadMusic() {
+                // Для iOS используем hidden audio element
+                if (this.isIOS) {
+                    return new Promise((resolve, reject) => {
+                        this.hiddenAudio.addEventListener('canplaythrough', () => {
+                            console.log('✅ iOS: аудио готово к воспроизведению');
+                            resolve();
+                        }, { once: true });
                         
-                        // Скрываем баннер
-                        banner.style.opacity = '0';
-                        banner.style.transform = 'translateY(-100%)';
-                        banner.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        this.hiddenAudio.addEventListener('error', (e) => {
+                            console.error('❌ iOS: ошибка загрузки аудио', e);
+                            reject(e);
+                        }, { once: true });
                         
-                        setTimeout(() => {
-                            banner.style.display = 'none';
-                        }, 500);
+                        // Начинаем загрузку
+                        this.hiddenAudio.load();
                     });
-                    
-                    // Скрываем баннер при скролле
-                    let scrollTimer;
-                    window.addEventListener('scroll', () => {
-                        clearTimeout(scrollTimer);
-                        scrollTimer = setTimeout(() => {
-                            if (!this.isPlaying) {
-                                banner.style.opacity = '0';
-                                banner.style.transform = 'translateY(-100%)';
-                                banner.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                                
-                                setTimeout(() => {
-                                    banner.style.display = 'none';
-                                }, 500);
-                            }
-                        }, 1000);
+                } else {
+                    // Для не-iOS используем стандартный подход
+                    return new Promise((resolve, reject) => {
+                        const audio = new Audio();
+                        audio.preload = 'auto';
+                        audio.src = 'romantic-music.mp3';
+                        
+                        audio.addEventListener('canplaythrough', () => {
+                            console.log('✅ Аудио готово к воспроизведению');
+                            this.audioElement = audio;
+                            resolve();
+                        }, { once: true });
+                        
+                        audio.addEventListener('error', (e) => {
+                            console.error('❌ Ошибка загрузки аудио', e);
+                            reject(e);
+                        }, { once: true });
+                        
+                        // Начинаем загрузку
+                        audio.load();
                     });
-                }, 2000);
+                }
             }
             
-            // 2. Функция для предварительной загрузки файла
-            preloadAudio(src) {
-                return new Promise((resolve, reject) => {
-                    const audio = new Audio();
-                    audio.preload = 'auto';
+            setupButtonListeners() {
+                // Основная кнопка музыки
+                this.btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     
-                    // Используем oncanplaythrough для гарантии полной загрузки
-                    audio.oncanplaythrough = () => {
-                        console.log(`✅ Загружен: ${src}`);
-                        resolve();
-                    };
+                    this.hasUserInteracted = true;
                     
-                    audio.onerror = reject;
-                    audio.src = src;
+                    if (this.isIOS) {
+                        // Для iOS используем специальный метод
+                        this.playForIOS();
+                    } else {
+                        this.toggleMusic();
+                    }
+                    
+                    return false;
+                });
+                
+                // Кнопка закрытия уведомления
+                this.closeNotificationBtn.addEventListener('click', () => {
+                    this.hideNotification();
+                });
+                
+                // Отключаем прокрутку при клике
+                this.btn.addEventListener('mousedown', (e) => e.preventDefault());
+                this.btn.addEventListener('touchstart', (e) => e.preventDefault());
+            }
+            
+            setupIOS() {
+                console.log('📱 Настройка для iOS...');
+                
+                // Показываем инструкцию для iOS через 2 секунды
+                setTimeout(() => {
+                    if (!this.isPlaying && !this.hasUserInteracted) {
+                        this.iosGuide.style.display = 'block';
+                        
+                        // Анимация появления
+                        setTimeout(() => {
+                            this.iosGuide.style.opacity = '1';
+                            this.iosGuide.style.transform = 'translateY(0)';
+                        }, 10);
+                    }
+                }, 2000);
+                
+                // Кнопка в iOS инструкции
+                this.iosStarterBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    this.hasUserInteracted = true;
+                    this.playForIOS();
+                    
+                    // Скрываем инструкцию
+                    this.iosGuide.style.opacity = '0';
+                    this.iosGuide.style.transform = 'translateY(-100%)';
+                    this.iosGuide.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    
+                    setTimeout(() => {
+                        this.iosGuide.style.display = 'none';
+                    }, 500);
+                    
+                    return false;
+                });
+                
+                // Скрываем инструкцию при скролле
+                let scrollTimer;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimer);
+                    scrollTimer = setTimeout(() => {
+                        if (!this.isPlaying) {
+                            this.iosGuide.style.opacity = '0';
+                            this.iosGuide.style.transform = 'translateY(-100%)';
+                            this.iosGuide.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            
+                            setTimeout(() => {
+                                this.iosGuide.style.display = 'none';
+                            }, 500);
+                        }
+                    }, 1000);
                 });
             }
             
-            // Предзагрузка всех треков
-            async preloadAllAudio() {
-                const promises = this.audioFiles.map(file => this.preloadAudio(file));
-                await Promise.all(promises);
+            setupStorage() {
+                window.addEventListener('beforeunload', () => {
+                    if (this.isPlaying) {
+                        localStorage.setItem('musicPreference', 'enabled');
+                    } else {
+                        localStorage.setItem('musicPreference', 'disabled');
+                    }
+                    localStorage.setItem('musicVolume', this.volume.toString());
+                });
             }
             
-            // 3. Функция для безопасного воспроизведения
-            async playStableAudio(src) {
+            // ===== МЕТОДЫ ВОСПРОИЗВЕДЕНИЯ =====
+            
+            async playForIOS() {
+                if (this.isPlaying) {
+                    this.pauseMusic();
+                    return;
+                }
+                
+                console.log('📱 iOS: запуск музыки...');
+                
                 try {
-                    // Создаём новый экземпляр для воспроизведения
-                    const player = new Audio(src);
-                    player.loop = true;
-                    player.volume = parseFloat(this.volume);
-                    
-                    // Для iOS важные настройки
-                    if (this.isIOS) {
-                        player.playsInline = true;
-                        player.preload = 'auto';
+                    // iOS требует явного действия пользователя
+                    if (!this.hasUserInteracted) {
+                        this.showNotification('Нажмите на кнопку музыки для включения');
+                        return;
                     }
                     
-                    // На мобильных устройствах нужно проверять разрешение на воспроизведение
-                    if (this.isMobile && !this.hasUserInteracted) {
-                        console.log('📱 Требуется взаимодействие пользователя для воспроизведения');
-                        return null;
-                    }
+                    // Воспроизводим через hidden audio element
+                    this.hiddenAudio.volume = this.volume;
+                    this.hiddenAudio.loop = true;
                     
-                    // Воспроизводим сразу
-                    const playPromise = player.play();
+                    const playPromise = this.hiddenAudio.play();
                     
-                    // Обрабатываем Promise для отлова ошибок автовоспроизведения
                     if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            console.log(`▶️ Воспроизведение: ${src}`);
-                        }).catch(error => {
-                            console.error('❌ Ошибка автовоспроизведения:', error);
-                            // На iOS показываем инструкцию
-                            if (this.isIOS) {
-                                this.showIOSInstructions();
-                            }
-                            return null;
-                        });
+                        await playPromise;
+                        console.log('✅ iOS: музыка играет');
+                        
+                        this.isPlaying = true;
+                        this.btn.classList.add('playing');
+                        this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        localStorage.setItem('musicPreference', 'enabled');
+                        
+                        this.showNotification('Музыка включена');
                     }
-                    
-                    return player;
                     
                 } catch (error) {
-                    console.error('Ошибка воспроизведения аудио:', error);
+                    console.error('❌ iOS: ошибка воспроизведения:', error);
                     
-                    // Специальное сообщение для iOS
-                    if (this.isIOS) {
-                        this.showIOSInstructions();
-                    } else {
-                        this.showErrorNotification('Для включения музыки нажмите на кнопку');
-                    }
-                    
-                    return null;
+                    // Пробуем альтернативный метод для iOS
+                    this.tryIOSAlternative();
                 }
             }
             
-            // Показать инструкцию для iOS
-            showIOSInstructions() {
-                const instruction = document.createElement('div');
-                instruction.innerHTML = `
+            async tryIOSAlternative() {
+                console.log('📱 iOS: пробуем альтернативный метод...');
+                
+                try {
+                    // Создаем новый audio элемент
+                    const audio = new Audio('romantic-music.mp3');
+                    audio.volume = this.volume;
+                    audio.loop = true;
+                    
+                    // Важные настройки для iOS
+                    audio.playsInline = true;
+                    audio.preload = 'auto';
+                    
+                    // Воспроизводим
+                    await audio.play();
+                    
+                    console.log('✅ iOS: альтернативный метод сработал');
+                    
+                    this.audioElement = audio;
+                    this.isPlaying = true;
+                    this.btn.classList.add('playing');
+                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    localStorage.setItem('musicPreference', 'enabled');
+                    
+                    this.showNotification('Музыка включена');
+                    
+                } catch (error) {
+                    console.error('❌ iOS: альтернативный метод тоже не сработал:', error);
+                    this.showIOSHelp();
+                }
+            }
+            
+            async playMusic() {
+                if (this.isPlaying) {
+                    this.pauseMusic();
+                    return;
+                }
+                
+                try {
+                    // Создаем audio элемент если его нет
+                    if (!this.audioElement) {
+                        this.audioElement = new Audio('romantic-music.mp3');
+                        this.audioElement.preload = 'auto';
+                    }
+                    
+                    this.audioElement.volume = this.volume;
+                    this.audioElement.loop = true;
+                    
+                    await this.audioElement.play();
+                    
+                    this.isPlaying = true;
+                    this.btn.classList.add('playing');
+                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    localStorage.setItem('musicPreference', 'enabled');
+                    
+                    this.showNotification('Музыка включена');
+                    
+                } catch (error) {
+                    console.error('Ошибка воспроизведения:', error);
+                    this.showError('Для включения музыки нажмите на кнопку');
+                }
+            }
+            
+            pauseMusic() {
+                if (!this.isPlaying) return;
+                
+                if (this.isIOS && this.hiddenAudio) {
+                    this.hiddenAudio.pause();
+                    this.hiddenAudio.currentTime = 0;
+                }
+                
+                if (this.audioElement) {
+                    this.audioElement.pause();
+                    this.audioElement.currentTime = 0;
+                }
+                
+                this.isPlaying = false;
+                this.btn.classList.remove('playing');
+                this.btn.innerHTML = '<i class="fas fa-music"></i>';
+                localStorage.setItem('musicPreference', 'disabled');
+                
+                this.showNotification('Музыка выключена');
+            }
+            
+            toggleMusic() {
+                if (this.isPlaying) {
+                    this.pauseMusic();
+                } else {
+                    this.playMusic();
+                }
+            }
+            
+            // ===== УВЕДОМЛЕНИЯ И ПОМОЩЬ =====
+            
+            showIOSHelp() {
+                const help = document.createElement('div');
+                help.innerHTML = `
                     <div style="
                         position: fixed;
                         top: 50%;
@@ -1229,10 +1331,11 @@
                         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
                         text-align: center;
                     ">
-                        <h3 style="margin-bottom: 15px; font-size: 2rem;">🎵 Включение музыки на iOS</h3>
-                        <p style="margin-bottom: 10px; font-size: 1.6rem;">1. Убедитесь, что боковая кнопка 🔇 переключена на 🔈</p>
+                        <h3 style="margin-bottom: 15px; font-size: 2rem;">📱 Включение музыки на iPhone</h3>
+                        <p style="margin-bottom: 10px; font-size: 1.6rem;">1. Проверьте, что боковая кнопка не в беззвучном режиме</p>
+                        <p style="margin-bottom: 10px; font-size: 1.6rem;">2. Перезагрузите страницу</p>
                         <p style="margin-bottom: 20px; font-size: 1.4rem;">
-                            2. Перезагрузите страницу и нажмите кнопку музыки снова
+                            3. Нажмите кнопку музыки еще раз
                         </p>
                         <button onclick="this.parentNode.parentNode.remove()" style="
                             background: white;
@@ -1248,87 +1351,49 @@
                     </div>
                 `;
                 
-                document.body.appendChild(instruction);
+                document.body.appendChild(help);
                 
-                // Автоматическое скрытие через 8 секунд
                 setTimeout(() => {
-                    if (instruction.parentNode) {
-                        instruction.parentNode.removeChild(instruction);
+                    if (help.parentNode) {
+                        help.parentNode.removeChild(help);
                     }
                 }, 8000);
             }
             
-            // Основные методы управления
-            async playMusic() {
-                if (this.isPlaying) return;
+            showNotification(message) {
+                const originalContent = this.notification.innerHTML;
                 
-                // На мобильных проверяем, было ли взаимодействие
-                if (this.isMobile && !this.hasUserInteracted) {
-                    console.log('📱 Ждем взаимодействия пользователя...');
-                    if (this.isIOS) {
-                        this.showIOSInstructions();
-                    }
-                    return;
-                }
+                this.notification.innerHTML = `
+                    <button class="close-notification">×</button>
+                    <p><strong>${message}</strong></p>
+                `;
                 
-                // Используем первый трек из списка (основную музыку)
-                const src = this.audioFiles[0];
-                this.currentAudio = await this.playStableAudio(src);
-                
-                if (this.currentAudio) {
-                    this.isPlaying = true;
-                    this.btn.classList.add('playing');
-                    this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    this.showNotification();
-                    localStorage.setItem('musicPreference', 'enabled');
-                    
-                    // Скрываем fallback если он показан
-                    document.getElementById('iosFallback').style.display = 'none';
-                } else if (this.isIOS) {
-                    // Если не удалось воспроизвести на iOS, показываем fallback
-                    setTimeout(() => {
-                        if (!this.isPlaying) {
-                            document.getElementById('iosFallback').style.display = 'block';
-                        }
-                    }, 3000);
-                }
-            }
-            
-            pauseMusic() {
-                if (!this.isPlaying || !this.currentAudio) return;
-                
-                this.currentAudio.pause();
-                this.isPlaying = false;
-                this.btn.classList.remove('playing');
-                this.btn.innerHTML = '<i class="fas fa-music"></i>';
-                localStorage.setItem('musicPreference', 'disabled');
-                this.hideNotification();
-            }
-            
-            toggleMusic() {
-                if (this.isPlaying) {
-                    this.pauseMusic();
-                } else {
-                    this.playMusic();
-                }
-            }
-            
-            // Методы уведомлений
-            showNotification() {
                 this.notification.classList.add('show');
+                
+                this.notification.querySelector('.close-notification').addEventListener('click', () => {
+                    this.hideNotification();
+                    // Восстанавливаем оригинальный контент
+                    setTimeout(() => {
+                        this.notification.innerHTML = originalContent;
+                        this.notification.querySelector('.close-notification').addEventListener('click', () => {
+                            this.hideNotification();
+                        });
+                    }, 100);
+                });
+                
                 setTimeout(() => {
                     this.hideNotification();
-                }, 6000);
+                }, 3000);
             }
             
             hideNotification() {
                 this.notification.classList.remove('show');
             }
             
-            showErrorNotification(message = 'Не удалось загрузить музыку') {
+            showError(message) {
                 this.notification.innerHTML = `
                     <button class="close-notification">×</button>
-                    <p><strong>${message}</strong><br>Проверьте подключение к интернету</p>
+                    <p><strong>${message}</strong></p>
                 `;
                 this.notification.classList.add('show');
                 
@@ -1341,12 +1406,11 @@
         // ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ =====
         document.addEventListener('DOMContentLoaded', () => {
             // Инициализируем музыкальный плеер
-            const musicPlayer = new StableMusicPlayer();
+            const musicPlayer = new UniversalMusicPlayer();
             
-            // Плавная прокрутка - ИСКЛЮЧАЕМ кнопку музыки
+            // Плавная прокрутка
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                // Исключаем кнопку музыки из обработки прокрутки
-                if (anchor.id === 'musicBtn' || anchor.closest('.music-btn')) return;
+                if (anchor.id === 'musicBtn' || anchor.classList.contains('music-btn')) return;
                 
                 anchor.addEventListener('click', function(e) {
                     if (this.getAttribute('href').startsWith('https://')) return;
@@ -1366,14 +1430,6 @@
                         });
                     }
                 });
-            });
-            
-            // Отключаем прокрутку при нажатии на кнопку музыки
-            const musicBtn = document.getElementById('musicBtn');
-            musicBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
             });
             
             // Анимация появления элементов при скролле
@@ -1402,20 +1458,10 @@
                 observer.observe(block);
             });
             
-            // Проверка для iOS через 8 секунд
-            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                setTimeout(() => {
-                    if (!musicPlayer.isPlaying) {
-                        // Показываем fallback если музыка не играет
-                        document.getElementById('iosFallback').style.display = 'block';
-                    }
-                }, 8000);
-            }
-            
             console.log('🎨 Игорян.рф — создание сайтов-подарков на годовщину свадьбы родителей');
-            console.log('🎵 Система предзагрузки музыки активирована (автовоспроизведение выключено)');
+            console.log('🎵 Универсальная система музыки активирована');
+            console.log('📱 iOS совместимость: включена');
             console.log('💝 Нажмите на сердечко внизу страницы!');
-            console.log('📱 Все CTA ведут в Telegram: t.me/nasvadebku');
         });
     </script>
 </body>
