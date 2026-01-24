@@ -219,6 +219,8 @@
             cursor: pointer;
             transition: var(--transition);
             margin-top: 3rem;
+            position: relative;
+            z-index: 10;
         }
         
         .cta-button:hover {
@@ -503,7 +505,7 @@
             letter-spacing: 0.1em;
         }
         
-        /* Стили для кнопки музыки */
+        /* Стили для кнопки музыки - ИСПРАВЛЕНО */
         .music-btn {
             position: fixed;
             bottom: 3rem;
@@ -512,7 +514,7 @@
             height: 60px;
             border-radius: 50%;
             background: var(--color-ivory);
-            border: 1px solid rgba(184, 155, 114, 0.3);
+            border: 2px solid var(--color-gold);
             color: var(--color-gold);
             cursor: pointer;
             display: flex;
@@ -520,20 +522,27 @@
             justify-content: center;
             font-size: 2rem;
             transition: var(--transition);
-            box-shadow: 0 5px 20px rgba(42, 42, 42, 0.1);
-            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(42, 42, 42, 0.15);
+            z-index: 999; /* Уменьшен z-index, чтобы не перекрывала CTA кнопку */
             outline: none;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
         }
         
         .music-btn:hover {
-            transform: scale(1.08);
-            border-color: var(--color-gold);
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(42, 42, 42, 0.2);
+        }
+        
+        .music-btn:active {
+            transform: scale(0.95);
         }
         
         .music-btn.playing {
             animation: pulse 2s infinite;
-            color: var(--color-umber);
+            color: var(--color-charcoal);
+            background-color: var(--color-gold);
         }
         
         .music-btn.loading {
@@ -707,6 +716,9 @@
             .music-btn {
                 bottom: 2rem;
                 right: 2rem;
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
             }
             
             .music-notification {
@@ -763,6 +775,21 @@
                 margin-bottom: 1rem;
             }
             
+            .music-btn {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.6rem;
+            }
+            
+            .music-notification {
+                bottom: 7rem;
+                right: 1.5rem;
+                width: 220px;
+                padding: 1.5rem;
+            }
+            
             .ios-music-guide {
                 padding: 12px;
             }
@@ -772,6 +799,11 @@
             }
             
             .ios-music-guide p {
+                font-size: 1.3rem;
+            }
+            
+            .ios-music-btn {
+                padding: 10px 25px;
                 font-size: 1.3rem;
             }
         }
@@ -1002,6 +1034,10 @@
                 this.hasUserInteracted = false;
                 this.userPreference = localStorage.getItem('musicPreference');
                 this.volume = localStorage.getItem('musicVolume') || 0.4;
+                this.audioElement = null;
+                
+                // Ссылка на экземпляр для глобального доступа
+                window.musicPlayer = this;
                 
                 this.init();
             }
@@ -1019,9 +1055,9 @@
                     
                     console.log('✅ Музыка загружена');
                     this.btn.classList.remove('loading');
-                    this.btn.title = 'Включить/выключить музыку';
+                    this.updateButtonTitle();
                     
-                    // Настройка кнопки
+                    // Настройка кнопки - ИСПРАВЛЕНО: предотвращаем всплытие события
                     this.setupButtonListeners();
                     
                     // Настройка для iOS
@@ -1032,8 +1068,10 @@
                     // Сохранение настроек
                     this.setupStorage();
                     
-                    // Сохраняем ссылку глобально
-                    window.musicPlayer = this;
+                    // Инициализация уведомления
+                    this.closeNotificationBtn.addEventListener('click', () => {
+                        this.hideNotification();
+                    });
                     
                 } catch (error) {
                     console.error('❌ Ошибка загрузки музыки:', error);
@@ -1085,10 +1123,11 @@
             }
             
             setupButtonListeners() {
-                // Основная кнопка музыки
+                // Основная кнопка музыки - ИСПРАВЛЕНО: предотвращаем всплытие
                 this.btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
+                    e.stopImmediatePropagation();
                     
                     this.hasUserInteracted = true;
                     
@@ -1099,17 +1138,15 @@
                         this.toggleMusic();
                     }
                     
+                    // Предотвращаем любые другие действия
                     return false;
                 });
                 
-                // Кнопка закрытия уведомления
-                this.closeNotificationBtn.addEventListener('click', () => {
-                    this.hideNotification();
+                // Также добавляем touchstart для мобильных
+                this.btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                 });
-                
-                // Отключаем прокрутку при клике
-                this.btn.addEventListener('mousedown', (e) => e.preventDefault());
-                this.btn.addEventListener('touchstart', (e) => e.preventDefault());
             }
             
             setupIOS() {
@@ -1128,10 +1165,11 @@
                     }
                 }, 2000);
                 
-                // Кнопка в iOS инструкции
+                // Кнопка в iOS инструкции - ИСПРАВЛЕНО: предотвращаем всплытие
                 this.iosStarterBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
+                    e.stopImmediatePropagation();
                     
                     this.hasUserInteracted = true;
                     this.playForIOS();
@@ -1177,9 +1215,18 @@
                 });
             }
             
+            updateButtonTitle() {
+                if (this.isPlaying) {
+                    this.btn.title = 'Выключить музыку (сейчас играет)';
+                } else {
+                    this.btn.title = 'Включить фоновую музыку';
+                }
+            }
+            
             // ===== МЕТОДЫ ВОСПРОИЗВЕДЕНИЯ =====
             
             async playForIOS() {
+                // Если музыка уже играет - выключаем
                 if (this.isPlaying) {
                     this.pauseMusic();
                     return;
@@ -1207,9 +1254,10 @@
                         this.isPlaying = true;
                         this.btn.classList.add('playing');
                         this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        this.updateButtonTitle();
                         localStorage.setItem('musicPreference', 'enabled');
                         
-                        this.showNotification('Музыка включена');
+                        this.showNotification('Музыка включена 🎵');
                     }
                     
                 } catch (error) {
@@ -1242,9 +1290,10 @@
                     this.isPlaying = true;
                     this.btn.classList.add('playing');
                     this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    this.updateButtonTitle();
                     localStorage.setItem('musicPreference', 'enabled');
                     
-                    this.showNotification('Музыка включена');
+                    this.showNotification('Музыка включена 🎵');
                     
                 } catch (error) {
                     console.error('❌ iOS: альтернативный метод тоже не сработал:', error);
@@ -1253,6 +1302,7 @@
             }
             
             async playMusic() {
+                // Если музыка уже играет - выключаем
                 if (this.isPlaying) {
                     this.pauseMusic();
                     return;
@@ -1273,9 +1323,10 @@
                     this.isPlaying = true;
                     this.btn.classList.add('playing');
                     this.btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    this.updateButtonTitle();
                     localStorage.setItem('musicPreference', 'enabled');
                     
-                    this.showNotification('Музыка включена');
+                    this.showNotification('Музыка включена 🎵');
                     
                 } catch (error) {
                     console.error('Ошибка воспроизведения:', error);
@@ -1286,25 +1337,34 @@
             pauseMusic() {
                 if (!this.isPlaying) return;
                 
-                if (this.isIOS && this.hiddenAudio) {
-                    this.hiddenAudio.pause();
-                    this.hiddenAudio.currentTime = 0;
+                console.log('⏸️ Выключение музыки...');
+                
+                try {
+                    if (this.isIOS && this.hiddenAudio) {
+                        this.hiddenAudio.pause();
+                        this.hiddenAudio.currentTime = 0;
+                    }
+                    
+                    if (this.audioElement) {
+                        this.audioElement.pause();
+                        this.audioElement.currentTime = 0;
+                    }
+                    
+                    this.isPlaying = false;
+                    this.btn.classList.remove('playing');
+                    this.btn.innerHTML = '<i class="fas fa-music"></i>';
+                    this.updateButtonTitle();
+                    localStorage.setItem('musicPreference', 'disabled');
+                    
+                    this.showNotification('Музыка выключена 🔇');
+                    
+                } catch (error) {
+                    console.error('Ошибка при выключении музыки:', error);
                 }
-                
-                if (this.audioElement) {
-                    this.audioElement.pause();
-                    this.audioElement.currentTime = 0;
-                }
-                
-                this.isPlaying = false;
-                this.btn.classList.remove('playing');
-                this.btn.innerHTML = '<i class="fas fa-music"></i>';
-                localStorage.setItem('musicPreference', 'disabled');
-                
-                this.showNotification('Музыка выключена');
             }
             
             toggleMusic() {
+                console.log('🎵 Переключение музыки...');
                 if (this.isPlaying) {
                     this.pauseMusic();
                 } else {
@@ -1408,7 +1468,14 @@
             // Инициализируем музыкальный плеер
             const musicPlayer = new UniversalMusicPlayer();
             
-            // Плавная прокрутка
+            // ИСПРАВЛЕНО: Предотвращаем прокрутку при клике на кнопку музыки
+            document.getElementById('musicBtn').addEventListener('click', function(e) {
+                // Останавливаем всплытие события, чтобы не сработала плавная прокрутка
+                e.stopPropagation();
+                return false;
+            });
+            
+            // Плавная прокрутка - ИСПРАВЛЕНО: исключаем кнопку музыки
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 if (anchor.id === 'musicBtn' || anchor.classList.contains('music-btn')) return;
                 
@@ -1461,6 +1528,7 @@
             console.log('🎨 Игорян.рф — создание сайтов-подарков на годовщину свадьбы родителей');
             console.log('🎵 Универсальная система музыки активирована');
             console.log('📱 iOS совместимость: включена');
+            console.log('🔧 Исправления: кнопка музыки не мешает CTA, корректное выключение');
             console.log('💝 Нажмите на сердечко внизу страницы!');
         });
     </script>
