@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио | Оживление старых фотографий | Волшебные подарки для семьи</title>
+    <meta name="description" content="Профессиональное оживление старых фото и создание трогательных видео-подарков для вашей семьи. Примеры работ, услуги и цены.">
+    <!-- Подключение шрифтов Google Fonts для элегантной типографики -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Подключение иконок Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Стили -->
+    <style>
+        :root {
+            /* Цветовая палитра в нежных, свадебных тонах */
+            --color-primary: #f8f1f1; /* Фоновый цвет, светлый слоновая кость */
+            --color-secondary: #e6d2d2; /* Акцентный цвет, приглушенный розовый */
+            --color-accent: #d4bebe; /* Более глубокий акцент */
+            --color-text: #5a4e4e; /* Основной цвет текста, теплый коричнево-серый */
+            --color-text-light: #867c7c; /* Светлый текст */
+            --color-white: #ffffff;
+            --color-overlay: rgba(90, 78, 78, 0.85); /* Затемнение для фона */
+            --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-white) 100%);
+            --shadow-soft: 0 8px 30px rgba(214, 190, 190, 0.15);
+            --shadow-medium: 0 15px 40px rgba(180, 160, 160, 0.2);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--gradient-primary);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo, .price-tag {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--color-text);
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 2.75rem;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3.5rem;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--color-accent);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        p, li {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+        }
+
+        .section-heading h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 38px;
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn:hover {
+            background-color: var(--color-accent);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary {
+            background-color: var(--color-text);
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-text-light);
+        }
+
+        /* Навигация */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 300;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Герой-секция */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            z-index: -2;
+        }
+
+        .hero-bg:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-overlay);
+        }
+
+        .hero-content {
+            max-width: 750px;
+            color: var(--color-primary);
+        }
+
+        .hero h1, .hero p {
+            color: var(--color-white);
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            font-weight: 200;
+            max-width: 600px;
+        }
+
+        /* Сетка портфолио */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+        }
+
+        .portfolio-item {
+            background: var(--color-white);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s ease;
+        }
+
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-info {
+            padding: 25px;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .portfolio-info p {
+            font-size: 1rem;
+        }
+
+        /* Блоки услуг */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: var(--color-white);
+            padding: 45px 35px;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            border-top: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+            border-top-color: var(--color-secondary);
+        }
+
+        .service-icon {
+            font-size: 2.8rem;
+            color: var(--color-accent);
+            margin-bottom: 25px;
+        }
+
+        .price-tag {
+            font-size: 2.2rem;
+            color: var(--color-text);
+            margin-top: 15px;
+            font-weight: 700;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Футер */
+        .footer {
+            background-color: var(--color-text);
+            color: var(--color-primary);
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--color-white);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-weight: 300;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-secondary);
+        }
+
+        .copyright {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.5rem; }
+            .hero h1 { font-size: 3.8rem; }
+            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--color-white);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 60px;
+                gap: 30px;
+                transition: left 0.5s ease;
+            }
+            .nav-links.active { left: 0; }
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.1rem; }
+            section { padding: 70px 0; }
+            .container { padding: 0 20px; }
+        }
+
+        @media (max-width: 576px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .services-container { grid-template-columns: 1fr; }
+            .btn { padding: 14px 28px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Фотоистория</a>
+            <ul class="nav-links">
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#contact" class="btn btn-primary">Заказать</a></li>
+            </ul>
+            <div class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Оживите ваши воспоминания</h1>
+                <p>Я превращаю старые фотографии в трогательные живые видео — уникальные подарки, которые хранят тепло вашей семейной истории. Доверьте мне ваши снимки, и они заговорят, заулыбаются и подарят чувства заново.</p>
+                <a href="#portfolio" class="btn">Смотреть работы</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Секция портфолио -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Примеры работ</h2>
+                <p>Взгляните, как обычные старые фотографии превращаются в волшебные моменты.</p>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Элемент портфолио 1 -->
+                <article class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80" alt="Пример оживления фото бабушки и дедушки" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Свадьба бабушки</h3>
+                        <p>Чёрно-белый снимок 1958 года. Добавлена анимация: легкая улыбка, поворот головы, моргание. Формат — GIF для семейного чата.</p>
+                    </div>
+                </article>
+                <!-- Элемент портфолио 2 -->
+                <article class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80" alt="Пример оживления детского фото" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Детство папы</h3>
+                        <p>Цветное фото 1970-х. Оживлен смех и движение. Создан короткий клип с ностальгической музыкой для юбилея.</p>
+                    </div>
+                </article>
+                <!-- Элемент портфолио 3 -->
+                <article class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2064&q=80" alt="Пример семейного видео-портрета" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Семейный портрет</h3>
+                        <p>Оживлено групповое фото трёх поколений. Каждое лицо анимировано отдельно для создания эффекта живого кадра.</p>
+                    </div>
+                </article>
+                <!-- Элемент портфолио 4 -->
+                <article class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80" alt="Пример видео-открытки с музыкой" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Поздравление для мамы</h3>
+                        <p>Из трёх фото создан видеоролик с титрами-поздравлениями и фоновой музыкой. Идеальный подарок на День рождения.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция услуг -->
+    <section id="services" style="background-color: var(--color-white);">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Мои услуги</h2>
+                <p>Выберите вариант, который лучше всего подходит для вашей истории.</p>
+            </div>
+            <div class="services-container">
+                <!-- Услуга 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Оживление одного фото</h3>
+                    <p>Идеально для первого знакомства с технологией или простого подарка. Ваш близкий на фото мягко улыбнётся и повернёт голову.</p>
+                    <div class="price-tag">от 300 ₽</div>
+                    <p class="price-note">Формат GIF, срок 1-6 часов</p>
+                </div>
+                <!-- Услуга 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3>Видеоклип из фото</h3>
+                    <p>Плавное слайд-шоу из 3-10 оживших фотографий. Расскажите историю в движении.</p>
+                    <div class="price-tag">800 — 2500 ₽</div>
+                    <p class="price-note">Формат MP4, срок до 1 дня</p>
+                </div>
+                <!-- Услуга 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Клип с музыкой и надписями</h3>
+                    <p>Всё из пакета выше, плюс фоновая музыка и красивые титры с именами, датами или пожеланиями.</p>
+                    <div class="price-tag">1500 — 3500 ₽</div>
+                    <p class="price-note">Готово для соцсетей и мессенджеров</p>
+                </div>
+                <!-- Услуга 4 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Эксклюзив: Видео с уникальной песней</h3>
+                    <p>Премиум-подарок. Я напишу и запишу песню о вашей семье с помощью нейросетей и вставлю её в ваш видеоклип.</p>
+                    <div class="price-tag">+ 5000 ₽</div>
+                    <p class="price-note">К цене выбранного клипа. Срок 2-3 дня</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <p><strong>Как заказать:</strong> Выберите пакет, пришлите фото в чат Авито, обсудим детали. Работаю онлайн, отвечаю быстро!</p>
+                <a href="https://www.avito.ru/sankt-peterburg/predlozheniya_uslug/ozhivim_foto_video-podarok_dlya_blizkih_pesnya_7947348440" target="_blank" class="btn btn-primary" style="margin-top: 30px;">Перейти к заказу на Авито</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Фотоистория</div>
+                <p style="color: #ccc; max-width: 600px; margin: 0 auto 40px;">Создаю цифровую магию для ваших самых тёплых воспоминаний. Работаю с уважением к вашей личной истории и конфиденциальности.</p>
+                <ul class="footer-links">
+                    <li><a href="#portfolio">Портфолио</a></li>
+                    <li><a href="#services">Услуги и цены</a></li>
+                    <li><a href="https://www.avito.ru/sankt-peterburg/predlozheniya_uslug/ozhivim_foto_video-podarok_dlya_blizkih_pesnya_7947348440" target="_blank">Моё объявление на Авито</a></li>
+                </ul>
+                <p style="margin-bottom: 20px;">
+                    <strong>Связь:</strong> Только через чат Авито для оперативности.<br>
+                    <strong>Оплата:</strong> Картой (СБП) или через «Авито.Платеж».
+                </p>
+            </div>
+            <div class="copyright">
+                &copy; 2026 «Фотоистория». Оживление фотографий. Все примеры работ созданы нейросетями или размещены с разрешения клиентов.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипт для мобильного меню -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            mobileToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileToggle.innerHTML = navLinks.classList.contains('active')
+                    ? '<i class="fas fa-times"></i>'
+                    : '<i class="fas fa-bars"></i>';
+            });
+
+            // Закрытие меню при клике на ссылку
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
