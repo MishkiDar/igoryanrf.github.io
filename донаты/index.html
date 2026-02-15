@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!-- Мгновенный редирект через 0.5 секунд (500 мс) -->
+    <meta http-equiv="refresh" content="0.5;url=https://pay.cloudtips.ru/p/521a4473">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Оплата и получение PDF ✨</title>
+    <style>
+        /* Сброс отступов и высота на весь экран */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0c0f; /* Глубокий темный фон */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.5;
+            position: relative;
+            overflow: hidden; /* Убираем скролл, если счетчик чуть вылезет */
+        }
+
+        .container {
+            max-width: 90%;
+            padding: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        h1 {
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 30px;
+            color: #f0f3f8;
+            text-shadow: 0 0 15px rgba(255,255,255,0.15);
+        }
+
+        /* Стили для аккуратного выделения "PDF" */
+        .pdf-highlight {
+            font-weight: 600;
+            color: #a8c0ff; /* Мягкий лавандовый оттенок */
+            background: linear-gradient(145deg, #6e8ef0, #a777e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(167, 119, 227, 0.3);
+        }
+
+        /* Обертка для круга и текста */
+        .timer-circle-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0 10px;
+        }
+
+        /* Анимированный SVG кружок */
+        .progress-ring {
+            transform: rotate(-90deg); /* Начинаем анимацию с верхней точки */
+            width: 120px;
+            height: 120px;
+        }
+
+        .progress-ring__circle-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 4;
+            fill: none;
+        }
+
+        .progress-ring__circle {
+            stroke: #ffffff;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-dasharray: 345.58; /* Длина окружности (2 * pi * 55) */
+            stroke-dashoffset: 0; /* Начальное значение будет задано в JS */
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+            transition: stroke-dashoffset 0.1s linear; /* Плавность обновления */
+        }
+
+        /* Текст внутри круга (цифра) */
+        .circle-text {
+            font-size: 2.3rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: white;
+            margin-top: -90px; /* Наезжаем на SVG */
+            margin-bottom: 25px;
+            text-shadow: 0 0 12px rgba(255,255,255,0.7);
+            font-variant-numeric: tabular-nums; /* Моноширинность для цифр */
+        }
+
+        /* Подпись под кругом */
+        .redirect-label {
+            font-size: 1rem;
+            color: #9aa5b5;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        /* Анимация появления */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+
+    <!-- 👇 ВСТАВЛЕННЫЕ СЧЕТЧИКИ (Yandex и Top.Mail.Ru) 👇 -->
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+        ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <!-- Top.Mail.Ru counter -->
+    <script type="text/javascript">
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
+    (function (d, w, id) {
+      if (d.getElementById(id)) return;
+      var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+      ts.src = "https://top-fwz1.mail.ru/js/code.js";
+      var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+    })(document, window, "tmr-code");
+    </script>
+    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3734723;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+    <!-- /Top.Mail.Ru counter -->
+
+    <!-- 👆 КОНЕЦ ВСТАВЛЕННЫХ СЧЕТЧИКОВ 👆 -->
+
+</head>
+<body>
+    <div class="container">
+        <h1>
+            Сейчас вас переместит<br>на страницу оплаты и получения<br>
+            <span class="pdf-highlight">⚡ PDF-файла ⚡</span>
+        </h1>
+
+        <div class="timer-circle-wrapper">
+            <!-- SVG Кружок -->
+            <svg class="progress-ring" viewBox="0 0 120 120">
+                <!-- Фоновый серый круг -->
+                <circle class="progress-ring__circle-bg" cx="60" cy="60" r="55"></circle>
+                <!-- Анимируемый белый круг (прогресс) -->
+                <circle class="progress-ring__circle" cx="60" cy="60" r="55" id="progressCircle"></circle>
+            </svg>
+
+            <!-- Цифра обратного отсчета (миллисекунды не пишем, показываем как 0.5 -> 0) -->
+            <div class="circle-text" id="countdownDisplay">0.5</div>
+        </div>
+
+        <div class="redirect-label">
+            подготовка перехода...
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // --- Настройки таймера ---
+            const totalTime = 500; // миллисекунд
+            const updateInterval = 50; // обновление каждые 50 мс для плавности круга
+            const startTime = Date.now();
+            const endTime = startTime + totalTime;
+
+            const circle = document.getElementById('progressCircle');
+            const displayDiv = document.getElementById('countdownDisplay');
+
+            // Длина окружности: 2 * pi * радиус (радиус 55)
+            const circumference = 2 * Math.PI * 55; // ≈ 345.58
+            circle.style.strokeDasharray = `${circumference}`;
+
+            // Функция обновления счетчика и круга
+            function updateTimer() {
+                const now = Date.now();
+                const remaining = Math.max(0, endTime - now); // сколько осталось мс
+                const elapsed = totalTime - remaining; // сколько прошло мс
+
+                // Прогресс от 0 до 1 (0 - начало, 1 - конец)
+                const progress = Math.min(1, elapsed / totalTime);
+
+                // Рассчет смещения для круга: чем больше прогресс, тем меньше dashoffset (круг заполняется)
+                // offset = circumference * (1 - progress)
+                const offset = circumference * (1 - progress);
+                circle.style.strokeDashoffset = offset;
+
+                // Отображение секунд с одним знаком после запятой (0.5, 0.4 ... 0.0)
+                const secondsRemaining = (remaining / 1000).toFixed(1);
+                displayDiv.textContent = secondsRemaining;
+
+                // Продолжаем обновление, пока время не вышло
+                if (remaining > 0) {
+                    requestAnimationFrame(updateTimer); 
+                    // Используем requestAnimationFrame для более гладкой анимации,
+                    // но частота обновления будет ограничена примерно 60fps.
+                    // В некоторых браузерах для сверхточной длительности лучше setTimeout,
+                    // но здесь важна плавность круга.
+                } else {
+                    // Финальное обновление дисплея и круга
+                    displayDiv.textContent = '0.0';
+                    circle.style.strokeDashoffset = circumference; // полностью заполнен
+                }
+            }
+
+            // Запускаем обновление
+            // Небольшая задержка перед стартом, чтобы первый кадр точно отрисовался с 0.5
+            // и для синхронизации с мета-тегом редиректа
+            setTimeout(() => {
+                requestAnimationFrame(updateTimer);
+            }, 10);
+
+            // Дополнительно: если вдруг редирект не сработает по мета-тегу (например, пользователь отключил),
+            // делаем страховочный редирект через JS ровно через 500 мс.
+            setTimeout(function() {
+                window.location.replace('https://pay.cloudtips.ru/p/521a4473');
+            }, 500); // 500 мс
+
+        })();
+    </script>
+
+    <!-- Пиксель в виде прозрачного изображения (дополнительно к noscript из счетчиков) -->
+    <img src="https://top-fwz1.mail.ru/counter?id=3734723;js=na" 
+         style="position:absolute; left:-9999px; top:0; width:1px; height:1px; opacity:0.01" 
+         alt="" 
+         aria-hidden="true" />
+    <img src="https://mc.yandex.ru/watch/99150786" 
+         style="position:absolute; left:-9999px; top:0; width:1px; height:1px; opacity:0.01" 
+         alt="" 
+         aria-hidden="true" />
+</body>
+</html>
