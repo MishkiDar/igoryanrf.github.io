@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игорян.рф — Оживить фото бесплатно</title>
+    <style>
+        /* Глобальный сброс и базовые настройки */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #faf9f8;
+            color: #1a1a1a;
+            line-height: 1.4;
+        }
+
+        /* Баннер на всю ширину */
+        .top-banner {
+            width: 100%;
+            background: linear-gradient(135deg, #2b3a4a 0%, #1d2b35 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            border-bottom: 4px solid #e0b0a0;
+            /* Имитация картинки */
+            background-image: radial-gradient(circle at 30% 40%, rgba(255, 215, 200, 0.15) 0%, transparent 30%),
+                              linear-gradient(125deg, #3a4e5e, #1f2e3a);
+        }
+
+        .banner-text {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .banner-text small {
+            display: block;
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+
+        /* Основной контейнер — очень узкий и простой */
+        .main-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        /* Заголовок страницы h1 */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2.5rem;
+            margin-top: 1rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(145deg, #222, #3a3a3a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            border-left: 6px solid #b87e6b;
+            padding-left: 1.2rem;
+        }
+
+        /* Блок болей */
+        .pains-section {
+            background-color: white;
+            border-radius: 24px;
+            padding: 1.8rem 1.8rem 1.2rem 1.8rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem;
+            border: 1px solid #edeae7;
+        }
+
+        .pain-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            color: #2a2a2a;
+        }
+
+        /* Галка слева */
+        .check-mark {
+            color: #b0765d; /* спокойный терракот */
+            font-weight: 700;
+            font-size: 1.4rem;
+            line-height: 1;
+            flex-shrink: 0;
+            width: 1.8rem;
+            text-align: left;
+        }
+
+        .pain-text {
+            flex: 1;
+        }
+
+        /* Жирные вводные внутри буллетов — как в примере */
+        .pain-bold {
+            font-weight: 600;
+            color: #1f1f1f;
+        }
+
+        /* Кнопка с телегой */
+        .button-telegram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #1d3b5c; /* глубокий синий */
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1.2rem 1.5rem;
+            border-radius: 60px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            box-shadow: 0 6px 14px rgba(0, 40, 70, 0.25);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #ffffff30;
+            letter-spacing: -0.01em;
+        }
+
+        .button-telegram:hover {
+            background: #143048;
+        }
+
+        /* Иконка Telegram (SVG) */
+        .tg-icon {
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+            background-color: #26A5E4; /* цвет Telegram */
+            border-radius: 50%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.4-.8 4.8-1.13 6.37-.14.67-.42.9-.68.93-.45.05-.8-.3-1.24-.58-.7-.46-1.1-.75-1.78-1.2-.8-.53-.28-.82.17-1.3.12-.12 2.2-2.02 2.24-2.2.005-.02.01-.05-.02-.07-.03-.03-.07-.02-.1-.01-.15.04-2.8 1.78-3.18 2.1-.3.24-.6.37-.92.37-.3 0-.6-.1-.9-.2-.45-.15-.8-.24-1.1-.24-.36 0-.66.1-.9.2-.3.12-.5.18-.7.12-.2-.06-.3-.2-.3-.4 0-.12.02-.24.1-.36.1-.14 1.6-1.02 3.2-1.72 1.5-.66 2.8-.96 3.2-.96.3 0 .5.05.7.1.2.06.3.2.3.4v.1z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.4-.8 4.8-1.13 6.37-.14.67-.42.9-.68.93-.45.05-.8-.3-1.24-.58-.7-.46-1.1-.75-1.78-1.2-.8-.53-.28-.82.17-1.3.12-.12 2.2-2.02 2.24-2.2.005-.02.01-.05-.02-.07-.03-.03-.07-.02-.1-.01-.15.04-2.8 1.78-3.18 2.1-.3.24-.6.37-.92.37-.3 0-.6-.1-.9-.2-.45-.15-.8-.24-1.1-.24-.36 0-.66.1-.9.2-.3.12-.5.18-.7.12-.2-.06-.3-.2-.3-.4 0-.12.02-.24.1-.36.1-.14 1.6-1.02 3.2-1.72 1.5-.66 2.8-.96 3.2-.96.3 0 .5.05.7.1.2.06.3.2.3.4v.1z'/%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
+            flex-shrink: 0;
+        }
+
+        /* подпись под кнопкой — опционально */
+        .caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6f6b68;
+            margin-top: 0.8rem;
+        }
+
+        /* Разделитель (если нужен воздух) */
+        hr {
+            border: none;
+            border-top: 2px dotted #d9d2cc;
+            margin: 2rem 0 1.5rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            .button-telegram {
+                font-size: 1.3rem;
+                padding: 1rem;
+            }
+            .pain-item {
+                font-size: 1rem;
+            }
+            .top-banner {
+                padding: 2rem 0.5rem;
+                font-size: 1.2rem;
+            }
+            .tg-icon {
+                width: 28px;
+                height: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Баннер имитация img.jpg (графика на всю ширину) -->
+    <div class="top-banner">
+        <div class="banner-text">
+            ⏳ Разбор метода <br>· Оживление фото бесплатно и без лимитов
+            <small>Как делать оживление фото безлимитно <br> и бесплатно с теми движениями как вы хотите<br><br>Только телефон или компьютер, <br>пара простых программ и руки из плеч</small>
+        </div>
+    </div>
+
+    <div class="main-container">
+        
+        <!-- ЗАГОЛОВОК СТРАНИЦЫ -->
+        <h1>
+            В разборе рассказываю
+        </h1>
+
+        <!-- БЛОК С ПУНКТАМИ (ПЕРЕРАБОТАНЫ В "КАК ...") -->
+        <div class="pains-section">
+            
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как превратить «цифровой хаос»</span> тысяч снимков в живую историю, которую захочется пересматривать.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как вернуть вкус счастья</span> из прошлого — даже если остались только разрозненные файлы.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как превратить «мыло» в винтаж:</span> сделать старые снимки красивыми без навыков фотошопа.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как сделать видео самому</span> без кривой верстки, обрезанных лиц и чтобы музыка попадала в такт.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как увидеть ушедших «живыми»</span> в движении — чтобы всплакнуть и отпустить.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как найти компромисс</span> между маминым желанием распечатать фото и цифровым миром дочери.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как сделать подарок</span> который никто не дарит — эмоцию вместо конфет.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как сделать видео из прошлого</span> без найма оператора и съемок сегодня.</span>
+            </div>
+
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как увидеть свою жизнь</span> не серой, а наполненной — через красивый монтаж под музыку.</span>
+            </div>
+            
+            <div class="pain-item">
+                <span class="check-mark">✓</span>
+                <span class="pain-text"><span class="pain-bold">Как перестать откладывать</span> и наконец собрать архив, пока время не ушло.</span>
+            </div>
+
+        </div>
+
+        <!-- КНОПКА С ТЕЛЕГРАМОМ (иконка бренда) -->
+        <a href="https://pay.cloudtips.ru/p/521a4473" target="_blank" class="button-telegram" rel="noopener noreferrer">
+            <span class="tg-icon"></span> Забрать разбор метода
+        </a>
+        <div class="caption">
+            Telegram · без регистрации
+        </div>
+
+        <!-- МИКРО-ПРОСТРАНСТВО (необязательный декоративный hr) -->
+        <hr>
+
+        <!-- маленький дисклеймер -->
+        <div style="text-align: center; color: #aaa; font-size: 0.85rem; margin-top: 2rem; border-top: 1px dashed #ddd; padding-top: 1.5rem;">
+            игорян.рф / как-оживить-фото-бесплатно / эмульсия времени
+        </div>
+    </div>
+
+</body>
+</html>
