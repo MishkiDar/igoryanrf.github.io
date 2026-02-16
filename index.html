@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
 
-
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -16,8 +15,6 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
-
 
 <!-- Top.Mail.Ru counter -->
 <script type="text/javascript">
@@ -104,6 +101,55 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
     object-fit: cover;
   }
 
+  /* Стили для квадратиков (карточек) - адаптивные, всегда по 2 в ряд */
+  .lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Две равные колонки, минимальная ширина 0 */
+    gap: 12px; /* Немного уменьшил расстояние между карточками */
+    max-width: 700px; /* Чуть меньше максимальная ширина, чтобы были уже */
+    width: 100%;
+    margin: 20px auto 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .lesson-card {
+    background: rgba(10, 30, 60, 0.7);
+    border: 1px solid rgba(0, 150, 255, 0.3);
+    border-radius: 16px;
+    padding: 16px 10px; /* Уменьшен горизонтальный padding */
+    text-align: center;
+    backdrop-filter: blur(4px);
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    word-break: break-word; /* Перенос длинных слов */
+  }
+
+  .lesson-card a {
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 0.95rem; /* Чуть уменьшен размер шрифта для мобильных */
+    display: block;
+    width: 100%;
+  }
+
+  .lesson-card:hover {
+    background: rgba(0, 150, 255, 0.25);
+    border-color: rgba(0, 150, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .lesson-card:hover a {
+    color: #ffffff;
+  }
+
   /* Навигация под заголовком */
   .categories-wrapper {
     position: relative;
@@ -165,11 +211,12 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
     width: 100%;
     padding: 20px;
     line-height: 1.7;
+    box-sizing: border-box;
   }
 
   .content h1 {
     font-size: 32px;
-    margin: 30px 0 20px;
+    margin: 30px 0 10px;
     text-align: center;
     color: #4fd6ff;
   }
@@ -180,24 +227,16 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
     color: #7fc8ff;
   }
 
-  .content p { margin: 15px 0; }
-
-  .intro {
-    font-size: 18px;
-    margin: 20px 0 30px;
+  .content h3 {
+    font-size: 26px;
+    margin: 20px 0 10px;
     text-align: center;
     color: #cfe8ff;
+    font-weight: 400;
+    letter-spacing: 1px;
   }
 
-  .cta {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: rgba(0,150,255,0.1);
-    border: 1px solid rgba(0,150,255,0.3);
-    border-radius: 12px;
-    text-align: center;
-  }
+  .content p { margin: 15px 0; }
 
   /* Подвал */
   .site-footer {
@@ -237,7 +276,18 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
     text-shadow: 0 0 6px #4fd6ff;
   }
 
-  /* Мобильная адаптация */
+  /* Адаптация для очень маленьких экранов (до 400px) */
+  @media (max-width: 400px) {
+    .lesson-card a {
+      font-size: 0.85rem; /* Ещё меньше текст */
+    }
+    .lesson-card {
+      padding: 12px 6px; /* Уменьшаем внутренние отступы */
+      min-height: 80px;
+    }
+  }
+
+  /* Старые медиазапросы */
   @media (max-width: 480px) {
     .footer-grid {
       flex-direction: column;
@@ -249,7 +299,6 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
   }
 </style>
 </head>
-
 <body>
 
   <!-- Верхнее меню -->
@@ -269,10 +318,17 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
     <div class="content">
       <h1>Привет, меня зовут Игорь</h1>
 
-      <div class="cta">
-        <p>Изучите разделы сайта, чтобы узнать больше о моих практиках и услугах.</p>
+      <!-- Новый подзаголовок и квадратики -->
+      <h3>мои уроки для вас</h3>
+      
+      <div class="lessons-grid">
+        <div class="lesson-card"><a href="/как-оживить-фото-бесплатно/">Как оживлять фотографии без лимитов</a></div>
+        <div class="lesson-card"><a href="#">Как делать продающие лендинги бесплатно</a></div> <!-- Ссылка позже -->
+        <div class="lesson-card"><a href="#">Как создавать трогательные видео из фото</a></div> <!-- Ссылка позже -->
+        <div class="lesson-card"><a href="#">Как создавать продающие Shorts и Reels бесплатно и безлимитно</a></div> <!-- Ссылка позже -->
       </div>
 
+      <!-- Блок с навигацией (категории слева/справа) -->
       <div class="categories-wrapper">
         <div class="line"></div>
 
@@ -287,8 +343,7 @@ _tmr.push({id: "3734723", type: "pageView", start: (new Date()).getTime()});
         </div>
       </div>
 
-      <br><br><br>
-
+      <!-- Остальной контент -->
       <h2>Что вы найдете здесь</h2>
       <p>На этом сайте я делюсь практиками здоровья, опытом создания личного бренда, инструментами для продвижения проектов и своими музыкальными работами. Все это — результат реального опыта, без инфобизнес-клише и пустых обещаний.</p>
 
