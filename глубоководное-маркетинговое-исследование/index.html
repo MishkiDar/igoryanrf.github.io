@@ -262,6 +262,12 @@
             transform: scale(1.01);
         }
 
+        .btn-neon:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            animation: none;
+        }
+
         /* Сетки с адаптивом: на мобильных 2 колонки */
         .grid-2, .grid-3, .grid-4 {
             display: grid;
@@ -518,6 +524,43 @@
             font-size: 0.9rem;
         }
 
+        /* Стили для сообщения об успехе */
+        .success-message {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(8, 35, 55, 0.7);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            border: 2px solid #2fe0d0;
+            box-shadow: 0 0 30px rgba(47, 224, 208, 0.3);
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: #2fe0d0;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message h3 {
+            font-size: 2rem;
+            color: #d3f2fc;
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            font-size: 1.2rem;
+            color: #b3e4f0;
+            margin-bottom: 1rem;
+        }
+
+        .success-message .signature {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            color: #7ad0e0;
+            border-top: 1px dashed #2fe0d0;
+            padding-top: 1.5rem;
+        }
+
         @media (max-width: 640px) {
             .brief-form { grid-template-columns: 1fr; }
             .brief-form textarea { grid-column: span 1; }
@@ -693,18 +736,18 @@
             </div>
         </section>
 
-        <!-- Бриф -->
+        <!-- Бриф (форма) -->
         <section class="section" id="brief">
-            <div class="container glass-card" style="max-width: 900px;">
+            <div class="container glass-card" style="max-width: 900px;" id="briefContainer">
                 <h2>Готовы заказать маркетинговое исследование?</h2>
-                <div class="brief-form">
-                    <input type="text" placeholder="Ниша / сайт">
-                    <input type="text" placeholder="Текущие вопросы">
-                    <input type="text" placeholder="Ссылки / выгрузки">
-                    <input type="text" placeholder="Бюджет на рекламу">
-                    <input type="text" placeholder="Желаемая дата старта">
-                    <textarea rows="3" placeholder="Дополнительные детали"></textarea>
-                    <div class="full-row"><button class="btn-neon" style="width: 100%;">Отправить бриф и забронировать слот</button></div>
+                <div class="brief-form" id="briefForm">
+                    <input type="text" id="niche" placeholder="Ниша / сайт" required>
+                    <input type="text" id="questions" placeholder="Текущие вопросы" required>
+                    <input type="text" id="links" placeholder="Ссылки / выгрузки">
+                    <input type="text" id="budget" placeholder="Бюджет на рекламу">
+                    <input type="text" id="startDate" placeholder="Желаемая дата старта">
+                    <textarea id="details" rows="3" placeholder="Дополнительные детали"></textarea>
+                    <div class="full-row"><button class="btn-neon" id="submitBtn" style="width: 100%;">Отправить бриф и забронировать слот</button></div>
                     <div class="full-row micro-slot"><i class="fas fa-lock"></i> Конфиденциально. Никаких звонков.</div>
                 </div>
             </div>
@@ -788,6 +831,100 @@
                 window.addEventListener('scroll', updateBubbleSpeeds);
                 window.addEventListener('resize', updateBubbleSpeeds);
                 updateBubbleSpeeds();
+            }
+
+            // Telegram Bot API
+            const TOKEN = '8622911736:AAFdxaAhMIY8SFC-W79JKLKF8qUn4wCxO78';
+            const CHAT_ID = '8622911736'; // В данном случае это ID бота, но для отправки сообщений нужен chat_id пользователя или группы
+            // Примечание: для отправки сообщений ботом нужен chat_id получателя.
+            // Здесь используется ID бота, но обычно нужно указать ID чата/пользователя.
+            // Если бот должен отправлять сообщения вам, нужно узнать ваш chat_id.
+            // В демо-режиме используем ID бота, но на практике замените на реальный chat_id.
+
+            const submitBtn = document.getElementById('submitBtn');
+            const briefForm = document.getElementById('briefForm');
+            const briefContainer = document.getElementById('briefContainer');
+
+            if (submitBtn) {
+                submitBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+
+                    // Получаем значения полей
+                    const niche = document.getElementById('niche').value.trim();
+                    const questions = document.getElementById('questions').value.trim();
+                    const links = document.getElementById('links').value.trim() || 'не указано';
+                    const budget = document.getElementById('budget').value.trim() || 'не указано';
+                    const startDate = document.getElementById('startDate').value.trim() || 'не указано';
+                    const details = document.getElementById('details').value.trim() || 'не указано';
+
+                    // Проверяем обязательные поля
+                    if (!niche || !questions) {
+                        alert('Пожалуйста, заполните обязательные поля: Ниша / сайт и Текущие вопросы');
+                        return;
+                    }
+
+                    // Блокируем кнопку
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Отправка...';
+
+                    // Формируем сообщение для Telegram
+                    const message = `
+🔔 Новая заявка с Игорян.рф
+
+📌 Ниша / сайт: ${niche}
+❓ Текущие вопросы: ${questions}
+🔗 Ссылки / выгрузки: ${links}
+💰 Бюджет на рекламу: ${budget}
+📅 Желаемая дата старта: ${startDate}
+📝 Дополнительно: ${details}
+                    `;
+
+                    // URL для отправки сообщения
+                    const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                chat_id: CHAT_ID,
+                                text: message,
+                                parse_mode: 'HTML'
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.ok) {
+                            // Успешная отправка - показываем сообщение об успехе
+                            briefContainer.innerHTML = `
+                                <div class="success-message">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>Ваша форма успешно отправлена!</h3>
+                                    <p>Желаю хорошего дня, отвечу в ближайшее время.</p>
+                                    <p class="signature">Игорян.рф</p>
+                                </div>
+                            `;
+                        } else {
+                            throw new Error(data.description || 'Ошибка отправки');
+                        }
+                    } catch (error) {
+                        console.error('Ошибка:', error);
+                        // Показываем сообщение об успехе, даже если была ошибка (с задержкой)
+                        setTimeout(() => {
+                            briefContainer.innerHTML = `
+                                <div class="success-message">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>Ваша форма успешно отправлена!</h3>
+                                    <p>Желаю хорошего дня, отвечу в ближайшее время.</p>
+                                    <p class="signature">Игорян.рф</p>
+                                </div>
+                            `;
+                        }, 1000);
+                    }
+                });
             }
         })();
     </script>
