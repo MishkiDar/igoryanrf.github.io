@@ -164,7 +164,7 @@
             100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
         }
 
-        /* ===== АНИМАЦИИ ПЛАВАНИЯ (ускорены на 30%) ===== */
+        /* ===== АНИМАЦИИ ПЛАВАНИЯ (ускорены) ===== */
         .floating-element {
             display: inline-block;
             animation: floatSoft 5.6s infinite alternate ease-in-out;
@@ -190,70 +190,56 @@
             animation: floatSoftReverse 8.3s infinite alternate;
         }
 
-        /* ===== НЕОНОВЫЕ БЛОКИ (ПЕРЕЛИВ + ХОВЕР + АДАПТИВ) ===== */
+        /* ===== НЕОНОВЫЕ БЛОКИ (МЯГКОЕ ПУЛЬСИРОВАНИЕ) ===== */
         .neon-metallic {
             border: 1px solid rgba(140, 255, 240, 0.3);
             backdrop-filter: blur(4px);
             background: rgba(5, 30, 45, 0.6);
             color: #dcf5ff;
-            transition: all 0.3s ease;
-            
-            /* Плавное переливание (анимация тени и границы) */
-            animation: neonPulse 4s infinite alternate ease-in-out;
+            transition: all 0.2s ease;
+            animation: softPulse 5s infinite alternate ease-in-out;
             will-change: box-shadow, border-color;
         }
 
-        /* Ключевые кадры для пульсации свечения */
-        @keyframes neonPulse {
+        @keyframes softPulse {
             0% {
-                box-shadow: 0 0 8px rgba(0, 200, 180, 0.15), 0 0 15px rgba(0, 230, 210, 0.1), inset 0 0 8px rgba(210, 255, 240, 0.1);
+                box-shadow: 0 0 6px rgba(0, 200, 180, 0.1), 0 0 12px rgba(0, 210, 190, 0.08), inset 0 0 4px rgba(210, 255, 240, 0.08);
                 border-color: rgba(140, 255, 240, 0.25);
             }
-            25% {
-                box-shadow: 0 0 15px rgba(0, 230, 210, 0.25), 0 0 25px rgba(0, 200, 210, 0.15), inset 0 0 12px rgba(170, 255, 240, 0.2);
-                border-color: rgba(170, 255, 240, 0.45);
-            }
             50% {
-                box-shadow: 0 0 10px rgba(0, 210, 200, 0.2), 0 0 30px rgba(0, 250, 220, 0.2), inset 0 0 10px rgba(190, 255, 240, 0.15);
-                border-color: rgba(130, 245, 235, 0.4);
-            }
-            75% {
-                box-shadow: 0 0 18px rgba(0, 240, 220, 0.3), 0 0 22px rgba(0, 210, 220, 0.2), inset 0 0 14px rgba(150, 250, 240, 0.2);
-                border-color: rgba(150, 255, 240, 0.5);
+                box-shadow: 0 0 12px rgba(0, 220, 200, 0.2), 0 0 20px rgba(0, 220, 200, 0.15), inset 0 0 8px rgba(170, 255, 240, 0.15);
+                border-color: rgba(160, 255, 240, 0.4);
             }
             100% {
-                box-shadow: 0 0 12px rgba(0, 210, 190, 0.2), 0 0 20px rgba(0, 230, 200, 0.15), inset 0 0 10px rgba(140, 240, 230, 0.15);
-                border-color: rgba(140, 250, 235, 0.35);
+                box-shadow: 0 0 8px rgba(0, 200, 180, 0.15), 0 0 16px rgba(0, 210, 190, 0.1), inset 0 0 6px rgba(140, 240, 230, 0.1);
+                border-color: rgba(140, 250, 235, 0.3);
             }
         }
 
-        /* Ховер — увеличиваем свечение на 7% относительно текущего (но так как анимация непрерывна, просто делаем более яркий стейт) */
+        /* Ховер — очень мягкое увеличение (всего на 5-7% от текущего) */
         .neon-metallic:hover {
-            animation: neonPulseHover 0.4s infinite alternate ease-in-out;
-            border-color: rgba(200, 255, 245, 0.8);
-            transform: scale(1.02);
-            transition: transform 0.2s;
+            animation: softPulseHover 0.6s infinite alternate ease-in-out;
+            border-color: rgba(180, 255, 245, 0.6);
+            transform: scale(1.01);
         }
 
-        @keyframes neonPulseHover {
+        @keyframes softPulseHover {
             0% {
-                box-shadow: 0 0 18px rgba(0, 240, 220, 0.5), 0 0 30px rgba(0, 255, 230, 0.4), inset 0 0 15px #bffff0;
-                border-color: rgba(200, 255, 245, 0.8);
+                box-shadow: 0 0 10px rgba(0, 230, 210, 0.3), 0 0 20px rgba(0, 230, 210, 0.2), inset 0 0 10px #b0fff0;
+                border-color: rgba(180, 255, 245, 0.6);
             }
             100% {
-                box-shadow: 0 0 24px rgba(0, 255, 230, 0.6), 0 0 40px rgba(0, 255, 220, 0.5), inset 0 0 18px #e0fff5;
-                border-color: #c0fff5;
+                box-shadow: 0 0 14px rgba(0, 240, 220, 0.35), 0 0 24px rgba(0, 240, 220, 0.25), inset 0 0 12px #c0fff5;
+                border-color: rgba(200, 255, 245, 0.7);
             }
         }
 
-        /* Для мобильных устройств — оставляем пульсацию, hover будет работать как tap (кратковременное усиление) */
         @media (hover: hover) {
             .neon-metallic:hover {
-                animation: neonPulseHover 0.4s infinite alternate;
+                animation: softPulseHover 0.6s infinite alternate;
             }
         }
 
-        /* Кнопки тоже делаем пульсирующими, но мягче */
         .btn-neon {
             background: rgba(10, 45, 65, 0.7);
             backdrop-filter: blur(8px);
@@ -267,16 +253,16 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             text-decoration: none;
             display: inline-block;
-            transition: 0.25s;
-            animation: neonPulse 5s infinite alternate ease-in-out;
+            transition: 0.2s;
+            animation: softPulse 5s infinite alternate ease-in-out;
         }
 
         .btn-neon:hover {
-            animation: neonPulseHover 0.4s infinite alternate;
-            transform: scale(1.02);
+            animation: softPulseHover 0.6s infinite alternate;
+            transform: scale(1.01);
         }
 
-        /* Сетки с адаптивом: на мобильных 2 колонки, если позволяет ширина */
+        /* Сетки с адаптивом: на мобильных 2 колонки */
         .grid-2, .grid-3, .grid-4 {
             display: grid;
             gap: 1.5rem;
@@ -286,25 +272,23 @@
         .grid-3 { grid-template-columns: repeat(3, 1fr); }
         .grid-4 { grid-template-columns: repeat(4, 1fr); }
 
-        /* Планшеты и маленькие экраны */
         @media screen and (max-width: 860px) {
-            .grid-4 { grid-template-columns: repeat(2, 1fr); }  /* 4 колонки превращаются в 2 */
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media screen and (max-width: 640px) {
             .grid-2, .grid-3, .grid-4 { 
-                grid-template-columns: repeat(2, 1fr); /* везде по 2 колонки */
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
         }
 
         @media screen and (max-width: 440px) {
             .grid-2, .grid-3, .grid-4 { 
-                grid-template-columns: 1fr; /* только если совсем узко — 1 колонка */
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Остальные стили (без изменений, кроме добавленной пульсации к существующим карточкам) */
         .section {
             max-width: 1300px;
             margin: 0 auto;
@@ -319,13 +303,29 @@
             border: 1px solid rgba(0, 255, 200, 0.2);
             box-shadow: 0 8px 30px -10px #00000080;
             color: #c8e9f0;
-            animation: neonPulse 5s infinite alternate ease-in-out; /* добавили пульсацию всем glass-card */
+            animation: softPulse 5s infinite alternate ease-in-out;
         }
 
         .glass-card:hover {
-            animation: neonPulseHover 0.4s infinite alternate;
+            animation: softPulseHover 0.6s infinite alternate;
         }
 
+        /* Новый баннер (вместо красного) — цвет морской раковины */
+        .oyster-banner {
+            background: rgba(60, 110, 120, 0.25);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(150, 210, 200, 0.5);
+            border-radius: 40px;
+            padding: 1.8rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 2rem 0 0;
+            color: #ceefe8;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(100, 200, 190, 0.2);
+        }
+
+        /* Микро-слот */
         .micro-slot {
             font-size: 0.9rem;
             text-transform: uppercase;
@@ -344,6 +344,7 @@
             margin: 1.5rem 0;
         }
 
+        /* АУДИОПЛЕЕР С ВОЛНОЙ (полностью восстановлен) */
         .audio-player {
             display: flex;
             align-items: center;
@@ -369,6 +370,22 @@
             font-size: 1.2rem;
             transition: 0.2s;
             cursor: pointer;
+        }
+
+        .player-wave {
+            flex: 1;
+            height: 24px;
+            background: linear-gradient(90deg, #2fe0d0 0%, rgba(255,255,255,0.2) 60%);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'%3E%3Cpath d='M0,12 Q10,4 20,12 T40,12 T60,12 T80,12 T100,12 T120,12 T140,12 T160,12 T180,12 T200,12' stroke='white' fill='none' stroke-width='4' /%3E%3C/svg%3E") repeat-x;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'%3E%3Cpath d='M0,12 Q10,4 20,12 T40,12 T60,12 T80,12 T100,12 T120,12 T140,12 T160,12 T180,12 T200,12' stroke='white' fill='none' stroke-width='4' /%3E%3C/svg%3E") repeat-x;
+            background-size: 80px 24px;
+        }
+
+        .player-time {
+            font-family: monospace;
+            color: #7ad0e0;
+            font-size: 0.9rem;
+            margin-right: 1.5rem;
         }
 
         .price-tag {
@@ -399,18 +416,7 @@
             color: #c2e7f0;
         }
 
-        .red-banner {
-            background: #ff4d4d20;
-            border: 1px solid #ff4d4d60;
-            border-radius: 40px;
-            padding: 1.8rem;
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin: 2rem 0 0;
-            color: #f2d5d5;
-            text-align: center;
-        }
-
+        /* Хедер с центрированием */
         .header-title {
             font-size: 1.8rem;
             font-weight: 500;
@@ -418,32 +424,64 @@
             text-shadow: 0 0 10px #0ff;
             display: flex;
             align-items: center;
+            justify-content: center;  /* Центрирование по горизонтали */
             gap: 0.8rem;
             flex-wrap: wrap;
+            text-align: center;
+            background: rgba(8, 35, 55, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 70px;
+            padding: 0.8rem 2rem;
+            border: 1px solid rgba(140, 255, 240, 0.25);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header-title i {
+            color: #4ff;
         }
 
         .header-title span {
             background: #0a3545;
-            padding: 0.2rem 1rem;
+            padding: 0.2rem 1.4rem;
             border-radius: 50px;
             font-size: 1rem;
             border: 1px solid #4ff;
             color: #a5e3f0;
         }
 
-        .mock-pdf {
-            background: #1F3A5A;
-            border-radius: 24px;
-            padding: 2rem 1.5rem;
-            flex: 1 1 160px;
+        /* Мокапы (что именно вы получите) — уменьшенные, прозрачные, хаотичное плавание */
+        .mock-item {
+            background: rgba(20, 50, 65, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            padding: 1.5rem 1rem;
+            flex: 1 1 140px;
             text-align: center;
-            border: 1px solid #2f4a70;
+            border: 1px solid rgba(100, 200, 200, 0.3);
             color: #cbebf0;
-            animation: neonPulse 6s infinite alternate; /* и мокапы тоже пульсируют */
+            animation: softPulse 5s infinite alternate ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 180, 170, 0.15);
+            transition: 0.2s;
+            font-size: 0.95rem;
         }
 
-        .mock-pdf:hover {
-            animation: neonPulseHover 0.4s infinite alternate;
+        .mock-item i {
+            font-size: 2.2rem;
+            color: #6ff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* индивидуальное плавание для каждого мокапа */
+        .mock-float1 { animation: floatSoft 5.2s infinite alternate ease-in-out; }
+        .mock-float2 { animation: floatSoftReverse 6.8s infinite alternate ease-in-out; }
+        .mock-float3 { animation: floatSoft 4.7s infinite alternate ease-in-out; }
+        .mock-float4 { animation: floatSoftReverse 7.3s infinite alternate ease-in-out; }
+
+        .mock-item:hover {
+            animation: softPulseHover 0.6s infinite alternate;
+            border-color: #7fffd0;
         }
 
         .contact-line {
@@ -485,6 +523,8 @@
             .brief-form textarea { grid-column: span 1; }
             .section { padding: 2.5rem 1rem; }
             h2 { font-size: 1.8rem; }
+            .header-title { font-size: 1.4rem; padding: 0.6rem 1.2rem; }
+            .header-title span { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -500,10 +540,10 @@
     <div class="bubble-container" id="bubbleContainer"></div>
 
     <div class="content">
-        <!-- Хедер -->
+        <!-- Хедер ПО ЦЕНТРУ -->
         <div style="padding: 2rem 2rem 0 2rem; max-width: 1300px; margin: 0 auto;">
             <div class="header-title floating-element">
-                <i class="fas fa-water" style="color: #4ff;"></i> Игорян.рф 
+                <i class="fas fa-water"></i> Игорян.рф 
                 <span>моё глубоководное маркетинговое исследование вашей рекламной стратегии и инструментариев</span>
             </div>
         </div>
@@ -516,6 +556,7 @@
                     Без гипотез вслепую. Только данные, глубинные инсайты и готовый отчёт.
                 </div>
 
+                <!-- Аудиоплеер с ВОЛНОЙ (восстановлен) -->
                 <div class="audio-player floating-element">
                     <div class="player-btn"><i class="fas fa-play"></i></div>
                     <div class="player-wave"></div>
@@ -541,7 +582,7 @@
             </div>
         </section>
 
-        <!-- Проблемы бизнеса (сетка 4 -> на мобильных 2) -->
+        <!-- Проблемы бизнеса -->
         <section class="section">
             <div class="container">
                 <h2>С чем сталкиваются компании</h2>
@@ -554,7 +595,7 @@
             </div>
         </section>
 
-        <!-- Этапы исследования (grid-4) -->
+        <!-- Этапы исследования -->
         <section class="section">
             <div class="container">
                 <h2>Как проходит исследование</h2>
@@ -567,15 +608,15 @@
             </div>
         </section>
 
-        <!-- Мокапы (grid гибкая) -->
+        <!-- Что именно вы получите (уменьшенные прозрачные плавающие мокапы) -->
         <section class="section">
             <div class="container">
                 <h2>Что именно вы получите</h2>
-                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;">
-                    <div class="mock-pdf floating-element"><i class="fas fa-search"></i><br>Точки утечки трафика</div>
-                    <div class="mock-pdf float-slow-reverse"><i class="fas fa-check-double"></i><br>План гипотез на 30 дней</div>
-                    <div class="mock-pdf floating-element"><i class="fas fa-project-diagram"></i><br>Карта касаний с клиентом</div>
-                    <div class="mock-pdf float-slow-reverse"><i class="fas fa-chart-bar"></i><br>Прогнозная модель</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;">
+                    <div class="mock-item mock-float1"><i class="fas fa-search"></i><br>Точки утечки трафика</div>
+                    <div class="mock-item mock-float2"><i class="fas fa-check-double"></i><br>План гипотез на 30 дней</div>
+                    <div class="mock-item mock-float3"><i class="fas fa-project-diagram"></i><br>Карта касаний с клиентом</div>
+                    <div class="mock-item mock-float4"><i class="fas fa-chart-bar"></i><br>Прогнозная модель</div>
                 </div>
             </div>
         </section>
@@ -615,7 +656,8 @@
                         <a href="#brief" class="btn-neon">Выбрать</a>
                     </div>
                 </div>
-                <div class="red-banner">
+                <!-- Замена красного баннера на "морскую раковину" -->
+                <div class="oyster-banner">
                     <strong>Я беру 2–3 проекта в месяц</strong> — чтобы каждое исследование было максимально глубоким. Сейчас открыт <strong>1 слот на март</strong> (39 000₽). Далее цена 59 000₽.
                 </div>
             </div>
