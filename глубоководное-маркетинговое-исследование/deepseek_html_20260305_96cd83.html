@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Игорян.рф • глубинное исследование</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #05121e;
+            color: #b3e4f0;
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-weight: 350;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, .strong {
+            color: #d3f2fc;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 9vw, 4.5rem);
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 650;
+        }
+
+        a, .accent {
+            color: #6ee7f0;
+            transition: 0.2s;
+        }
+
+        /* Фоновые слои (аквариум) */
+        .ocean-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 30% 40%, #0b2b44, #02101c 80%);
+        }
+
+        .water-glimmer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.9;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(140, 230, 255, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 90% 70%, rgba(0, 255, 200, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 45% 85%, rgba(210, 255, 240, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 15%, rgba(90, 210, 255, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 5% 60%, rgba(0, 210, 200, 0.08) 0%, transparent 30%);
+            animation: shiftGlimmer 24s infinite alternate ease-in-out;
+        }
+
+        @keyframes shiftGlimmer {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+            25% { background-position: 3% 5%, -2% 3%, 4% -1%, -3% 6%, 2% -4%; }
+            50% { background-position: -4% 8%, 5% -3%, -2% 10%, 6% 2%, -5% -2%; }
+            75% { background-position: 6% -5%, -4% 8%, 3% -6%, -5% 9%, 4% 3%; }
+            100% { background-position: -3% 2%, 2% -4%, -5% 4%, 3% -5%, -2% 8%; }
+        }
+
+        .caustic-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                repeating-linear-gradient(125deg, 
+                    rgba(255, 255, 255, 0) 0px, 
+                    rgba(150, 240, 255, 0.03) 2px, 
+                    transparent 5px,
+                    transparent 20px),
+                repeating-linear-gradient(35deg, 
+                    rgba(200, 255, 240, 0.02) 0px, 
+                    transparent 10px,
+                    transparent 30px,
+                    rgba(130, 230, 255, 0.02) 35px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.4;
+            animation: subtleWave 32s infinite linear;
+        }
+
+        @keyframes subtleWave {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(1%, -1%) scale(1.02); }
+            66% { transform: translate(-1.5%, 0.5%) scale(0.98); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .depth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #02121f;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+
+        .content {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* ===== ПУЗЫРЬКИ ===== */
+        .bubble-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -20px;
+            width: 6px;
+            height: 6px;
+            background: rgba(170, 240, 255, 0.25);
+            border-radius: 70% 30% 60% 40% / 50% 40% 60% 50%;
+            box-shadow: 0 0 8px #8cf0ff80, inset -1px -2px 5px #ffffff40;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.8); opacity: 0.4; }
+            100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+        }
+
+        /* ===== АНИМАЦИИ ПЛАВАНИЯ (ускорены на 30%) ===== */
+        .floating-element {
+            display: inline-block;
+            animation: floatSoft 5.6s infinite alternate ease-in-out;
+        }
+
+        .float-slow-reverse {
+            animation: floatSoftReverse 7.7s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatSoft {
+            0% { transform: translate(0px, 0px); }
+            100% { transform: translate(6px, -12px); }
+        }
+        @keyframes floatSoftReverse {
+            0% { transform: translate(0px, 0px); }
+            100% { transform: translate(-8px, 10px); }
+        }
+
+        .card-float {
+            animation: floatSoft 6.2s infinite alternate;
+        }
+        .card-float2 {
+            animation: floatSoftReverse 8.3s infinite alternate;
+        }
+
+        /* ===== НЕОНОВЫЕ БЛОКИ (ПЕРЕЛИВ + ХОВЕР + АДАПТИВ) ===== */
+        .neon-metallic {
+            border: 1px solid rgba(140, 255, 240, 0.3);
+            backdrop-filter: blur(4px);
+            background: rgba(5, 30, 45, 0.6);
+            color: #dcf5ff;
+            transition: all 0.3s ease;
+            
+            /* Плавное переливание (анимация тени и границы) */
+            animation: neonPulse 4s infinite alternate ease-in-out;
+            will-change: box-shadow, border-color;
+        }
+
+        /* Ключевые кадры для пульсации свечения */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 8px rgba(0, 200, 180, 0.15), 0 0 15px rgba(0, 230, 210, 0.1), inset 0 0 8px rgba(210, 255, 240, 0.1);
+                border-color: rgba(140, 255, 240, 0.25);
+            }
+            25% {
+                box-shadow: 0 0 15px rgba(0, 230, 210, 0.25), 0 0 25px rgba(0, 200, 210, 0.15), inset 0 0 12px rgba(170, 255, 240, 0.2);
+                border-color: rgba(170, 255, 240, 0.45);
+            }
+            50% {
+                box-shadow: 0 0 10px rgba(0, 210, 200, 0.2), 0 0 30px rgba(0, 250, 220, 0.2), inset 0 0 10px rgba(190, 255, 240, 0.15);
+                border-color: rgba(130, 245, 235, 0.4);
+            }
+            75% {
+                box-shadow: 0 0 18px rgba(0, 240, 220, 0.3), 0 0 22px rgba(0, 210, 220, 0.2), inset 0 0 14px rgba(150, 250, 240, 0.2);
+                border-color: rgba(150, 255, 240, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 12px rgba(0, 210, 190, 0.2), 0 0 20px rgba(0, 230, 200, 0.15), inset 0 0 10px rgba(140, 240, 230, 0.15);
+                border-color: rgba(140, 250, 235, 0.35);
+            }
+        }
+
+        /* Ховер — увеличиваем свечение на 7% относительно текущего (но так как анимация непрерывна, просто делаем более яркий стейт) */
+        .neon-metallic:hover {
+            animation: neonPulseHover 0.4s infinite alternate ease-in-out;
+            border-color: rgba(200, 255, 245, 0.8);
+            transform: scale(1.02);
+            transition: transform 0.2s;
+        }
+
+        @keyframes neonPulseHover {
+            0% {
+                box-shadow: 0 0 18px rgba(0, 240, 220, 0.5), 0 0 30px rgba(0, 255, 230, 0.4), inset 0 0 15px #bffff0;
+                border-color: rgba(200, 255, 245, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 24px rgba(0, 255, 230, 0.6), 0 0 40px rgba(0, 255, 220, 0.5), inset 0 0 18px #e0fff5;
+                border-color: #c0fff5;
+            }
+        }
+
+        /* Для мобильных устройств — оставляем пульсацию, hover будет работать как tap (кратковременное усиление) */
+        @media (hover: hover) {
+            .neon-metallic:hover {
+                animation: neonPulseHover 0.4s infinite alternate;
+            }
+        }
+
+        /* Кнопки тоже делаем пульсирующими, но мягче */
+        .btn-neon {
+            background: rgba(10, 45, 65, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 200, 0.35);
+            color: #dcf5ff;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.25s;
+            animation: neonPulse 5s infinite alternate ease-in-out;
+        }
+
+        .btn-neon:hover {
+            animation: neonPulseHover 0.4s infinite alternate;
+            transform: scale(1.02);
+        }
+
+        /* Сетки с адаптивом: на мобильных 2 колонки, если позволяет ширина */
+        .grid-2, .grid-3, .grid-4 {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        /* Планшеты и маленькие экраны */
+        @media screen and (max-width: 860px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }  /* 4 колонки превращаются в 2 */
+        }
+
+        @media screen and (max-width: 640px) {
+            .grid-2, .grid-3, .grid-4 { 
+                grid-template-columns: repeat(2, 1fr); /* везде по 2 колонки */
+                gap: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 440px) {
+            .grid-2, .grid-3, .grid-4 { 
+                grid-template-columns: 1fr; /* только если совсем узко — 1 колонка */
+            }
+        }
+
+        /* Остальные стили (без изменений, кроме добавленной пульсации к существующим карточкам) */
+        .section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .glass-card {
+            background: rgba(8, 35, 55, 0.55);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            box-shadow: 0 8px 30px -10px #00000080;
+            color: #c8e9f0;
+            animation: neonPulse 5s infinite alternate ease-in-out; /* добавили пульсацию всем glass-card */
+        }
+
+        .glass-card:hover {
+            animation: neonPulseHover 0.4s infinite alternate;
+        }
+
+        .micro-slot {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #7ad0e0;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background: rgba(0, 196, 160, 0.15);
+            border-left: 4px solid #2fe0d0;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            color: #b2e3ea;
+            margin: 1.5rem 0;
+        }
+
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 0.5rem 0.5rem 0.5rem 2rem;
+            margin: 2rem 0 1.5rem;
+            max-width: 440px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .player-btn {
+            background: #2fe0d0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #05121e;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .price-tag {
+            font-size: 2.6rem;
+            font-weight: 300;
+            color: #9cecf0;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #5fe0db;
+        }
+
+        .glowing-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #2fe0d0;
+            border-radius: 50%;
+            margin-right: 0.6rem;
+            box-shadow: 0 0 10px #00C4A0;
+        }
+
+        .case-item {
+            border-bottom: 1px dashed #1e3b5a;
+            padding: 1.5rem 0;
+            color: #c2e7f0;
+        }
+
+        .red-banner {
+            background: #ff4d4d20;
+            border: 1px solid #ff4d4d60;
+            border-radius: 40px;
+            padding: 1.8rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 2rem 0 0;
+            color: #f2d5d5;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #bef2fc;
+            text-shadow: 0 0 10px #0ff;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title span {
+            background: #0a3545;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            border: 1px solid #4ff;
+            color: #a5e3f0;
+        }
+
+        .mock-pdf {
+            background: #1F3A5A;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            flex: 1 1 160px;
+            text-align: center;
+            border: 1px solid #2f4a70;
+            color: #cbebf0;
+            animation: neonPulse 6s infinite alternate; /* и мокапы тоже пульсируют */
+        }
+
+        .mock-pdf:hover {
+            animation: neonPulseHover 0.4s infinite alternate;
+        }
+
+        .contact-line {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brief-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .brief-form input, .brief-form textarea {
+            background: #112b44;
+            border: 1px solid #2c4b6e;
+            border-radius: 40px;
+            padding: 1rem 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #d7f0f5;
+            font-size: 1rem;
+            width: 100%;
+        }
+        .brief-form textarea { grid-column: span 2; }
+        .brief-form .full-row { grid-column: span 2; }
+
+        .footer-note {
+            font-family: monospace;
+            color: #7aadb8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .brief-form { grid-template-columns: 1fr; }
+            .brief-form textarea { grid-column: span 1; }
+            .section { padding: 2.5rem 1rem; }
+            h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Фикс. фон -->
+    <div class="ocean-bg"></div>
+    <div class="water-glimmer"></div>
+    <div class="caustic-layer"></div>
+    <div class="depth-overlay" id="depthOverlay"></div>
+
+    <!-- Пузырьки -->
+    <div class="bubble-container" id="bubbleContainer"></div>
+
+    <div class="content">
+        <!-- Хедер -->
+        <div style="padding: 2rem 2rem 0 2rem; max-width: 1300px; margin: 0 auto;">
+            <div class="header-title floating-element">
+                <i class="fas fa-water" style="color: #4ff;"></i> Игорян.рф 
+                <span>моё глубоководное маркетинговое исследование вашей рекламной стратегии и инструментариев</span>
+            </div>
+        </div>
+
+        <!-- Герой -->
+        <section class="section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+            <div class="container" style="max-width:1200px; margin:0 auto;">
+                <h1>За 10–14 дней я провожу маркетинговое исследование и выдаю план точечного роста</h1>
+                <div style="font-size: 1.4rem; color: #a5d9e6; margin: 1.5rem 0; max-width: 700px;">
+                    Без гипотез вслепую. Только данные, глубинные инсайты и готовый отчёт.
+                </div>
+
+                <div class="audio-player floating-element">
+                    <div class="player-btn"><i class="fas fa-play"></i></div>
+                    <div class="player-wave"></div>
+                    <div class="player-time">3:00</div>
+                    <div style="margin-right: 1rem;"><i class="fas fa-volume-up" style="color: #2fe0d0;"></i></div>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+                    <a href="#brief" class="btn-neon">Заполнить бриф и занять слот <i class="fas fa-arrow-right" style="margin-left: 0.7rem;"></i></a>
+                    <div class="micro-slot"><i class="fas fa-calendar-alt"></i> Сейчас открыт 1 слот на март. Следующее исследование — апрель.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Особенность -->
+        <section class="section">
+            <div class="container" style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center;">
+                <div style="flex: 0 1 200px; font-size: 10rem; color: #2fe0d0; text-align: center;"><i class="fas fa-brain"></i></div>
+                <div style="flex:1;">
+                    <h2>Другой подход к исследованию</h2>
+                    <p style="font-size: 1.2rem; color: #c0e7f0;">СДВГ + РАС — сверхфокус на ваших данных. Я сканирую то, что обычно скрыто. Глубокое маркетинговое исследование без шума, пока конкуренты гадают.</p>
+                    <div class="badge">Я нахожу скрытые точки роста, а не отчёты ради отчётов.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Проблемы бизнеса (сетка 4 -> на мобильных 2) -->
+        <section class="section">
+            <div class="container">
+                <h2>С чем сталкиваются компании</h2>
+                <div class="grid-4" style="margin: 2rem 0;">
+                    <div class="glass-card neon-metallic"><i class="fas fa-chart-line" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span class="stat-number">до 60%</span><br>бюджета уходит впустую</div>
+                    <div class="glass-card neon-metallic"><i class="fas fa-gavel" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span>реклама не масштабируется</span></div>
+                    <div class="glass-card neon-metallic"><i class="fas fa-pause-circle" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span>нет понятной стратегии</span></div>
+                    <div class="glass-card neon-metallic"><i class="fas fa-question-circle" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span>«данных много, а ответов нет»</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Этапы исследования (grid-4) -->
+        <section class="section">
+            <div class="container">
+                <h2>Как проходит исследование</h2>
+                <div class="grid-4">
+                    <div class="glass-card card-float neon-metallic"><i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>1. Выгрузка данных</h3><p>рекламные кабинеты, метрики, финансы</p></div>
+                    <div class="glass-card card-float2 neon-metallic"><i class="fas fa-brain" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>2. Гиперфокус 10–14 дней</h3><p>полное погружение в цифры</p></div>
+                    <div class="glass-card card-float neon-metallic"><i class="fas fa-file-pdf" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>3. Отчёт 30–60 стр</h3><p>инсайты, гипотезы, дашборд</p></div>
+                    <div class="glass-card card-float2 neon-metallic"><i class="fas fa-rocket" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>4. Рост на основе данных</h3><p>внедряете — получаете результат</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Мокапы (grid гибкая) -->
+        <section class="section">
+            <div class="container">
+                <h2>Что именно вы получите</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;">
+                    <div class="mock-pdf floating-element"><i class="fas fa-search"></i><br>Точки утечки трафика</div>
+                    <div class="mock-pdf float-slow-reverse"><i class="fas fa-check-double"></i><br>План гипотез на 30 дней</div>
+                    <div class="mock-pdf floating-element"><i class="fas fa-project-diagram"></i><br>Карта касаний с клиентом</div>
+                    <div class="mock-pdf float-slow-reverse"><i class="fas fa-chart-bar"></i><br>Прогнозная модель</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Результаты -->
+        <section class="section">
+            <div class="container">
+                <h2>Результаты исследований</h2>
+                <div class="case-item"><span class="glowing-dot"></span> <strong>+47%</strong> ROMI за 38 дней (WB)</div>
+                <div class="case-item"><span class="glowing-dot"></span> <strong>+62%</strong> маржинальность после оптимизации</div>
+                <div class="case-item"><span class="glowing-dot"></span> <strong>1,8 млн руб.</strong> экономии на логистике</div>
+                <div class="case-item"><span class="glowing-dot"></span> ещё 2 кейса (под NDA) в портфолио</div>
+            </div>
+        </section>
+
+        <!-- Цены -->
+        <section class="section" id="pricing">
+            <div class="container">
+                <h2>Выберите формат исследования</h2>
+                <div class="grid-3">
+                    <div class="glass-card neon-metallic" style="padding:2rem;">
+                        <span style="font-size: 0.9rem;">Базовое</span>
+                        <div class="price-tag">39 000 ₽</div>
+                        <div class="micro-slot">1 слот в марте</div>
+                        <a href="#brief" class="btn-neon" style="margin-top:1rem;">Выбрать</a>
+                    </div>
+                    <div class="glass-card neon-metallic" style="padding:2rem;">
+                        <span style="font-size: 0.9rem;">Расширенное</span>
+                        <div class="price-tag">59 000 ₽</div>
+                        <div class="micro-slot">приоритетная очередь</div>
+                        <a href="#brief" class="btn-neon">Выбрать</a>
+                    </div>
+                    <div class="glass-card neon-metallic" style="padding:2rem;">
+                        <span style="font-size: 0.9rem;">Премиум</span>
+                        <div class="price-tag">89 000 ₽</div>
+                        <div class="micro-slot">+ месяц консультаций</div>
+                        <a href="#brief" class="btn-neon">Выбрать</a>
+                    </div>
+                </div>
+                <div class="red-banner">
+                    <strong>Я беру 2–3 проекта в месяц</strong> — чтобы каждое исследование было максимально глубоким. Сейчас открыт <strong>1 слот на март</strong> (39 000₽). Далее цена 59 000₽.
+                </div>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section class="section">
+            <div class="container">
+                <h2>Отзывы</h2>
+                <div class="grid-3">
+                    <div class="glass-card floating-element"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Алексей, e-com: «+63% после внедрения. Исследование глубже, чем заказывал раньше»</div>
+                    <div class="glass-card float-slow-reverse"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Екатерина: «отчёт на 50 стр — нашли 2,2 млн скрытых потерь»</div>
+                    <div class="glass-card floating-element"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Дмитрий: «впервые получил не просто цифры, а готовые гипотезы»</div>
+                    <div class="glass-card float-slow-reverse"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Иван: «47% за 38д — рабочий зверь, исследование окупилось за неделю»</div>
+                    <div class="glass-card floating-element"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Ольга: «анализ глубже, чем у всех, кого нанимала»</div>
+                    <div class="glass-card float-slow-reverse"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Анна: «поняли куда расти и что выключать»</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section">
+            <div class="container">
+                <h2>Вопросы об исследовании</h2>
+                <div class="grid-3">
+                    <div class="glass-card neon-metallic"><strong>Сколько длится?</strong> 10–14 дней чистого исследования.</div>
+                    <div class="glass-card neon-metallic"><strong>Созвоны?</strong> Нет, полная асинхронность.</div>
+                    <div class="glass-card neon-metallic"><strong>Любая ниша?</strong> Да, я ищу закономерности везде.</div>
+                    <div class="glass-card neon-metallic"><strong>Оплата частями?</strong> Да.</div>
+                    <div class="glass-card neon-metallic"><strong>Гарантия?</strong> 14 дней возврата.</div>
+                    <div class="glass-card neon-metallic"><strong>NDA?</strong> Безусловно.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Бриф -->
+        <section class="section" id="brief">
+            <div class="container glass-card" style="max-width: 900px;">
+                <h2>Готовы заказать маркетинговое исследование?</h2>
+                <div class="brief-form">
+                    <input type="text" placeholder="Ниша / сайт">
+                    <input type="text" placeholder="Текущие вопросы">
+                    <input type="text" placeholder="Ссылки / выгрузки">
+                    <input type="text" placeholder="Бюджет на рекламу">
+                    <input type="text" placeholder="Желаемая дата старта">
+                    <textarea rows="3" placeholder="Дополнительные детали"></textarea>
+                    <div class="full-row"><button class="btn-neon" style="width: 100%;">Отправить бриф и забронировать слот</button></div>
+                    <div class="full-row micro-slot"><i class="fas fa-lock"></i> Конфиденциально. Никаких звонков.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section class="section" style="padding: 2rem;">
+            <div class="container contact-line">
+                <div><i class="fab fa-telegram" style="color: #2fe0d0;"></i> @deepdive_bot</div>
+                <div><i class="fas fa-envelope"></i> hello@deepfocus.ru</div>
+                <div><a href="#" style="color: #b3e4f0;">Политика</a></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="max-width: 1300px; margin: 0 auto 2rem; padding: 2rem; border-top: 1px solid #1f495b; display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <span class="footer-note">© 2025 — Глубоководное маркетинговое исследование</span>
+            <span class="footer-note">Данные решают</span>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            const overlay = document.getElementById('depthOverlay');
+            if (overlay) {
+                function updateDepth() {
+                    const scrollY = window.scrollY;
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    let progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+                    let opacity = Math.min(progress * 0.7, 0.55);
+                    overlay.style.opacity = opacity;
+                }
+                window.addEventListener('scroll', updateDepth);
+                window.addEventListener('resize', updateDepth);
+                updateDepth();
+            }
+
+            document.querySelector('.player-btn')?.addEventListener('click', function() {
+                alert('⭐ аудиодорожка с голосом (автозапуск muted)');
+            });
+
+            // Пузырьки
+            const bubbleContainer = document.getElementById('bubbleContainer');
+            if (bubbleContainer) {
+                const BUBBLE_COUNT = 45;
+                const bubbles = [];
+
+                function getSpeedFactor() {
+                    const scrollY = window.scrollY;
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+                    return 0.8 + progress * 1.7;
+                }
+
+                function createBubble() {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    const size = 3 + Math.random() * 9;
+                    bubble.style.width = size + 'px';
+                    bubble.style.height = size * (0.8 + Math.random() * 0.4) + 'px';
+                    bubble.style.left = Math.random() * 100 + '%';
+                    const baseDuration = 8 + Math.random() * 15;
+                    bubble.style.animationDuration = baseDuration + 's';
+                    bubble.style.animationDelay = Math.random() * -20 + 's';
+                    bubbleContainer.appendChild(bubble);
+                    return { element: bubble, baseDuration };
+                }
+
+                for (let i = 0; i < BUBBLE_COUNT; i++) {
+                    bubbles.push(createBubble());
+                }
+
+                function updateBubbleSpeeds() {
+                    const factor = getSpeedFactor();
+                    bubbles.forEach(b => {
+                        const newDuration = b.baseDuration / factor;
+                        b.element.style.animationDuration = newDuration + 's';
+                    });
+                }
+
+                window.addEventListener('scroll', updateBubbleSpeeds);
+                window.addEventListener('resize', updateBubbleSpeeds);
+                updateBubbleSpeeds();
+            }
+        })();
+    </script>
+</body>
+</html>
