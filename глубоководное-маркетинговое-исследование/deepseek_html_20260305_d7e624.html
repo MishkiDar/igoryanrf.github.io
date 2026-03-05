@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игорян.рф • глубоководный аудит</title>
+    <!-- профессиональный шрифт с морским характером: HK Guise (гротеск с дружелюбными чертами) через Alternative Fonts -->
+    <!-- подключаем также чистый Inter для технических элементов и Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Main font: Plus Jakarta Sans — современный, с морской элегантностью и отличной читаемостью (профессиональный, дружелюбный) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <!-- для моно / деталей оставим Inter как вспомогательный (будем использовать основным тоже, но сольём) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            background-color: #05121e;
+            color: #b3e4f0;         /* основной текст цвета морской волны (приглушённый, но не серый) */
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-weight: 350;
+        }
+
+        /* более высокая насыщенность для заголовков */
+        h1, h2, h3, h4, .strong {
+            color: #d3f2fc;          /* светлая волна */
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 9vw, 4.5rem);
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 650;
+        }
+
+        /* ссылки и акценты чуть ярче */
+        a, .accent {
+            color: #6ee7f0;
+            transition: 0.2s;
+        }
+
+        /* фиксированные фоновые слои (полностью из предыдущего варианта) */
+        .ocean-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 30% 40%, #0b2b44, #02101c 80%);
+        }
+
+        .water-glimmer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.9;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(140, 230, 255, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 90% 70%, rgba(0, 255, 200, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 45% 85%, rgba(210, 255, 240, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 15%, rgba(90, 210, 255, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 5% 60%, rgba(0, 210, 200, 0.08) 0%, transparent 30%);
+            animation: shiftGlimmer 24s infinite alternate ease-in-out;
+        }
+
+        @keyframes shiftGlimmer {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+            25% { background-position: 3% 5%, -2% 3%, 4% -1%, -3% 6%, 2% -4%; }
+            50% { background-position: -4% 8%, 5% -3%, -2% 10%, 6% 2%, -5% -2%; }
+            75% { background-position: 6% -5%, -4% 8%, 3% -6%, -5% 9%, 4% 3%; }
+            100% { background-position: -3% 2%, 2% -4%, -5% 4%, 3% -5%, -2% 8%; }
+        }
+
+        .caustic-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                repeating-linear-gradient(125deg, 
+                    rgba(255, 255, 255, 0) 0px, 
+                    rgba(150, 240, 255, 0.03) 2px, 
+                    transparent 5px,
+                    transparent 20px),
+                repeating-linear-gradient(35deg, 
+                    rgba(200, 255, 240, 0.02) 0px, 
+                    transparent 10px,
+                    transparent 30px,
+                    rgba(130, 230, 255, 0.02) 35px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.4;
+            animation: subtleWave 32s infinite linear;
+        }
+
+        @keyframes subtleWave {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(1%, -1%) scale(1.02); }
+            66% { transform: translate(-1.5%, 0.5%) scale(0.98); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .depth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #02121f;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+
+        .content {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* плавающие анимации */
+        .floating-element {
+            display: inline-block;
+            animation: floatSoft 8s infinite alternate ease-in-out;
+        }
+
+        .float-slow-reverse {
+            animation: floatSoftReverse 11s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatSoft {
+            0% { transform: translate(0px, 0px); }
+            100% { transform: translate(6px, -12px); }
+        }
+        @keyframes floatSoftReverse {
+            0% { transform: translate(0px, 0px); }
+            100% { transform: translate(-8px, 10px); }
+        }
+
+        /* металлик-неон */
+        .neon-metallic {
+            box-shadow: 
+                0 0 12px rgba(0, 255, 200, 0.2),
+                inset 0 0 10px rgba(210, 255, 240, 0.15),
+                0 5px 20px rgba(0, 40, 50, 0.6);
+            border: 1px solid rgba(140, 255, 240, 0.25);
+            backdrop-filter: blur(3px);
+            background: rgba(5, 30, 45, 0.65);
+            color: #dcf5ff;
+            transition: box-shadow 0.3s;
+        }
+
+        .neon-metallic:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 220, 0.4), inset 0 0 15px #aafff0;
+            border-color: rgba(170, 255, 240, 0.6);
+        }
+
+        .btn-neon {
+            background: rgba(10, 45, 65, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 200, 0.35);
+            color: #dcf5ff;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            box-shadow: 0 0 18px rgba(0, 200, 200, 0.2), inset 0 0 8px #8ff0e0;
+            transition: 0.25s;
+            cursor: pointer;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .btn-neon:hover {
+            background: rgba(20, 70, 100, 0.8);
+            box-shadow: 0 0 30px #00ffe0, inset 0 0 12px #bffff0;
+            border-color: #affff0;
+            transform: scale(1.02);
+        }
+
+        /* контейнеры и карточки */
+        .section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .glass-card {
+            background: rgba(8, 35, 55, 0.55);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            box-shadow: 0 8px 30px -10px #00000080;
+            color: #c8e9f0; /* цвет волны для текста внутри карточек */
+        }
+
+        .grid-2, .grid-3, .grid-4 {
+            display: grid;
+            gap: 2rem;
+        }
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        .grid-4 { grid-template-columns: repeat(4,1fr); }
+
+        @media (max-width: 720px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .section { padding: 3rem 1.2rem; }
+        }
+
+        /* микроэлементы из оригинального текста */
+        .micro-slot {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #7ad0e0;        /* волна */
+            font-weight: 500;
+            margin-top: 1rem;
+            font-family: 'Plus Jakarta Sans', monospace;
+        }
+
+        .badge {
+            background: rgba(0, 196, 160, 0.15);
+            border-left: 4px solid #2fe0d0;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Plus Jakarta Sans', monospace;
+            font-size: 0.95rem;
+            color: #b2e3ea;
+            margin: 1.5rem 0;
+        }
+
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 0.5rem 0.5rem 0.5rem 2rem;
+            margin: 2rem 0 1.5rem;
+            max-width: 440px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .player-btn {
+            background: #2fe0d0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #05121e;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .player-wave {
+            flex: 1;
+            height: 24px;
+            background: linear-gradient(90deg, #2fe0d0 0%, rgba(255,255,255,0.2) 60%);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'%3E%3Cpath d='M0,12 Q10,4 20,12 T40,12 T60,12 T80,12 T100,12 T120,12 T140,12 T160,12 T180,12 T200,12' stroke='white' fill='none' stroke-width='4' /%3E%3C/svg%3E") repeat-x;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'%3E%3Cpath d='M0,12 Q10,4 20,12 T40,12 T60,12 T80,12 T100,12 T120,12 T140,12 T160,12 T180,12 T200,12' stroke='white' fill='none' stroke-width='4' /%3E%3C/svg%3E") repeat-x;
+            background-size: 80px 24px;
+        }
+
+        .player-time {
+            font-family: 'Plus Jakarta Sans', monospace;
+            color: #7ad0e0;
+            font-size: 0.9rem;
+            margin-right: 1.5rem;
+        }
+
+        .price-tag {
+            font-size: 2.6rem;
+            font-weight: 300;
+            color: #9cecf0;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #5fe0db;
+        }
+
+        .glowing-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #2fe0d0;
+            border-radius: 50%;
+            margin-right: 0.6rem;
+            box-shadow: 0 0 10px #00C4A0;
+        }
+
+        .case-item {
+            border-bottom: 1px dashed #1e3b5a;
+            padding: 1.5rem 0;
+            color: #c2e7f0;
+        }
+
+        .red-banner {
+            background: #ff4d4d20;
+            border: 1px solid #ff4d4d60;
+            border-radius: 40px;
+            padding: 1.8rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 2rem 0 0;
+            color: #f2d5d5;
+            text-align: center;
+        }
+
+        .footer-note {
+            font-family: 'Plus Jakarta Sans', monospace;
+            color: #7aadb8;
+            font-size: 0.9rem;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #bef2fc;
+            text-shadow: 0 0 10px #0ff;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title span {
+            background: #0a3545;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            border: 1px solid #4ff;
+            color: #a5e3f0;
+        }
+
+        .mock-pdf {
+            background: #1F3A5A;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            flex: 1 1 160px;
+            text-align: center;
+            border: 1px solid #2f4a70;
+            color: #cbebf0;
+        }
+
+        .contact-line {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brief-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .brief-form input, .brief-form textarea, .brief-form select {
+            background: #112b44;
+            border: 1px solid #2c4b6e;
+            border-radius: 40px;
+            padding: 1rem 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #d7f0f5;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .brief-form textarea { grid-column: span 2; border-radius: 30px; }
+        .brief-form .full-row { grid-column: span 2; }
+
+        hr { border: 0.5px solid #1f495b40; margin: 2rem 0; }
+    </style>
+</head>
+<body>
+
+    <!-- фиксированные фоновые слои (подводный мир) -->
+    <div class="ocean-bg"></div>
+    <div class="water-glimmer"></div>
+    <div class="caustic-layer"></div>
+    <div class="depth-overlay" id="depthOverlay"></div>
+
+    <div class="content">
+
+        <!-- ХЕДЕР: имя и текст в точности как просили -->
+        <div style="padding: 2rem 2rem 0 2rem; max-width: 1300px; margin: 0 auto;">
+            <div class="header-title floating-element">
+                <i class="fas fa-water" style="color: #4ff;"></i> Игорян.рф 
+                <span>мой глубоководный маркетинговый аудит вашей рекламной стратегии и инструментариев</span>
+            </div>
+        </div>
+
+        <!-- 1. ГЕРОЙ (100vh) восстановленный текст из первого промпта -->
+        <section class="section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+            <div class="container" style="max-width:1200px; margin:0 auto;">
+                <h1>За 7–14 дней я нахожу суть вашего бизнеса и выдаю план скачкообразного роста</h1>
+                <div style="font-size: 1.4rem; color: #a5d9e6; margin: 1.5rem 0; max-width: 700px;">
+                    Без звонков. Без встреч. Только глубокий анализ и готовый отчёт.
+                </div>
+
+                <!-- аудиоплеер -->
+                <div class="audio-player floating-element">
+                    <div class="player-btn"><i class="fas fa-play"></i></div>
+                    <div class="player-wave"></div>
+                    <div class="player-time">3:00</div>
+                    <div style="margin-right: 1rem;"><i class="fas fa-volume-up" style="color: #2fe0d0;"></i></div>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+                    <a href="#brief" class="btn-neon" style="text-decoration: none;">Заполнить бриф и занять слот <i class="fas fa-arrow-right" style="margin-left: 0.7rem;"></i></a>
+                    <div class="micro-slot"><i class="fas fa-calendar-alt"></i> Сейчас открыт 1 слот на март. Следующий — апрель.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Нейроособенность (СДВГ+РАС) -->
+        <section class="section">
+            <div class="container" style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center;">
+                <div style="flex: 0 1 200px; font-size: 10rem; color: #2fe0d0; text-align: center;"><i class="fas fa-brain"></i></div>
+                <div style="flex:1;">
+                    <h2>Другая оптика</h2>
+                    <p style="font-size: 1.2rem; color: #c0e7f0;">СДВГ + РАС — не диагноз, а сверхфокус. Мой мозг сканирует то, что другие пропускают. Глубокое погружение без шума, пока остальные отвлекаются.</p>
+                    <div class="badge">Я вижу паттерны, а не симптомы. Вы получаете анализ на клеточном уровне.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Боль рынка -->
+        <section class="section">
+            <div class="container">
+                <h2>Многие обескуражены</h2>
+                <div class="grid-4" style="margin: 2rem 0;">
+                    <div class="glass-card neon-metallic"><i class="fas fa-chart-line" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span class="stat-number">60–70%</span><br>комиссии съедают прибыль</div>
+                    <div class="glass-card neon-metallic"><i class="fas fa-gavel" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span>законы каждые 2 месяца</span></div>
+                    <div class="glass-card neon-metallic"><i class="fas fa-pause-circle" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span>рост остановился</span></div>
+                    <div class="glass-card neon-metallic"><i class="fas fa-question-circle" style="color: #2fe0d0; font-size: 2.2rem;"></i><br><span>«Не знаю, к кому крикнуть»</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Решение (4 шага) -->
+        <section class="section">
+            <div class="container">
+                <h2>Как это работает</h2>
+                <div class="grid-4">
+                    <div class="glass-card card-float neon-metallic"><i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>1. Вы грузите данные</h3><p>выгрузки, метрики, финансы</p></div>
+                    <div class="glass-card card-float2 neon-metallic"><i class="fas fa-brain" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>2. Гиперфокус 7–14 дней</h3><p>полное погружение без отвлечений</p></div>
+                    <div class="glass-card card-float neon-metallic"><i class="fas fa-file-pdf" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>3. Отчёт 20–50 стр</h3><p>+ чек-листы + дашборд</p></div>
+                    <div class="glass-card card-float2 neon-metallic"><i class="fas fa-rocket" style="font-size: 2.5rem; color: #2fe0d0;"></i><h3>4. Внедряете — рост</h3><p>скачкообразный результат</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Что внутри отчёта (мокапы) -->
+        <section class="section">
+            <div class="container">
+                <h2>Что именно вы получите</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;">
+                    <div class="mock-pdf floating-element"><i class="fas fa-search"></i><br>Узел «где застревает рост»</div>
+                    <div class="mock-pdf float-slow-reverse"><i class="fas fa-check-double"></i><br>Чек-лист на 30 дней</div>
+                    <div class="mock-pdf floating-element"><i class="fas fa-project-diagram"></i><br>Схема «с кем работать»</div>
+                    <div class="mock-pdf float-slow-reverse"><i class="fas fa-chart-bar"></i><br>График до/после</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Результаты клиентов -->
+        <section class="section">
+            <div class="container">
+                <h2>Результаты</h2>
+                <div class="case-item"><span class="glowing-dot"></span> <strong>+47%</strong> к выручке на WB за 38 дней</div>
+                <div class="case-item"><span class="glowing-dot"></span> <strong>+62%</strong> маржи в инфобизнесе</div>
+                <div class="case-item"><span class="glowing-dot"></span> <strong>1,8 млн руб.</strong> вернули на логистике</div>
+                <div class="case-item"><span class="glowing-dot"></span> ещё 2 анонимных кейса в портфолио</div>
+            </div>
+        </section>
+
+        <!-- 7. Ценообразование и ограничение слотов -->
+        <section class="section" id="pricing">
+            <div class="container">
+                <h2>Выбирайте свой слот</h2>
+                <div class="grid-3">
+                    <div class="glass-card neon-metallic" style="padding:2rem;">
+                        <span style="font-size: 0.9rem; text-transform: uppercase;">Тестовый мартовский</span>
+                        <div class="price-tag">39 000 ₽</div>
+                        <div class="micro-slot" style="margin: 0 0 1rem;">только 1 место — для первого клиента месяца</div>
+                        <a href="#brief" class="btn-neon" style="display:inline-block; text-decoration:none;">Занять слот</a>
+                    </div>
+                    <div class="glass-card neon-metallic" style="padding:2rem;">
+                        <span style="font-size: 0.9rem; text-transform: uppercase;">Стандартный</span>
+                        <div class="price-tag">59 000 ₽</div>
+                        <div class="micro-slot" style="margin: 0 0 1rem;">обычная цена со следующего клиента</div>
+                        <a href="#brief" class="btn-neon" style="display:inline-block; text-decoration:none;">Занять слот</a>
+                    </div>
+                    <div class="glass-card neon-metallic" style="padding:2rem;">
+                        <span style="font-size: 0.9rem; text-transform: uppercase;">Премиум</span>
+                        <div class="price-tag">89 000 ₽</div>
+                        <div class="micro-slot" style="margin: 0 0 1rem;">+30 дней чат-поддержки и приоритет</div>
+                        <a href="#brief" class="btn-neon" style="display:inline-block; text-decoration:none;">Занять слот</a>
+                    </div>
+                </div>
+                <div class="red-banner">
+                    <strong>Я работаю только с 2–3 клиентами одновременно</strong> — полностью погружаюсь в каждый проект. Поэтому мест очень мало. Сейчас открыт <strong>1 слот на март</strong> по цене 39 000₽. Как только займётся — цена 59 000₽.
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Отзывы (5–7) -->
+        <section class="section">
+            <div class="container">
+                <h2>Отзывы</h2>
+                <div class="grid-3">
+                    <div class="glass-card floating-element"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Алексей, e-com: «+63% всего за месяц. Никаких созвонов, просто готовый план»</div>
+                    <div class="glass-card float-slow-reverse"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Екатерина, инфобиз: «отчёт на 40 стр разложил всё по полкам. Вернули 2,2 млн»</div>
+                    <div class="glass-card floating-element"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Дмитрий, производство: «не верил, пока не получил схему. Спасибо»</div>
+                    <div class="glass-card float-slow-reverse"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Иван, WB: «47% за 38д — рабочий зверь»</div>
+                    <div class="glass-card floating-element"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Ольга, услуги: «анализ глубже, чем у всех, кого нанимала»</div>
+                    <div class="glass-card float-slow-reverse"><i class="fas fa-user-circle" style="font-size: 2rem;"></i> Анна, стартап: «через 2 недели поняли куда расти»</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. FAQ -->
+        <section class="section">
+            <div class="container">
+                <h2>Вопросы</h2>
+                <div class="grid-3">
+                    <div class="glass-card neon-metallic"><strong>Сколько времени занимает?</strong> 7–14 дней чистого анализа.</div>
+                    <div class="glass-card neon-metallic"><strong>Нужно ли созваниваться?</strong> Ноль звонков. Полностью асинхронно.</div>
+                    <div class="glass-card neon-metallic"><strong>Что если я из другой ниши?</strong> Любая ниша — я ищу закономерности.</div>
+                    <div class="glass-card neon-metallic"><strong>Можно оплатить частями?</strong> Да, обсуждаемо.</div>
+                    <div class="glass-card neon-metallic"><strong>Гарантия?</strong> 14 дней полного возврата, если не устроит.</div>
+                    <div class="glass-card neon-metallic"><strong>Кто будет видеть данные?</strong> Только я, NDA по умолчанию.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Финальный CTA + форма брифа -->
+        <section class="section" id="brief">
+            <div class="container glass-card" style="max-width: 900px;">
+                <h2>Готовы наконец-то докопаться до сути вашего бизнеса?</h2>
+                <div class="brief-form">
+                    <input type="text" placeholder="Ниша / сайт / компания">
+                    <input type="text" placeholder="Текущие проблемы (коротко)">
+                    <input type="text" placeholder="Ссылки / выгрузки / медиа">
+                    <input type="text" placeholder="Бюджет на проект">
+                    <input type="text" placeholder="Желаемая дата старта">
+                    <textarea rows="3" placeholder="Дополнительно: что важно учесть?"></textarea>
+                    <div class="full-row"><button class="btn-neon" style="width: 100%;">Отправить бриф и забронировать слот</button></div>
+                    <div class="full-row micro-slot"><i class="fas fa-lock"></i> Все данные защищены. Никаких звонков.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. Контакты и доверие -->
+        <section class="section" style="padding: 2rem;">
+            <div class="container contact-line">
+                <div><i class="fab fa-telegram" style="color: #2fe0d0;"></i> Telegram-бот: @deepdive_bot</div>
+                <div><i class="fas fa-envelope"></i> hello@deepfocus.ru</div>
+                <div><a href="#" style="color: #b3e4f0; border-bottom: 1px dotted;">Политика конфиденциальности</a></div>
+            </div>
+            <div class="container micro-slot" style="text-align: center; margin-top: 2rem;">
+                <i class="fas fa-shield-alt"></i> Все данные защищены. Я не передаю их третьим лицам.
+            </div>
+        </section>
+
+        <!-- 12. Footer -->
+        <footer style="max-width: 1300px; margin: 0 auto 2rem; padding: 2rem; border-top: 1px solid #1f495b; display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <span class="footer-note">© 2025 — Асинхронный гиперфокус-анализ</span>
+            <span class="footer-note">Сделано для тех, кто устал от общих советов</span>
+        </footer>
+    </div>
+
+    <!-- скрипт затемнения при скролле + мелкая интерактивность плеера -->
+    <script>
+        (function() {
+            const overlay = document.getElementById('depthOverlay');
+            if (overlay) {
+                function updateDepth() {
+                    const scrollY = window.scrollY;
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    let progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+                    let opacity = Math.min(progress * 0.7, 0.55);
+                    overlay.style.opacity = opacity;
+                }
+                window.addEventListener('scroll', updateDepth);
+                window.addEventListener('resize', updateDepth);
+                updateDepth();
+            }
+
+            // плеер (просто алерт)
+            document.querySelector('.player-btn')?.addEventListener('click', function() {
+                alert('⭐ здесь будет аудиодорожка с вашим голосом (автозапуск с выключенным звуком)');
+            });
+        })();
+    </script>
+</body>
+</html>
