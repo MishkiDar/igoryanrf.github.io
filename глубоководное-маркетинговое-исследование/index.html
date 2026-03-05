@@ -430,7 +430,7 @@
             text-shadow: 0 0 10px #0ff;
             display: flex;
             align-items: center;
-            justify-content: center;  /* Центрирование по горизонтали */
+            justify-content: center;
             gap: 0.8rem;
             flex-wrap: wrap;
             text-align: center;
@@ -498,14 +498,17 @@
             justify-content: space-between;
         }
 
+        /* ===== ФОРМА В ОДИН СТОЛБЕЦ ===== */
         .brief-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
             margin-top: 2rem;
+            width: 100%;
         }
 
-        .brief-form input, .brief-form textarea {
+        .brief-form input, 
+        .brief-form textarea {
             background: #112b44;
             border: 1px solid #2c4b6e;
             border-radius: 40px;
@@ -515,13 +518,13 @@
             font-size: 1rem;
             width: 100%;
         }
-        .brief-form textarea { grid-column: span 2; }
-        .brief-form .full-row { grid-column: span 2; }
-
-        .footer-note {
-            font-family: monospace;
-            color: #7aadb8;
-            font-size: 0.9rem;
+        
+        .brief-form textarea { 
+            width: 100%; 
+        }
+        
+        .brief-form .full-row { 
+            width: 100%; 
         }
 
         /* Стили для сообщения об успехе */
@@ -561,9 +564,13 @@
             padding-top: 1.5rem;
         }
 
+        .footer-note {
+            font-family: monospace;
+            color: #7aadb8;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 640px) {
-            .brief-form { grid-template-columns: 1fr; }
-            .brief-form textarea { grid-column: span 1; }
             .section { padding: 2.5rem 1rem; }
             h2 { font-size: 1.8rem; }
             .header-title { font-size: 1.4rem; padding: 0.6rem 1.2rem; }
@@ -736,13 +743,13 @@
             </div>
         </section>
 
-        <!-- Бриф (форма) -->
+        <!-- Бриф (форма в один столбец) -->
         <section class="section" id="brief">
             <div class="container glass-card" style="max-width: 900px;" id="briefContainer">
                 <h2>Готовы заказать маркетинговое исследование?</h2>
                 <div class="brief-form" id="briefForm">
                     <input type="text" id="niche" placeholder="Ниша / сайт" required>
-                    <input type="text" id="questions" placeholder="Текущие вопросы" required>
+                    <input type="text" id="questions" placeholder="Текущие вопросы / Ваши контакты (не забудьте)" required>
                     <input type="text" id="links" placeholder="Ссылки / выгрузки">
                     <input type="text" id="budget" placeholder="Бюджет на рекламу">
                     <input type="text" id="startDate" placeholder="Желаемая дата старта">
@@ -833,13 +840,9 @@
                 updateBubbleSpeeds();
             }
 
-            // Telegram Bot API
+            // Telegram Bot API с правильным chat_id
             const TOKEN = '8622911736:AAFdxaAhMIY8SFC-W79JKLKF8qUn4wCxO78';
-            const CHAT_ID = '8622911736'; // В данном случае это ID бота, но для отправки сообщений нужен chat_id пользователя или группы
-            // Примечание: для отправки сообщений ботом нужен chat_id получателя.
-            // Здесь используется ID бота, но обычно нужно указать ID чата/пользователя.
-            // Если бот должен отправлять сообщения вам, нужно узнать ваш chat_id.
-            // В демо-режиме используем ID бота, но на практике замените на реальный chat_id.
+            const CHAT_ID = '7094985962'; // Правильный ID пользователя @gargaross
 
             const submitBtn = document.getElementById('submitBtn');
             const briefForm = document.getElementById('briefForm');
