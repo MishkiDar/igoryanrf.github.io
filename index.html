@@ -492,6 +492,54 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        /* Новые стили для подвала */
+        .site-footer {
+            margin-top: 40px;
+            padding: 25px 10px;
+            text-align: center;
+            color: #9fcaff;
+            font-size: 14px;
+            background: rgba(10, 25, 55, 0.35);
+            border-top: 1px solid rgba(0,150,255,0.25);
+            backdrop-filter: blur(6px);
+        }
+
+        .footer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .footer-col {
+            min-width: 180px;
+        }
+
+        .footer-col p {
+            margin: 6px 0;
+        }
+
+        .site-footer a {
+            color: #4fd6ff;
+            text-decoration: none;
+        }
+
+        .site-footer a:hover {
+            text-shadow: 0 0 6px #4fd6ff;
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .footer-col {
+                min-width: unset;
+            }
+        }
     </style>
 </head>
 <body>
@@ -542,7 +590,7 @@
             <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;">
                 <div class="mock-item mock-float1"><i class="fas fa-camera"></i><br>Ваши фото и описания</div>
                 <div class="mock-item mock-float2"><i class="fas fa-mobile-alt"></i><br>Адаптация под телефон</div>
-                <div class="mock-item mock-float3"><i class="fas fa-link"></i><br>Ссылка на соцсети / WhatsApp</div>
+                <div class="mock-item mock-float3"><i class="fas fa-link"></i><br>Ссылка на соцсети / Telegram</div>
                 <div class="mock-item mock-float4"><i class="fas fa-tag"></i><br>Цена и форма заявки</div>
             </div>
         </section>
@@ -578,7 +626,7 @@
                 <div class="brief-form" id="briefForm">
                     <input type="text" id="name" placeholder="Ваше имя" required>
                     <input type="text" id="hobby" placeholder="Какое у вас хобби?" required>
-                    <input type="text" id="contact" placeholder="Telegram / WhatsApp / email" required>
+                    <input type="text" id="contact" placeholder="Telegram / Телефон / E-mail" required>
                     <div style="width:100%;"><button class="btn-neon" id="submitBtn" style="width: 100%;">Отправить и забрать сайт за 2000₽</button></div>
                     <div class="micro-slot" style="text-align:center;"><i class="fas fa-lock"></i> Без спама, только по делу</div>
                 </div>
@@ -598,21 +646,31 @@
             </div>
         </section>
 
-        <!-- Контакты -->
-        <section class="section" style="padding: 2rem;">
-            <div class="contact-line">
-                <div><i class="fab fa-telegram" style="color: #2fe0d0;"></i> @igor_hobby_site</div>
-                <div><i class="fas fa-envelope"></i> hello@игорян.рф</div>
-                <div><a href="#" style="color: #b3e4f0;">Политика обработки данных</a></div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer style="max-width: 1300px; margin: 0 auto 2rem; padding: 2rem; border-top: 1px solid #1f495b; display: flex; justify-content: space-between; flex-wrap: wrap;">
-            <span class="footer-note">© 2025 Игорян.рф — сайты для хобби</span>
-            <span class="footer-note">Ваше увлечение заслуживает клиентов</span>
-        </footer>
+        <!-- Контакты (убраны, т.к. дублируются в подвале) -->
+        
     </div>
+
+    <!-- НОВЫЙ ПОДВАЛ (вставлен из предоставленного кода) -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+
+            <div class="footer-col">
+                <p>ИНН: 782035015940</p>
+                <p>Кузнецов Игорь Олегович</p>
+            </div>
+
+            <div class="footer-col">
+                <p><a href="/политика-конфиденциальности.html">Политика конфиденциальности</a></p>
+                <p><a href="https://игорян.рф/oferta.pdf" target="_blank">Публичная оферта 19.01.2026</a></p>
+            </div>
+
+            <div class="footer-col">
+                <p><a href="tel:+79811665458">+7 (981) 166‑54‑58</a></p>
+                <p><a href="mailto:igorkuzja@yandex.ru">igorkuzja@yandex.ru</a></p>
+            </div>
+
+        </div>
+    </footer>
 
     <script>
         (function() {
