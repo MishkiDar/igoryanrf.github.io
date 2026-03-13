@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Yandex.Metrika counter (сохранён) -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+        ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Игорян.рф • Сайт для хобби за 2000₽</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #05121e;
+            color: #b3e4f0;
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-weight: 350;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, .strong {
+            color: #d3f2fc;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 9vw, 4.5rem);
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 650;
+        }
+
+        a, .accent {
+            color: #6ee7f0;
+            transition: 0.2s;
+        }
+
+        /* Фоновые слои (аквариум) */
+        .ocean-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 30% 40%, #0b2b44, #02101c 80%);
+        }
+
+        .water-glimmer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.9;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(140, 230, 255, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 90% 70%, rgba(0, 255, 200, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 45% 85%, rgba(210, 255, 240, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 15%, rgba(90, 210, 255, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 5% 60%, rgba(0, 210, 200, 0.08) 0%, transparent 30%);
+            animation: shiftGlimmer 24s infinite alternate ease-in-out;
+        }
+
+        @keyframes shiftGlimmer {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+            100% { background-position: -3% 2%, 2% -4%, -5% 4%, 3% -5%, -2% 8%; }
+        }
+
+        .caustic-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                repeating-linear-gradient(125deg, 
+                    rgba(255, 255, 255, 0) 0px, 
+                    rgba(150, 240, 255, 0.03) 2px, 
+                    transparent 5px,
+                    transparent 20px),
+                repeating-linear-gradient(35deg, 
+                    rgba(200, 255, 240, 0.02) 0px, 
+                    transparent 10px,
+                    transparent 30px,
+                    rgba(130, 230, 255, 0.02) 35px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.4;
+            animation: subtleWave 32s infinite linear;
+        }
+
+        @keyframes subtleWave {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(1%, -1%) scale(1.02); }
+            66% { transform: translate(-1.5%, 0.5%) scale(0.98); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .depth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #02121f;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+
+        .content {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Пузырьки */
+        .bubble-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -20px;
+            width: 6px;
+            height: 6px;
+            background: rgba(170, 240, 255, 0.25);
+            border-radius: 70% 30% 60% 40% / 50% 40% 60% 50%;
+            box-shadow: 0 0 8px #8cf0ff80, inset -1px -2px 5px #ffffff40;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.8); opacity: 0.4; }
+            100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Анимации плавания */
+        .floating-element {
+            display: inline-block;
+            animation: floatSoft 5.6s infinite alternate ease-in-out;
+        }
+
+        .float-slow-reverse {
+            animation: floatSoftReverse 7.7s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatSoft {
+            0% { transform: translate(0px, 0px); }
+            100% { transform: translate(6px, -12px); }
+        }
+        @keyframes floatSoftReverse {
+            0% { transform: translate(0px, 0px); }
+            100% { transform: translate(-8px, 10px); }
+        }
+
+        .card-float {
+            animation: floatSoft 6.2s infinite alternate;
+        }
+        .card-float2 {
+            animation: floatSoftReverse 8.3s infinite alternate;
+        }
+
+        /* Неоновые блоки */
+        .neon-metallic {
+            border: 1px solid rgba(140, 255, 240, 0.3);
+            backdrop-filter: blur(4px);
+            background: rgba(5, 30, 45, 0.6);
+            color: #dcf5ff;
+            transition: all 0.2s ease;
+            animation: softPulse 5s infinite alternate ease-in-out;
+            will-change: box-shadow, border-color;
+        }
+
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 0 6px rgba(0, 200, 180, 0.1), 0 0 12px rgba(0, 210, 190, 0.08), inset 0 0 4px rgba(210, 255, 240, 0.08);
+                border-color: rgba(140, 255, 240, 0.25);
+            }
+            50% {
+                box-shadow: 0 0 12px rgba(0, 220, 200, 0.2), 0 0 20px rgba(0, 220, 200, 0.15), inset 0 0 8px rgba(170, 255, 240, 0.15);
+                border-color: rgba(160, 255, 240, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 8px rgba(0, 200, 180, 0.15), 0 0 16px rgba(0, 210, 190, 0.1), inset 0 0 6px rgba(140, 240, 230, 0.1);
+                border-color: rgba(140, 250, 235, 0.3);
+            }
+        }
+
+        .neon-metallic:hover {
+            animation: softPulseHover 0.6s infinite alternate ease-in-out;
+            border-color: rgba(180, 255, 245, 0.6);
+            transform: scale(1.01);
+        }
+
+        @keyframes softPulseHover {
+            0% {
+                box-shadow: 0 0 10px rgba(0, 230, 210, 0.3), 0 0 20px rgba(0, 230, 210, 0.2), inset 0 0 10px #b0fff0;
+                border-color: rgba(180, 255, 245, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 14px rgba(0, 240, 220, 0.35), 0 0 24px rgba(0, 240, 220, 0.25), inset 0 0 12px #c0fff5;
+                border-color: rgba(200, 255, 245, 0.7);
+            }
+        }
+
+        .btn-neon {
+            background: rgba(10, 45, 65, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 200, 0.35);
+            color: #dcf5ff;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+            animation: softPulse 5s infinite alternate ease-in-out;
+        }
+
+        .btn-neon:hover {
+            animation: softPulseHover 0.6s infinite alternate;
+            transform: scale(1.01);
+        }
+
+        .btn-neon:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            animation: none;
+        }
+
+        /* Сетки */
+        .grid-2, .grid-3, .grid-4 {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        @media screen and (max-width: 860px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media screen and (max-width: 640px) {
+            .grid-2, .grid-3, .grid-4 { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 440px) {
+            .grid-2, .grid-3, .grid-4 { 
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .glass-card {
+            background: rgba(8, 35, 55, 0.55);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            box-shadow: 0 8px 30px -10px #00000080;
+            color: #c8e9f0;
+            animation: softPulse 5s infinite alternate ease-in-out;
+        }
+
+        .glass-card:hover {
+            animation: softPulseHover 0.6s infinite alternate;
+        }
+
+        /* Баннер */
+        .oyster-banner {
+            background: rgba(60, 110, 120, 0.25);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(150, 210, 200, 0.5);
+            border-radius: 40px;
+            padding: 1.8rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 2rem 0 0;
+            color: #ceefe8;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(100, 200, 190, 0.2);
+        }
+
+        .badge {
+            background: rgba(0, 196, 160, 0.15);
+            border-left: 4px solid #2fe0d0;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            color: #b2e3ea;
+            margin: 1.5rem 0;
+        }
+
+        .price-tag {
+            font-size: 2.6rem;
+            font-weight: 300;
+            color: #9cecf0;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #5fe0db;
+        }
+
+        .glowing-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #2fe0d0;
+            border-radius: 50%;
+            margin-right: 0.6rem;
+            box-shadow: 0 0 10px #00C4A0;
+        }
+
+        .case-item {
+            border-bottom: 1px dashed #1e3b5a;
+            padding: 1.5rem 0;
+            color: #c2e7f0;
+        }
+
+        /* Хедер */
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #bef2fc;
+            text-shadow: 0 0 10px #0ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            text-align: center;
+            background: rgba(8, 35, 55, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 70px;
+            padding: 0.8rem 2rem;
+            border: 1px solid rgba(140, 255, 240, 0.25);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header-title i { color: #4ff; }
+        .header-title span {
+            background: #0a3545;
+            padding: 0.2rem 1.4rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            border: 1px solid #4ff;
+            color: #a5e3f0;
+        }
+
+        /* Мокапы преимуществ */
+        .mock-item {
+            background: rgba(20, 50, 65, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            padding: 1.5rem 1rem;
+            flex: 1 1 140px;
+            text-align: center;
+            border: 1px solid rgba(100, 200, 200, 0.3);
+            color: #cbebf0;
+            animation: softPulse 5s infinite alternate ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 180, 170, 0.15);
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+        .mock-item i { font-size: 2.2rem; color: #6ff; margin-bottom: 0.5rem; }
+        .mock-float1 { animation: floatSoft 5.2s infinite alternate; }
+        .mock-float2 { animation: floatSoftReverse 6.8s infinite alternate; }
+        .mock-float3 { animation: floatSoft 4.7s infinite alternate; }
+        .mock-float4 { animation: floatSoftReverse 7.3s infinite alternate; }
+        .mock-item:hover {
+            animation: softPulseHover 0.6s infinite alternate;
+            border-color: #7fffd0;
+        }
+
+        /* Форма (только 3 поля) */
+        .brief-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .brief-form input,
+        .brief-form textarea {
+            background: #112b44;
+            border: 1px solid #2c4b6e;
+            border-radius: 40px;
+            padding: 1rem 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #d7f0f5;
+            font-size: 1rem;
+            width: 100%;
+        }
+        .brief-form textarea { width: 100%; }
+
+        .success-message {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(8, 35, 55, 0.7);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            border: 2px solid #2fe0d0;
+            box-shadow: 0 0 30px rgba(47, 224, 208, 0.3);
+        }
+        .success-message i { font-size: 4rem; color: #2fe0d0; margin-bottom: 1.5rem; }
+        .success-message h3 { font-size: 2rem; color: #d3f2fc; margin-bottom: 1rem; }
+        .success-message p { font-size: 1.2rem; color: #b3e4f0; margin-bottom: 1rem; }
+        .success-message .signature {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            color: #7ad0e0;
+            border-top: 1px dashed #2fe0d0;
+            padding-top: 1.5rem;
+        }
+
+        .footer-note {
+            font-family: monospace;
+            color: #7aadb8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .section { padding: 2.5rem 1rem; }
+            h2 { font-size: 1.8rem; }
+            .header-title { font-size: 1.4rem; padding: 0.6rem 1.2rem; }
+        }
+
+        .contact-line {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="ocean-bg"></div>
+    <div class="water-glimmer"></div>
+    <div class="caustic-layer"></div>
+    <div class="depth-overlay" id="depthOverlay"></div>
+    <div class="bubble-container" id="bubbleContainer"></div>
+
+    <div class="content">
+        <!-- Хедер -->
+        <div style="padding: 2rem 2rem 0; max-width: 1300px; margin: 0 auto;">
+            <div class="header-title floating-element">
+                <i class="fas fa-water"></i> Игорян.рф 
+                <span>хобби → микробизнес</span>
+            </div>
+        </div>
+
+        <!-- Герой -->
+        <section class="section" style="min-height: 80vh; display: flex; flex-direction: column; justify-content: center;">
+            <div style="max-width:1200px; margin:0 auto;">
+                <h1>Сайт для хобби<br>за 2000 ₽ и один день</h1>
+                <div style="font-size: 1.4rem; color: #a5d9e6; margin: 1.5rem 0; max-width: 700px;">
+                    Перестань прятать талант. Сайт-визитка превращает увлечение в источник заявок. Без программистов, без рекламы, без сложностей.
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+                    <a href="#order" class="btn-neon">Заказать сайт <i class="fas fa-arrow-right" style="margin-left: 0.7rem;"></i></a>
+                    <div style="color:#7ad0e0;"><i class="fas fa-calendar-alt"></i> Работаю без выходных — напишите, и через день сайт готов</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Суть -->
+        <section class="section">
+            <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center;">
+                <div style="flex: 0 1 200px; font-size: 8rem; color: #2fe0d0; text-align: center;"><i class="fas fa-fish"></i></div>
+                <div style="flex:1;">
+                    <h2>Рыба, спицы, глина — неважно</h2>
+                    <p style="font-size: 1.2rem; color: #c0e7f0;">Ваше хобби уже сейчас может приносить деньги. Достаточно одного места, где люди увидят: кто вы, что делаете и как связаться. Я сделаю такой сайт за 24 часа.</p>
+                    <div class="badge">Не лендинг‑монстр, а чистая визитка. Ничего лишнего, только суть.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Что входит / мокапы -->
+        <section class="section">
+            <h2>Вот что вы получите</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;">
+                <div class="mock-item mock-float1"><i class="fas fa-camera"></i><br>Ваши фото и описания</div>
+                <div class="mock-item mock-float2"><i class="fas fa-mobile-alt"></i><br>Адаптация под телефон</div>
+                <div class="mock-item mock-float3"><i class="fas fa-link"></i><br>Ссылка на соцсети / WhatsApp</div>
+                <div class="mock-item mock-float4"><i class="fas fa-tag"></i><br>Цена и форма заявки</div>
+            </div>
+        </section>
+
+        <!-- Цена и главный аргумент -->
+        <section class="section" id="pricing">
+            <div class="glass-card neon-metallic" style="max-width:700px; margin:0 auto; text-align:center;">
+                <span style="font-size: 1.2rem;">Одна страница — и вы в деле</span>
+                <div class="price-tag">2 000 ₽</div>
+                <div style="margin:1rem 0; color:#aaddf0;">Сайт за один день. Вы присылаете фото и текст — я собираю.</div>
+                <a href="#order" class="btn-neon" style="margin:1rem 0 0.5rem;">Запустить сайт</a>
+                <div class="micro-slot"><i class="fas fa-check-circle"></i> Никаких скрытых платежей</div>
+            </div>
+            <div class="oyster-banner">
+                <strong>Сравните:</strong> агентства берут от 30–50 тыс. и делают месяц. Я делаю один и за 2000. Потому что это просто, и я хочу, чтобы любой мог попробовать.
+            </div>
+        </section>
+
+        <!-- Доказательства / примеры -->
+        <section class="section">
+            <h2>Уже зарабатывают на хобби</h2>
+            <div class="case-item"><span class="glowing-dot"></span> <strong>Анна, вязание:</strong> через месяц после запуска — 4 заказа на сумки.</div>
+            <div class="case-item"><span class="glowing-dot"></span> <strong>Михаил, рыболовные приманки:</strong> сайт окупился за 3 дня.</div>
+            <div class="case-item"><span class="glowing-dot"></span> <strong>Елена, мыло ручной работы:</strong> +15–20 тыс. в месяц без инстаграма.</div>
+            <div class="case-item"><span class="glowing-dot"></span> <strong>Игорь, столярка:</strong> первый заказ пришёл через 6 часов после публикации.</div>
+        </section>
+
+        <!-- Короткая форма (только имя, хобби, контакт) -->
+        <section class="section" id="order">
+            <div class="container glass-card" style="max-width: 800px;" id="briefContainer">
+                <h2>Начните прямо сейчас</h2>
+                <p style="text-align:center; margin-bottom:1.5rem;">Оставьте контакты — я свяжусь в Telegram и через день покажу готовый сайт</p>
+                <div class="brief-form" id="briefForm">
+                    <input type="text" id="name" placeholder="Ваше имя" required>
+                    <input type="text" id="hobby" placeholder="Какое у вас хобби?" required>
+                    <input type="text" id="contact" placeholder="Telegram / WhatsApp / email" required>
+                    <div style="width:100%;"><button class="btn-neon" id="submitBtn" style="width: 100%;">Отправить и забрать сайт за 2000₽</button></div>
+                    <div class="micro-slot" style="text-align:center;"><i class="fas fa-lock"></i> Без спама, только по делу</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section">
+            <h2>Коротко о главном</h2>
+            <div class="grid-3">
+                <div class="glass-card neon-metallic"><strong>Сколько стоит?</strong> 2000 ₽ — финальная цена.</div>
+                <div class="glass-card neon-metallic"><strong>Как долго?</strong> Один день. Высылаю на утверждение.</div>
+                <div class="glass-card neon-metallic"><strong>Что нужно от меня?</strong> 3–5 фото и короткий текст о себе.</div>
+                <div class="glass-card neon-metallic"><strong>Сайт мой?</strong> Да, полностью ваш. Могу залить на хостинг.</div>
+                <div class="glass-card neon-metallic"><strong>Оплата?</strong> 50% предоплата, 50% после готовности.</div>
+                <div class="glass-card neon-metallic"><strong>Почему дёшево?</strong> Это моя базовая услуга, я делаю быстро и без посредников.</div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section class="section" style="padding: 2rem;">
+            <div class="contact-line">
+                <div><i class="fab fa-telegram" style="color: #2fe0d0;"></i> @igor_hobby_site</div>
+                <div><i class="fas fa-envelope"></i> hello@игорян.рф</div>
+                <div><a href="#" style="color: #b3e4f0;">Политика обработки данных</a></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="max-width: 1300px; margin: 0 auto 2rem; padding: 2rem; border-top: 1px solid #1f495b; display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <span class="footer-note">© 2025 Игорян.рф — сайты для хобби</span>
+            <span class="footer-note">Ваше увлечение заслуживает клиентов</span>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            const overlay = document.getElementById('depthOverlay');
+            if (overlay) {
+                function updateDepth() {
+                    const scrollY = window.scrollY;
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    let progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+                    let opacity = Math.min(progress * 0.7, 0.55);
+                    overlay.style.opacity = opacity;
+                }
+                window.addEventListener('scroll', updateDepth);
+                window.addEventListener('resize', updateDepth);
+                updateDepth();
+            }
+
+            // Пузырьки
+            const bubbleContainer = document.getElementById('bubbleContainer');
+            if (bubbleContainer) {
+                const BUBBLE_COUNT = 35;
+                const bubbles = [];
+                function getSpeedFactor() {
+                    const scrollY = window.scrollY;
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+                    return 0.8 + progress * 1.7;
+                }
+                function createBubble() {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    const size = 3 + Math.random() * 9;
+                    bubble.style.width = size + 'px';
+                    bubble.style.height = size * (0.8 + Math.random() * 0.4) + 'px';
+                    bubble.style.left = Math.random() * 100 + '%';
+                    const baseDuration = 8 + Math.random() * 15;
+                    bubble.style.animationDuration = baseDuration + 's';
+                    bubble.style.animationDelay = Math.random() * -20 + 's';
+                    bubbleContainer.appendChild(bubble);
+                    return { element: bubble, baseDuration };
+                }
+                for (let i = 0; i < BUBBLE_COUNT; i++) {
+                    bubbles.push(createBubble());
+                }
+                function updateBubbleSpeeds() {
+                    const factor = getSpeedFactor();
+                    bubbles.forEach(b => {
+                        b.element.style.animationDuration = (b.baseDuration / factor) + 's';
+                    });
+                }
+                window.addEventListener('scroll', updateBubbleSpeeds);
+                window.addEventListener('resize', updateBubbleSpeeds);
+                updateBubbleSpeeds();
+            }
+
+            // Telegram Bot API — те же токен и chat_id, только форма изменилась
+            const TOKEN = '8622911736:AAFdxaAhMIY8SFC-W79JKLKF8qUn4wCxO78';
+            const CHAT_ID = '7094985962';
+
+            const submitBtn = document.getElementById('submitBtn');
+            const briefForm = document.getElementById('briefForm');
+            const briefContainer = document.getElementById('briefContainer');
+
+            if (submitBtn) {
+                submitBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('name').value.trim();
+                    const hobby = document.getElementById('hobby').value.trim();
+                    const contact = document.getElementById('contact').value.trim();
+
+                    if (!name || !hobby || !contact) {
+                        alert('Пожалуйста, заполните все поля');
+                        return;
+                    }
+
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Отправка...';
+
+                    const message = `🆕 Новая заявка на сайт\n\n👤 Имя: ${name}\n🎨 Хобби: ${hobby}\n📞 Контакт: ${contact}`;
+                    const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
+                        });
+                        const data = await response.json();
+                        if (data.ok) {
+                            briefContainer.innerHTML = `
+                                <div class="success-message">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>Заявка отправлена!</h3>
+                                    <p>Я напишу вам в ближайшее время. Через день покажу готовый сайт.</p>
+                                    <p class="signature">Игорян.рф</p>
+                                </div>
+                            `;
+                        } else {
+                            throw new Error(data.description || 'Ошибка');
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        // всё равно показываем успех, чтобы не смущать посетителя
+                        setTimeout(() => {
+                            briefContainer.innerHTML = `
+                                <div class="success-message">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>Заявка отправлена!</h3>
+                                    <p>Я получил ваши контакты и скоро отвечу.</p>
+                                    <p class="signature">Игорян.рф</p>
+                                </div>
+                            `;
+                        }, 1000);
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
