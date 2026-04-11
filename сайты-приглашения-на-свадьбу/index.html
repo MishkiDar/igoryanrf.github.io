@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Игорян.рф | Истории пар | Свадебные сайты-приглашения</title>
+    <meta name="description" content="Реальные истории пар, которые заказали сайт-приглашение на свадьбу у Игоряна. Вдохновляйтесь и создавайте свой уникальный свадебный сайт.">
+    
+    <!-- Элегантные шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-bg: #faf9f7;
+            --color-surface: #ffffff;
+            --color-text: #1a1a1a;
+            --color-text-light: #6d6d6d;
+            --color-accent: #b89b72;
+            --color-border: rgba(184, 155, 114, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { font-size: 62.5%; scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Шапка */
+        .header {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 4rem;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 500;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo i {
+            color: var(--color-accent);
+            font-size: 2.4rem;
+        }
+        
+        .page-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.8rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-text);
+        }
+        
+        .page-subtitle {
+            font-size: 1.8rem;
+            color: var(--color-text-light);
+            text-align: center;
+            margin-bottom: 5rem;
+            font-style: italic;
+        }
+        
+        /* Сетка статей */
+        .stories-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+        
+        /* Карточка статьи */
+        .story-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        
+        .story-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Заголовок статьи (кликабельный) */
+        .story-header {
+            padding: 2.5rem 3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            transition: background 0.2s;
+        }
+        
+        .story-header:hover {
+            background: rgba(184, 155, 114, 0.03);
+        }
+        
+        .story-emoji {
+            font-size: 3.2rem;
+            min-width: 5rem;
+            text-align: center;
+        }
+        
+        .story-title-wrapper {
+            flex: 1;
+        }
+        
+        .story-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+        
+        .story-subtitle {
+            font-size: 1.6rem;
+            color: var(--color-text-light);
+            font-style: italic;
+        }
+        
+        .story-toggle {
+            color: var(--color-accent);
+            font-size: 2rem;
+            transition: transform 0.3s;
+            min-width: 3rem;
+            text-align: center;
+        }
+        
+        .story-card.active .story-toggle {
+            transform: rotate(180deg);
+        }
+        
+        /* Содержимое статьи (скрыто по умолчанию) */
+        .story-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 3rem;
+            transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s ease, padding 0.3s ease;
+            border-top: 1px solid transparent;
+        }
+        
+        .story-card.active .story-content {
+            max-height: 2000px;
+            opacity: 1;
+            padding: 2rem 3rem 3rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .story-text {
+            font-size: 1.7rem;
+            line-height: 1.9;
+            color: var(--color-text);
+        }
+        
+        .story-text p {
+            margin-bottom: 2rem;
+        }
+        
+        .story-text strong {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+        
+        .story-highlight {
+            background: rgba(184, 155, 114, 0.08);
+            padding: 2rem 2.5rem;
+            border-radius: 8px;
+            margin: 2.5rem 0;
+            border-left: 3px solid var(--color-accent);
+            font-style: normal;
+        }
+        
+        .story-text .mention {
+            font-weight: 600;
+            color: var(--color-accent);
+            border-bottom: 1px dashed var(--color-accent);
+        }
+        
+        /* CTA внутри статьи */
+        .story-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--color-bg);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .story-cta p {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--color-accent);
+            color: white;
+            padding: 1.4rem 3.5rem;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid var(--color-accent);
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: var(--color-accent);
+        }
+        
+        /* CTA внизу страницы */
+        .global-cta {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 4rem;
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+        
+        .global-cta h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .global-cta p {
+            font-size: 1.8rem;
+            color: var(--color-text-light);
+            margin-bottom: 2.5rem;
+        }
+        
+        .telegram-link {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: var(--color-accent);
+            text-decoration: none;
+            border: 1px solid var(--color-accent);
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+        
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 3rem 0 5rem;
+            color: var(--color-text-light);
+            font-size: 1.4rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+        
+        /* Адаптив */
+        @media (max-width: 600px) {
+            .page-title { font-size: 3.6rem; }
+            .story-header { padding: 2rem; }
+            .story-title { font-size: 2.2rem; }
+            .story-emoji { font-size: 2.8rem; min-width: 4rem; }
+            .story-card.active .story-content { padding: 1.5rem 2rem 2.5rem; }
+            .global-cta { padding: 3rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-heart"></i>
+                Игорян.рф
+            </a>
+        </div>
+    </header>
+
+    <!-- Заголовок страницы -->
+    <div class="container">
+        <h1 class="page-title">Реальные истории пар</h1>
+        <p class="page-subtitle">Вдохновляйтесь — и создавайте свою историю</p>
+    </div>
+
+    <!-- Список статей -->
+    <div class="container">
+        <div class="stories-grid" id="storiesGrid">
+            
+            <!-- Статья 1 -->
+            <div class="story-card" data-story="1">
+                <div class="story-header">
+                    <span class="story-emoji">💍</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Свадьба через 5 дней: как мы всё успели и не сошли с ума</h2>
+                        <p class="story-subtitle">История Кати и Димы, у которых сорвалась площадка, а гости уже купили билеты</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Знаете это чувство, когда за пять дней до свадьбы вам звонят из ресторана и говорят: «Извините, у нас прорвало трубу, мы не сможем вас принять»? Мы — Катя и Дима — узнали его в полной мере.</p>
+                        <p>Билеты куплены. Гости из трёх городов. Платье висит. Кольца готовы. А площадки нет.</p>
+                        <p>Первые сутки ушли на панику. Вторые — на поиск нового места. Нашли. Старый загородный клуб в 40 километрах от города. Красиво, но... как объяснить 60 гостям, куда ехать? Обзванивать каждого? Писать в WhatsApp и надеяться, что никто не потеряется?</p>
+                        <div class="story-highlight">
+                            «И тут подруга скинула контакт Игоряна. "Он делает сайты за сутки", — сказала она. Я не поверила. Но написал.»
+                        </div>
+                        <p><span class="mention">Игорян.рф</span> ответил через 15 минут. Никаких «давайте созвонимся через неделю». Просто: «Пришлите фото, имена, адрес. Завтра в обед будет готовая ссылка».</p>
+                        <p>И ведь правда — в обед следующего дня у нас был сайт. С картой проезда, таймером обратного отсчёта и тёплыми словами для гостей. Мы просто скинули ссылку в общий чат. И знаете что? Ни один человек не опоздал и не заблудился. А бабушка Димы сказала, что это «самое современное приглашение в её жизни».</p>
+                        <div class="story-cta">
+                            <p>🤵 👰 Хотите такой же сайт-спасение?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Написать Игоряну</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 2 -->
+            <div class="story-card" data-story="2">
+                <div class="story-header">
+                    <span class="story-emoji">👵</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Почему бабушка плакала от нашего приглашения (и это хорошо)</h2>
+                        <p class="story-subtitle">Как мы учли интересы старшего поколения и сделали сайт, который тронул всех</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Моей бабушке 78. Она не пользуется WhatsApp, не сидит в Telegram и до сих пор пишет нам бумажные письма на праздники. Когда мы с Андреем решили делать сайт-приглашение, я переживала: а как же бабушка? Она ведь даже не откроет ссылку.</p>
+                        <p>Я поделилась этим с <span class="mention">Игоряном</span>, когда обсуждала заказ. И он сказал то, что меня поразило: «Сделаем специальную версию для неё. Крупный шрифт, минимум анимации, всё чётко и ясно».</p>
+                        <p>Мы распечатали для бабушки отдельную открытку с QR-кодом. Племянник помог ей навести камеру. И когда на экране её старенького планшета открылась страница с нашими фотографиями и крупной надписью «Дорогая бабушка Лида, мы тебя очень ждём!» — она заплакала.</p>
+                        <div class="story-highlight">
+                            «Она сказала: "Я думала, вы про меня забудете в этой вашей цифровой суете. А вы сделали специально для меня". Это был самый трогательный момент подготовки.»
+                        </div>
+                        <p>Остальным гостям мы отправили обычную ссылку с красивыми анимациями. И все были в восторге. Но для меня главное — что <span class="mention">игорян.рф</span> учёл даже такую мелочь, как потребности пожилого человека. Это дорогого стоит.</p>
+                        <div class="story-cta">
+                            <p>❤️ Хотите, чтобы ваш сайт тронул каждого гостя?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Обсудить с Игоряном</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 3 -->
+            <div class="story-card" data-story="3">
+                <div class="story-header">
+                    <span class="story-emoji">⏰</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">3 ошибки, из-за которых гости опаздывают на церемонию</h2>
+                        <p class="story-subtitle">Чек-лист для невест: как сделать так, чтобы все приехали вовремя</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Я — Алиса, и я работаю свадебным координатором. За 5 лет я видела всё: гости приезжали не в тот ресторан, путали города, опаздывали на 2 часа, потому что «навигатор повёл через лес». Хочу поделиться тремя главными ошибками и способом их избежать.</p>
+                        <p><strong>Ошибка №1: Адрес только в тексте.</strong> Люди ленятся вбивать адрес вручную. Они копируют с ошибками или вообще не смотрят.</p>
+                        <p><strong>Ошибка №2: Нет таймера.</strong> «Ой, а я думал, сбор гостей в 16:00, а не в 15:00». Знакомо?</p>
+                        <p><strong>Ошибка №3: Сложная навигация.</strong> «Поверните у синего забора» — плохая идея. Забор перекрасили.</p>
+                        <div class="story-highlight">
+                            «Самое простое решение — сайт-приглашение с интерактивной картой и таймером обратного отсчёта. <span class="mention">Игорян.рф</span> делает такие за сутки. Цена смешная, а нервов экономит — вагон.»
+                        </div>
+                        <p>На последней свадьбе, которую я вела, пара заказала сайт у Игоряна. Там была кнопка «Построить маршрут», которая сразу открывала Яндекс.Карты с готовой точкой. И таймер, который показывал, сколько осталось до церемонии. Результат? Из 70 гостей опоздал только один — и то потому, что проспал.</p>
+                        <p>Не повторяйте чужих ошибок. Сделайте так, чтобы гости думали о празднике, а не о том, как до него добраться.</p>
+                        <div class="story-cta">
+                            <p>🚗 Хотите, чтобы гости приехали вовремя?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Заказать сайт с картой</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 4 -->
+            <div class="story-card" data-story="4">
+                <div class="story-header">
+                    <span class="story-emoji">🥂</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Как мы отказались от бумажных приглашений и потратили деньги на шампанское</h2>
+                        <p class="story-subtitle">История про экономию, экологию и ящик просекко</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Мы с Лёшей — пара эко-активистов. Ну, в разумных пределах. И когда встал вопрос о приглашениях, мы посчитали: 60 открыток дизайнерской печати + конверты + марки = почти 15 000 рублей. И всё это через месяц отправится в мусорку.</p>
+                        <p>Я полезла искать альтернативы. Наткнулась на <span class="mention">игорян.рф</span>. Посмотрела примеры. Написала. Игорь ответил быстро и просто: «Сделаю сайт за 4900. Ссылка живёт год. Никакой бумаги».</p>
+                        <p>Мы решили рискнуть. И знаете что? Это было лучшее решение.</p>
+                        <div class="story-highlight">
+                            «На сэкономленные 10 тысяч мы купили ящик отличного просекко и устроили welcome-бар для гостей. Все были в восторге. А сайт от Игоряна до сих пор работает — гости пересматривают фото и пишут тёплые слова.»
+                        </div>
+                        <p>Ни один человек не сказал: «А где моя бумажная открыточка?». Наоборот — все хвалили современный формат и то, как удобно всё посмотреть в телефоне. А мама Лёши, консерватор со стажем, сказала: «Ну наконец-то вы придумали что-то умное, а не эти ваши бумажки».</p>
+                        <p>Так что если сомневаетесь — не сомневайтесь. Лучше потратьте деньги на впечатления, а не на макулатуру.</p>
+                        <div class="story-cta">
+                            <p>🍾 Сэкономьте на бумаге — потратьте на шампанское!</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Узнать цену сайта</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 5 -->
+            <div class="story-card" data-story="5">
+                <div class="story-header">
+                    <span class="story-emoji">🗺️</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Жених из Новосибирска, невеста из Казани: как мы собирали гостей с двух городов</h2>
+                        <p class="story-subtitle">История пары на расстоянии и одного сайта, который объединил всех</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Я из Казани. Руслан из Новосибирска. Познакомились в Москве, пожениться решили там же. Гости — 30 человек из Казани, 25 из Новосибирска, ещё 10 из других городов. Квест «объясни каждому, куда ехать» грозил затянуться на недели.</p>
+                        <p>Руслан предложил сделать сайт. Я скептически отнеслась — думала, это дорого и сложно. Но он нашёл <span class="mention">игорян.рф</span>, и всё оказалось наоборот.</p>
+                        <p>Игорь сделал нам сайт с двумя вкладками: «Гостям из Казани» и «Гостям из Новосибирска». В каждой — карта проезда от аэропорта, варианты отелей, рекомендации, чем заняться в Москве до свадьбы. И общий таймер обратного отсчёта до церемонии.</p>
+                        <div class="story-highlight">
+                            «Гости потом говорили, что чувствовали себя не "приглашёнными", а "долгожданными". Сайт создал ощущение, что мы позаботились о каждом заранее.»
+                        </div>
+                        <p>Особенно тронуло, что <span class="mention">игорян.рф</span> добавил на сайт раздел «Наша история» — как мы познакомились в Москве, как летали друг к другу. Многие гости, которые не знали деталей, были растроганы.</p>
+                        <p>Сайт стал не просто приглашением, а целым порталом для наших гостей. И стоил он при этом всего 4900 рублей. За эти деньги мы получили спокойствие и кучу комплиментов.</p>
+                        <div class="story-cta">
+                            <p>✈️ У вас гости из разных городов? Сделаем сайт для каждого!</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Рассказать про свой случай</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 6 -->
+            <div class="story-card" data-story="6">
+                <div class="story-header">
+                    <span class="story-emoji">👔</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Что делать, если мама жениха не одобряет дресс-код?</h2>
+                        <p class="story-subtitle">Как мы решили конфликт поколений с помощью одной страницы на сайте</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Мы с Женей хотели свадьбу в стиле «бохо»: песочные тона, натуральные ткани, венки. А его мама, Ирина Петровна, человек классический. «Что за цыганщина? — говорила она. — Я приду в своём любимом красном платье, и не уговаривайте».</p>
+                        <p>Спорить бесполезно. Объяснять на словах — тоже. И тут Женя вспомнил про <span class="mention">игорян.рф</span>. «А давай на сайте сделаем раздел с примерами?»</p>
+                        <p>Написали Игорю. Он не просто добавил раздел «Дресс-код», а сделал его визуально понятным: фотопримеры одежды в наших цветах, палитра, даже варианты для женщин 50+. И главное — мягкий, уважительный текст: «Мы будем рады, если вы поддержите цветовую гамму нашего праздника. Вот несколько идей».</p>
+                        <div class="story-highlight">
+                            «Ирина Петровна открыла сайт, посмотрела примеры и... купила себе песочный брючный костюм! Сказала: "Оказывается, это выглядит очень благородно". Конфликт был исчерпан без единого слова.»
+                        </div>
+                        <p>На свадьбе она выглядела великолепно и потом весь вечер рассказывала подругам, какой у нас «стильный современный сайт» и как она «сама выбирала наряд по картинкам».</p>
+                        <p>Мораль: иногда лучший способ договориться — это показать, а не рассказать. <span class="mention">Игорян.рф</span> дал нам этот инструмент.</p>
+                        <div class="story-cta">
+                            <p>👗 Хотите элегантно объяснить дресс-код?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Добавим на сайт</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 7 -->
+            <div class="story-card" data-story="7">
+                <div class="story-header">
+                    <span class="story-emoji">💸</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Топ-5 бесполезных трат на свадьбу (куда мы зря выкинули деньги)</h2>
+                        <p class="story-subtitle">Честный разбор от пары, которая прошла через это</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Прошёл год после нашей свадьбы. Мы с Викой сели и посчитали: на что реально ушли деньги, а что было зря. Делюсь честно.</p>
+                        <p><strong>1. Салфетки с именами гостей (3000₽).</strong> Никто не заметил. Серьёзно. Лежат в коробке.</p>
+                        <p><strong>2. Золотые стулья в аренду (8000₽).</strong> На фото красиво, в жизни — никто не вспомнит.</p>
+                        <p><strong>3. Сложный свадебный торт за 15 000₽.</strong> Вкусный, но гости наелись закусок и ели его без энтузиазма.</p>
+                        <p><strong>4. Фотозона с живыми цветами (12 000₽).</strong> Цветы завяли через день. Фото есть, но без них тоже было бы фото.</p>
+                        <p><strong>5. Бумажные приглашения ручной работы (11 000₽).</strong> Выбросили почти все.</p>
+                        <div class="story-highlight">
+                            «Единственное, на чём мы не экономили и не прогадали — сайт от <span class="mention">игорян.рф</span>. 4900 рублей, и гости до сих пор его вспоминают. Пересматривают, пишут комментарии. Салфетки никто не вспоминает. А сайт — да.»
+                        </div>
+                        <p>Вывод: тратьте деньги на впечатления и удобство. Сайт-приглашение — это и то, и другое. А салфетки... ну, вы поняли.</p>
+                        <div class="story-cta">
+                            <p>💡 Хотите вложиться в то, что реально запомнится?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Обсудить сайт</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 8 -->
+            <div class="story-card" data-story="8">
+                <div class="story-header">
+                    <span class="story-emoji">📋</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Как мы собирали пожелания от гостей без танцев с бубном</h2>
+                        <p class="story-subtitle">История про онлайн-форму, которая спасла нас от сотни звонков</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>У нас было 70 гостей. И у каждого — свои предпочтения по еде: кто-то не ест мясо, у кого-то аллергия на орехи, кто-то пьёт только белое. Менеджер ресторана сказала: «Соберите данные и пришлите таблицу за неделю».</p>
+                        <p>Я представила, как буду обзванивать 70 человек, и мне стало плохо. А потом написала <span class="mention">Игоряну</span> с вопросом: «Можно ли на сайте сделать форму для сбора пожеланий?»</p>
+                        <p>Он ответил: «Конечно. Какие поля нужны?» Через день на нашем сайте-приглашении появилась вкладка «Анкета гостя». Там были вопросы про еду, напитки и даже «Ваша любимая песня для танцев».</p>
+                        <div class="story-highlight">
+                            «Гости заполнили анкету за три дня. Мы просто открыли таблицу в Google, которую сформировал сайт, и отправили её в ресторан. Официанты были счастливы. Мы — тоже.»
+                        </div>
+                        <p>Бонусом мы узнали, что дядя Боря обожает «Руки вверх», и диджей поставил ему персональный трек. Дядя Боря был в восторге и сказал, что это «лучшая свадьба в его жизни».</p>
+                        <p><span class="mention">Игорян.рф</span> сделал из обычного сайта полноценный инструмент организации. Это реально удобно.</p>
+                        <div class="story-cta">
+                            <p>📊 Хотите собрать данные гостей без стресса?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Добавим форму на сайт</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 9 -->
+            <div class="story-card" data-story="9">
+                <div class="story-header">
+                    <span class="story-emoji">🌿</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Свадьба в стиле «Тайный сад»: как мы объяснили гостям концепцию</h2>
+                        <p class="story-subtitle">История про атмосферу, которую невозможно передать словами</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Наша свадьба была не просто «в ресторане». Мы арендовали старую усадьбу с заброшенным садом, привезли туда сотни свечей, мха, папоротников. Концепция — «Тайный сад». Но как объяснить гостям, что это не просто «природа и шашлыки»?</p>
+                        <p>В бумажном приглашении не передать атмосферу. А на сайте от <span class="mention">игорян.рф</span> мы смогли сделать это идеально.</p>
+                        <p>Игорь добавил на главный экран нашу любимую мелодию из фильма «Амели», поставил фоном фото усадьбы в сумерках, а в разделе «О свадьбе» появился текст, который мы писали вместе: про тайный сад как метафору наших отношений — что-то дикое, живое, прекрасное.</p>
+                        <div class="story-highlight">
+                            «Гости потом говорили: "Мы зашли на сайт, и у нас мурашки пошли. Сразу стало понятно, какое настроение вы хотите создать". Это была лучшая похвала.»
+                        </div>
+                        <p>Сайт задал тон всему празднику. Люди пришли подготовленными морально и визуально. Многие девушки были в платьях с цветочным принтом, мужчины — в льняных рубашках. Всё сложилось.</p>
+                        <p>С <span class="mention">игорян.рф</span> мы получили не просто страницу с датой и адресом, а настоящий портал в атмосферу нашего праздника.</p>
+                        <div class="story-cta">
+                            <p>✨ Хотите передать атмосферу вашей свадьбы?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Создадим настроение</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статья 10 -->
+            <div class="story-card" data-story="10">
+                <div class="story-header">
+                    <span class="story-emoji">🌙</span>
+                    <div class="story-title-wrapper">
+                        <h2 class="story-title">Один день из жизни свадебного организатора: как спасти невесту в 2 часа ночи</h2>
+                        <p class="story-subtitle">Взгляд профессионала на то, кто реально выручает в критический момент</p>
+                    </div>
+                    <span class="story-toggle"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Меня зовут Лена, я свадебный организатор с 6-летним стажем. Я знаю всё о форс-мажорах. Но случай с Лерой и Пашей запомнила надолго.</p>
+                        <p>Свадьба в субботу. Четверг, 2 часа ночи. Звонок от Леры в истерике: «Лена, мы забыли сделать приглашения! Вообще! У нас только список гостей в заметках!»</p>
+                        <p>Типографии закрыты. Дизайнеры спят. Гости прилетают через 36 часов.</p>
+                        <p>Я набрала <span class="mention">Игоряна</span>. Просто потому что знаю: он работает по ночам. Ответ пришёл через 10 минут: «Скидывай имена, дату, пару фото. Утром будет ссылка».</p>
+                        <div class="story-highlight">
+                            «В 9 утра у Леры был готовый сайт. Красивый, с картой, таймером, разделом дресс-кода. Она скинула ссылку в чаты гостям. Никто даже не понял, что это был аврал. Все подумали, что так и задумано.»
+                        </div>
+                        <p>С тех пор <span class="mention">игорян.рф</span> — мой секретный контакт для экстренных случаев. Я знаю, что если паре нужен сайт «на вчера» — надо писать ему. Цена адекватная, скорость фантастическая, качество на уровне.</p>
+                        <p>Не доводите до моего случая. Закажите сайт заранее. Но если что — вы знаете, кто работает по ночам.</p>
+                        <div class="story-cta">
+                            <p>🚨 Нужен сайт срочно? Даже ночью?</p>
+                            <a href="https://t.me/gargaross" class="cta-button">Написать Игоряну</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Глобальный CTA -->
+        <div class="global-cta">
+            <h3>Готовы написать свою историю?</h3>
+            <p>Каждая пара уникальна. Расскажите о себе — и я сделаю сайт, который будет отражать именно вас.</p>
+            <a href="https://t.me/gargaross" class="cta-button">Обсудить ваш сайт</a>
+            <div>
+                <a href="https://t.me/gargaross" class="telegram-link">@gargaross</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 <a href="#">Игорян.рф</a> | Срочные сайты-приглашения на свадьбу</p>
+            <p style="margin-top: 1rem;">Сделано с любовью к вашим историям ❤️</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript для раскрытия статей -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const storyCards = document.querySelectorAll('.story-card');
+            
+            storyCards.forEach(card => {
+                const header = card.querySelector('.story-header');
+                
+                header.addEventListener('click', function() {
+                    // Закрываем все другие открытые карточки (опционально)
+                    // storyCards.forEach(c => {
+                    //     if (c !== card) c.classList.remove('active');
+                    // });
+                    
+                    // Переключаем текущую
+                    card.classList.toggle('active');
+                });
+            });
+            
+            // Открываем первую статью по умолчанию для примера
+            if (storyCards.length > 0) {
+                storyCards[0].classList.add('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
