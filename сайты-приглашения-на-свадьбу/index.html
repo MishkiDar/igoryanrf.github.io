@@ -25,7 +25,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        html { font-size: 62.5%; scroll-behavior: smooth; }
+        html { 
+            font-size: 62.5%; /* 10px по умолчанию для десктопа */
+            scroll-behavior: smooth; 
+        }
         
         body {
             font-family: 'EB Garamond', serif;
@@ -294,51 +297,52 @@
             text-decoration: none;
         }
         
-        /* ========== АДАПТИВ: МОБИЛЬНЫЕ УВЕЛИЧЕНИЯ ШРИФТОВ ========== */
+        /* ========== МОБИЛЬНЫЕ — РЕАЛЬНО БОЛЬШИЕ ШРИФТЫ ========== */
         @media (max-width: 768px) {
-            html { font-size: 55%; } /* чуть увеличиваем базовый размер */
-            .container { padding: 0 1.6rem; }
+            html { font-size: 100%; } /* 16px база — теперь на мобилке текст НАСТОЯЩИЙ */
             
-            .page-title { font-size: 3.8rem; }
-            .page-subtitle { font-size: 2rem; margin-bottom: 3.5rem; }
+            .container { padding: 0 1.8rem; }
             
-            .story-header { padding: 2rem 2rem; gap: 1.2rem; }
-            .story-emoji { font-size: 3.6rem; min-width: 4.8rem; }
-            .story-title { font-size: 2.4rem; line-height: 1.35; }
-            .story-subtitle { font-size: 1.7rem; }
-            .story-toggle { font-size: 2.2rem; }
+            .page-title { font-size: 2.8rem; }
+            .page-subtitle { font-size: 1.4rem; margin-bottom: 3rem; }
             
-            .story-card.active .story-content { padding: 1.8rem 2rem 2.5rem; }
-            .story-text { font-size: 1.9rem; line-height: 1.75; }
-            .story-text p { margin-bottom: 2rem; }
-            .story-highlight { font-size: 1.85rem; padding: 2rem 2rem; margin: 2rem 0; }
+            .story-header { padding: 1.8rem 1.8rem; gap: 1.2rem; }
+            .story-emoji { font-size: 2.8rem; min-width: 4rem; }
+            .story-title { font-size: 1.8rem; line-height: 1.4; }
+            .story-subtitle { font-size: 1.2rem; }
+            .story-toggle { font-size: 1.6rem; }
             
-            .story-cta p { font-size: 2rem; }
-            .cta-button { font-size: 1.6rem; padding: 1.6rem 3rem; letter-spacing: 0.05em; }
+            .story-card.active .story-content { padding: 1.5rem 1.8rem 2rem; }
+            .story-text { font-size: 1.2rem; line-height: 1.65; }
+            .story-text p { margin-bottom: 1.5rem; }
+            .story-highlight { font-size: 1.15rem; padding: 1.5rem; margin: 1.8rem 0; }
             
-            .global-cta { padding: 3rem 2rem; }
-            .global-cta h3 { font-size: 2.8rem; }
-            .global-cta p { font-size: 1.9rem; }
-            .telegram-link { font-size: 2rem; padding: 1.2rem 2.8rem; }
+            .story-cta p { font-size: 1.3rem; }
+            .cta-button { font-size: 1rem; padding: 1rem 2rem; letter-spacing: 0.08em; }
             
-            .footer { font-size: 1.6rem; padding: 3rem 0 4rem; }
-            .logo { font-size: 2.8rem; }
+            .global-cta { padding: 2.5rem 1.5rem; }
+            .global-cta h3 { font-size: 1.8rem; }
+            .global-cta p { font-size: 1.2rem; }
+            .telegram-link { font-size: 1.2rem; padding: 0.8rem 2rem; }
+            
+            .footer { font-size: 1rem; padding: 2rem 0 3rem; }
+            .logo { font-size: 2rem; }
+            .logo i { font-size: 1.6rem; }
         }
         
-        /* для совсем маленьких (iPhone SE и тд) */
+        /* для совсем маленьких (iPhone SE, 375px) — ещё чуть увеличиваем комфорт */
         @media (max-width: 480px) {
-            html { font-size: 52%; }
-            .story-title { font-size: 2.2rem; }
-            .story-text { font-size: 1.85rem; }
-            .story-highlight { font-size: 1.8rem; }
-            .global-cta h3 { font-size: 2.6rem; }
-            .cta-button { font-size: 1.5rem; padding: 1.4rem 2.8rem; }
+            .story-title { font-size: 1.7rem; }
+            .story-text { font-size: 1.18rem; }
+            .story-highlight { font-size: 1.12rem; }
+            .global-cta h3 { font-size: 1.7rem; }
         }
         
-        /* десктоп — почти без изменений, только слегка подправили базовый размер для воздуха */
-        @media (min-width: 1200px) {
+        /* десктоп — классическая элегантность, базовый шрифт 10px как было */
+        @media (min-width: 1024px) {
             html { font-size: 62.5%; }
-            .story-text { font-size: 1.75rem; }
+            .story-text { font-size: 1.7rem; }
+            .story-title { font-size: 2.6rem; }
         }
     </style>
 </head>
