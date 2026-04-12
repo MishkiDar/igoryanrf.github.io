@@ -294,14 +294,51 @@
             text-decoration: none;
         }
         
-        /* Адаптив */
-        @media (max-width: 600px) {
-            .page-title { font-size: 3.6rem; }
-            .story-header { padding: 2rem; }
-            .story-title { font-size: 2.2rem; }
-            .story-emoji { font-size: 2.8rem; min-width: 4rem; }
-            .story-card.active .story-content { padding: 1.5rem 2rem 2.5rem; }
+        /* ========== АДАПТИВ: МОБИЛЬНЫЕ УВЕЛИЧЕНИЯ ШРИФТОВ ========== */
+        @media (max-width: 768px) {
+            html { font-size: 55%; } /* чуть увеличиваем базовый размер */
+            .container { padding: 0 1.6rem; }
+            
+            .page-title { font-size: 3.8rem; }
+            .page-subtitle { font-size: 2rem; margin-bottom: 3.5rem; }
+            
+            .story-header { padding: 2rem 2rem; gap: 1.2rem; }
+            .story-emoji { font-size: 3.6rem; min-width: 4.8rem; }
+            .story-title { font-size: 2.4rem; line-height: 1.35; }
+            .story-subtitle { font-size: 1.7rem; }
+            .story-toggle { font-size: 2.2rem; }
+            
+            .story-card.active .story-content { padding: 1.8rem 2rem 2.5rem; }
+            .story-text { font-size: 1.9rem; line-height: 1.75; }
+            .story-text p { margin-bottom: 2rem; }
+            .story-highlight { font-size: 1.85rem; padding: 2rem 2rem; margin: 2rem 0; }
+            
+            .story-cta p { font-size: 2rem; }
+            .cta-button { font-size: 1.6rem; padding: 1.6rem 3rem; letter-spacing: 0.05em; }
+            
             .global-cta { padding: 3rem 2rem; }
+            .global-cta h3 { font-size: 2.8rem; }
+            .global-cta p { font-size: 1.9rem; }
+            .telegram-link { font-size: 2rem; padding: 1.2rem 2.8rem; }
+            
+            .footer { font-size: 1.6rem; padding: 3rem 0 4rem; }
+            .logo { font-size: 2.8rem; }
+        }
+        
+        /* для совсем маленьких (iPhone SE и тд) */
+        @media (max-width: 480px) {
+            html { font-size: 52%; }
+            .story-title { font-size: 2.2rem; }
+            .story-text { font-size: 1.85rem; }
+            .story-highlight { font-size: 1.8rem; }
+            .global-cta h3 { font-size: 2.6rem; }
+            .cta-button { font-size: 1.5rem; padding: 1.4rem 2.8rem; }
+        }
+        
+        /* десктоп — почти без изменений, только слегка подправили базовый размер для воздуха */
+        @media (min-width: 1200px) {
+            html { font-size: 62.5%; }
+            .story-text { font-size: 1.75rem; }
         }
     </style>
 </head>
