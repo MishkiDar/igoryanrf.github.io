@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Электронное приглашение на свадьбу — сайт под ключ | Игорян.рф</title>
+    <meta name="description" content="Сайт-приглашение на свадьбу: карта, таймер, анкета гостя, дресс-код, подтверждение в мессенджере. Цена от 2 200 ₽. Сделано для пар, которые ценят порядок и атмосферу.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #faf9f7;
+            font-family: 'Inter', sans-serif;
+            color: #1e1e1e;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* типографика */
+        h1, h2, h3, .serif {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(184, 155, 114, 0.15);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(184, 155, 114, 0.1);
+            color: #b89b72;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .title-lg {
+            font-size: 3.8rem;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #5a5a5a;
+            max-width: 680px;
+            margin-bottom: 48px;
+        }
+
+        /* сетка фич — 11 пунктов */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 48px 0 24px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 28px 24px;
+            border-radius: 20px;
+            border: 1px solid #f0ede8;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .feature-card:hover {
+            border-color: #b89b72;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            color: #b89b72;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.55rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #4a4a4a;
+            line-height: 1.5;
+        }
+
+        /* ценовая матрица */
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: white;
+            flex: 1;
+            min-width: 260px;
+            border-radius: 32px;
+            padding: 32px 24px 40px;
+            border: 1px solid #e9e2d9;
+            transition: all 0.2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
+
+        .pricing-card.popular {
+            border-color: #b89b72;
+            background: #fffdfa;
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 32px;
+            background: #b89b72;
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 14px;
+            border-radius: 40px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: #b89b72;
+            margin: 20px 0 8px;
+        }
+
+        .price small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #7a6a5a;
+        }
+
+        .service-list {
+            list-style: none;
+            margin: 28px 0 32px;
+            text-align: left;
+        }
+
+        .service-list li {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #f2ede7;
+        }
+
+        .service-list i.fa-check-circle {
+            color: #b89b72;
+            font-size: 1.1rem;
+            width: 22px;
+        }
+
+        .btn-outline-light {
+            background: transparent;
+            border: 1px solid #b89b72;
+            color: #b89b72;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline-light:hover {
+            background: #b89b72;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #b89b72;
+            border: none;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary:hover {
+            background: #9f7f58;
+            transform: translateY(-2px);
+        }
+
+        .how-work {
+            background: #ffffffea;
+            border-radius: 32px;
+            padding: 48px 40px;
+            margin-top: 20px;
+            border: 1px solid #ece5dd;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+        }
+
+        .step-num {
+            width: 48px;
+            height: 48px;
+            background: #f3efe9;
+            color: #b89b72;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 0 auto 20px;
+        }
+
+        /* CTA финал */
+        .final-cta {
+            background: #1e1e1e;
+            color: white;
+            border-radius: 32px;
+            padding: 64px 48px;
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .final-cta h2 {
+            font-size: 2.8rem;
+            color: white;
+        }
+
+        .final-cta .btn-primary {
+            background: #b89b72;
+            margin-top: 24px;
+            font-size: 1.1rem;
+            padding: 16px 42px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #6c6a67;
+            font-size: 0.8rem;
+            border-top: 1px solid #e3dfd9;
+        }
+
+        @media (max-width: 780px) {
+            .section { padding: 48px 0; }
+            .title-lg { font-size: 2.6rem; }
+            .pricing-grid { flex-direction: column; max-width: 420px; margin-left: auto; margin-right: auto; }
+            .how-work { padding: 32px 24px; }
+            .steps { flex-direction: column; align-items: center; }
+            .final-cta { padding: 48px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- шапка тихая -->
+    <div style="padding: 24px 0 16px; border-bottom: 1px solid #ece3db; margin-bottom: 20px;">
+        <a href="/" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; text-decoration: none; color: #1a1a1a; letter-spacing: 1px;">
+            <i class="fas fa-heart" style="color: #b89b72; margin-right: 6px;"></i> Игорян.рф
+        </a>
+    </div>
+</div>
+
+<main>
+    <!-- герой -->
+    <div class="container">
+        <div style="max-width: 780px; margin: 20px 0 40px;">
+            <span class="badge">электронное приглашение на свадьбу</span>
+            <h1 class="title-lg">Сайт, который соберёт гостей и расскажет вашу историю</h1>
+            <p class="subhead">Никакой суеты: карта, таймер, анкета, дресс-код и подтверждение в мессенджере. Всё, чтобы вы занимались любовью, а не рассылкой.</p>
+        </div>
+    </div>
+
+    <!-- ровно 11 пунктов — то, что вы делаете -->
+    <div class="container section" style="padding-top: 0;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <span class="badge">что внутри</span>
+            <h2 style="font-size: 2.6rem;">Ваш личный свадебный портал</h2>
+            <p style="color: #5a5a5a; max-width: 600px; margin: 16px auto 0;">Без лишних обещаний. Только то, что реально работает в историях пар.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>Сайт за сутки</h3><p>Готовый сайт-приглашение на следующий день после оплаты. Без ожидания.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-reply-all"></i></div><h3>Ответ за 15 минут</h3><p>Пишите в любое время — я отвечаю быстро. Никаких «перезвоню через неделю».</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div><h3>Карта и маршрут</h3><p>Кнопка «Построить маршрут» — гости откроют навигатор в один клик.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-hourglass-half"></i></div><h3>Таймер до церемонии</h3><p>Обратный отсчёт: никто не перепутает время сбора.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-eye"></i></div><h3>Версия для старшего поколения</h3><p>Крупный шрифт, минимум анимации — бабушки и дедушки всё увидят.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-qrcode"></i></div><h3>QR-код на открытке</h3><p>Распечатайте красивую карточку со ссылкой — даже консерваторы оценят.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-book-open"></i></div><h3>Раздел «Наша история»</h3><p>Расскажите гостям, как вы встретились — это сближает.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-tshirt"></i></div><h3>Дресс-код с примерами</h3><p>Фото, палитра, варианты для разных возрастов — никаких споров.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-clipboard-list"></i></div><h3>Анкета гостя</h3><p>Сбор пожеланий по еде, аллергиям, напиткам и любимой песне.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fab fa-telegram"></i></div><h3>«Приду / не приду» в мессенджер</h3><p>Гость нажимает кнопку — вы получаете ответ прямо в Telegram. Никаких звонков.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-image"></i></div><h3>Главный экран под вашу концепцию</h3><p>Фото, настроение, атмосфера — сайт становится частью праздника.</p></div>
+        </div>
+    </div>
+
+    <!-- матрица цен — честно и красиво -->
+    <div class="container section">
+        <div style="text-align: center;">
+            <span class="badge">прозрачно</span>
+            <h2 style="font-size: 2.6rem;">Выберите свой формат</h2>
+            <p class="subhead" style="margin-left: auto; margin-right: auto;">Цена зависит только от сложности и времени на реализацию. Без скрытых доплат.</p>
+        </div>
+        <div class="pricing-grid">
+            <!-- базовый минимум -->
+            <div class="pricing-card">
+                <h3>Лаконичный</h3>
+                <div class="price">2 200 ₽ <small>финал</small></div>
+                <ul class="service-list">
+                    <li><i class="fas fa-check-circle"></i> Сайт за сутки</li>
+                    <li><i class="fas fa-check-circle"></i> Карта проезда + кнопка маршрута</li>
+                    <li><i class="fas fa-check-circle"></i> Таймер обратного отсчёта</li>
+                    <li><i class="fas fa-check-circle"></i> Адаптивная вёрстка (телефоны/планшеты)</li>
+                    <li><i class="fas fa-check-circle"></i> Базовый дизайн под ваши фото</li>
+                    <li><i class="fas fa-check-circle"></i> «Приду / не приду» в мессенджер</li>
+                </ul>
+                <a href="#" class="btn-outline-light cta-selector" data-price="2200">Выбрать →</a>
+            </div>
+            <!-- оптимальный (популярный) -->
+            <div class="pricing-card popular">
+                <div class="popular-badge">выбирают пары</div>
+                <h3>С заботой о гостях</h3>
+                <div class="price">4 900 ₽ <small>финал</small></div>
+                <ul class="service-list">
+                    <li><i class="fas fa-check-circle"></i> Всё из пакета «Лаконичный»</li>
+                    <li><i class="fas fa-check-circle"></i> Версия для пожилых (крупный шрифт)</li>
+                    <li><i class="fas fa-check-circle"></i> QR-код + макет для распечатки</li>
+                    <li><i class="fas fa-check-circle"></i> Раздел «Наша история»</li>
+                    <li><i class="fas fa-check-circle"></i> Анкета гостя (еда, аллергии, песни)</li>
+                    <li><i class="fas fa-check-circle"></i> Дресс-код с фотопримерами и палитрой</li>
+                </ul>
+                <a href="#" class="btn-primary cta-selector" data-price="4900">Выбрать →</a>
+            </div>
+            <!-- всё включено -->
+            <div class="pricing-card">
+                <h3>Абсолютный максимум</h3>
+                <div class="price">7 900 ₽ <small>финал</small></div>
+                <ul class="service-list">
+                    <li><i class="fas fa-check-circle"></i> Всё из пакета «С заботой о гостях»</li>
+                    <li><i class="fas fa-check-circle"></i> Главный экран под ключ под вашу концепцию</li>
+                    <li><i class="fas fa-check-circle"></i> Дополнительные страницы (программа, отель, транспорт)</li>
+                    <li><i class="fas fa-check-circle"></i> Расширенная анимация и плавный скролл</li>
+                    <li><i class="fas fa-check-circle"></i> Индивидуальный дизайн с нуля под стиль свадьбы</li>
+                    <li><i class="fas fa-check-circle"></i> Приоритетная поддержка до дня свадьбы</li>
+                </ul>
+                <a href="#" class="btn-outline-light cta-selector" data-price="7900">Выбрать →</a>
+            </div>
+        </div>
+        <p style="text-align: center; font-size: 0.85rem; margin-top: 32px; color: #7a6a5a;"><i class="fas fa-credit-card"></i> Оплата после согласования макета. Доработки — в разумных пределах бесплатно.</p>
+    </div>
+
+    <!-- как мы работаем (честно и без маркетингового шума) -->
+    <div class="container section">
+        <div class="how-work">
+            <div style="text-align: center;">
+                <span class="badge">процесс</span>
+                <h2 style="font-size: 2.2rem;">Как появляется ваш сайт</h2>
+            </div>
+            <div class="steps">
+                <div class="step"><div class="step-num">1</div><h3>Вы пишете в Telegram</h3><p>Рассказываете дату, место, пару слов о себе.</p></div>
+                <div class="step"><div class="step-num">2</div><h3>Я уточняю детали</h3><p>Карта, таймер, анкета — какие пункты из 11 вам нужны.</p></div>
+                <div class="step"><div class="step-num">3</div><h3>Через 24 часа — черновик</h3><p>Вы смотрите сайт, вносите правки, утверждаете.</p></div>
+                <div class="step"><div class="step-num">4</div><h3>Ссылка гостям</h3><p>Отправляете ссылку и QR‑код — гости подтверждают приход.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- блок: почему сайт а не бумага (из историй) -->
+    <div class="container section">
+        <div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center;">
+            <div style="flex:1.2">
+                <span class="badge">вместо тысячи открыток</span>
+                <h2 style="font-size: 2.4rem; margin-bottom: 20px;">Не тратьте деньги на макулатуру</h2>
+                <p style="font-size: 1.05rem; color: #3a3a3a; margin-bottom: 20px;">Бумажные приглашения через месяц оказываются в мусоре. Сайт живёт всю подготовку, его удобно переслать, а гости в один клик подтверждают присутствие. Разницу в деньгах лучше потратить на просекко или welcome-бар.</p>
+                <p style="font-size: 1rem; color: #5a5a5a;">Пара заказывает сайт — вы получаете порядок, а гости — тёплое впечатление.</p>
+            </div>
+            <div style="flex:0.8; background: #efe7de; border-radius: 32px; padding: 32px; text-align: center;">
+                <i class="fas fa-envelope-open-text" style="font-size: 3rem; color: #b89b72; margin-bottom: 16px; display: block;"></i>
+                <p style="font-style: italic; font-size: 1rem;">«Сайт от Игоряна — единственное вложение, о котором мы не пожалели. Остальное — просто траты»</p>
+                <p style="margin-top: 12px;">— из истории пары</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- финальный CTA  — ведёт на ту же страницу (пока якорь) но кнопки переделаем позже-->
+    <div class="container">
+        <div class="final-cta">
+            <h2>Готовы получить сайт-приглашение?</h2>
+            <p style="margin-top: 16px; opacity: 0.8; max-width: 540px; margin-left: auto; margin-right: auto;">Напишите в Telegram @gargaross — я отвечу через 15 минут. Расскажу, какой пакет лучше подходит под вашу историю.</p>
+            <a href="https://t.me/gargaross" class="btn-primary" style="background: #b89b72; color: white; margin-top: 16px;">Написать Игоряну →</a>
+            <div style="margin-top: 20px;"><a href="https://t.me/gargaross" style="color: #d9c9b5; text-decoration: none;">@gargaross</a></div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Игорян.рф — Свадебные сайты-приглашения. С любовью к вашим историям.</p>
+        <p style="margin-top: 8px;">Работаем честно: никакой фоновой музыки, ночной спешки и ложных обещаний.</p>
+    </div>
+</footer>
+
+<!-- скрипт для сбора данных с кнопок (чтобы потом поменять ссылки, но пока просто консоль) -->
+<script>
+    document.querySelectorAll('.cta-selector, .btn-primary, .btn-outline-light').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            if(this.closest('.final-cta') && this.href.includes('t.me')) return;
+            e.preventDefault();
+            let price = this.getAttribute('data-price') || (this.innerText.includes('4900') ? '4900' : (this.innerText.includes('7900') ? '7900' : '2200'));
+            let message = `Здравствуйте! Хочу заказать сайт-приглашение. Интересует пакет стоимостью ${price} ₽. Обсудим детали?`;
+            window.open(`https://t.me/gargaross?text=${encodeURIComponent(message)}`, '_blank');
+        });
+    });
+</script>
+</body>
+</html>
