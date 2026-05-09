@@ -61,71 +61,26 @@
       touch-action: pan-y;
     }
     
-    /* Контейнер индикатора прокрутки */
-    #scroll-indicator-container {
+    /* Ползунок — теперь двигается с пальцем */
+    .mobile-hint {
       display: none;
       position: fixed;
-      right: 8px;
-      top: 8%;
-      height: 84%;
-      width: 4px;
-      z-index: 35;
+      right: 1rem;
+      color: #b8c7e0;
+      font-size: 0.6rem;
+      background: rgba(8, 12, 24, 0.65);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 0.6rem;
+      border-radius: 2rem;
+      z-index: 31;
+      border: 1px solid rgba(140, 170, 220, 0.3);
       pointer-events: none;
-    }
-    
-    /* Дорожка индикатора */
-    #scroll-indicator-track {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 100%;
-      background: rgba(140, 170, 220, 0.2);
-      border-radius: 2px;
-    }
-    
-    /* Метки-точки для каждой карточки */
-    .scroll-dot {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 6px;
-      height: 6px;
-      background: rgba(180, 200, 230, 0.5);
-      border-radius: 50%;
-      z-index: 36;
-    }
-    
-    /* Ползунок */
-    #scroll-indicator-thumb {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      width: 12px;
-      height: 12px;
-      background: linear-gradient(135deg, #c9b8e8, #8aa0d0);
-      border-radius: 50%;
-      z-index: 37;
-      box-shadow: 0 0 12px rgba(160, 140, 220, 0.6), 0 0 24px rgba(140, 120, 200, 0.3);
-      transition: top 0.15s ease-out;
-    }
-    
-    /* Подпись к ползунку */
-    #scroll-indicator-label {
-      position: absolute;
-      right: 20px;
-      transform: translateY(-50%);
-      color: #c0cef0;
-      font-size: 0.55rem;
-      font-family: 'Montserrat', 'Inter', sans-serif;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
       white-space: nowrap;
-      z-index: 38;
-      text-shadow: 0 0 8px rgba(140, 160, 210, 0.5);
-      transition: top 0.15s ease-out;
+      font-weight: 300;
+      transition: none; /* Убираем плавность для точного следования */
     }
     
     @media (max-width: 768px) {
@@ -139,8 +94,10 @@
         display: block;
       }
       
-      #scroll-indicator-container {
+      .mobile-hint {
         display: block;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
     
@@ -160,14 +117,8 @@
 <body>
   <div id="canvas-container"></div>
   <div class="hint">🌀 Двигайте мышь — камера следует за вами</div>
+  <div class="mobile-hint" id="mobile-hint-el">↕️ Веди здесь</div>
   <div id="mobile-scroll-zone"></div>
-  
-  <!-- Индикатор прокрутки для мобильных -->
-  <div id="scroll-indicator-container">
-    <div id="scroll-indicator-track"></div>
-    <div id="scroll-indicator-thumb"></div>
-    <div id="scroll-indicator-label">Веди здесь</div>
-  </div>
 
   <script type="importmap">
     {
@@ -187,7 +138,7 @@
     
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x05080f);
-    scene.fog = new THREE.Fog(0x05080f, 8.5, 38);
+    scene.fog = new THREE.Fog(0x05080f, 6.5, 32);
 
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true,
@@ -207,35 +158,36 @@
     cssRenderer.domElement.style.pointerEvents = 'none';
     container.appendChild(cssRenderer.domElement);
 
-    // Камера
-    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.6, 55);
-    camera.position.set(6.5, 2.5, 10.5);
+    // Камера — отодвинута ещё на 10% дальше
+    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.6, 50);
+    camera.position.set(5.8, 2.2, 9.5);
     camera.lookAt(0, 0.8, 0);
 
     // Освещение
     const ambient = new THREE.AmbientLight(0x2a3448);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xdce6f5, 0.9);
-    dirLight.position.set(3, 8, 5);
+    dirLight.position.set(3, 6, 5);
     dirLight.castShadow = true;
     dirLight.receiveShadow = true;
     scene.add(dirLight);
-    const fillLight = new THREE.PointLight(0x89a3c2, 0.6, 18);
+    const fillLight = new THREE.PointLight(0x89a3c2, 0.6, 16);
     fillLight.position.set(-2, 2.5, -2.5);
     scene.add(fillLight);
     
-    const accentLight = new THREE.PointLight(0xb8a9d0, 0.5, 16);
+    // Дополнительный акцентный свет для объёма
+    const accentLight = new THREE.PointLight(0xb8a9d0, 0.5, 14);
     accentLight.position.set(1, -1, 2);
     scene.add(accentLight);
 
-    // Частицы фона
+    // Частицы фона (звёзды) — расширена область
     const starsGeo = new THREE.BufferGeometry();
-    const starsCount = 800;
+    const starsCount = 700;
     const starsPos = new Float32Array(starsCount * 3);
     for (let i = 0; i < starsCount * 3; i += 3) {
-      starsPos[i] = (Math.random() - 0.5) * 30;
-      starsPos[i+1] = (Math.random() - 0.5) * 22 + 2.0;
-      starsPos[i+2] = (Math.random() - 0.5) * 26;
+      starsPos[i] = (Math.random() - 0.5) * 26;
+      starsPos[i+1] = (Math.random() - 0.5) * 18 + 1.8;
+      starsPos[i+2] = (Math.random() - 0.5) * 22;
     }
     starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
     const starsMat = new THREE.PointsMaterial({ 
@@ -249,10 +201,11 @@
     const stars = new THREE.Points(starsGeo, starsMat);
     scene.add(stars);
 
-    // ---------- КАРТОЧКИ ----------
+    // ---------- КАРТОЧКИ (дизайн сохранён) ----------
     function makeCard(title, subtitle, content, accent = false) {
       const div = document.createElement('div');
       
+      // Основа карточки — стеклянный эффект с градиентом
       div.style.width = '280px';
       div.style.maxWidth = '84vw';
       div.style.background = accent 
@@ -283,6 +236,7 @@
       html += `<h2 style="font-family:'Cormorant Garamond', 'Playfair Display', serif; font-size:1.35rem; font-weight:500; color:#eef3ff; margin:0 0 0.6rem; letter-spacing:0.02em; text-shadow: 0 0 12px rgba(180, 200, 240, 0.3);">${title}</h2>`;
       html += `<div style="font-size:0.82rem; color:#b8c7e0; font-weight:300;">${content}</div>`;
       
+      // Добавляем декоративную линию снизу для дорогого вида
       if (accent) {
         html += `<div style="margin-top: 1rem; width: 2.5rem; height: 1px; background: linear-gradient(90deg, #c9b8e8, transparent);"></div>`;
       }
@@ -291,6 +245,7 @@
       return div;
     }
 
+    // ---------- КЛИКАБЕЛЬНАЯ КНОПКА-ССЫЛКА ----------
     function makeLinkButton() {
       const div = document.createElement('div');
       
@@ -319,11 +274,13 @@
         <div style="position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-top:8px solid rgba(180, 160, 220, 0.5);"></div>
       `;
       
+      // Делаем всю карточку ссылкой
       div.addEventListener('click', (e) => {
         e.stopPropagation();
         window.open('https://vk.com/v.igore', '_blank');
       });
       
+      // Эффекты при наведении
       div.addEventListener('mouseenter', () => {
         div.style.transform = 'scale(1.03)';
         div.style.boxShadow = '0 24px 48px rgba(0,0,0,0.7), 0 0 30px rgba(160, 140, 220, 0.4), 0 0 0 1px rgba(210, 195, 240, 0.3) inset';
@@ -345,51 +302,59 @@
       return div;
     }
 
+    // ---------- СОДЕРЖАНИЕ КАРТОЧЕК ----------
     const cardData = [
+      // Карточка 0
       makeCard(
         'Только человек с нейроотличием СДВГ+РАС может создать пространство для других особенных людей',
         '',
         'И дело здесь в том, что нейротипичные (обычные люди) не только не понимают всю боль и потребность в этом, но и в большинстве даже не понимают, что проблема существует.',
         true
       ),
+      // Карточка 1
       makeCard(
         'Это правда я. СДВГ + РАС.',
         '01 · Главная',
         'Я создал это место, потому что устал притворяться нейротипичным. Обычные советы нас ломают. Обычные люди нас не понимают. Здесь говорят на нашем языке. Меня зовут Игорь. Я узнал о своих нейроотличиях, пройдя через ад. Теперь моя задача — помочь тебе пройти этот путь быстрее и легче.'
       ),
+      // Карточка 2
       makeCard(
         'Ты живёшь с инструкцией, которая тебе не подходит',
         '02 · Тяжесть',
         'Постоянный шум в голове. Хаос в планировании. Сенсорные перегрузки. Ты всю жизнь слышишь «соберись», «не ленись», «будь проще». Но ты и так собираешься из последних сил. Ты не сломан. Твой мозг просто устроен иначе. Проблема в том, что никто тебе этого не объяснил.'
       ),
+      // Карточка 3 (была проблема с видимостью)
       makeCard(
         'СДВГ и РАС — это не «модный диагноз»',
         '03 · Причина',
         'Это нейробиологическая реальность. Миллионы взрослых живут с ней, не зная об этом. Им ставят «тревожное расстройство», «депрессию», «сложный характер». Обычные люди годами ходят по кругу, потому что лечат симптомы, а не причину. Факт: большинство нейроотличных людей не диагностированы. Они просто считают себя «неправильными». Но выход есть. Он начинается с узнавания себя.'
       ),
+      // Карточка 4
       makeCard(
         'Как мы будем выбираться вместе',
         '04 · Карта пути',
         '• Осознать. Пройти бережный скрининг и понять, что твои трудности имеют имя. Это не вина. Это особенность.<br>• Разобраться. Получить гайды и информацию, написанные не врачами, а такими же нейроотличными, как ты. Без «ты должен просто захотеть».<br>• Обрести опору. Пространство, где тебя понимают с полуслова. Чат, дневник, поддержка. Место, где не нужно объяснять, что такое «сенсорная перегрузка».',
         true
       ),
+      // Карточка 5
       makeCard(
         'Игорян.рф — сообщество + приложение',
         '05 · Инструмент',
         '• Бережные опросники для самодиагностики СДВГ и РАС у взрослых.<br>• Что делать после осознания: как выстроить быт, отдых, общение с близкими.<br>• Живое пространство своих: чаты, дневники, коллективная поддержка.<br><br><span style="font-style:italic; color:#c5aae8;">«Я просто читал статьи. Потом прошёл опросник. А потом заплакал — впервые за много лет. Потому что понял: со мной всё так. Я не один.»</span>'
       ),
+      // Карточка-ссылка (кнопка)
       makeLinkButton()
     ];
 
-    // 7 элементов: 6 карточек + кнопка
+    // ---------- ЗНАЧИТЕЛЬНО УВЕЛИЧЕННЫЕ РАССТОЯНИЯ МЕЖДУ КАРТОЧКАМИ ----------
     const verticalPositions = [
-      new THREE.Vector3(0.0, 5.0, 0.15),   // Карточка 0
-      new THREE.Vector3(0.18, 3.2, -0.3),  // Карточка 1
-      new THREE.Vector3(-0.12, 1.4, 0.25), // Карточка 2
-      new THREE.Vector3(0.08, -0.4, -0.3), // Карточка 3
-      new THREE.Vector3(-0.06, -2.2, 0.2), // Карточка 4
-      new THREE.Vector3(0.12, -4.0, -0.2), // Карточка 5
-      new THREE.Vector3(0.0, -6.0, 0.1)    // Кнопка
+      new THREE.Vector3(0.0, 5.0, 0.15),
+      new THREE.Vector3(0.18, 3.0, -0.3),
+      new THREE.Vector3(-0.12, 1.0, 0.25),   // Карточка 3 (индекс 2) — проблемная
+      new THREE.Vector3(0.08, -1.0, -0.3),
+      new THREE.Vector3(-0.06, -3.0, 0.2),
+      new THREE.Vector3(0.12, -5.0, -0.2),
+      new THREE.Vector3(0.0, -7.0, 0.1)      // Кнопка
     ];
 
     const cards3D = [];
@@ -401,6 +366,7 @@
       scene.add(obj);
       cards3D.push(obj);
       
+      // Объёмная задняя панелька (только для обычных карточек, не для кнопки)
       if (i < cardData.length - 1) {
         const planeGeo = new THREE.PlaneGeometry(2.0, 3.1);
         const planeMat = new THREE.MeshStandardMaterial({ 
@@ -421,6 +387,7 @@
         scene.add(plane);
         backgroundPlanes.push(plane);
         
+        // Дополнительная тонкая рамка для объёма
         const edgeGeo = new THREE.EdgesGeometry(planeGeo);
         const edgeMat = new THREE.LineBasicMaterial({ 
           color: 0x4a6090, 
@@ -433,9 +400,9 @@
       }
     });
 
-    // Центральная линия
+    // Центральная линия — удлинена под новые позиции
     const lineGeo = new THREE.BufferGeometry().setFromPoints(
-      Array.from({length: 60}, (_, i) => new THREE.Vector3(0, -6.8 + i*0.22, 0))
+      Array.from({length: 65}, (_, i) => new THREE.Vector3(0, -7.8 + i*0.22, 0))
     );
     const lineMat = new THREE.LineBasicMaterial({ 
       color: 0x3a5070, 
@@ -446,10 +413,11 @@
     const line = new THREE.Line(lineGeo, lineMat);
     scene.add(line);
     
+    // Светящиеся точки вдоль линии
     const dotsGeo = new THREE.BufferGeometry();
     const dotsPositions = [];
-    for (let i = 0; i < 30; i++) {
-      dotsPositions.push(0, -6.5 + i * 0.42, 0);
+    for (let i = 0; i < 34; i++) {
+      dotsPositions.push(0, -7.5 + i * 0.42, 0);
     }
     dotsGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(dotsPositions), 3));
     const dotsMat = new THREE.PointsMaterial({ 
@@ -461,60 +429,58 @@
     const dots = new THREE.Points(dotsGeo, dotsMat);
     scene.add(dots);
 
-    // ---------- ИНДИКАТОР ПРОКРУТКИ ----------
-    const scrollContainer = document.getElementById('scroll-indicator-container');
-    const scrollThumb = document.getElementById('scroll-indicator-thumb');
-    const scrollLabel = document.getElementById('scroll-indicator-label');
-    const scrollTrack = document.getElementById('scroll-indicator-track');
-    
-    // Создаём метки-точки для каждой карточки
-    const totalItems = verticalPositions.length;
-    const cardLabels = ['0', '1', '2', '3', '4', '5', '↗'];
-    
-    for (let i = 0; i < totalItems; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'scroll-dot';
-      // Позиция точки: i=0 (верхняя карточка) = 0%, i=6 (кнопка) = 100%
-      const topPercent = (i / (totalItems - 1)) * 100;
-      dot.style.top = topPercent + '%';
-      scrollContainer.appendChild(dot);
-    }
-    
-    function updateScrollIndicator(normY) {
-      // normY: 0 = верхняя карточка, 1 = кнопка
-      const clampedNormY = Math.max(0, Math.min(1, normY));
-      const topPercent = clampedNormY * 100;
-      
-      scrollThumb.style.top = topPercent + '%';
-      scrollLabel.style.top = topPercent + '%';
-      
-      // Обновляем текст метки в зависимости от позиции
-      const itemIndex = Math.round(clampedNormY * (totalItems - 1));
-      if (itemIndex === totalItems - 1) {
-        scrollLabel.textContent = 'Кнопка';
-      } else {
-        scrollLabel.textContent = 'Карт. ' + itemIndex;
-      }
-    }
+    // ---------- ОПРЕДЕЛЕНИЕ ЗОН С "МЁРТВЫМ ХОДОМ" ДЛЯ КАРТОЧЕК ----------
+    // Каждая карточка имеет Y-позицию и зону, где она видна полностью
+    // Структура: { centerY, deadZoneHalf } — мёртвая зона ±deadZoneHalf от центра
+    const cardZones = [
+      { centerY: 5.0, deadZoneHalf: 0.65 },  // Карточка 0 (верхняя)
+      { centerY: 3.0, deadZoneHalf: 0.65 },  // Карточка 1
+      { centerY: 1.0, deadZoneHalf: 0.85 },  // Карточка 2 (увеличенная мёртвая зона!)
+      { centerY: -1.0, deadZoneHalf: 0.65 }, // Карточка 3
+      { centerY: -3.0, deadZoneHalf: 0.65 }, // Карточка 4
+      { centerY: -5.0, deadZoneHalf: 0.65 }, // Карточка 5
+    ];
 
-    // ---------- НАВИГАЦИЯ ----------
+    // ---------- ЛОГИКА НАВИГАЦИИ ----------
     const targetLookAt = new THREE.Vector3(0, 5.0, 0);
-    const targetCameraPos = new THREE.Vector3(6.5, 7.5, 10.5);
+    const targetCameraPos = new THREE.Vector3(5.8, 7.2, 9.5);
     
-    // Диапазон Y: от верхней карточки (5.0) до кнопки (-6.0)
-    const worldYMin = -6.5;
+    const worldYMin = -7.5;
     const worldYMax = 5.5;
     const worldXRange = 3.6;
     
     let mouseX = 0.5;
     let mouseY = 0.5;
+    
+    // Флаг: true = мобильная зона прокрутки активна
     let isMobileScrollActive = false;
     
+    // Элемент ползунка
+    const mobileHintEl = document.getElementById('mobile-hint-el');
+    
+    // Функция применения мёртвых зон к целевой Y-координате
+    function applyDeadZones(targetY) {
+      for (const zone of cardZones) {
+        const dist = Math.abs(targetY - zone.centerY);
+        if (dist < zone.deadZoneHalf) {
+          // Притягиваем к центру карточки внутри мёртвой зоны
+          return zone.centerY;
+        }
+      }
+      return targetY;
+    }
+    
+    // Функция обновления камеры на основе нормализованных координат
     function updateCameraFromPosition(normX, normY) {
       const invY = 1.0 - normY;
       
+      // Вычисляем сырую целевую Y (без мёртвых зон)
+      const rawLookY = worldYMin + invY * (worldYMax - worldYMin);
+      
+      // Применяем мёртвые зоны — карточки "примагничивают" взгляд
+      const lookY = applyDeadZones(rawLookY);
+      
       const lookX = (normX - 0.5) * worldXRange * 1.8;
-      const lookY = worldYMin + invY * (worldYMax - worldYMin);
       const lookZ = (normX - 0.5) * 1.6;
       
       targetLookAt.set(lookX, lookY, lookZ);
@@ -522,9 +488,9 @@
       const angleH = (normX - 0.5) * Math.PI * 0.8;
       const angleV = (invY - 0.5) * Math.PI * 0.6;
       
-      const distance = 8.0;
+      const distance = 7.0;
       const camOffsetX = Math.sin(angleH) * distance * 0.8;
-      const camOffsetY = Math.sin(angleV) * distance * 0.7 + 0.8;
+      const camOffsetY = Math.sin(angleV) * distance * 0.7 + 0.6;
       const camOffsetZ = Math.cos(angleH) * distance * 0.8;
       
       targetCameraPos.set(
@@ -532,12 +498,23 @@
         targetLookAt.y + camOffsetY,
         targetLookAt.z + camOffsetZ
       );
-      
-      // Обновляем индикатор прокрутки
-      updateScrollIndicator(normY);
     }
     
-    // Десктоп: мышь
+    // Обновление позиции ползунка на мобильном
+    function updateMobileHintPosition(touchClientY) {
+      if (!mobileHintEl || window.innerWidth > 768) return;
+      
+      const windowHeight = window.innerHeight;
+      // Ограничиваем позицию ползунка в пределах экрана с отступами
+      const minY = 40;
+      const maxY = windowHeight - 40;
+      const clampedY = Math.max(minY, Math.min(maxY, touchClientY));
+      
+      mobileHintEl.style.top = `${clampedY}px`;
+      mobileHintEl.style.transform = 'translateY(-50%)';
+    }
+    
+    // Десктоп: мышь работает по всему экрану
     window.addEventListener('mousemove', (event) => {
       if (window.innerWidth <= 768) return;
       mouseX = event.clientX / window.innerWidth;
@@ -552,13 +529,16 @@
       e.preventDefault();
       isMobileScrollActive = true;
       const touch = e.touches[0];
+      
+      // Обновляем позицию ползунка
+      updateMobileHintPosition(touch.clientY);
+      
       const touchNormY = touch.clientY / window.innerHeight;
+      const targetY = worldYMax - (touchNormY - 0.5) * (worldYMax - worldYMin) / 0.5;
+      const clampedY = Math.max(worldYMin, Math.min(worldYMax + 2, targetY));
+      const inverseNormY = 1.0 - ((clampedY - worldYMin) / (worldYMax - worldYMin));
       
-      // Середина экрана (0.5) = верхняя карточка, низ (1.0) = кнопка
-      const scrollProgress = (touchNormY - 0.5) / 0.5;
-      const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
-      
-      updateCameraFromPosition(0.5, clampedProgress);
+      updateCameraFromPosition(0.5, Math.max(0, Math.min(1, inverseNormY)));
     });
     
     scrollZone.addEventListener('touchmove', (e) => {
@@ -566,20 +546,31 @@
       if (!isMobileScrollActive) return;
       if (e.touches.length) {
         const touch = e.touches[0];
+        
+        // Обновляем позицию ползунка — теперь он следует за пальцем
+        updateMobileHintPosition(touch.clientY);
+        
         const touchNormY = touch.clientY / window.innerHeight;
+        const targetY = worldYMax - (touchNormY - 0.5) * (worldYMax - worldYMin) / 0.5;
+        const clampedY = Math.max(worldYMin, Math.min(worldYMax + 2, targetY));
+        const inverseNormY = 1.0 - ((clampedY - worldYMin) / (worldYMax - worldYMin));
         
-        const scrollProgress = (touchNormY - 0.5) / 0.5;
-        const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
-        
-        updateCameraFromPosition(0.5, clampedProgress);
+        updateCameraFromPosition(0.5, Math.max(0, Math.min(1, inverseNormY)));
       }
     }, {passive: false});
     
     scrollZone.addEventListener('touchend', (e) => {
       e.preventDefault();
       isMobileScrollActive = false;
+      
+      // Возвращаем ползунок в центр после отпускания
+      if (mobileHintEl && window.innerWidth <= 768) {
+        mobileHintEl.style.top = '50%';
+        mobileHintEl.style.transform = 'translateY(-50%)';
+      }
     });
     
+    // Блокируем touchmove на всём остальном экране кроме зоны прокрутки
     window.addEventListener('touchmove', (event) => {
       if (window.innerWidth <= 768 && !isMobileScrollActive) {
         event.preventDefault();
@@ -597,25 +588,35 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       cssRenderer.setSize(window.innerWidth, window.innerHeight);
       
+      // Обновляем видимость зоны прокрутки
       if (window.innerWidth <= 768) {
         scrollZone.style.display = 'block';
-        scrollContainer.style.display = 'block';
+        if (mobileHintEl) {
+          mobileHintEl.style.display = 'block';
+          mobileHintEl.style.top = '50%';
+          mobileHintEl.style.transform = 'translateY(-50%)';
+        }
       } else {
         scrollZone.style.display = 'none';
-        scrollContainer.style.display = 'none';
+        if (mobileHintEl) {
+          mobileHintEl.style.display = 'none';
+        }
         isMobileScrollActive = false;
       }
     });
     
+    // Инициализация видимости зоны прокрутки
     if (window.innerWidth <= 768) {
       scrollZone.style.display = 'block';
-      scrollContainer.style.display = 'block';
+      if (mobileHintEl) {
+        mobileHintEl.style.display = 'block';
+      }
     }
     
-    // Инициализация: верхняя карточка
+    // Инициализация камеры на верхнюю карточку
     updateCameraFromPosition(0.5, 0.0);
 
-    // ---------- АНИМАЦИЯ ----------
+    // ---------- АНИМАЦИЯ С ПЛАВНЫМ СЛЕДОВАНИЕМ ----------
     function animate() {
       requestAnimationFrame(animate);
       
@@ -631,9 +632,11 @@
       camera.userData.smoothTarget.lerp(tempTarget, 0.1);
       camera.lookAt(camera.userData.smoothTarget);
       
+      // Лёгкое вращение фона и мерцание точек
       stars.rotation.y += 0.0002;
       dots.rotation.y += 0.0001;
       
+      // Пульсация фоновых панелей
       backgroundPlanes.forEach((plane, idx) => {
         plane.material.opacity = 0.2 + Math.sin(Date.now() * 0.002 + idx) * 0.04;
       });
@@ -645,7 +648,7 @@
     camera.userData.smoothTarget = targetLookAt.clone();
     
     animate();
-    console.log('🖱️ Навигация активирована. Индикатор прокрутки с ползунком добавлен.');
+    console.log('🖱️ Навигация активирована. Мобильная зона: ползунок следует за пальцем. Карточка 3 имеет увеличенную мёртвую зону.');
   </script>
 </body>
 </html>
