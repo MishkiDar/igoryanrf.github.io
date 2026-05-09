@@ -17,6 +17,7 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: #05080f;
       cursor: crosshair;
+      touch-action: manipulation;
     }
     #canvas-container {
       position: fixed;
@@ -68,10 +69,10 @@
       top: 50%;
       transform: translateY(-50%);
       color: #b8c7e0;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       background: rgba(8, 12, 24, 0.65);
       backdrop-filter: blur(12px);
-      padding: 0.5rem 0.8rem;
+      padding: 0.5rem 0.6rem;
       border-radius: 2rem;
       z-index: 31;
       border: 1px solid rgba(140, 170, 220, 0.3);
@@ -428,9 +429,9 @@
     const dots = new THREE.Points(dotsGeo, dotsMat);
     scene.add(dots);
 
-    // ---------- ЛОГИКА МЫШИ (адаптирована под новый диапазон) ----------
-    const targetLookAt = new THREE.Vector3(0, 0.8, 0);
-    const targetCameraPos = new THREE.Vector3(5.8, 2.2, 9.5);
+    // ---------- ЛОГИКА НАВИГАЦИИ ----------
+    const targetLookAt = new THREE.Vector3(0, 5.0, 0);  // По умолчанию смотрим на верхнюю карточку
+    const targetCameraPos = new THREE.Vector3(5.8, 7.2, 9.5);
     
     const worldYMin = -7.5;
     const worldYMax = 5.5;
@@ -439,7 +440,10 @@
     let mouseX = 0.5;
     let mouseY = 0.5;
     
-    // Функция обновления камеры на основе координат
+    // Флаг: true = мобильная зона прокрутки активна
+    let isMobileScrollActive = false;
+    
+    // Функция обновления камеры на основе нормализованных координат
     function updateCameraFromPosition(normX, normY) {
       const invY = 1.0 - normY;
       
@@ -466,6 +470,7 @@
     
     // Десктоп: мышь работает по всему экрану
     window.addEventListener('mousemove', (event) => {
+      if (window.innerWidth <= 768) return; // На мобильных не используем мышь
       mouseX = event.clientX / window.innerWidth;
       mouseY = event.clientY / window.innerHeight;
       updateCameraFromPosition(mouseX, mouseY);
@@ -476,44 +481,50 @@
     
     scrollZone.addEventListener('touchstart', (e) => {
       e.preventDefault();
+      isMobileScrollActive = true;
       const touch = e.touches[0];
-      mouseY = touch.clientY / window.innerHeight;
-      // По X оставляем текущее значение или фиксируем центр
-      updateCameraFromPosition(mouseX, mouseY);
+      // Нормализуем Y касания: 0 = верх экрана, 1 = низ экрана
+      const touchNormY = touch.clientY / window.innerHeight;
+      
+      // Средняя точка экрана (0.5) = верхняя карточка (worldYMax = 5.0)
+      // Низ экрана (1.0) = нижняя кнопка (worldYMin = -7.5)
+      // Формула: при touchNormY = 0.5 → targetY = 5.0 (верхняя карточка)
+      //          при touchNormY = 1.0 → targetY = -7.5 (нижняя кнопка)
+      //          при touchNormY = 0.0 → targetY = 17.5 (выше верхней карточки)
+      const targetY = worldYMax - (touchNormY - 0.5) * (worldYMax - worldYMin) / 0.5;
+      
+      const clampedY = Math.max(worldYMin, Math.min(worldYMax + 2, targetY));
+      const inverseNormY = 1.0 - ((clampedY - worldYMin) / (worldYMax - worldYMin));
+      
+      updateCameraFromPosition(0.5, Math.max(0, Math.min(1, inverseNormY)));
     });
     
     scrollZone.addEventListener('touchmove', (e) => {
       e.preventDefault();
+      if (!isMobileScrollActive) return;
       if (e.touches.length) {
         const touch = e.touches[0];
-        mouseY = touch.clientY / window.innerHeight;
-        updateCameraFromPosition(mouseX, mouseY);
+        const touchNormY = touch.clientY / window.innerHeight;
+        
+        const targetY = worldYMax - (touchNormY - 0.5) * (worldYMax - worldYMin) / 0.5;
+        const clampedY = Math.max(worldYMin, Math.min(worldYMax + 2, targetY));
+        const inverseNormY = 1.0 - ((clampedY - worldYMin) / (worldYMax - worldYMin));
+        
+        updateCameraFromPosition(0.5, Math.max(0, Math.min(1, inverseNormY)));
       }
     }, {passive: false});
     
     scrollZone.addEventListener('touchend', (e) => {
       e.preventDefault();
+      isMobileScrollActive = false;
     });
     
-    // Touch-события на всём экране оставляем для совместимости
+    // Блокируем touchmove на всём остальном экране кроме зоны прокрутки
     window.addEventListener('touchmove', (event) => {
-      if (event.touches.length) {
-        const touch = event.touches[0];
-        // Проверяем, находится ли касание в зоне прокрутки
-        const touchX = touch.clientX;
-        const zoneLeft = window.innerWidth * 0.75; // правая четверть
-        
-        if (touchX > zoneLeft) {
-          // В зоне прокрутки — обрабатываем там
-          return;
-        }
-        
-        // Иначе стандартное поведение
-        mouseX = touch.clientX / window.innerWidth;
-        mouseY = touch.clientY / window.innerHeight;
-        updateCameraFromPosition(mouseX, mouseY);
+      if (window.innerWidth <= 768 && !isMobileScrollActive) {
+        event.preventDefault();
       }
-    }, {passive: true});
+    }, {passive: false});
     
     window.addEventListener('wheel', (e) => {
       e.preventDefault();
@@ -531,6 +542,7 @@
         scrollZone.style.display = 'block';
       } else {
         scrollZone.style.display = 'none';
+        isMobileScrollActive = false;
       }
     });
     
@@ -538,6 +550,9 @@
     if (window.innerWidth <= 768) {
       scrollZone.style.display = 'block';
     }
+    
+    // Инициализация камеры на верхнюю карточку
+    updateCameraFromPosition(0.5, 0.0);  // normY=0 → верхняя карточка
 
     // ---------- АНИМАЦИЯ С ПЛАВНЫМ СЛЕДОВАНИЕМ ----------
     function animate() {
@@ -546,9 +561,6 @@
       const lerpFactor = 0.08;
       
       camera.position.lerp(targetCameraPos, lerpFactor);
-      
-      const currentLookAt = new THREE.Vector3();
-      camera.getWorldDirection(currentLookAt);
       
       const tempTarget = targetLookAt.clone();
       
@@ -574,7 +586,7 @@
     camera.userData.smoothTarget = targetLookAt.clone();
     
     animate();
-    console.log('🖱️ Навигация мышью активирована. Мобильная зона прокрутки справа.');
+    console.log('🖱️ Навигация активирована. Мобильная зона: середина справа = верхняя карточка, низ = кнопка.');
   </script>
 </body>
 </html>
