@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Игорян.рф • Мышь-навигация</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #05080f;
+      cursor: crosshair;
+    }
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    /* Подсказка в углу */
+    .hint {
+      position: fixed;
+      bottom: 1.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #b8c7e0;
+      font-size: 0.85rem;
+      background: rgba(8, 12, 24, 0.7);
+      backdrop-filter: blur(16px);
+      padding: 0.5rem 1.6rem;
+      border-radius: 3rem;
+      z-index: 20;
+      border: 1px solid rgba(140, 170, 220, 0.35);
+      pointer-events: none;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      font-weight: 300;
+    }
+    @media (max-width: 600px) {
+      .hint {
+        font-size: 0.7rem;
+        padding: 0.4rem 1.2rem;
+        bottom: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div class="hint">🌀 Двигайте мышь — камера следует за вами</div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+    // ---------- ИНИЦИАЛИЗАЦИЯ ----------
+    const container = document.getElementById('canvas-container');
+    
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x05080f);
+    scene.fog = new THREE.Fog(0x05080f, 6.5, 32);
+
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: true,
+      alpha: false,
+      powerPreference: "high-performance"
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    const cssRenderer = new CSS2DRenderer();
+    cssRenderer.setSize(window.innerWidth, window.innerHeight);
+    cssRenderer.domElement.style.position = 'absolute';
+    cssRenderer.domElement.style.top = '0px';
+    cssRenderer.domElement.style.pointerEvents = 'none';
+    container.appendChild(cssRenderer.domElement);
+
+    // Камера — отодвинута ещё на 10% дальше
+    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.6, 50);
+    camera.position.set(5.8, 2.2, 9.5);
+    camera.lookAt(0, 0.8, 0);
+
+    // Освещение
+    const ambient = new THREE.AmbientLight(0x2a3448);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xdce6f5, 0.9);
+    dirLight.position.set(3, 6, 5);
+    dirLight.castShadow = true;
+    dirLight.receiveShadow = true;
+    scene.add(dirLight);
+    const fillLight = new THREE.PointLight(0x89a3c2, 0.6, 16);
+    fillLight.position.set(-2, 2.5, -2.5);
+    scene.add(fillLight);
+    
+    // Дополнительный акцентный свет для объёма
+    const accentLight = new THREE.PointLight(0xb8a9d0, 0.5, 14);
+    accentLight.position.set(1, -1, 2);
+    scene.add(accentLight);
+
+    // Частицы фона (звёзды) — расширена область
+    const starsGeo = new THREE.BufferGeometry();
+    const starsCount = 700;
+    const starsPos = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount * 3; i += 3) {
+      starsPos[i] = (Math.random() - 0.5) * 26;
+      starsPos[i+1] = (Math.random() - 0.5) * 18 + 1.8;
+      starsPos[i+2] = (Math.random() - 0.5) * 22;
+    }
+    starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
+    const starsMat = new THREE.PointsMaterial({ 
+      color: 0x9aafca, 
+      size: 0.06, 
+      blending: THREE.AdditiveBlending, 
+      depthWrite: false,
+      opacity: 0.8,
+      transparent: true
+    });
+    const stars = new THREE.Points(starsGeo, starsMat);
+    scene.add(stars);
+
+    // ---------- КАРТОЧКИ (дизайн сохранён) ----------
+    function makeCard(title, subtitle, content, accent = false) {
+      const div = document.createElement('div');
+      
+      // Основа карточки — стеклянный эффект с градиентом
+      div.style.width = '280px';
+      div.style.maxWidth = '84vw';
+      div.style.background = accent 
+        ? 'linear-gradient(135deg, rgba(18, 24, 42, 0.72) 0%, rgba(25, 32, 56, 0.78) 100%)' 
+        : 'linear-gradient(135deg, rgba(14, 18, 32, 0.68) 0%, rgba(20, 26, 46, 0.74) 100%)';
+      div.style.backdropFilter = 'blur(18px) saturate(140%)';
+      div.style.WebkitBackdropFilter = 'blur(18px) saturate(140%)';
+      div.style.borderRadius = '2.2rem';
+      div.style.padding = '1.8rem 1.5rem';
+      div.style.border = accent 
+        ? '1px solid rgba(180, 160, 210, 0.45)' 
+        : '1px solid rgba(120, 145, 190, 0.35)';
+      div.style.boxShadow = accent 
+        ? '0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(200, 180, 225, 0.15) inset, 0 0 20px rgba(140, 120, 200, 0.2)' 
+        : '0 20px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(140, 155, 190, 0.12) inset';
+      div.style.color = '#d6dfef';
+      div.style.fontFamily = "'Montserrat', 'Inter', sans-serif";
+      div.style.lineHeight = '1.55';
+      div.style.textAlign = 'left';
+      div.style.pointerEvents = 'auto';
+      div.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+      div.style.letterSpacing = '0.01em';
+      
+      let html = '';
+      if (subtitle) {
+        html += `<div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.2em; color:#9eb0d1; margin-bottom:0.5rem; font-weight:400;">${subtitle}</div>`;
+      }
+      html += `<h2 style="font-family:'Cormorant Garamond', 'Playfair Display', serif; font-size:1.35rem; font-weight:500; color:#eef3ff; margin:0 0 0.6rem; letter-spacing:0.02em; text-shadow: 0 0 12px rgba(180, 200, 240, 0.3);">${title}</h2>`;
+      html += `<div style="font-size:0.82rem; color:#b8c7e0; font-weight:300;">${content}</div>`;
+      
+      // Добавляем декоративную линию снизу для дорогого вида
+      if (accent) {
+        html += `<div style="margin-top: 1rem; width: 2.5rem; height: 1px; background: linear-gradient(90deg, #c9b8e8, transparent);"></div>`;
+      }
+      
+      div.innerHTML = html;
+      return div;
+    }
+
+    // ---------- КЛИКАБЕЛЬНАЯ КНОПКА-ССЫЛКА ----------
+    function makeLinkButton() {
+      const div = document.createElement('div');
+      
+      div.style.width = '280px';
+      div.style.maxWidth = '84vw';
+      div.style.background = 'linear-gradient(135deg, rgba(25, 32, 56, 0.85) 0%, rgba(35, 42, 70, 0.88) 100%)';
+      div.style.backdropFilter = 'blur(20px) saturate(150%)';
+      div.style.WebkitBackdropFilter = 'blur(20px) saturate(150%)';
+      div.style.borderRadius = '2.5rem';
+      div.style.padding = '1.2rem 1.8rem';
+      div.style.border = '1px solid rgba(180, 160, 220, 0.5)';
+      div.style.boxShadow = '0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(140, 120, 200, 0.25), 0 0 0 1px rgba(200, 185, 230, 0.2) inset';
+      div.style.color = '#e8edff';
+      div.style.fontFamily = "'Montserrat', 'Inter', sans-serif";
+      div.style.textAlign = 'center';
+      div.style.pointerEvents = 'auto';
+      div.style.cursor = 'pointer';
+      div.style.transition = 'all 0.3s ease';
+      div.style.letterSpacing = '0.03em';
+      div.style.position = 'relative';
+      
+      div.innerHTML = `
+        <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.25em; color:#a0b5e0; margin-bottom:0.4rem;">🌐 Присоединяйся</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-size:1.4rem; font-weight:500; color:#fff; margin-bottom:0.3rem; text-shadow: 0 0 15px rgba(180, 200, 240, 0.4);">vk.com/v.igore</div>
+        <div style="font-size:0.7rem; color:#8a9dc0; font-weight:300;">нажми, чтобы перейти</div>
+        <div style="position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-top:8px solid rgba(180, 160, 220, 0.5);"></div>
+      `;
+      
+      // Делаем всю карточку ссылкой
+      div.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open('https://vk.com/v.igore', '_blank');
+      });
+      
+      // Эффекты при наведении
+      div.addEventListener('mouseenter', () => {
+        div.style.transform = 'scale(1.03)';
+        div.style.boxShadow = '0 24px 48px rgba(0,0,0,0.7), 0 0 30px rgba(160, 140, 220, 0.4), 0 0 0 1px rgba(210, 195, 240, 0.3) inset';
+        div.style.border = '1px solid rgba(200, 180, 230, 0.6)';
+        document.body.style.cursor = 'pointer';
+      });
+      
+      div.addEventListener('mouseleave', () => {
+        div.style.transform = 'scale(1)';
+        div.style.boxShadow = '0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(140, 120, 200, 0.25), 0 0 0 1px rgba(200, 185, 230, 0.2) inset';
+        div.style.border = '1px solid rgba(180, 160, 220, 0.5)';
+        document.body.style.cursor = 'crosshair';
+      });
+      
+      return div;
+    }
+
+    // ---------- СОДЕРЖАНИЕ КАРТОЧЕК ----------
+    const cardData = [
+      // Карточка 0
+      makeCard(
+        'Только человек с нейроотличием СДВГ+РАС может создать пространство для других особенных людей',
+        '',
+        'И дело здесь в том, что нейротипичные (обычные люди) не только не понимают всю боль и потребность в этом, но и в большинстве даже не понимают, что проблема существует.',
+        true
+      ),
+      // Карточка 1
+      makeCard(
+        'Это правда я. СДВГ + РАС.',
+        '01 · Главная',
+        'Я создал это место, потому что устал притворяться нейротипичным. Обычные советы нас ломают. Обычные люди нас не понимают. Здесь говорят на нашем языке. Меня зовут Игорь. Я узнал о своих нейроотличиях, пройдя через ад. Теперь моя задача — помочь тебе пройти этот путь быстрее и легче.'
+      ),
+      // Карточка 2
+      makeCard(
+        'Ты живёшь с инструкцией, которая тебе не подходит',
+        '02 · Тяжесть',
+        'Постоянный шум в голове. Хаос в планировании. Сенсорные перегрузки. Ты всю жизнь слышишь «соберись», «не ленись», «будь проще». Но ты и так собираешься из последних сил. Ты не сломан. Твой мозг просто устроен иначе. Проблема в том, что никто тебе этого не объяснил.'
+      ),
+      // Карточка 3
+      makeCard(
+        'СДВГ и РАС — это не «модный диагноз»',
+        '03 · Причина',
+        'Это нейробиологическая реальность. Миллионы взрослых живут с ней, не зная об этом. Им ставят «тревожное расстройство», «депрессию», «сложный характер». Обычные люди годами ходят по кругу, потому что лечат симптомы, а не причину. Факт: большинство нейроотличных людей не диагностированы. Они просто считают себя «неправильными». Но выход есть. Он начинается с узнавания себя.'
+      ),
+      // Карточка 4
+      makeCard(
+        'Как мы будем выбираться вместе',
+        '04 · Карта пути',
+        '• Осознать. Пройти бережный скрининг и понять, что твои трудности имеют имя. Это не вина. Это особенность.<br>• Разобраться. Получить гайды и информацию, написанные не врачами, а такими же нейроотличными, как ты. Без «ты должен просто захотеть».<br>• Обрести опору. Пространство, где тебя понимают с полуслова. Чат, дневник, поддержка. Место, где не нужно объяснять, что такое «сенсорная перегрузка».',
+        true
+      ),
+      // Карточка 5
+      makeCard(
+        'Игорян.рф — сообщество + приложение',
+        '05 · Инструмент',
+        '• Бережные опросники для самодиагностики СДВГ и РАС у взрослых.<br>• Что делать после осознания: как выстроить быт, отдых, общение с близкими.<br>• Живое пространство своих: чаты, дневники, коллективная поддержка.<br><br><span style="font-style:italic; color:#c5aae8;">«Я просто читал статьи. Потом прошёл опросник. А потом заплакал — впервые за много лет. Потому что понял: со мной всё так. Я не один.»</span>'
+      ),
+      // Карточка-ссылка (кнопка)
+      makeLinkButton()
+    ];
+
+    // ---------- ЗНАЧИТЕЛЬНО УВЕЛИЧЕННЫЕ РАССТОЯНИЯ МЕЖДУ КАРТОЧКАМИ ----------
+    // Шаг ~2.04 единицы, общий диапазон от 5.0 до -5.2, плюс кнопка внизу
+    const verticalPositions = [
+      new THREE.Vector3(0.0, 5.0, 0.15),
+      new THREE.Vector3(0.18, 3.0, -0.3),
+      new THREE.Vector3(-0.12, 1.0, 0.25),
+      new THREE.Vector3(0.08, -1.0, -0.3),
+      new THREE.Vector3(-0.06, -3.0, 0.2),
+      new THREE.Vector3(0.12, -5.0, -0.2),
+      new THREE.Vector3(0.0, -7.0, 0.1)  // Кнопка в самом низу
+    ];
+
+    const cards3D = [];
+    const backgroundPlanes = [];
+    
+    cardData.forEach((el, i) => {
+      const obj = new CSS2DObject(el);
+      obj.position.copy(verticalPositions[i]);
+      scene.add(obj);
+      cards3D.push(obj);
+      
+      // Объёмная задняя панелька (только для обычных карточек, не для кнопки)
+      if (i < cardData.length - 1) {
+        const planeGeo = new THREE.PlaneGeometry(2.0, 3.1);
+        const planeMat = new THREE.MeshStandardMaterial({ 
+          color: 0x1a2340, 
+          roughness: 0.4, 
+          metalness: 0.35, 
+          transparent: true, 
+          opacity: 0.22, 
+          side: THREE.DoubleSide,
+          emissive: new THREE.Color(0x0a0e1c),
+          emissiveIntensity: 0.15
+        });
+        const plane = new THREE.Mesh(planeGeo, planeMat);
+        plane.position.copy(verticalPositions[i]);
+        plane.lookAt(0, verticalPositions[i].y, 0);
+        plane.castShadow = false;
+        plane.receiveShadow = true;
+        scene.add(plane);
+        backgroundPlanes.push(plane);
+        
+        // Дополнительная тонкая рамка для объёма
+        const edgeGeo = new THREE.EdgesGeometry(planeGeo);
+        const edgeMat = new THREE.LineBasicMaterial({ 
+          color: 0x4a6090, 
+          transparent: true, 
+          opacity: 0.3,
+          blending: THREE.AdditiveBlending
+        });
+        const wireframe = new THREE.LineSegments(edgeGeo, edgeMat);
+        plane.add(wireframe);
+      }
+    });
+
+    // Центральная линия — удлинена под новые позиции
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(
+      Array.from({length: 65}, (_, i) => new THREE.Vector3(0, -7.8 + i*0.22, 0))
+    );
+    const lineMat = new THREE.LineBasicMaterial({ 
+      color: 0x3a5070, 
+      opacity: 0.5, 
+      transparent: true,
+      blending: THREE.AdditiveBlending
+    });
+    const line = new THREE.Line(lineGeo, lineMat);
+    scene.add(line);
+    
+    // Светящиеся точки вдоль линии
+    const dotsGeo = new THREE.BufferGeometry();
+    const dotsPositions = [];
+    for (let i = 0; i < 34; i++) {
+      dotsPositions.push(0, -7.5 + i * 0.42, 0);
+    }
+    dotsGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(dotsPositions), 3));
+    const dotsMat = new THREE.PointsMaterial({ 
+      color: 0x6a80b0, 
+      size: 0.04, 
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const dots = new THREE.Points(dotsGeo, dotsMat);
+    scene.add(dots);
+
+    // ---------- ЛОГИКА МЫШИ (адаптирована под новый диапазон) ----------
+    const targetLookAt = new THREE.Vector3(0, 0.8, 0);
+    const targetCameraPos = new THREE.Vector3(5.8, 2.2, 9.5);
+    
+    const worldYMin = -7.5;
+    const worldYMax = 5.5;
+    const worldXRange = 3.6;
+    
+    let mouseX = 0.5;
+    let mouseY = 0.5;
+    
+    window.addEventListener('mousemove', (event) => {
+      mouseX = event.clientX / window.innerWidth;
+      mouseY = event.clientY / window.innerHeight;
+      
+      const invY = 1.0 - mouseY;
+      
+      const lookX = (mouseX - 0.5) * worldXRange * 1.8;
+      const lookY = worldYMin + invY * (worldYMax - worldYMin);
+      const lookZ = (mouseX - 0.5) * 1.6;
+      
+      targetLookAt.set(lookX, lookY, lookZ);
+      
+      const angleH = (mouseX - 0.5) * Math.PI * 0.8;
+      const angleV = (invY - 0.5) * Math.PI * 0.6;
+      
+      const distance = 7.0;
+      const camOffsetX = Math.sin(angleH) * distance * 0.8;
+      const camOffsetY = Math.sin(angleV) * distance * 0.7 + 0.6;
+      const camOffsetZ = Math.cos(angleH) * distance * 0.8;
+      
+      targetCameraPos.set(
+        targetLookAt.x + camOffsetX,
+        targetLookAt.y + camOffsetY,
+        targetLookAt.z + camOffsetZ
+      );
+    });
+    
+    window.addEventListener('touchmove', (event) => {
+      if (event.touches.length) {
+        const touch = event.touches[0];
+        mouseX = touch.clientX / window.innerWidth;
+        mouseY = touch.clientY / window.innerHeight;
+        const invY = 1.0 - mouseY;
+        
+        const lookX = (mouseX - 0.5) * worldXRange * 1.8;
+        const lookY = worldYMin + invY * (worldYMax - worldYMin);
+        const lookZ = (mouseX - 0.5) * 1.6;
+        targetLookAt.set(lookX, lookY, lookZ);
+        
+        const angleH = (mouseX - 0.5) * Math.PI * 0.8;
+        const angleV = (invY - 0.5) * Math.PI * 0.6;
+        const distance = 7.0;
+        targetCameraPos.set(
+          targetLookAt.x + Math.sin(angleH) * distance * 0.8,
+          targetLookAt.y + Math.sin(angleV) * distance * 0.7 + 0.6,
+          targetLookAt.z + Math.cos(angleH) * distance * 0.8
+        );
+      }
+    }, {passive: true});
+    
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+    }, {passive: false});
+
+    // ---------- АДАПТИВНОСТЬ ----------
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      cssRenderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ---------- АНИМАЦИЯ С ПЛАВНЫМ СЛЕДОВАНИЕМ ----------
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      const lerpFactor = 0.08;
+      
+      camera.position.lerp(targetCameraPos, lerpFactor);
+      
+      const currentLookAt = new THREE.Vector3();
+      camera.getWorldDirection(currentLookAt);
+      
+      const tempTarget = targetLookAt.clone();
+      
+      if (!camera.userData.smoothTarget) {
+        camera.userData.smoothTarget = targetLookAt.clone();
+      }
+      camera.userData.smoothTarget.lerp(tempTarget, 0.1);
+      camera.lookAt(camera.userData.smoothTarget);
+      
+      // Лёгкое вращение фона и мерцание точек
+      stars.rotation.y += 0.0002;
+      dots.rotation.y += 0.0001;
+      
+      // Пульсация фоновых панелей
+      backgroundPlanes.forEach((plane, idx) => {
+        plane.material.opacity = 0.2 + Math.sin(Date.now() * 0.002 + idx) * 0.04;
+      });
+      
+      renderer.render(scene, camera);
+      cssRenderer.render(scene, camera);
+    }
+    
+    camera.userData.smoothTarget = targetLookAt.clone();
+    
+    animate();
+    console.log('🖱️ Навигация мышью активирована. Кликабельная кнопка vk.com/v.igore добавлена внизу.');
+  </script>
+</body>
+</html>
