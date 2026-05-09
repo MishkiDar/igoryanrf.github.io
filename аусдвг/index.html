@@ -45,11 +45,69 @@
       white-space: nowrap;
       font-weight: 300;
     }
-    @media (max-width: 600px) {
+    
+    /* Зона прокрутки для мобильных — правая четверть экрана */
+    #mobile-scroll-zone {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 25%;
+      height: 100%;
+      z-index: 30;
+      background: transparent;
+      pointer-events: auto;
+      touch-action: pan-y;
+    }
+    
+    /* Подсказка для мобильной зоны прокрутки */
+    .mobile-hint {
+      display: none;
+      position: fixed;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #b8c7e0;
+      font-size: 0.65rem;
+      background: rgba(8, 12, 24, 0.65);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 0.8rem;
+      border-radius: 2rem;
+      z-index: 31;
+      border: 1px solid rgba(140, 170, 220, 0.3);
+      pointer-events: none;
+      letter-spacing: 0.05em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      white-space: nowrap;
+      font-weight: 300;
+    }
+    
+    @media (max-width: 768px) {
       .hint {
         font-size: 0.7rem;
         padding: 0.4rem 1.2rem;
         bottom: 1.2rem;
+      }
+      
+      #mobile-scroll-zone {
+        display: block;
+      }
+      
+      .mobile-hint {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .hint {
+        font-size: 0.65rem;
+        padding: 0.3rem 1rem;
+        bottom: 1rem;
+      }
+      
+      #mobile-scroll-zone {
+        width: 28%;
       }
     }
   </style>
@@ -57,6 +115,8 @@
 <body>
   <div id="canvas-container"></div>
   <div class="hint">🌀 Двигайте мышь — камера следует за вами</div>
+  <div class="mobile-hint">↕️ Веди здесь</div>
+  <div id="mobile-scroll-zone"></div>
 
   <script type="importmap">
     {
@@ -223,14 +283,18 @@
         div.style.transform = 'scale(1.03)';
         div.style.boxShadow = '0 24px 48px rgba(0,0,0,0.7), 0 0 30px rgba(160, 140, 220, 0.4), 0 0 0 1px rgba(210, 195, 240, 0.3) inset';
         div.style.border = '1px solid rgba(200, 180, 230, 0.6)';
-        document.body.style.cursor = 'pointer';
+        if (window.innerWidth > 768) {
+          document.body.style.cursor = 'pointer';
+        }
       });
       
       div.addEventListener('mouseleave', () => {
         div.style.transform = 'scale(1)';
         div.style.boxShadow = '0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(140, 120, 200, 0.25), 0 0 0 1px rgba(200, 185, 230, 0.2) inset';
         div.style.border = '1px solid rgba(180, 160, 220, 0.5)';
-        document.body.style.cursor = 'crosshair';
+        if (window.innerWidth > 768) {
+          document.body.style.cursor = 'crosshair';
+        }
       });
       
       return div;
@@ -375,19 +439,17 @@
     let mouseX = 0.5;
     let mouseY = 0.5;
     
-    window.addEventListener('mousemove', (event) => {
-      mouseX = event.clientX / window.innerWidth;
-      mouseY = event.clientY / window.innerHeight;
+    // Функция обновления камеры на основе координат
+    function updateCameraFromPosition(normX, normY) {
+      const invY = 1.0 - normY;
       
-      const invY = 1.0 - mouseY;
-      
-      const lookX = (mouseX - 0.5) * worldXRange * 1.8;
+      const lookX = (normX - 0.5) * worldXRange * 1.8;
       const lookY = worldYMin + invY * (worldYMax - worldYMin);
-      const lookZ = (mouseX - 0.5) * 1.6;
+      const lookZ = (normX - 0.5) * 1.6;
       
       targetLookAt.set(lookX, lookY, lookZ);
       
-      const angleH = (mouseX - 0.5) * Math.PI * 0.8;
+      const angleH = (normX - 0.5) * Math.PI * 0.8;
       const angleV = (invY - 0.5) * Math.PI * 0.6;
       
       const distance = 7.0;
@@ -400,28 +462,56 @@
         targetLookAt.y + camOffsetY,
         targetLookAt.z + camOffsetZ
       );
+    }
+    
+    // Десктоп: мышь работает по всему экрану
+    window.addEventListener('mousemove', (event) => {
+      mouseX = event.clientX / window.innerWidth;
+      mouseY = event.clientY / window.innerHeight;
+      updateCameraFromPosition(mouseX, mouseY);
     });
     
+    // Мобильная зона прокрутки
+    const scrollZone = document.getElementById('mobile-scroll-zone');
+    
+    scrollZone.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      mouseY = touch.clientY / window.innerHeight;
+      // По X оставляем текущее значение или фиксируем центр
+      updateCameraFromPosition(mouseX, mouseY);
+    });
+    
+    scrollZone.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (e.touches.length) {
+        const touch = e.touches[0];
+        mouseY = touch.clientY / window.innerHeight;
+        updateCameraFromPosition(mouseX, mouseY);
+      }
+    }, {passive: false});
+    
+    scrollZone.addEventListener('touchend', (e) => {
+      e.preventDefault();
+    });
+    
+    // Touch-события на всём экране оставляем для совместимости
     window.addEventListener('touchmove', (event) => {
       if (event.touches.length) {
         const touch = event.touches[0];
+        // Проверяем, находится ли касание в зоне прокрутки
+        const touchX = touch.clientX;
+        const zoneLeft = window.innerWidth * 0.75; // правая четверть
+        
+        if (touchX > zoneLeft) {
+          // В зоне прокрутки — обрабатываем там
+          return;
+        }
+        
+        // Иначе стандартное поведение
         mouseX = touch.clientX / window.innerWidth;
         mouseY = touch.clientY / window.innerHeight;
-        const invY = 1.0 - mouseY;
-        
-        const lookX = (mouseX - 0.5) * worldXRange * 1.8;
-        const lookY = worldYMin + invY * (worldYMax - worldYMin);
-        const lookZ = (mouseX - 0.5) * 1.6;
-        targetLookAt.set(lookX, lookY, lookZ);
-        
-        const angleH = (mouseX - 0.5) * Math.PI * 0.8;
-        const angleV = (invY - 0.5) * Math.PI * 0.6;
-        const distance = 7.0;
-        targetCameraPos.set(
-          targetLookAt.x + Math.sin(angleH) * distance * 0.8,
-          targetLookAt.y + Math.sin(angleV) * distance * 0.7 + 0.6,
-          targetLookAt.z + Math.cos(angleH) * distance * 0.8
-        );
+        updateCameraFromPosition(mouseX, mouseY);
       }
     }, {passive: true});
     
@@ -435,7 +525,19 @@
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
       cssRenderer.setSize(window.innerWidth, window.innerHeight);
+      
+      // Обновляем видимость зоны прокрутки
+      if (window.innerWidth <= 768) {
+        scrollZone.style.display = 'block';
+      } else {
+        scrollZone.style.display = 'none';
+      }
     });
+    
+    // Инициализация видимости зоны прокрутки
+    if (window.innerWidth <= 768) {
+      scrollZone.style.display = 'block';
+    }
 
     // ---------- АНИМАЦИЯ С ПЛАВНЫМ СЛЕДОВАНИЕМ ----------
     function animate() {
@@ -472,7 +574,7 @@
     camera.userData.smoothTarget = targetLookAt.clone();
     
     animate();
-    console.log('🖱️ Навигация мышью активирована. Кликабельная кнопка vk.com/v.igore добавлена внизу.');
+    console.log('🖱️ Навигация мышью активирована. Мобильная зона прокрутки справа.');
   </script>
 </body>
 </html>
