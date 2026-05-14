@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Видеорасклад Таро по имени и вопросу. Индивидуальный разбор ситуации с ответом на волнующий вопрос.">
+    <title>Видеорасклад Таро | Игорь</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf8f4;
+            color: #2c241a;
+            line-height: 1.5;
+        }
+
+        /* контейнер */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* основной блок */
+        .main-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 48px 40px;
+            margin: 40px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #ece4da;
+        }
+
+        /* заголовки */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 500;
+            color: #1f1a14;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 500;
+            color: #2c241a;
+            margin: 32px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e8dfd5;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 24px 0 12px 0;
+            color: #3d3227;
+        }
+
+        /* кнопка */
+        .btn {
+            display: inline-block;
+            background-color: #e6d9cd;
+            color: #2c241a;
+            padding: 14px 32px;
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #d4c7b8;
+        }
+
+        .btn:hover {
+            background-color: #dad0c2;
+        }
+
+        /* сетка преимуществ */
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .feature-item {
+            flex: 1;
+            min-width: 200px;
+            background: #fefaf5;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #efe5db;
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        /* шаги */
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 32px 0;
+        }
+        .step {
+            flex: 1;
+            background: #f8f4ef;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .step-num {
+            font-family: 'Playfair Display';
+            font-size: 2rem;
+            font-weight: 600;
+            color: #b48c5c;
+            margin-bottom: 8px;
+        }
+
+        /* список */
+        .check-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .check-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .check-list li:before {
+            content: "✓";
+            background: #e8dfd5;
+            width: 22px;
+            height: 22px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #4a3a2a;
+        }
+
+        /* разделитель */
+        .divider {
+            height: 1px;
+            background: #ece4da;
+            margin: 32px 0;
+        }
+
+        /* футер */
+        .footer-note {
+            font-size: 0.75rem;
+            color: #9e8e7c;
+            text-align: center;
+            padding: 24px 0 40px;
+            border-top: 1px solid #ece4da;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .main-card {
+                padding: 32px 20px;
+            }
+            h1 {
+                font-size: 1.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        
+        <!-- заголовок и описание -->
+        <h1>Видеорасклад Таро<br>по вашему имени и вопросу</h1>
+        <p style="font-size: 1.1rem; color: #4c3f33; margin-bottom: 24px;">
+            Короткое вертикальное видео, где я лично отвечаю на ваш запрос.<br>
+            Без воды, без общих фраз — только конкретный разбор вашей ситуации.
+        </p>
+
+        <!-- преимущества -->
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🎴</div>
+                <strong>Индивидуальный подход</strong>
+                <p style="margin-top: 8px; font-size: 0.9rem;">Расклад делается лично для вас по вашему имени и живому вопросу</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📹</div>
+                <strong>Видео остаётся у вас</strong>
+                <p style="margin-top: 8px; font-size: 0.9rem;">Вы получаете запись, которую можно пересматривать в любой момент</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎙️</div>
+                <strong>Честный формат</strong>
+                <p style="margin-top: 8px; font-size: 0.9rem;">Я комментирую карты своими словами, без прикрас и запугивания</p>
+            </div>
+        </div>
+
+        <!-- как получить (3 шага) -->
+        <h2>Как получить расклад</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <strong>Напишите в сообщения группы</strong>
+                <p style="font-size: 0.85rem; margin-top: 8px;">Укажите своё имя и сформулируйте вопрос</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <strong>Я подтверждаю и называю срок</strong>
+                <p style="font-size: 0.85rem; margin-top: 8px;">Обычно видео готово в течение суток</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <strong>Вы получаете видео</strong>
+                <p style="font-size: 0.85rem; margin-top: 8px;">Ссылка на облако — смотрите когда удобно</p>
+            </div>
+        </div>
+
+        <!-- что вы получите (ценность без цены) -->
+        <h2>Что вы получите</h2>
+        <ul class="check-list">
+            <li>Ответ на ваш конкретный вопрос — любовь, деньги, работа, самореализация</li>
+            <li>Разбор ситуации по картам Таро с моими комментариями</li>
+            <li>Ясность и направление — то, на что можно опереться</li>
+            <li>Видео, которое можно сохранить и пересматривать</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <!-- кто я: деликатное упоминание нейроотличия один раз -->
+        <h2>Обо мне</h2>
+        <p style="margin-bottom: 16px;">
+            Меня зовут Игорь. Я практикующий таролог. Моё восприятие мира имеет свою особенность — <strong>нейроотличие</strong>, 
+            которое позволяет мне тонко чувствовать людей и видеть неочевидные связи в ваших ситуациях. 
+            Я не даю пустых обещаний и не работаю по шаблонам. Каждый расклад — это живой диалог с картами, 
+            обращённый лично к вам.
+        </p>
+        <p>
+            В моей группе ВК вы ежедневно найдёте карту дня, разборы ситуаций и полезную информацию 
+            для саморефлексии. Также я веду чат-бота, где делаю рассылки и общаюсь с подписчицами, 
+            а среди участниц группы и бота разыгрываю бесплатный расклад.
+        </p>
+
+        <!-- блок про бесплатный расклад без обещаний "всем" -->
+        <div style="background: #f8f4ef; border-radius: 20px; padding: 24px; margin: 32px 0;">
+            <h3 style="margin-top: 0;">🎁 Бесплатный расклад для участниц</h3>
+            <p>Среди подписчиц моего чат-бота и участниц группы я регулярно делаю один бесплатный видеорасклад. 
+            Для этого достаточно подписаться на бота и быть в группе. Никаких скрытых условий — просто мой способ 
+            благодарить за доверие и поддержку.</p>
+            <p style="margin-top: 12px; font-size: 0.9rem;">Подробности — в закреплённом посте группы и в боте после подписки.</p>
+        </div>
+
+        <!-- кнопка призыва -->
+        <div style="text-align: center; margin: 40px 0 20px;">
+            <a href="#" class="btn" id="contactBtn">📩 Написать в сообщения группы</a>
+            <p style="font-size: 0.8rem; color: #9e8e7c; margin-top: 16px;">
+                Напишите «Имя + вопрос» — я отвечу в ближайшее время
+            </p>
+        </div>
+
+        <!-- дополнительная информация -->
+        <div class="divider"></div>
+        <p style="font-size: 0.85rem; color: #7f6e5c;">
+            Расклады Таро — это инструмент для самопознания и поиска внутренних опор. 
+            Результат зависит от вашей готовности услышать ответ. Я не гарантирую исполнение желаний 
+            и не ставлю диагнозов, а лишь делюсь тем, что видят карты. 
+            Все данные конфиденциальны, видео отправляется только вам.
+        </p>
+    </div>
+
+    <div class="footer-note">
+        © Игорь · Видеорасклады Таро · Информационная поддержка и консультации
+    </div>
+</div>
+
+<script>
+    // ссылка на сообщения группы — замените на реальную
+    const contactBtn = document.getElementById('contactBtn');
+    if (contactBtn) {
+        contactBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // реальная ссылка на сообщения ВК
+            const vkLink = 'https://vk.me/igortarot_public'; // <-- замените на актуальную
+            window.open(vkLink, '_blank');
+        });
+    }
+</script>
+</body>
+</html>
