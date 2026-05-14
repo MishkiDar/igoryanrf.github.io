@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Выбери свой расклад | Таро-карты | Игорь</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e7dfd5 0%, #d6cbbc 100%);
+            font-family: 'Inter', sans-serif;
+            color: #2c241a;
+            padding: 2rem 1.5rem 4rem;
+            position: relative;
+        }
+        /* лёгкая текстура под старинную бумагу */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(#9c897a 0.5px, transparent 0.5px);
+            background-size: 18px 18px;
+            opacity: 0.12;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #2d241c, #624c38);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #4f3e2e;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+            border-bottom: 1px solid rgba(99, 70, 50, 0.25);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .sub {
+            font-size: 1rem;
+            color: #7a624b;
+            margin-top: 0.75rem;
+            font-weight: 300;
+        }
+
+        .ornament {
+            text-align: center;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            color: #b59473;
+            margin: 1rem 0 0.5rem;
+            opacity: 0.7;
+        }
+
+        /* сетка карточек */
+        .spread-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.8rem;
+            margin: 2.5rem 0 3rem;
+        }
+
+        /* СТИЛЬ КАРТЫ ТАРО: пепельно-бежевый фон + узоры как на обложке */
+        .tarot-card {
+            background: #faf3e8;
+            background-image: repeating-linear-gradient(45deg, rgba(185, 155, 125, 0.08) 0px, rgba(185, 155, 125, 0.08) 2px, transparent 2px, transparent 8px),
+                              repeating-linear-gradient(135deg, rgba(140, 110, 80, 0.05) 0px, rgba(140, 110, 80, 0.05) 1px, transparent 1px, transparent 6px);
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 245, 230, 0.7);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            padding: 1.5rem 1rem 1.8rem;
+            text-align: center;
+            border: 1px solid #d9c6ae;
+            position: relative;
+            backdrop-filter: blur(0px);
+            display: flex;
+            flex-direction: column;
+        }
+        /* имитация золотой рамки на карте */
+        .tarot-card::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(180, 145, 105, 0.35);
+            pointer-events: none;
+        }
+        /* угловой орнамент — как на старинных картах */
+        .tarot-card::after {
+            content: "✧";
+            font-size: 14px;
+            color: #b58b64;
+            position: absolute;
+            bottom: 12px;
+            right: 18px;
+            opacity: 0.5;
+            font-family: monospace;
+        }
+
+        .tarot-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 42px -14px rgba(45, 30, 20, 0.3);
+            border-color: #c4a077;
+            background: #fffaf2;
+        }
+
+        .card-number {
+            background: #e1cfb9;
+            width: 36px;
+            height: 36px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #442f1f;
+            margin: 0 auto 1rem auto;
+            font-family: 'Cormorant Garamond', monospace;
+            border: 1px solid #cfb68f;
+            box-shadow: inset 0 1px 0 #fff6e6, 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #2c1e12;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+            letter-spacing: -0.2px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: #5f4a34;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            padding: 0 0.25rem;
+            font-weight: 400;
+        }
+
+        .card-time {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9f7b58;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            background: #f0e5d9;
+            display: inline-block;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 0.5px solid #dccbad;
+        }
+
+        .card-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #4f3523;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.3px;
+            font-family: 'Inter', monospace;
+        }
+
+        .price-badge {
+            background: #ebe0d2;
+            padding: 0.25rem 1rem;
+            border-radius: 60px;
+            display: inline-block;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.02);
+            border: 0.5px solid #e1cfb5;
+        }
+
+        .choose-btn {
+            background: transparent;
+            border: 1.5px solid #c2a074;
+            padding: 0.6rem 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #6b4e3a;
+            transition: 0.2s;
+            cursor: pointer;
+            width: 100%;
+            max-width: 140px;
+            margin: 0 auto;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tarot-card:hover .choose-btn {
+            background: #6b4e3a;
+            color: white;
+            border-color: #6b4e3a;
+        }
+
+        .selection-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #2c241ae6;
+            backdrop-filter: blur(12px);
+            color: #fef2e6;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+            z-index: 1000;
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            border: 1px solid #cbad8b;
+        }
+
+        .selection-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .action-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            background: #4f3523;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 48px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cta-button:hover {
+            background: #2f2219;
+            transform: scale(0.98);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 1100px) {
+            .spread-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        }
+        @media (max-width: 860px) {
+            .spread-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 640px) {
+            body { padding: 1.5rem 1rem; }
+            .spread-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .hero h1 { font-size: 2.1rem; }
+            .card-title { font-size: 1.3rem; }
+            .card-desc { font-size: 0.78rem; }
+            .tarot-card { padding: 1rem 0.8rem 1.4rem; }
+            .choose-btn { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.75rem;
+            color: #9f8872;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🌀 выбери свой расклад</h1>
+        <p>каждая карта — как личный аркан</p>
+        <div class="sub">от быстрого ответа (500₽) до глубинной сессии (5000₽)</div>
+        <div class="ornament">✧  ✦  ✧</div>
+    </div>
+
+    <div class="spread-grid" id="spreadsContainer"></div>
+
+    <div class="action-footer">
+        <button class="cta-button" id="finalOrderBtn">📜 Перейти к заказу ⟶</button>
+        <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">напиши в сообщения группы: «Имя + Вопрос + № расклада»</p>
+    </div>
+    <footer>Игорь | Таро иной оптики · видео-расклад · ответ в течение 24ч</footer>
+</div>
+<div id="toastMsg" class="selection-toast">✨ расклад выбран</div>
+
+<script>
+    // База раскладов со временем и честной ценой (от 500₽ до 5000₽)
+    const spreadsData = [
+        { id: 1, name: "Однокарточный расклад", desc: "быстрый совет, энергия дня или ответ «да/нет»", time: "3–5 мин", price: 500 },
+        { id: 2, name: "Прошлое – Настоящее – Будущее", desc: "классика: динамика ситуации и её корни", time: "8–12 мин", price: 800 },
+        { id: 3, name: "Ситуация – Действие – Итог", desc: "какие шаги приведут к результату", time: "7–10 мин", price: 700 },
+        { id: 4, name: "Благословения – Препятствия – Действия", desc: "ресурсы и как преодолеть трудности", time: "9–14 мин", price: 900 },
+        { id: 5, name: "Разум – Тело – Дух", desc: "гармония трёх уровней, целостный взгляд", time: "12–18 мин", price: 1200 },
+        { id: 6, name: "Расклад «Выбор»", desc: "сравни два варианта: куда двигаться дальше", time: "10–15 мин", price: 1000 },
+        { id: 7, name: "Стоп – Старт – Продолжить", desc: "коррекция привычек и решений", time: "8–12 мин", price: 800 },
+        { id: 8, name: "Кельтский крест", desc: "глубокий анализ проблемы, 10 карт", time: "35–50 мин", price: 4200 },
+        { id: 9, name: "Расклад «Подкова»", desc: "европейская классика на 7 позиций", time: "20–30 мин", price: 2500 },
+        { id: 10, name: "Звездный расклад", desc: "для духовных вопросов, форма звезды", time: "25–35 мин", price: 3000 },
+        { id: 11, name: "Древо Жизни (Сефирот)", desc: "каббалистическая глубина, 11 позиций", time: "40–55 мин", price: 4800 },
+        { id: 12, name: "Расклад «Отношения»", desc: "чувства, мысли и перспективы пары", time: "20–30 мин", price: 2800 },
+        { id: 13, name: "Любовный треугольник", desc: "прояснение связей с третьей стороной", time: "25–35 мин", price: 3200 },
+        { id: 14, name: "Чакровый расклад", desc: "7 энергоцентров, состояние тонких тел", time: "22–30 мин", price: 2700 },
+        { id: 15, name: "Карьерный расклад", desc: "препятствия, рост и призвание", time: "18–25 мин", price: 2200 },
+        { id: 16, name: "Финансовый расклад (Деньги)", desc: "поток, долги, инвестиции, изобилие", time: "15–22 мин", price: 1900 },
+        { id: 17, name: "Путь Героя", desc: "6 этапов: зов, кризис, трансформация", time: "20–28 мин", price: 2300 },
+        { id: 18, name: "Расклад «Переезд»", desc: "смена места жительства, новые горизонты", time: "18–26 мин", price: 2100 },
+        { id: 19, name: "Кармический расклад", desc: "уроки прошлых жизней, влияние на сейчас", time: "35–45 мин", price: 4000 },
+        { id: 20, name: "Колесо Фортуны", desc: "циклы судьбы и точка перемен", time: "12–18 мин", price: 1300 },
+        { id: 21, name: "Восемь лучей надежды", desc: "выход из сложной жизненной ситуации", time: "22–32 мин", price: 2900 },
+        { id: 22, name: "Щит Давида (Гексаграмма)", desc: "баланс противоположностей, 7 позиций", time: "25–35 мин", price: 3100 },
+        { id: 23, name: "Расклад «Свидетельство»", desc: "судебные тяжбы, юридические вопросы", time: "20–28 мин", price: 2600 },
+        { id: 24, name: "Брачный прогноз", desc: "перспективы брака или текущего союза", time: "18–25 мин", price: 2300 },
+        { id: 25, name: "Расклад на беременность", desc: "зачатие, течение, роды", time: "20–28 мин", price: 2700 },
+        { id: 26, name: "Расклад «Вердикт»", desc: "итог затянувшейся проблемы", time: "16–22 мин", price: 2000 },
+        { id: 27, name: "Дорога к цели", desc: "пошаговый анализ достижения мечты", time: "14–20 мин", price: 1700 },
+        { id: 28, name: "Переход", desc: "помощь в периоде развода, увольнения, потерь", time: "22–30 мин", price: 2800 },
+        { id: 29, name: "Надежда, Вера, Любовь", desc: "опоры и внутренний свет", time: "10–15 мин", price: 1100 },
+        { id: 30, name: "Радуга (Семь домов)", desc: "все сферы: дом, любовь, карьера, друзья", time: "25–35 мин", price: 3300 },
+        { id: 31, name: "Расклад «Поиск»", desc: "найти потерянную вещь или человека", time: "12–18 мин", price: 1400 },
+        { id: 32, name: "Оракул (итоговый)", desc: "короткое уточнение после основного расклада", time: "5–9 мин", price: 600 },
+        { id: 33, name: "Год (12 месяцев)", desc: "энергетика каждого месяца вперёд", time: "40–55 мин", price: 4900 },
+        { id: 34, name: "Недельный прогноз", desc: "7 дней, ключевые события", time: "15–22 мин", price: 1900 },
+        { id: 35, name: "Ремонт и недвижимость", desc: "оценка покупки или продажи жилья", time: "20–28 мин", price: 2500 },
+        { id: 36, name: "Путешествие", desc: "безопасность, впечатления, удачность поездки", time: "14–20 мин", price: 1700 },
+        { id: 37, name: "Исцеление (здоровье)", desc: "причины недуга и путь к ремиссии", time: "22–32 мин", price: 3000 },
+        { id: 38, name: "Зеркало Архимеда", desc: "взгляд на ситуацию со стороны, нестандартное решение", time: "20–28 мин", price: 2600 },
+        { id: 39, name: "Колесо года (сезонный)", desc: "12 саббатов или месяцев, природный цикл", time: "35–48 мин", price: 4300 },
+        { id: 40, name: "Квадрат Юпитера", desc: "расширение влияния, социальный успех", time: "28–38 мин", price: 3800 }
+    ];
+
+    function renderSpreads() {
+        const container = document.getElementById('spreadsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        spreadsData.forEach(spread => {
+            const card = document.createElement('div');
+            card.className = 'tarot-card';
+            card.setAttribute('data-spread-id', spread.id);
+            card.setAttribute('data-spread-name', spread.name);
+            card.setAttribute('data-price', spread.price);
+            card.setAttribute('data-time', spread.time);
+
+            // номер
+            const numberDiv = document.createElement('div');
+            numberDiv.className = 'card-number';
+            numberDiv.innerText = spread.id;
+
+            // заголовок
+            const title = document.createElement('div');
+            title.className = 'card-title';
+            title.innerText = spread.name;
+
+            // описание
+            const desc = document.createElement('div');
+            desc.className = 'card-desc';
+            desc.innerText = spread.desc;
+
+            // время
+            const timeSpan = document.createElement('div');
+            timeSpan.className = 'card-time';
+            timeSpan.innerText = `⏱️ ${spread.time}`;
+
+            // цена
+            const priceSpan = document.createElement('div');
+            priceSpan.className = 'card-price';
+            priceSpan.innerHTML = `<span class="price-badge">${spread.price.toLocaleString('ru-RU')} ₽</span>`;
+
+            // кнопка
+            const btn = document.createElement('button');
+            btn.className = 'choose-btn';
+            btn.innerText = 'выбрать →';
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectSpread(spread.id, spread.name, spread.price, spread.time);
+            });
+
+            card.appendChild(numberDiv);
+            card.appendChild(title);
+            card.appendChild(desc);
+            card.appendChild(timeSpan);
+            card.appendChild(priceSpan);
+            card.appendChild(btn);
+
+            // клик по всей карточке
+            card.addEventListener('click', (e) => {
+                if (e.target !== btn) {
+                    selectSpread(spread.id, spread.name, spread.price, spread.time);
+                }
+            });
+            container.appendChild(card);
+        });
+    }
+
+    let selectedSpread = null;
+    let selectedPrice = 0;
+    let selectedDuration = '';
+
+    function selectSpread(id, name, price, duration) {
+        selectedSpread = { id, name };
+        selectedPrice = price;
+        selectedDuration = duration;
+        const toast = document.getElementById('toastMsg');
+        if (toast) {
+            toast.innerText = `✓ расклад №${id} «${name}» (${duration}, ${price.toLocaleString('ru-RU')}₽)`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+        // визуальное выделение
+        document.querySelectorAll('.tarot-card').forEach(card => {
+            card.style.border = '1px solid #d9c6ae';
+            card.style.background = '#faf3e8';
+            card.style.backgroundImage = "repeating-linear-gradient(45deg, rgba(185, 155, 125, 0.08) 0px, rgba(185, 155, 125, 0.08) 2px, transparent 2px, transparent 8px), repeating-linear-gradient(135deg, rgba(140, 110, 80, 0.05) 0px, rgba(140, 110, 80, 0.05) 1px, transparent 1px, transparent 6px)";
+        });
+        const currentCard = Array.from(document.querySelectorAll('.tarot-card')).find(card => 
+            card.getAttribute('data-spread-id') == id
+        );
+        if(currentCard) {
+            currentCard.style.border = '2px solid #b77b3c';
+            currentCard.style.background = '#fff6ec';
+            currentCard.style.backgroundImage = "repeating-linear-gradient(45deg, rgba(185, 155, 125, 0.1) 0px, rgba(185, 155, 125, 0.1) 2px, transparent 2px, transparent 8px)";
+        }
+    }
+
+    const finalBtn = document.getElementById('finalOrderBtn');
+    if (finalBtn) {
+        finalBtn.addEventListener('click', () => {
+            if (selectedSpread) {
+                const message = `Здравствуйте, Игорь! Меня зовут [твоё имя]. Мой вопрос: [опиши ситуацию]. Хочу заказать расклад №${selectedSpread.id} — «${selectedSpread.name}» (длительность ${selectedDuration}, стоимость ${selectedPrice.toLocaleString('ru-RU')}₽).`;
+                navigator.clipboard.writeText(message).then(() => {
+                    const toast = document.getElementById('toastMsg');
+                    toast.innerText = '📜 Текст заявки скопирован! Вставь в сообщения группы.';
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2500);
+                }).catch(() => {
+                    alert('Скопируй заявку вручную:\n' + message);
+                });
+                const userConfirmed = confirm(`Ты выбрал расклад «${selectedSpread.name}» (${selectedDuration}, ${selectedPrice.toLocaleString('ru-RU')}₽).\nОК — скопировать готовую заявку для отправки в ЛС.`);
+                if(userConfirmed) {
+                    navigator.clipboard.writeText(message).then(() => {
+                        alert('✅ Заявка скопирована! Укажи своё Имя и живой вопрос, и отправь в сообщения группы.\nПосле оплаты я запишу твой персональный видео-расклад.');
+                    });
+                }
+            } else {
+                const toast = document.getElementById('toastMsg');
+                toast.innerText = '🌟 Сначала выбери расклад, который откликается';
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+        });
+    }
+
+    renderSpreads();
+
+    setTimeout(() => {
+        const tempToast = document.getElementById('toastMsg');
+        if(tempToast && !selectedSpread) {
+            tempToast.innerText = '🔮 нажми на любую карту — узнаешь цену и время';
+            tempToast.classList.add('show');
+            setTimeout(() => {
+                tempToast.classList.remove('show');
+            }, 2000);
+        }
+    }, 600);
+</script>
+</body>
+</html>
