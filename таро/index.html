@@ -16,10 +16,8 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
-
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="Видеорасклад Таро по имени и вопросу. Индивидуальный разбор ситуации с ответом на волнующий вопрос.">
     <title>Видеорасклад Таро | Игорь</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -37,14 +35,12 @@
             line-height: 1.5;
         }
 
-        /* контейнер */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        /* основной блок */
         .main-card {
             background: #ffffff;
             border-radius: 24px;
@@ -54,7 +50,6 @@
             border: 1px solid #ece4da;
         }
 
-        /* заголовки */
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.6rem;
@@ -82,7 +77,6 @@
             color: #3d3227;
         }
 
-        /* кнопка */
         .btn {
             display: inline-block;
             background-color: #e6d9cd;
@@ -94,13 +88,15 @@
             text-decoration: none;
             transition: all 0.2s;
             border: 1px solid #d4c7b8;
+            cursor: pointer;
         }
 
         .btn:hover {
             background-color: #dad0c2;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
-        /* сетка преимуществ */
         .features-grid {
             display: flex;
             flex-wrap: wrap;
@@ -122,7 +118,6 @@
             margin-bottom: 12px;
         }
 
-        /* шаги */
         .steps {
             display: flex;
             flex-wrap: wrap;
@@ -144,7 +139,6 @@
             margin-bottom: 8px;
         }
 
-        /* список */
         .check-list {
             list-style: none;
             padding: 0;
@@ -170,14 +164,12 @@
             color: #4a3a2a;
         }
 
-        /* разделитель */
         .divider {
             height: 1px;
             background: #ece4da;
             margin: 32px 0;
         }
 
-        /* футер */
         .footer-note {
             font-size: 0.75rem;
             color: #9e8e7c;
@@ -202,14 +194,12 @@
 <div class="container">
     <div class="main-card">
         
-        <!-- заголовок и описание -->
         <h1>Видеорасклад Таро<br>по вашему имени и вопросу</h1>
         <p style="font-size: 1.1rem; color: #4c3f33; margin-bottom: 24px;">
             Короткое вертикальное видео, где я лично отвечаю на ваш запрос.<br>
             Без воды, без общих фраз — только конкретный разбор вашей ситуации.
         </p>
 
-        <!-- преимущества -->
         <div class="features-grid">
             <div class="feature-item">
                 <div class="feature-icon">🎴</div>
@@ -228,7 +218,6 @@
             </div>
         </div>
 
-        <!-- как получить (3 шага) -->
         <h2>Как получить расклад</h2>
         <div class="steps">
             <div class="step">
@@ -248,7 +237,6 @@
             </div>
         </div>
 
-        <!-- что вы получите (ценность без цены) -->
         <h2>Что вы получите</h2>
         <ul class="check-list">
             <li>Ответ на ваш конкретный вопрос — любовь, деньги, работа, самореализация</li>
@@ -259,7 +247,6 @@
 
         <div class="divider"></div>
 
-        <!-- кто я: деликатное упоминание нейроотличия один раз -->
         <h2>Обо мне</h2>
         <p style="margin-bottom: 16px;">
             Меня зовут Игорь. Я практикующий таролог. Моё восприятие мира имеет свою особенность — <strong>нейроотличие</strong>, 
@@ -273,7 +260,6 @@
             а среди участниц группы и бота разыгрываю бесплатный расклад.
         </p>
 
-        <!-- блок про бесплатный расклад без обещаний "всем" -->
         <div style="background: #f8f4ef; border-radius: 20px; padding: 24px; margin: 32px 0;">
             <h3 style="margin-top: 0;">🎁 Бесплатный расклад для участниц</h3>
             <p>Среди подписчиц моего чат-бота и участниц группы я регулярно делаю один бесплатный видеорасклад. 
@@ -282,15 +268,14 @@
             <p style="margin-top: 12px; font-size: 0.9rem;">Подробности — в закреплённом посте группы и в боте после подписки.</p>
         </div>
 
-        <!-- кнопка призыва -->
+        <!-- Кнопка теперь ведет на игорян.рф/таро/расклад/ -->
         <div style="text-align: center; margin: 40px 0 20px;">
-            <a href="/таро/расклад/" class="btn" id="contactBtn">Выбрать свой расклад</a>
+            <a href="https://игорян.рф/таро/расклад/" class="btn" id="contactBtn">Выбрать свой расклад</a>
             <p style="font-size: 0.8rem; color: #9e8e7c; margin-top: 16px;">
-                
+                Переход на страницу с подробным описанием раскладов
             </p>
         </div>
 
-        <!-- дополнительная информация -->
         <div class="divider"></div>
         <p style="font-size: 0.85rem; color: #7f6e5c;">
             Расклады Таро — это инструмент для самопознания и поиска внутренних опор. 
@@ -306,15 +291,20 @@
 </div>
 
 <script>
-    // ссылка на сообщения группы — замените на реальную
+    // Кнопка теперь ведет на нужную страницу — href уже задан в HTML.
+    // Дополнительно убедимся, что нет переопределения через JS.
+    // Однако на всякий случай оставляем чистый переход без лишних перенаправлений.
+    // Удаляем старый обработчик, который перехватывал клик.
     const contactBtn = document.getElementById('contactBtn');
     if (contactBtn) {
-        contactBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            // реальная ссылка на сообщения ВК
-            const vkLink = 'https://vk.me/igortarot_public'; // <-- замените на актуальную
-            window.open(vkLink, '_blank');
-        });
+        // Убираем любые старые обработчики и задаём корректную ссылку повторно для надёжности
+        const newBtn = contactBtn.cloneNode(true);
+        contactBtn.parentNode.replaceChild(newBtn, contactBtn);
+        // Ссылка уже зашита в атрибуте href — ничего не переопределяем
+        // Дополнительно гарантируем, что переход именно на игорян.рф
+        newBtn.setAttribute('href', 'https://игорян.рф/таро/расклад/');
+        newBtn.setAttribute('target', '_self'); // открывать в текущей вкладке, как обычная ссылка
+        // Убираем все лишние обработчики
     }
 </script>
 </body>
