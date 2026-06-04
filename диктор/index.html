@@ -33,6 +33,8 @@
             --bg-card: #1a1a20;
             --accent: #8a2be2;
             --accent-hover: #9d4edd;
+            --telegram: #26A5E4;
+            --telegram-hover: #0088cc;
             --text-primary: #ffffff;
             --text-secondary: #a0a0b0;
             --border: #2a2a35;
@@ -115,6 +117,16 @@
             background: var(--accent-hover);
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .btn-telegram {
+            background: var(--telegram);
+            box-shadow: 0 4px 20px rgba(38, 165, 228, 0.3);
+        }
+
+        .btn-telegram:hover {
+            background: var(--telegram-hover);
+            box-shadow: 0 8px 30px rgba(38, 165, 228, 0.5);
         }
 
         .btn-outline {
@@ -275,7 +287,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
         .service-card {
@@ -285,6 +297,8 @@
             padding: 32px 28px;
             transition: var(--transition);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .service-card:hover {
             transform: translateY(-5px);
@@ -313,9 +327,14 @@
             color: var(--text-secondary);
             margin: 10px 0;
         }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
         .btn-block {
             width: 100%;
-            margin-top: 24px;
         }
         .popular-badge {
             position: absolute;
@@ -387,29 +406,6 @@
             }
         }
         
-        .form-control, select, textarea {
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        .form-control:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .form-container {
-            background: var(--bg-card);
-            padding: 36px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            max-width: 700px;
-            margin: 0 auto;
-        }
         footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border);
@@ -463,27 +459,36 @@
             color: var(--accent-hover);
             border-bottom-color: var(--accent);
         }
-        .status-message {
-            margin-top: 16px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 32px;
             text-align: center;
+            transition: var(--transition);
         }
-        .status-success {
-            background: rgba(46, 204, 113, 0.15);
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
         }
-        .status-error {
-            background: rgba(231, 76, 60, 0.15);
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
+        .contact-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.2rem;
         }
-        .status-loading {
-            background: rgba(138, 43, 226, 0.15);
-            border: 1px solid var(--accent);
+        .contact-card a {
             color: var(--accent);
+            font-weight: 500;
+            word-break: break-all;
+        }
+        .contact-card a:hover {
+            color: var(--accent-hover);
         }
     </style>
 </head>
@@ -499,7 +504,7 @@
                 <li><a href="#transform">Трансформация</a></li>
                 <li><a href="#tariffs">Тарифы</a></li>
                 <li><a href="#compare">Сравнение</a></li>
-                <li><a href="#order">Заказ</a></li>
+                <li><a href="#contacts">Контакты</a></li>
             </ul>
         </nav>
     </div>
@@ -513,8 +518,8 @@
                 <h1>Превращаю текст в объёмную аудио-сцену</h1>
                 <p>Привет, я Игорь. Профессиональная озвучка любого текста — от радиоролика до аудио-спектакля. Голос, атмосферные шумы, музыка под ключ. Без шаблонов.</p>
                 <div class="hero-buttons">
-                    <a href="#order" class="btn">🎧 Заказать озвучку</a>
-                    <a href="#tariffs" class="btn btn-outline">🔥 Выбрать тариф</a>
+                    <a href="#tariffs" class="btn">🎧 Выбрать тариф</a>
+                    <a href="#contacts" class="btn btn-outline">📞 Связаться со мной</a>
                 </div>
             </div>
         </div>
@@ -578,7 +583,10 @@
                         <div class="upsell-item"><span>➕ Атмосфера кафе / улицы (2 звуковых слоя)</span><span style="color:var(--accent);">+300 ₽</span></div>
                         <div class="upsell-item"><span>🚀 Сдача за 4 часа (вместо 24ч)</span><span>+500 ₽</span></div>
                     </div>
-                    <button class="btn btn-block" onclick="selectTariff('ЛАЙТ')">Заказать ЛАЙТ →</button>
+                    <div class="button-group">
+                        <a href="https://t.me/gargaross" target="_blank" class="btn btn-telegram btn-block">📨 Заказать в Telegram →</a>
+                        <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="btn btn-block">📝 Заказать в МАКС →</a>
+                    </div>
                 </div>
                 <div class="service-card fade-up" style="border-color: var(--accent);">
                     <div class="popular-badge">⭐ САМЫЙ ПОПУЛЯРНЫЙ</div>
@@ -595,7 +603,10 @@
                         <div class="upsell-item"><span>🎵 Звуковой логотип (3 сек, ваш аудиобренд)</span><span>+400 ₽</span></div>
                         <div class="upsell-item"><span>🔄 Две разные концовки для A/B теста</span><span>+700 ₽</span></div>
                     </div>
-                    <button class="btn btn-block" onclick="selectTariff('ОПТИМА')">Заказать ОПТИМА →</button>
+                    <div class="button-group">
+                        <a href="https://t.me/gargaross" target="_blank" class="btn btn-telegram btn-block">📨 Заказать в Telegram →</a>
+                        <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="btn btn-block">📝 Заказать в МАКС →</a>
+                    </div>
                 </div>
                 <div class="service-card fade-up">
                     <h3>👑 ПРЕМИУМ</h3>
@@ -613,7 +624,10 @@
                         <div class="upsell-item"><span>📄 Коммерческое право (без упоминания диктора)</span><span>+1 500 ₽</span></div>
                         <div class="upsell-item"><span>🎁 Полная звуковая упаковка под ключ (интро + сцена + аутро + нарезки)</span><span>+2 000 ₽</span></div>
                     </div>
-                    <button class="btn btn-block" onclick="selectTariff('ПРЕМИУМ')">Заказать ПРЕМИУМ →</button>
+                    <div class="button-group">
+                        <a href="https://t.me/gargaross" target="_blank" class="btn btn-telegram btn-block">📨 Заказать в Telegram →</a>
+                        <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="btn btn-block">📝 Заказать в МАКС →</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -651,28 +665,28 @@
         </div>
     </section>
 
-    <section id="order" class="section">
+    <section id="contacts" class="section">
         <div class="container">
-            <h2 class="section-title">Заказать озвучку сейчас</h2>
-            <div class="form-container">
-                <form id="mainOrderForm">
-                    <div style="margin-bottom: 18px;"><label>Ваше имя *</label><input type="text" id="orderName" class="form-control" required></div>
-                    <div style="margin-bottom: 18px;"><label>Telegram или МАКС *</label><input type="text" id="orderContact" class="form-control" required placeholder="@username или ник в МАКС"></div>
-                    <div style="margin-bottom: 18px;"><label>Выберите тариф</label>
-                        <select id="orderTariff" class="form-control">
-                            <option value="ЛАЙТ / 30 сек — 500₽">ЛАЙТ / 30 сек — 500₽</option>
-                            <option value="ОПТИМА / 1 мин — 1000₽" selected>ОПТИМА / 1 мин — 1000₽ (самый популярный)</option>
-                            <option value="ПРЕМИУМ / 3–5 мин (от 3000₽)">ПРЕМИУМ / 3–5 мин (от 3000₽)</option>
-                        </select>
-                    </div>
-                    <div style="margin: 16px 0;"><strong>➕ Дополнительные опции:</strong></div>
-                    <label style="display: flex; gap: 12px; margin-bottom: 12px;"><input type="checkbox" id="upsellLogo"> Звуковой логотип (+400₽)</label>
-                    <label style="display: flex; gap: 12px; margin-bottom: 12px;"><input type="checkbox" id="upsellRush"> Срочная сдача за 4 часа (+500₽)</label>
-                    <label style="display: flex; gap: 12px; margin-bottom: 12px;"><input type="checkbox" id="upsellAtmo"> Атмосфера кафе/улицы (+300₽)</label>
-                    <div style="margin-bottom: 18px;"><label>Текст для озвучки или описание проекта *</label><textarea id="orderMessage" rows="3" class="form-control" placeholder="Напишите текст, укажите пожелания по атмосфере (кафе, радио-стиль, тишина и т.д.) или ссылку на документ" required></textarea></div>
-                    <button type="submit" class="btn" style="width:100%;" id="submitBtn">📦 Оформить заказ</button>
-                    <div id="orderStatus"></div>
-                </form>
+            <h2 class="section-title">Свяжитесь со мной</h2>
+            <p class="section-subtitle">Выберите удобный мессенджер или напишите напрямую — отвечу на все вопросы, сделаю расчёт и обсудим детали вашего проекта.</p>
+            <div class="contact-links">
+                <div class="contact-card">
+                    <h3>📱 Telegram</h3>
+                    <a href="https://t.me/gargaross" target="_blank">@gargaross</a>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-secondary);">Быстрый ответ, файлы, созвоны</p>
+                </div>
+                <div class="contact-card">
+                    <h3>🌐 МАКС</h3>
+                    <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="max-link">Мах Игорян.рф</a>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-secondary);">Профиль на платформе МАКС</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px; background: var(--bg-card); border-radius: 20px; padding: 24px; border: 1px solid var(--border); max-width: 500px; margin-left: auto; margin-right: auto;">
+                <p style="font-size: 1rem;">💬 Не стесняйтесь писать — обсудим текст, тариф, дедлайны. Работаю честно и с душой.</p>
+                <div style="margin-top: 20px; display: flex; gap: 16px; justify-content: center;">
+                    <a href="https://t.me/gargaross" target="_blank" class="btn btn-telegram" style="padding: 10px 24px;">✍️ Написать в Telegram</a>
+                    <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="btn" style="padding: 10px 24px;">📌 Написать в МАКС</a>
+                </div>
             </div>
         </div>
     </section>
@@ -690,252 +704,11 @@
             <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="max-link">Мах Игорян.рф</a>
         </p>
         <p style="margin-top: 24px; font-size:0.85rem;">Срок — обычно 24 часа. Срочные за 4 часа — по договорённости.</p>
-        <p style="margin-top: 30px;">© 2026 Игорян.РФ · Ваш звуковой стиль, который работает на результат</p>
+        <p style="margin-top: 30px;">© 2026 ИГОРЯН.РФ · Ваш звуковой стиль, который работает на результат</p>
     </div>
 </footer>
 
 <script>
-    // Конфигурация Telegram бота
-    const BOT_TOKEN = '8839555299:AAEvDodHSZpKHpvzRLvIjBxqqnUdTb1MrRM';
-    const CHAT_ID = '7094985962';
-    const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-    // Функция отправки в Telegram с тремя уровнями проверки
-    async function sendToTelegram(messageText) {
-        // Уровень 1: валидация входных данных
-        if (!messageText || messageText.trim().length === 0) {
-            throw new Error('Пустое сообщение');
-        }
-        
-        const payload = {
-            chat_id: CHAT_ID,
-            text: messageText,
-            parse_mode: 'HTML',
-            disable_web_page_preview: true
-        };
-        
-        // Уровень 2: попытка отправки с таймаутом и проверкой ответа
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 секунд таймаут
-        
-        try {
-            const response = await fetch(TELEGRAM_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            
-            // Уровень 3: проверка статуса ответа и его содержимого
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(`Ошибка HTTP ${response.status}: ${errorData.description || 'Неизвестная ошибка'}`);
-            }
-            
-            const result = await response.json();
-            
-            if (!result.ok) {
-                throw new Error(`Telegram API ошибка: ${result.description || 'Неизвестная ошибка'}`);
-            }
-            
-            return { success: true, data: result };
-        } catch (error) {
-            clearTimeout(timeoutId);
-            if (error.name === 'AbortError') {
-                throw new Error('Превышен таймаут отправки. Проверьте соединение.');
-            }
-            throw error;
-        }
-    }
-    
-    // Функция форматирования сообщения для заказа
-    function formatOrderMessage(formData) {
-        const date = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
-        let message = `🆕 <b>НОВЫЙ ЗАКАЗ ОЗВУЧКИ</b>\n`;
-        message += `━━━━━━━━━━━━━━━━━━━━\n`;
-        message += `📅 <b>Дата:</b> ${date}\n`;
-        message += `👤 <b>Имя:</b> ${escapeHtml(formData.name)}\n`;
-        message += `📱 <b>Контакт:</b> ${escapeHtml(formData.contact)}\n`;
-        message += `💰 <b>Тариф:</b> ${escapeHtml(formData.tariff)}\n`;
-        
-        if (formData.options.length > 0) {
-            message += `✨ <b>Доп. опции:</b>\n`;
-            formData.options.forEach(opt => {
-                message += `   • ${escapeHtml(opt)}\n`;
-            });
-        }
-        
-        message += `━━━━━━━━━━━━━━━━━━━━\n`;
-        message += `<b>📝 Текст/описание проекта:</b>\n`;
-        message += `<i>${escapeHtml(formData.message.substring(0, 800))}</i>`;
-        if (formData.message.length > 800) {
-            message += `\n... (обрезано, всего ${formData.message.length} символов)`;
-        }
-        message += `\n━━━━━━━━━━━━━━━━━━━━\n`;
-        message += `🔗 <b>Страница заказа:</b> ${window.location.href}`;
-        
-        return message;
-    }
-    
-    // Функция экранирования HTML для безопасности
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
-    
-    // Функция для показа статуса
-    function showStatus(element, message, type) {
-        if (!element) return;
-        let className = '';
-        switch(type) {
-            case 'success': className = 'status-success'; break;
-            case 'error': className = 'status-error'; break;
-            case 'loading': className = 'status-loading'; break;
-            default: className = '';
-        }
-        element.innerHTML = `<div class="status-message ${className}">${message}</div>`;
-        
-        // Автоматически скрываем успешное сообщение через 5 секунд
-        if (type === 'success') {
-            setTimeout(() => {
-                if (element.innerHTML.includes(message)) {
-                    element.innerHTML = '';
-                }
-            }, 5000);
-        }
-    }
-    
-    // Обработчик отправки формы
-    async function handleOrderSubmit(event) {
-        event.preventDefault();
-        
-        const submitBtn = document.getElementById('submitBtn');
-        const statusDiv = document.getElementById('orderStatus');
-        
-        // Сбор данных формы
-        const name = document.getElementById('orderName').value.trim();
-        const contact = document.getElementById('orderContact').value.trim();
-        const tariff = document.getElementById('orderTariff').value;
-        const message = document.getElementById('orderMessage').value.trim();
-        
-        const upsellLogo = document.getElementById('upsellLogo').checked;
-        const upsellRush = document.getElementById('upsellRush').checked;
-        const upsellAtmo = document.getElementById('upsellAtmo').checked;
-        
-        // Валидация на клиенте
-        if (!name) {
-            showStatus(statusDiv, '❌ Пожалуйста, укажите ваше имя', 'error');
-            return;
-        }
-        if (!contact) {
-            showStatus(statusDiv, '❌ Пожалуйста, укажите Telegram или МАКС для связи', 'error');
-            return;
-        }
-        if (!message) {
-            showStatus(statusDiv, '❌ Пожалуйста, напишите текст для озвучки или описание проекта', 'error');
-            return;
-        }
-        
-        // Сбор дополнительных опций
-        const options = [];
-        if (upsellLogo) options.push('Звуковой логотип (+400₽)');
-        if (upsellRush) options.push('Срочная сдача за 4 часа (+500₽)');
-        if (upsellAtmo) options.push('Атмосфера кафе/улицы (+300₽)');
-        
-        // Формирование объекта заказа
-        const orderData = {
-            name: name,
-            contact: contact,
-            tariff: tariff,
-            options: options,
-            message: message
-        };
-        
-        // Форматирование сообщения для Telegram
-        const telegramMessage = formatOrderMessage(orderData);
-        
-        // Блокируем кнопку и показываем статус загрузки
-        submitBtn.disabled = true;
-        submitBtn.textContent = '⏳ Отправка...';
-        showStatus(statusDiv, '📨 Отправка заказа в Telegram...', 'loading');
-        
-        // Пробуем отправить с повторной попыткой при ошибке
-        let lastError = null;
-        let success = false;
-        
-        for (let attempt = 1; attempt <= 2; attempt++) {
-            try {
-                const result = await sendToTelegram(telegramMessage);
-                if (result.success) {
-                    success = true;
-                    break;
-                }
-            } catch (error) {
-                lastError = error;
-                console.error(`Попытка ${attempt} не удалась:`, error);
-                if (attempt === 1) {
-                    // Первая попытка не удалась, показываем повторную
-                    showStatus(statusDiv, '🔄 Повторная попытка отправки...', 'loading');
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
-            }
-        }
-        
-        if (success) {
-            // Отправка в Яндекс.Метрику события
-            if (typeof ym !== 'undefined') {
-                ym(99150786, 'reachGoal', 'order_submit');
-            }
-            
-            showStatus(statusDiv, '✅ Заказ успешно отправлен! Я свяжусь с вами в ближайшие часы для подтверждения деталей.', 'success');
-            
-            // Очистка формы
-            document.getElementById('mainOrderForm').reset();
-            
-            // Дополнительная проверка: отправляем уведомление себе в Telegram (для отладки)
-            try {
-                const testMessage = `✅ <b>Успешная отправка формы</b>\n👤 Клиент: ${escapeHtml(name)}\n📅 ${new Date().toLocaleString('ru-RU')}`;
-                await sendToTelegram(testMessage);
-            } catch (e) {
-                console.log('Тестовое уведомление не отправлено, но основной заказ принят');
-            }
-        } else {
-            let errorMessage = '❌ Не удалось отправить заказ. ';
-            if (lastError) {
-                errorMessage += `Ошибка: ${lastError.message}. `;
-            }
-            errorMessage += 'Пожалуйста, свяжитесь со мной напрямую в Telegram: @gargaross';
-            showStatus(statusDiv, errorMessage, 'error');
-            
-            // Отправка ошибки в консоль для отладки
-            console.error('Ошибка отправки заказа:', lastError);
-        }
-        
-        // Разблокируем кнопку
-        submitBtn.disabled = false;
-        submitBtn.textContent = '📦 Оформить заказ';
-    }
-    
-    // Функция выбора тарифа (скролл к форме)
-    function selectTariff(tariffName) {
-        const tariffSelect = document.getElementById('orderTariff');
-        if (tariffSelect) {
-            if (tariffName === 'ЛАЙТ') tariffSelect.value = "ЛАЙТ / 30 сек — 500₽";
-            else if (tariffName === 'ОПТИМА') tariffSelect.value = "ОПТИМА / 1 мин — 1000₽";
-            else if (tariffName === 'ПРЕМИУМ') tariffSelect.value = "ПРЕМИУМ / 3–5 мин (от 3000₽)";
-            document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-    
     // Анимация при скролле
     const fadeElements = document.querySelectorAll('.fade-up');
     const observer = new IntersectionObserver((entries) => {
@@ -965,15 +738,20 @@
         });
     });
     
-    // Назначение обработчика формы
-    const orderForm = document.getElementById('mainOrderForm');
-    if (orderForm) {
-        orderForm.addEventListener('submit', handleOrderSubmit);
-    }
-    
-    // Вывод в консоль информации о загрузке бота
-    console.log('Telegram бот инициализирован. Токен: 8839555299:AAEv...');
-    console.log('Чат ID: 7094985962');
+    // Отслеживание кликов на кнопки заказа для Яндекс.Метрики (опционально)
+    document.querySelectorAll('.btn-telegram, .btn-block').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            if (typeof ym !== 'undefined') {
+                if (this.classList.contains('btn-telegram')) {
+                    ym(99150786, 'reachGoal', 'click_telegram');
+                } else if (this.href && this.href.includes('max.ru')) {
+                    ym(99150786, 'reachGoal', 'click_max');
+                } else {
+                    ym(99150786, 'reachGoal', 'click_order_button');
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>
