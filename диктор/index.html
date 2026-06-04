@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ИГОРЯН.РФ | Профессиональная озвучка & аудио-сцены</title>
+    <meta name="description" content="Озвучка текстов, аудио-сцены, голос для радио, подкастов, рекламы. Работа с голосом, атмосферой и звуковыми деталями. Тарифы от 500₽.">
+    <style>
+        /* === БАЗОВЫЕ НАСТРОЙКИ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0c;
+            --bg-secondary: #121216;
+            --bg-card: #1a1a20;
+            --accent: #8a2be2;
+            --accent-hover: #9d4edd;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border: #2a2a35;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 56px;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* === КНОПКИ === */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: var(--accent);
+            color: white;
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+        }
+
+        /* === HEADER === */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 12, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 76px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* стиль логотипа: ИГОРЯН.РФ с акцентом на точку и прозрачный .РФ */
+        .logo {
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .logo .name {
+            color: var(--text-primary);
+        }
+        .logo .dot {
+            color: var(--accent);
+            font-weight: 900;
+        }
+        .logo .rf {
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.65;
+            letter-spacing: 0;
+            margin-left: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 780px) {
+            .nav {
+                flex-direction: column;
+                height: auto;
+                padding: 14px 0;
+                gap: 12px;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 22px;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .logo .rf {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .hero-content {
+            max-width: 800px;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(138, 43, 226, 0.12);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 24px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* карточки услуг/тарифов */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        .price-tag {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 16px 0 8px;
+        }
+        .price-tag span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        .upsell-list {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .upsell-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 10px 0;
+        }
+        .btn-block {
+            width: 100%;
+            margin-top: 24px;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--accent);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        /* ===== АДАПТИВНАЯ ТАБЛИЦА СРАВНЕНИЯ (без горизонтального скролла) ===== */
+        .compare-wrapper {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 16px 12px;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+        /* Настройка таблицы: компактные отступы, мелкий шрифт на узких экранах */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 480px; /* минимальная ширина для читаемости, но скролл появится только на очень маленьких */
+        }
+        .compare-table th, 
+        .compare-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top;
+        }
+        .compare-table th:first-child,
+        .compare-table td:first-child {
+            padding-left: 8px;
+            font-weight: 600;
+            background-color: rgba(138, 43, 226, 0.05);
+            width: 38%;
+        }
+        .compare-table th:not(:first-child),
+        .compare-table td:not(:first-child) {
+            text-align: center;
+            width: 20%;
+        }
+        
+        /* На очень узких экранах делаем шрифт меньше и отступы плотнее */
+        @media (max-width: 600px) {
+            .compare-table {
+                font-size: 0.75rem;
+                min-width: 420px;
+            }
+            .compare-table th, 
+            .compare-table td {
+                padding: 8px 6px;
+            }
+            .compare-wrapper {
+                padding: 12px 8px;
+            }
+            .compare-table th:first-child,
+            .compare-table td:first-child {
+                font-size: 0.8rem;
+                width: 44%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .compare-table {
+                font-size: 0.7rem;
+                min-width: 380px;
+            }
+            .compare-table th, 
+            .compare-table td {
+                padding: 6px 4px;
+            }
+        }
+        
+        .form-control, select, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .form-control:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .form-container {
+            background: var(--bg-card);
+            padding: 36px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 50px 0 30px;
+            text-align: center;
+        }
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: baseline;
+        }
+        .footer-logo .dot {
+            color: var(--accent);
+        }
+        .footer-logo .rf-small {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-left: 2px;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid var(--border);
+        }
+        @media (max-width: 680px) {
+            .grid-2col { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* ссылка max */
+        .max-link {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(138, 43, 226, 0.4);
+            transition: var(--transition);
+        }
+        .max-link:hover {
+            color: var(--accent-hover);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Стили для сообщения об успехе */
+        .success-message {
+            text-align: center;
+            padding: 40px 30px;
+        }
+        .success-message h3 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .success-message p {
+            margin: 15px 0;
+            color: var(--text-secondary);
+        }
+        .error-text {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <nav class="nav">
+            <a href="#" class="logo">
+                <span class="name">ИГОРЯН</span><span class="dot">.</span><span class="rf">РФ</span>
+            </a>
+            <ul class="nav-links" style="list-style:none;">
+                <li><a href="#transform">Трансформация</a></li>
+                <li><a href="#tariffs">Тарифы</a></li>
+                <li><a href="#compare">Сравнение</a></li>
+                <li><a href="#order">Заказ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- HERO — шире: озвучка текстов, аудио-сцены для радио/рекламы/блогов -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">🎙️ Голос + аудио-сцены | Для радио, подкастов, рекламы, блогов</span>
+                <h1>Превращаю текст в объёмную аудио-сцену</h1>
+                <p>Привет, я Игорь. Профессиональная озвучка любого текста — от радиоролика до аудио-спектакля. Голос, атмосферные шумы, музыка под ключ. Без шаблонов.</p>
+                <div class="hero-buttons">
+                    <a href="#order" class="btn">🎧 Заказать озвучку</a>
+                    <a href="#tariffs" class="btn btn-outline">🔥 Выбрать тариф</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ТРАНСФОРМАЦИЯ: акцент на звук текста + аудиосцена вместо "ролики" -->
+    <section id="transform" class="section">
+        <div class="container">
+            <h2 class="section-title">Почему люди пропускают монотонные аудио?</h2>
+            <p class="section-subtitle">Плоский голос без атмосферы не вызывает эмоций. Качественный звук — ваш магнит для слушателя.</p>
+            <div class="grid-2col">
+                <div>
+                    <h3 style="color:#a0a0b0;">❌ Без проработки</h3>
+                    <ul style="margin-top: 20px; list-style:none;">
+                        <li style="margin:12px 0">🎤 Голос «сухой», как в автоответчике</li>
+                        <li style="margin:12px 0">😶 Никакой картинки перед глазами</li>
+                        <li style="margin:12px 0">📉 Слушатель отвлекается через 5 секунд</li>
+                        <li style="margin:12px 0">🌀 Звук сливается с шумом других</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color:var(--accent);">⚡ С моей работой</h3>
+                    <ul style="margin-top: 20px; list-style:none;">
+                        <li style="margin:12px 0">🎬 Полноценная аудио-сцена: голос + среда</li>
+                        <li style="margin:12px 0">🧠 Включаем воображение (кафе, улица, студия)</li>
+                        <li style="margin:12px 0">🎯 Слушают до конца и запоминают</li>
+                        <li style="margin:12px 0">✨ Ваш уникальный звуковой стиль</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background: var(--bg-card); border-radius: 24px; padding: 28px; text-align: center; margin-top: 40px; border:1px solid var(--border);">
+                <p style="font-size:1.2rem;"><strong>Я не делаю бездушную начитку. Я создаю аудио-сцену.</strong> Голос + атмосферные звуки (кафе, офис, природа) + лёгкая музыка = люди верят с первой секунды. Идеально для рекламы на радио, подкастов, аудио-роликов.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОБО МНЕ (ИГОРЬ) -->
+    <section style="background: var(--bg-secondary); padding: 70px 0;">
+        <div class="container">
+            <div style="max-width: 800px; margin:0 auto; text-align: center;">
+                <h2 style="font-size: 2rem;">Меня зовут Игорь</h2>
+                <p style="margin-top: 20px; color:var(--text-secondary);">Аудиодиктор и саунд-дизайнер. Работаю с текстами, аудиорекламой, небольшими проектами. Не просто начитываю — я <strong>прописываю паузы, эмоции, расставляю живые звуки</strong> (звон чашек в кафе, шаги, звук открываемой двери, шёпот — всё, что создаёт картинку).</p>
+                <p style="margin-top: 16px;">👉 Ваш текст не останется «очередной записью». Он получит узнаваемую атмосферу, которая вовлекает слушателя и работает на результат.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ТАРИФЫ 3 шт -->
+    <section id="tariffs" class="section">
+        <div class="container">
+            <h2 class="section-title">Тарифы на озвучку с аудио-сценой</h2>
+            <p class="section-subtitle">Живой голос, чистка шумов, возможность добавить звуки кафе / офиса / города. Одна правка в тарифе.</p>
+            <div class="services-grid">
+                <!-- ЛАЙТ -->
+                <div class="service-card fade-up">
+                    <h3>⚡ ЛАЙТ</h3>
+                    <div class="price-tag">500 ₽ <span>/ 30 сек</span></div>
+                    <p style="margin: 12px 0;">Короткие аудио для соцсетей, сторис, тизер радио</p>
+                    <ul style="list-style: none; margin: 16px 0;">
+                        <li>✅ Голос + лёгкая фоновая музыка</li>
+                        <li>✅ Чёткий тембр, чистая запись</li>
+                        <li>✅ Идеально для коротких текстов и анонсов</li>
+                    </ul>
+                    <div class="upsell-list">
+                        <div class="upsell-item"><span>➕ Атмосфера кафе / улицы (2 звуковых слоя)</span><span style="color:var(--accent);">+300 ₽</span></div>
+                        <div class="upsell-item"><span>🚀 Сдача за 4 часа (вместо 24ч)</span><span>+500 ₽</span></div>
+                    </div>
+                    <button class="btn btn-block" onclick="selectTariff('ЛАЙТ')">Заказать ЛАЙТ →</button>
+                </div>
+                <!-- ОПТИМА популярный -->
+                <div class="service-card fade-up" style="border-color: var(--accent);">
+                    <div class="popular-badge">⭐ САМЫЙ ПОПУЛЯРНЫЙ</div>
+                    <h3>🔥 ОПТИМА</h3>
+                    <div class="price-tag">1 000 ₽ <span>/ 1 мин</span></div>
+                    <p style="margin: 12px 0;">Для радио-роликов, подкастов, презентаций</p>
+                    <ul style="list-style: none; margin: 16px 0;">
+                        <li>✅ Всё из тарифа Лайт</li>
+                        <li>✅ Мини-оранжировка: подбор атмосферной музыки</li>
+                        <li>✅ 3 звуковых эффекта в подарок (например, кафе, телефонный гудок, шаги)</li>
+                        <li>✅ Голос + окружение = готовая аудио-сцена</li>
+                    </ul>
+                    <div class="upsell-list">
+                        <div class="upsell-item"><span>🎵 Звуковой логотип (3 сек, ваш аудиобренд)</span><span>+400 ₽</span></div>
+                        <div class="upsell-item"><span>🔄 Две разные концовки для A/B теста</span><span>+700 ₽</span></div>
+                    </div>
+                    <button class="btn btn-block" onclick="selectTariff('ОПТИМА')">Заказать ОПТИМА →</button>
+                </div>
+                <!-- ПРЕМИУМ -->
+                <div class="service-card fade-up">
+                    <h3>👑 ПРЕМИУМ</h3>
+                    <div class="price-tag">3 000 – 5 000 ₽ <span>/ 3–5 мин</span></div>
+                    <p style="margin: 12px 0;">Аудиоспектакли, лонгриды, брендовые сцены, сложные проекты</p>
+                    <ul style="list-style: none; margin: 16px 0;">
+                        <li>✅ Всё из тарифа Оптима</li>
+                        <li>✅ Индивидуальная звуковая раскадровка (я предлагаю, где добавить эффекты — кафе, дождь, офис и т.д.)</li>
+                        <li>✅ 2 правки голоса после первой сдачи</li>
+                        <li>✅ Уникальная аранжировка музыки (не готовая фонограмма)</li>
+                        <li>✅ Звуковой бренд в подарок (логотип + интро для всех проектов)</li>
+                        <li>✅ Приоритет — готово за 12 часов</li>
+                    </ul>
+                    <div class="upsell-list">
+                        
+                        <div class="upsell-item"><span>🎁 Полная звуковая упаковка под ключ (интро + сцена + аутро + нарезки)</span><span>+2 000 ₽</span></div>
+                    </div>
+                    <button class="btn btn-block" onclick="selectTariff('ПРЕМИУМ')">Заказать ПРЕМИУМ →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СРАВНИТЕЛЬНАЯ ТАБЛИЦА — оптимизирована для мобильных (нет горизонтальной прокрутки при ширине > 380px) -->
+    <section id="compare" class="section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <h2 class="section-title">Сравнение тарифов</h2>
+            <div class="compare-wrapper">
+                <table class="compare-table">
+                    <thead>
+                        <tr><th>Что входит</th><th>ЛАЙТ</th><th>ОПТИМА</th><th>ПРЕМИУМ</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Голос + чистка</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                        <tr><td>Фоновая музыка</td><td>простая</td><td>индивид. подбор</td><td>уникальная аранжировка</td></tr>
+                        <tr><td>Звуковые эффекты / атмосфера</td><td>❌</td><td>3 в подарок</td><td>полная сцена</td></tr>
+                        <tr><td>Правки</td><td>1</td><td>1</td><td>2</td></tr>
+                        <tr><td>Срок</td><td>24 ч</td><td>24 ч</td><td>12 ч</td></tr>
+                        <tr><td>Звуковой логотип</td><td>❌</td><td>+400 ₽</td><td>✅ в подарок</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="text-align: center; margin-top: 32px;">⭐ Тариф ПРЕМИУМ выбирают для сильных аудио-проектов — окупается результатом и доверием аудитории.</p>
+        </div>
+    </section>
+
+    <!-- БЛОК СНЯТИЯ ВОЗРАЖЕНИЙ (адаптация под аудио) -->
+    <section class="section">
+        <div class="container">
+            <div class="services-grid" style="gap:25px;">
+                <div class="service-card"><h3>❌ «Я могу наговорить на диктофон»</h3><p>Можете. Но плоская запись без эмоций и атмосферы не удерживает внимание. Я добавляю объём и среду.</p></div>
+                <div class="service-card"><h3>❌ «Это дорого для простой озвучки»</h3><p>Ролик/аудио с серым звуком не продаёт. С моей работой слушатель погружается в историю — и это приносит результат.</p></div>
+                <div class="service-card"><h3>❌ «Сам наложу шумы»</h3><p>Можно, но качество «любительского микса» сразу выдаст себя. Я делаю чисто, профессионально, как для радио.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ФОРМА ЗАКАЗА С РЕАЛЬНОЙ ОТПРАВКОЙ В TELEGRAM -->
+    <section id="order" class="section">
+        <div class="container">
+            <h2 class="section-title">Заказать озвучку сейчас</h2>
+            <div class="form-container" id="formContainer">
+                <form id="mainOrderForm">
+                    <div style="margin-bottom: 18px;"><label>Ваше имя *</label><input type="text" id="orderName" class="form-control" required></div>
+                    <div style="margin-bottom: 18px;"><label>Telegram *</label><input type="text" id="orderContact" class="form-control" required placeholder="@username или номер телефона в Telegram"></div>
+                    <div style="margin-bottom: 18px;"><label>Выберите тариф</label>
+                        <select id="orderTariff" class="form-control">
+                            <option value="ЛАЙТ / 30 сек — 500₽">ЛАЙТ / 30 сек — 500₽</option>
+                            <option value="ОПТИМА / 1 мин — 1000₽" selected>ОПТИМА / 1 мин — 1000₽ (самый популярный)</option>
+                            <option value="ПРЕМИУМ / 3–5 мин (от 3000₽)">ПРЕМИУМ / 3–5 мин (от 3000₽)</option>
+                        </select>
+                    </div>
+                    <div style="margin: 16px 0;"><strong>➕ Дополнительные опции:</strong></div>
+                    <label style="display: flex; gap: 12px; margin-bottom: 12px;"><input type="checkbox" id="upsellLogo"> Звуковой логотип (+400₽)</label>
+                    <label style="display: flex; gap: 12px; margin-bottom: 12px;"><input type="checkbox" id="upsellRush"> Срочная сдача за 4 часа (+500₽)</label>
+                    <label style="display: flex; gap: 12px; margin-bottom: 12px;"><input type="checkbox" id="upsellAtmo"> Атмосфера кафе/улицы (+300₽)</label>
+                    <div style="margin-bottom: 18px;"><label>Текст для озвучки или описание проекта *</label><textarea id="orderMessage" rows="3" class="form-control" placeholder="Напишите текст, укажите пожелания по атмосфере (кафе, радио-стиль, тишина и т.д.) или ссылку на документ" required></textarea></div>
+                    <button type="submit" class="btn" style="width:100%;" id="submitBtn">📦 Оформить заказ</button>
+                    <div id="orderStatus" style="margin-top: 18px;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-logo">
+            <span>ИГОРЯН</span><span class="dot">.</span><span class="rf-small">РФ</span>
+        </div>
+        <p>Профессиональная озвучка и аудио-сцены</p>
+        <p style="margin: 12px 0;">Связаться со мной:</p>
+        <p style="margin: 6px 0;"><strong>Telegram:</strong> <a href="https://t.me/gargaross" target="_blank" style="color:var(--accent);">https://t.me/gargaross</a></p>
+        <p style="margin: 6px 0;"><strong>МАКС:</strong> 
+            <a href="https://max.ru/u/f9LHodD0cOJ02DJaXrxjGtbSB7mgGGOE1tGrZTCK8FnaYnr5XNMDEIU1A58" target="_blank" class="max-link">Мах Игорян.рф</a>
+        </p>
+        <p style="margin-top: 24px; font-size:0.85rem;">Срок — обычно 24 часа. Срочные за 4 часа — по договорённости.</p>
+        <p style="margin-top: 30px;">© 2026 Игорян.РФ · Ваш звуковой стиль, который работает на результат</p>
+    </div>
+</footer>
+
+<script>
+    // Telegram Bot данные (ваши)
+    const BOT_TOKEN = '8839555299:AAEvDodHSZpKHpvzRLvIjBxqqnUdTb1MrRM';
+    const CHAT_ID = '7094985962';
+
+    // анимация при скролле
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+    setTimeout(() => {
+        fadeElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) el.classList.add('visible');
+        });
+    }, 100);
+
+    // гладкий скролл
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    function selectTariff(tariffName) {
+        const tariffSelect = document.getElementById('orderTariff');
+        if (tariffSelect) {
+            if (tariffName === 'ЛАЙТ') tariffSelect.value = "ЛАЙТ / 30 сек — 500₽";
+            else if (tariffName === 'ОПТИМА') tariffSelect.value = "ОПТИМА / 1 мин — 1000₽";
+            else if (tariffName === 'ПРЕМИУМ') tariffSelect.value = "ПРЕМИУМ / 3–5 мин (от 3000₽)";
+            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // ОТПРАВКА ФОРМЫ В TELEGRAM
+    const mainForm = document.getElementById('mainOrderForm');
+    const formContainer = document.getElementById('formContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusDiv = document.getElementById('orderStatus');
+
+    if(mainForm){
+        mainForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('orderName').value.trim();
+            const contact = document.getElementById('orderContact').value.trim();
+            const tariffSelect = document.getElementById('orderTariff');
+            const tariff = tariffSelect.options[tariffSelect.selectedIndex].text;
+            const message = document.getElementById('orderMessage').value.trim();
+            const logo = document.getElementById('upsellLogo').checked;
+            const rush = document.getElementById('upsellRush').checked;
+            const atmo = document.getElementById('upsellAtmo').checked;
+            
+            // Валидация
+            if(!name || !contact || !message) {
+                statusDiv.innerHTML = '<div style="color:#e74c3c; background:rgba(231,76,60,0.1); padding:12px; border-radius:12px;">❌ Заполните имя, Telegram и текст проекта</div>';
+                return;
+            }
+            
+            // Блокируем кнопку
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Отправка...';
+            statusDiv.innerHTML = '<div style="color:var(--accent);">📨 Отправляем заказ в Telegram...</div>';
+            
+            // Формируем сообщение для Telegram
+            let tgText = `📢 *НОВЫЙ ЗАКАЗ ОЗВУЧКИ*\n\n`;
+            tgText += `👤 *Имя:* ${escapeMarkdown(name)}\n`;
+            tgText += `📱 *Telegram:* ${escapeMarkdown(contact)}\n`;
+            tgText += `💰 *Тариф:* ${escapeMarkdown(tariff)}\n`;
+            tgText += `📝 *Текст проекта:*\n${escapeMarkdown(message)}\n\n`;
+            tgText += `➕ *Дополнительно:*\n`;
+            if (logo) tgText += `🎵 Звуковой логотип (+400₽)\n`;
+            if (rush) tgText += `⚡ Срочность 4ч (+500₽)\n`;
+            if (atmo) tgText += `🌆 Атмосфера (+300₽)\n`;
+            if (!logo && !rush && !atmo) tgText += `— без опций\n`;
+            
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            const payload = {
+                chat_id: CHAT_ID,
+                text: tgText,
+                parse_mode: 'Markdown',
+                disable_web_page_preview: true
+            };
+            
+            // Таймаут 30 секунд
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000);
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    // Успех — заменяем форму на сообщение
+                    formContainer.innerHTML = `
+                        <div class="success-message">
+                            <h3>✅ Заказ успешно отправлен!</h3>
+                            <p>Спасибо, <strong>${escapeHtml(name)}</strong>!</p>
+                            <p>Я свяжусь с вами в Telegram в ближайшее время.</p>
+                            <p style="margin-top: 25px;">Если не получили ответ в течение часа, напишите мне сами:</p>
+                            <p><a href="https://t.me/gargaross" target="_blank" style="color:var(--accent);">👉 @gargaross</a></p>
+                            <button class="btn" onclick="location.reload();" style="margin-top: 25px;">📝 Отправить ещё один заказ</button>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(result.description || 'Ошибка отправки');
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                console.error('Ошибка:', error);
+                
+                let errorMsg = '⚠️ Не удалось отправить заказ. ';
+                if (error.name === 'AbortError') {
+                    errorMsg += 'Превышено время ожидания (30 сек). ';
+                } else {
+                    errorMsg += 'Проверьте подключение к интернету. ';
+                }
+                errorMsg += 'Пожалуйста, напишите мне напрямую в Telegram: <a href="https://t.me/gargaross" target="_blank" style="color:var(--accent);">@gargaross</a>';
+                
+                statusDiv.innerHTML = `<div class="error-text">${errorMsg}</div>`;
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📦 Оформить заказ';
+            }
+        });
+    }
+    
+    // Вспомогательная функция для экранирования Markdown
+    function escapeMarkdown(text) {
+        if (!text) return '';
+        return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+</script>
+</body>
+</html>
