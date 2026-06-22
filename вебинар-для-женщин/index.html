@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вебинар · 3 скрытых блока, которые крадут твою женскую силу</title>
+    <meta name="description" content="Бесплатный онлайн-вебинар Игоряна. Узнай, почему ты истощена даже после отдыха, и получи путь возврата энергии за 7 дней.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #fafaf8;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 248, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+        
+        .program-button {
+            padding: 12px 30px;
+            background: #1a1a1a;
+            color: #fafaf8;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 1px solid #1a1a1a;
+        }
+        
+        .program-button:hover {
+            background: transparent;
+            color: #1a1a1a;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 60px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+            color: #fafaf8;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(245, 240, 232, 0.1);
+            border: 1px solid rgba(245, 240, 232, 0.2);
+            border-radius: 30px;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            color: #f5f0e8;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: #fafaf8;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3em;
+            color: rgba(250, 250, 248, 0.8);
+            line-height: 1.6;
+            margin-bottom: 35px;
+            font-weight: 300;
+            font-style: italic;
+        }
+        
+        .hero-meta {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            font-size: 0.95em;
+        }
+        
+        .meta-label {
+            opacity: 0.5;
+            display: block;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .meta-value {
+            font-weight: 400;
+            color: #f5f0e8;
+        }
+        
+        .registration-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 5px;
+            padding: 40px 35px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-title {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+            font-weight: 400;
+            color: #fafaf8;
+        }
+        
+        .card-subtitle {
+            font-size: 0.95em;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            color: #f5f0e8;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            color: #f5f0e8;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 3px;
+            color: #fafaf8;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #f5f0e8;
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .form-group input::placeholder {
+            color: rgba(250,250,248,0.4);
+        }
+        
+        .time-selector {
+            margin-bottom: 25px;
+        }
+        
+        .time-selector-label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            color: #f5f0e8;
+        }
+        
+        .time-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .time-option {
+            position: relative;
+        }
+        
+        .time-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .time-option label {
+            display: block;
+            padding: 18px 15px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 3px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .time-option input[type="radio"]:checked + label {
+            background: #f5f0e8;
+            color: #1a1a1a;
+            border-color: #f5f0e8;
+        }
+        
+        .time-option label:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .time-slot {
+            display: block;
+            font-size: 1.3em;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+        
+        .time-period {
+            font-size: 0.8em;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .time-option input[type="radio"]:checked + label .time-period {
+            opacity: 0.8;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 18px;
+            background: #f5f0e8;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 3px;
+            font-size: 1.05em;
+            font-family: inherit;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-button:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .form-note {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.8em;
+            opacity: 0.6;
+            color: #f5f0e8;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 20px 0 15px;
+            font-size: 0.85em;
+            opacity: 0.7;
+            color: #f5f0e8;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 4px;
+            width: auto;
+        }
+        
+        .checkbox-group a {
+            color: #f5f0e8;
+            text-decoration: underline;
+        }
+        
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-size: 2.3em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1a1a1a;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        /* Для кого */
+        .for-whom {
+            background: #fff;
+        }
+        
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .pain-item {
+            padding: 30px 25px;
+            background: #fafaf8;
+            border-left: 3px solid #1a1a1a;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .pain-item p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        /* Программа */
+        .program-section {
+            background: #fafaf8;
+        }
+        
+        .program-timeline {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        
+        .program-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 30px;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        
+        .program-item:last-child {
+            border-bottom: none;
+        }
+        
+        .program-time {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #1a1a1a;
+            opacity: 0.4;
+            padding-top: 5px;
+        }
+        
+        .program-content h3 {
+            font-size: 1.3em;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+        
+        .program-content p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .program-content ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .program-content ul li {
+            margin-bottom: 8px;
+        }
+        
+        /* Результаты */
+        .results {
+            background: #1a1a1a;
+            color: #fafaf8;
+        }
+        
+        .results .section-title {
+            color: #fafaf8;
+        }
+        
+        .results .section-subtitle {
+            color: rgba(250,250,248,0.7);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .result-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .result-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .result-item h3 {
+            font-size: 1.3em;
+            font-weight: 400;
+            margin-bottom: 15px;
+            color: #f5f0e8;
+        }
+        
+        .result-item p {
+            opacity: 0.75;
+            line-height: 1.7;
+        }
+        
+        /* О ведущем */
+        .about {
+            background: #fff;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-image {
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.1);
+            font-size: 5em;
+            font-weight: 300;
+            letter-spacing: 5px;
+        }
+        
+        .about-content h2 {
+            font-size: 2.2em;
+            font-weight: 300;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+        }
+        
+        .about-content p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        
+        .about-quote {
+            font-style: italic;
+            color: #777;
+            border-left: 3px solid #1a1a1a;
+            padding-left: 20px;
+            margin-top: 30px;
+        }
+        
+        /* Финальный CTA */
+        .final-cta {
+            background: linear-gradient(135deg, #f0ede8 0%, #e8e4dd 100%);
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.3em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .final-cta p {
+            font-size: 1.2em;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .final-cta .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            background: #1a1a1a;
+            color: #fafaf8;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid #1a1a1a;
+        }
+        
+        .final-cta .cta-button:hover {
+            background: transparent;
+            color: #1a1a1a;
+        }
+        
+        footer {
+            background: #1a1a1a;
+            color: #fafaf8;
+            padding: 80px 0 40px;
+        }
+        
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-brand h3 {
+            font-size: 1.8em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-brand p {
+            opacity: 0.7;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #fafaf8;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        
+        .footer-legal {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 0.9em;
+            opacity: 0.6;
+            line-height: 1.8;
+        }
+        
+        .footer-legal p {
+            margin: 10px 0;
+        }
+        
+        .footer-legal .divider-symbol {
+            opacity: 0.4;
+            margin: 20px 0;
+            letter-spacing: 10px;
+        }
+        
+        .divider {
+            text-align: center;
+            padding: 60px 0;
+            font-size: 1.5em;
+            color: #1a1a1a;
+            opacity: 0.2;
+            letter-spacing: 15px;
+            background: #fff;
+        }
+        
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .program-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .program-button {
+                padding: 10px 20px;
+                font-size: 0.85em;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .time-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <a href="/" class="logo">ИГОРЯН</a>
+            <a href="/программа-для-женщин/" class="program-button">Программа для женщин</a>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <span class="hero-badge">Бесплатный онлайн-вебинар</span>
+                <h1>3 скрытых блока, которые крадут твою женскую силу</h1>
+                <p class="hero-subtitle">
+                    Почему ты истощена даже после отдыха —<br>
+                    и как вернуть себе энергию за 7 дней
+                </p>
+                
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Дата</span>
+                        <span class="meta-value" id="tomorrow-date">—</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Длительность</span>
+                        <span class="meta-value">55–60 минут</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Формат</span>
+                        <span class="meta-value">Онлайн · Закрытый доступ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="registration-card">
+                <h3 class="card-title">Занять место</h3>
+                <p class="card-subtitle">Количество мест ограничено · Доступ только зарегистрированным</p>
+                
+                <form id="webinar-form" action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" name="name" placeholder="Как к вам обращаться" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telegram">Telegram</label>
+                        <input type="text" id="telegram" name="telegram" placeholder="@username или номер телефона" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email (для напоминания)</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="time-selector">
+                        <span class="time-selector-label">Выберите время просмотра (завтра)</span>
+                        <div class="time-options">
+                            <div class="time-option">
+                                <input type="radio" id="time-morning" name="time" value="10:00" required>
+                                <label for="time-morning">
+                                    <span class="time-slot">10:00</span>
+                                    <span class="time-period">Утренний поток</span>
+                                </label>
+                            </div>
+                            <div class="time-option">
+                                <input type="radio" id="time-evening" name="time" value="20:00">
+                                <label for="time-evening">
+                                    <span class="time-slot">20:00</span>
+                                    <span class="time-period">Вечерний поток</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">
+                            Я согласна с <a href="/политика-конфиденциальности/">политикой конфиденциальности</a> и даю согласие на обработку персональных данных
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Забронировать место</button>
+                    
+                    <p class="form-note">🔒 Данные защищены · Ссылка придет в Telegram за час до начала</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="for-whom">
+    <div class="container">
+        <h2 class="section-title">Этот вебинар для тебя, если…</h2>
+        <p class="section-subtitle">Узнай хотя бы в одном пункте — значит, пришло время разбираться глубже.</p>
+        
+        <div class="pain-grid">
+            <div class="pain-item">
+                <p>Ты просыпаешься уже уставшей, даже если спала 8 часов. Кофе и выходные больше не помогают.</p>
+            </div>
+            <div class="pain-item">
+                <p>Ты всё отдаешь — мужчине, детям, работе, родителям. А на себя уже ничего не остаётся.</p>
+            </div>
+            <div class="pain-item">
+                <p>В голове постоянный шум. Мысли крутятся по кругу, не давая ни расслабиться, ни принять решение.</p>
+            </div>
+            <div class="pain-item">
+                <p>Ты чувствуешь, что живешь не своей жизнью. Что-то внутри замерло и не дышит.</p>
+            </div>
+            <div class="pain-item">
+                <p>Ты перепробовала много курсов, марафонов и психологов. Результаты — временные.</p>
+            </div>
+            <div class="pain-item">
+                <p>Ты ищешь не «еще одну технику», а настоящий путь. Глубину, опору, мужской взгляд.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider">✧ ◈ ✦ ◈ ✧</div>
+
+<section class="program-section">
+    <div class="container">
+        <h2 class="section-title">Программа вебинара</h2>
+        <p class="section-subtitle">
+            55 минут концентрированной пользы. Без воды. С практикой прямо в эфире.
+        </p>
+        
+        <div class="program-timeline">
+            <div class="program-item">
+                <div class="program-time">01</div>
+                <div class="program-content">
+                    <h3>Диагностика. Почему «просто отдохнуть» больше не работает</h3>
+                    <p>Что происходит с женской энергией в 2026 году. Мини-тест прямо в эфире: на каком из 3 уровней у тебя главный слив.</p>
+                </div>
+            </div>
+            
+            <div class="program-item">
+                <div class="program-time">02</div>
+                <div class="program-content">
+                    <h3>Блок №1 · Отношенческий слив</h3>
+                    <ul>
+                        <li>Архетип «Спасательницы»: как ты отдаешь силу мужчинам, детям, работе</li>
+                        <li>Карта Таро, которая показывает этот блок (покажу в эфире)</li>
+                        <li>5 признаков, что ты живешь не своей жизнью</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="program-item">
+                <div class="program-time">03</div>
+                <div class="program-content">
+                    <h3>Блок №2 · Ментальные петли</h3>
+                    <ul>
+                        <li>3 мысли, которые сжигают 40% твоей энергии до обеда</li>
+                        <li>Почему аффирмации и «позитивное мышление» больше не работают</li>
+                        <li>Практика «Остановка внутреннего диалога» — делаем вместе в эфире</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="program-item">
+                <div class="program-time">04</div>
+                <div class="program-content">
+                    <h3>Блок №3 · Телесные зажимы</h3>
+                    <ul>
+                        <li>Где в теле живет твоя непрожитая боль (3 ключевые зоны)</li>
+                        <li>Связь: щитовидка — голос — женская сила</li>
+                        <li>Дыхательная практика (1 минута, делаем вместе)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="program-item">
+                <div class="program-time">05</div>
+                <div class="program-content">
+                    <h3>Синтез · Путь выхода</h3>
+                    <p>Как работают 3 опоры трансформации вместе: Таро, Голос, Ритуалы. Почему изолированные практики дают лишь 20% результата.</p>
+                </div>
+            </div>
+            
+            <div class="program-item">
+                <div class="program-time">06</div>
+                <div class="program-content">
+                    <h3>Путь дальше + спецпредложение</h3>
+                    <p>Разбор программы «Путь к себе». Специальные условия для участников вебинара (действуют только 24 часа). Ответы на вопросы.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="results">
+    <div class="container">
+        <h2 class="section-title">Что ты унесешь с собой</h2>
+        <p class="section-subtitle">
+            Даже если не пойдешь дальше — это уже изменит твою неделю.
+        </p>
+        
+        <div class="results-grid">
+            <div class="result-item">
+                <div class="result-icon">🃏</div>
+                <h3>Ясность</h3>
+                <p>Ты поймешь, на каком из 3 уровней у тебя главная утечка энергии. Без иллюзий.</p>
+            </div>
+            <div class="result-item">
+                <div class="result-icon">🎧</div>
+                <h3>Практика</h3>
+                <p>2 рабочие техники: остановка мыслей и дыхание для возврата силы. Сможешь применять каждый день.</p>
+            </div>
+            <div class="result-item">
+                <div class="result-icon">🌿</div>
+                <h3>План</h3>
+                <p>Понимание, как работать с собой системно: тело + ум + дух. Почему только такой путь работает.</p>
+            </div>
+            <div class="result-item">
+                <div class="result-icon">✧</div>
+                <h3>Опора</h3>
+                <p>Мужской взгляд на женские проблемы. Честный разговор без утешений и «розовых соплей».</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-image">И</div>
+            <div class="about-content">
+                <h2>Кто ведет вебинар</h2>
+                <p>
+                    Я — Игорян. Живу осознанно. Практикую ежедневно. Помогаю женщинам находить опору в себе через Таро, голос и телесные ритуалы.
+                </p>
+                <p>
+                    Я не «гуру» и не коуч с сертификатами. Я человек, который прошел через собственный хаос — выгорание, потерю смысла, внутренний раскол — и нашел путь тишины, дисциплины и глубины.
+                </p>
+                <p>
+                    Моя работа — не утешать. Моя работа — показывать правду. Иногда это неудобно. Но именно это меняет жизнь.
+                </p>
+                <div class="about-quote">
+                    «Настоящая сила — не в том, чтобы кричать громче всех, а в том, чтобы оставаться спокойным, когда все кричат.»
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="final-cta">
+    <div class="container">
+        <h2>Готова узнать, что именно крадет твою силу?</h2>
+        <p>
+            Вебинар бесплатный. Но места ограничены — я работаю только с теми, кто готов меняться, а не просто «посмотреть».
+        </p>
+        <a href="#" class="cta-button" onclick="document.getElementById('name').focus(); window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Занять место на вебинаре</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <h3>ИГОРЯН</h3>
+                <p>Путь осознанной жизни</p>
+                <p style="opacity: 0.5; font-size: 0.9em;">✧ тишина · глубина · трансформация</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/программа-для-женщин/">Программа для женщин</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <ul class="footer-links">
+                    <li><a href="https://t.me/igoryan">Telegram</a></li>
+                    <li><a href="mailto:info@игорян.рф">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p><strong>Важная информация:</strong></p>
+                <p>
+                    ✦ Вебинар и все материалы носят информационно-консультационный и духовно-практический характер<br>
+                    ◈ Не являются медицинской помощью и не заменяют консультацию врача<br>
+                    ✧ Вы несёте ответственность за своё здоровье и принятые решения
+                </p>
+                <p class="divider-symbol">✧ ◈ ✦ ◈ ✧</p>
+                <p>
+                    <a href="/политика-конфиденциальности/" style="color: #fafaf8; text-decoration: underline;">Политика конфиденциальности</a> · 
+                    <a href="/условия-использования/" style="color: #fafaf8; text-decoration: underline;">Условия использования</a> · 
+                    <a href="/публичная-оферта/" style="color: #fafaf8; text-decoration: underline;">Публичная оферта</a>
+                </p>
+                <p style="margin-top: 20px;">© 2026 Игорян.рф · Самозанятость</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Автоматически подставляем завтрашнюю дату
+    (function() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        const months = [
+            'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+        ];
+        
+        const weekdays = [
+            'воскресенье', 'понедельник', 'вторник', 'среда',
+            'четверг', 'пятница', 'суббота'
+        ];
+        
+        const day = tomorrow.getDate();
+        const month = months[tomorrow.getMonth()];
+        const weekday = weekdays[tomorrow.getDay()];
+        
+        const dateElement = document.getElementById('tomorrow-date');
+        if (dateElement) {
+            dateElement.textContent = `${day} ${month}, ${weekday}`;
+        }
+    })();
+    
+    // Обработка формы (заглушка — потом подключим к бэкенду/боту)
+    document.getElementById('webinar-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            telegram: document.getElementById('telegram').value,
+            email: document.getElementById('email').value,
+            time: document.querySelector('input[name="time"]:checked')?.value,
+            date: document.getElementById('tomorrow-date').textContent
+        };
+        
+        console.log('Регистрация на вебинар:', formData);
+        
+        // Здесь будет отправка в Telegram-бота / CRM / GetCourse
+        alert(`Спасибо, ${formData.name}! Ссылка на вебинар придет в Telegram за час до начала (${formData.time}, ${formData.date}).`);
+    });
+</script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>
