@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игорян · Путь осознанной жизни</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #fafaf8;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 248, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #1a1a1a;
+        }
+        
+        .program-button {
+            padding: 12px 30px;
+            background: #1a1a1a;
+            color: #fafaf8;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 1px solid #1a1a1a;
+        }
+        
+        .program-button:hover {
+            background: transparent;
+            color: #1a1a1a;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: linear-gradient(135deg, #fafaf8 0%, #f0ede8 100%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        .hero-quote {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #777;
+            border-left: 3px solid #1a1a1a;
+            padding-left: 25px;
+            margin-top: 50px;
+        }
+        
+        .lifestyle {
+            padding: 120px 0;
+            background: #fff;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #1a1a1a;
+        }
+        
+        .lifestyle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+        
+        .lifestyle-item {
+            padding: 40px 30px;
+            background: #fafaf8;
+            border-radius: 3px;
+            border-top: 3px solid #1a1a1a;
+        }
+        
+        .lifestyle-item h3 {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #1a1a1a;
+        }
+        
+        .lifestyle-item p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .philosophy {
+            padding: 120px 0;
+            background: #1a1a1a;
+            color: #fafaf8;
+        }
+        
+        .philosophy .section-title {
+            color: #fafaf8;
+        }
+        
+        .philosophy-text {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.3em;
+            line-height: 2;
+            text-align: center;
+            font-weight: 300;
+        }
+        
+        .philosophy-text p {
+            margin-bottom: 30px;
+        }
+        
+        .principles {
+            padding: 120px 0;
+            background: #fafaf8;
+        }
+        
+        .principles-list {
+            max-width: 700px;
+            margin: 60px auto 0;
+        }
+        
+        .principle {
+            padding: 35px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            gap: 30px;
+            align-items: start;
+        }
+        
+        .principle:last-child {
+            border-bottom: none;
+        }
+        
+        .principle-number {
+            font-size: 2em;
+            font-weight: 300;
+            color: #1a1a1a;
+            opacity: 0.3;
+            min-width: 60px;
+        }
+        
+        .principle-content h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        .principle-content p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .cta-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, #f0ede8 0%, #e8e4dd 100%);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+        
+        .cta-content p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            background: #1a1a1a;
+            color: #fafaf8;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid #1a1a1a;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: #1a1a1a;
+        }
+        
+        footer {
+            background: #1a1a1a;
+            color: #fafaf8;
+            padding: 80px 0 40px;
+        }
+        
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-brand h3 {
+            font-size: 1.8em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-brand p {
+            opacity: 0.7;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #fafaf8;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        
+        .footer-legal {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 0.9em;
+            opacity: 0.6;
+            line-height: 1.8;
+        }
+        
+        .footer-legal p {
+            margin: 10px 0;
+        }
+        
+        .footer-legal .divider-symbol {
+            opacity: 0.4;
+            margin: 20px 0;
+            letter-spacing: 10px;
+        }
+        
+        .divider {
+            text-align: center;
+            padding: 60px 0;
+            font-size: 1.5em;
+            color: #1a1a1a;
+            opacity: 0.2;
+            letter-spacing: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .philosophy-text {
+                font-size: 1.1em;
+            }
+            
+            .program-button {
+                padding: 10px 20px;
+                font-size: 0.85em;
+            }
+            
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">ИГОРЯН</div>
+            <a href="/программа-для-женщин/" class="program-button">Программа для женщин</a>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Я выбрал путь тишины, чтобы услышать главное</h1>
+            <p class="hero-subtitle">
+                Живу осознанно. Практикую ежедневно. Делюсь тем, что работает.<br>
+                Без шума. Без обещаний. Только глубина и результат.
+            </p>
+            <div class="hero-quote">
+                «Настоящая сила — не в том, чтобы кричать громче всех,<br>
+                а в том, чтобы оставаться спокойным, когда все кричат»
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="lifestyle">
+    <div class="container">
+        <h2 class="section-title">Как я живу</h2>
+        <div class="lifestyle-grid">
+            <div class="lifestyle-item">
+                <h3>Режим</h3>
+                <p>
+                    Просыпаюсь до рассвета. Первые два часа — тишина, медитация, работа с картами. 
+                    Никаких уведомлений, соцсетей и суеты. День начинается из состояния покоя.
+                </p>
+            </div>
+            
+            <div class="lifestyle-item">
+                <h3>Тело</h3>
+                <p>
+                    Контрастный душ. Дыхательные практики. Простая еда. 
+                    Тело — это храм, а не мусорное ведро. Забочусь о нем, как о инструменте для духовной работы.
+                </p>
+            </div>
+            
+            <div class="lifestyle-item">
+                <h3>Практика</h3>
+                <p>
+                    Каждый день работаю с Таро. Не для гадания — для понимания архетипов и структур реальности. 
+                    Медитирую. Веду дневник. Это не хобби — это образ жизни.
+                </p>
+            </div>
+            
+            <div class="lifestyle-item">
+                <h3>Пространство</h3>
+                <p>
+                    Минимализм во всем. Меньше вещей — больше ясности. 
+                    Мой дом — это место силы, а не склад накопленного хлама.
+                </p>
+            </div>
+            
+            <div class="lifestyle-item">
+                <h3>Общение</h3>
+                <p>
+                    Говорю мало. Слушаю много. Выбираю людей осознанно. 
+                    Ценю глубину, а не количество контактов.
+                </p>
+            </div>
+            
+            <div class="lifestyle-item">
+                <h3>Работа</h3>
+                <p>
+                    Помогаю женщинам найти опору в себе. Не даю ответы — учу задавать правильные вопросы. 
+                    Работаю только с теми, кто готов меняться.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider">✧ ◈ ✦ ◈ ✧</div>
+
+<section class="philosophy">
+    <div class="container">
+        <h2 class="section-title">Почему я это делаю</h2>
+        <div class="philosophy-text">
+            <p>
+                Я вижу женщин, которые устали. Устали искать ответы снаружи. 
+                Устали от бесконечных советов, курсов и обещаний.
+            </p>
+            <p>
+                Они приходят ко мне не за предсказаниями. Они приходят за опорой. 
+                За мужским взглядом на их женские проблемы. За спокойствием, которого им не хватает.
+            </p>
+            <p>
+                Я не гуру. Я человек, который прошел через хаос и нашел путь. 
+                Теперь делюсь им с теми, кто готов идти.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="principles">
+    <div class="container">
+        <h2 class="section-title">Мои принципы</h2>
+        <div class="principles-list">
+            <div class="principle">
+                <div class="principle-number">01</div>
+                <div class="principle-content">
+                    <h3>Глубина вместо ширины</h3>
+                    <p>
+                        Лучше один глубокий расклад, чем десять поверхностных. 
+                        Лучше одна медитация, которая меняет состояние, чем сто часов пустых разговоров.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="principle">
+                <div class="principle-number">02</div>
+                <div class="principle-content">
+                    <h3>Честность вместо утешения</h3>
+                    <p>
+                        Карты не врут. Я говорю то, что вижу. 
+                        Иногда это больно. Но боль от правды лучше, чем комфорт от иллюзии.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="principle">
+                <div class="principle-number">03</div>
+                <div class="principle-content">
+                    <h3>Практика вместо теории</h3>
+                    <p>
+                        Знать — не значит уметь. Я даю инструменты, которые работают в реальной жизни. 
+                        Не философию для головы, а практики для тела и души.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="principle">
+                <div class="principle-number">04</div>
+                <div class="principle-content">
+                    <h3>Ответственность вместо зависимости</h3>
+                    <p>
+                        Моя цель — не сделать вас зависимой от меня, а научить опираться на себя. 
+                        Через 2 месяца вы должны стать сильнее, а не привязаннее.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Готовы начать путь?</h2>
+            <p>
+                Я работаю только с женщинами, которые готовы к глубоким изменениям. 
+                Не с теми, кто ищет быстрых ответов. А с теми, кто хочет настоящей трансформации.
+            </p>
+            <a href="/программа-для-женщин/" class="cta-button">Узнать о программе</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <h3>ИГОРЯН</h3>
+                <p>Путь осознанной жизни</p>
+                <p style="opacity: 0.5; font-size: 0.9em;">✧ тишина · глубина · трансформация</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/программа-для-женщин/">Программа для женщин</a></li>
+                    <li><a href="#lifestyle">Образ жизни</a></li>
+                    <li><a href="#philosophy">Философия</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <ul class="footer-links">
+                    <li><a href="https://t.me/igoryan">Telegram</a></li>
+                    <li><a href="mailto:info@игорян.рф">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p><strong>Важная информация:</strong></p>
+                <p>
+                    ✦ Все услуги носят информационно-консультационный и духовно-практический характер<br>
+                    ◈ Не являются медицинской помощью и не заменяют консультацию врача<br>
+                    ✧ Вы несёте ответственность за своё здоровье и принятые решения<br>
+                    ⚬ Все платежи оформляются официально через СБП с чеками для самозанятых<br>
+                    ◇ Возможна оплата в рассрочку (обсуждается индивидуально)
+                </p>
+                <p class="divider-symbol">✧ ◈ ✦ ◈ ✧</p>
+                <p>
+                    <a href="/политика-конфиденциальности/" style="color: #fafaf8; text-decoration: underline;">Политика конфиденциальности</a> · 
+                    <a href="/условия-использования/" style="color: #fafaf8; text-decoration: underline;">Условия использования</a> · 
+                    <a href="/публичная-оферта/" style="color: #fafaf8; text-decoration: underline;">Публичная оферта</a>
+                </p>
+                <p style="margin-top: 20px;">© 2026 Игорян.рф · Самозанятость · все чеки предоставляются</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>
