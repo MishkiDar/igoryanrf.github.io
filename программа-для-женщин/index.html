@@ -920,4 +920,54 @@
                         <input type="tel" name="phone" placeholder="Телефон или Telegram" required />
                     </div>
                     <div class="form-row">
-                        <button type="submit"
+                        <button type="submit" class="btn btn-gold">Хочу на диагностику</button>
+                    </div>
+                    <div class="form-note">
+                        <span>🔒</span> Данные защищены · После отправки я напишу вам в Telegram
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="footer container">
+        <span>© 2026 · Путь к себе</span>
+        <span>Самозанятость · все чеки предоставляются</span>
+        <span>✧ таро · голос · ритуалы</span>
+    </footer>
+
+    <script>
+        // Плавная имитация отправки
+        (function() {
+            const form = document.getElementById('leadForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Спасибо! Я свяжусь с вами в ближайшее время для диагностики. ❤️');
+                    form.reset();
+                });
+            }
+
+            // Анимация при скролле (Intersection Observer)
+            const cards = document.querySelectorAll('.pricing-card, .card, .includes-item, .testimonial');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                observer.observe(card);
+            });
+        })();
+    </script>
+
+</body>
+</html>
