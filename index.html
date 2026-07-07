@@ -31,7 +31,7 @@
             right: 0;
             background: rgba(250, 250, 248, 0.95);
             backdrop-filter: blur(10px);
-            padding: 20px 0;
+            padding: 16px 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
@@ -49,26 +49,34 @@
             color: #1a1a1a;
         }
         
-        /* ————— ИЗМЕНЕНО: буквы ЯН — прозрачно-синий цвет ————— */
         .logo .yan {
             color: rgba(0, 80, 200, 0.7);
         }
         
+        /* ——— Новая кнопка: закруглённая, компактная, гармоничный оттенок ——— */
         .program-button {
-            padding: 12px 30px;
-            background: #1a1a1a;
+            display: inline-block;
+            padding: 8px 22px;
+            background: #2c4c6b;
             color: #fafaf8;
             text-decoration: none;
-            border-radius: 2px;
-            font-size: 0.95em;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            border: 1px solid #1a1a1a;
+            border-radius: 40px;
+            font-size: 0.9em;
+            letter-spacing: 0.4px;
+            border: 1px solid #2c4c6b;
+            transition: all 0.25s ease;
+            font-weight: 400;
+            line-height: 1.4;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(44, 76, 107, 0.08);
         }
         
         .program-button:hover {
-            background: transparent;
-            color: #1a1a1a;
+            background: #1f3b54;
+            border-color: #1f3b54;
+            color: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(44, 76, 107, 0.15);
         }
         
         .hero {
@@ -274,7 +282,6 @@
             margin-bottom: 20px;
         }
         
-        /* ————— ИЗМЕНЕНО: буквы ЯН — прозрачно-синий цвет и в подвале ————— */
         .footer-brand h3 .yan {
             color: rgba(0, 80, 200, 0.7);
         }
@@ -361,9 +368,10 @@
                 font-size: 1.1em;
             }
             
+            /* кнопка адаптируется автоматически за счёт padding */
             .program-button {
-                padding: 10px 20px;
-                font-size: 0.85em;
+                font-size: 0.8em;
+                padding: 6px 16px;
             }
             
             .footer-main {
