@@ -47,6 +47,16 @@
             font-weight: 300;
             letter-spacing: 3px;
             color: #1a1a1a;
+            /* ————— НОВОЕ: прозрачно-синий фон для верхнего логотипа ————— */
+            background: rgba(0, 80, 180, 0.25);
+            padding: 6px 18px 6px 18px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        /* ————— НОВОЕ: выделяем окончание ЯН другим цветом ————— */
+        .logo .yan {
+            color: #d4880f;
         }
         
         .program-button {
@@ -267,6 +277,16 @@
             font-weight: 300;
             letter-spacing: 3px;
             margin-bottom: 20px;
+            /* ————— НОВОЕ: более тёмный прозрачно-синий фон для нижнего логотипа ————— */
+            background: rgba(0, 50, 130, 0.50);
+            padding: 6px 20px 6px 20px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        /* ————— НОВОЕ: выделяем окончание ЯН другим цветом и в подвале ————— */
+        .footer-brand h3 .yan {
+            color: #d4880f;
         }
         
         .footer-brand p {
@@ -368,7 +388,7 @@
 <header>
     <div class="container">
         <div class="header-content">
-            <div class="logo">ИГОРЯН</div>
+            <div class="logo">ИГОР<span class="yan">ЯН</span></div>
             <a href="/программа-для-женщин/" class="program-button">Программа для женщин</a>
         </div>
     </div>
@@ -535,7 +555,7 @@
     <div class="container">
         <div class="footer-main">
             <div class="footer-brand">
-                <h3>ИГОРЯН</h3>
+                <h3>ИГОР<span class="yan">ЯН</span></h3>
                 <p>Путь осознанной жизни</p>
                 <p style="opacity: 0.5; font-size: 0.9em;">✧ тишина · глубина · трансформация</p>
             </div>
