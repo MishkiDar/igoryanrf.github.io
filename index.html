@@ -2,616 +2,679 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игорян · Путь осознанной жизни</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Чат-Презентация с ответами</title>
     <style>
+        /* ---------- ГЛОБАЛЬНЫЙ СТИЛЬ (НОЧНАЯ ТЕМА) ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background-color: #0e0e0e;
+        }
+
         body {
-            font-family: 'Georgia', serif;
-            line-height: 1.8;
-            color: #1a1a1a;
-            background: #fafaf8;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-        
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(250, 250, 248, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 16px 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .header-content {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        /* ---------- ОСНОВНОЙ КОНТЕЙНЕР (как экран телефона) ---------- */
+        .phone-frame {
+            max-width: 500px;
+            width: 100%;
+            height: 90vh;
+            max-height: 800px;
+            background-color: #1a1a1a;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            position: relative;
+        }
+
+        /* ---------- ШАПКА (всегда сверху) ---------- */
+        .chat-header {
+            padding: 20px 20px 10px 20px;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
             justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 10;
+            /* Фиксируем внутри контейнера */
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
             align-items: center;
+            gap: 12px;
         }
-        
-        .logo {
-            font-size: 1.5em;
-            font-weight: 300;
-            letter-spacing: 3px;
-            color: #1a1a1a;
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        .logo .yan {
-            color: rgba(0, 80, 200, 0.7);
-        }
-        
-        /* ——— Новая кнопка: закруглённая, компактная, гармоничный оттенок ——— */
-        .program-button {
-            display: inline-block;
-            padding: 8px 22px;
-            background: #2c4c6b;
-            color: #fafaf8;
-            text-decoration: none;
-            border-radius: 40px;
-            font-size: 0.9em;
-            letter-spacing: 0.4px;
-            border: 1px solid #2c4c6b;
-            transition: all 0.25s ease;
-            font-weight: 400;
-            line-height: 1.4;
-            white-space: nowrap;
-            box-shadow: 0 2px 6px rgba(44, 76, 107, 0.08);
-        }
-        
-        .program-button:hover {
-            background: #1f3b54;
-            border-color: #1f3b54;
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2b2b2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
             color: #fff;
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(44, 76, 107, 0.15);
+            border: 2px solid #404040;
+            flex-shrink: 0;
         }
-        
-        .hero {
-            min-height: 100vh;
+
+        .chat-title {
+            color: #e0e0e0;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .chat-status {
+            color: #6b6b6b;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        /* ---------- КНОПКА КОПИРОВАНИЯ ---------- */
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #6b6b6b;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            padding-top: 80px;
-            background: linear-gradient(135deg, #fafaf8 0%, #f0ede8 100%);
+            gap: 4px;
+            position: relative;
         }
-        
-        .hero-content {
-            max-width: 800px;
+
+        .copy-btn:hover {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
         }
-        
-        .hero h1 {
-            font-size: 3.5em;
-            font-weight: 300;
-            line-height: 1.2;
-            margin-bottom: 30px;
-            color: #1a1a1a;
+
+        .copy-btn:active {
+            transform: scale(0.9);
         }
-        
-        .hero-subtitle {
-            font-size: 1.4em;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            font-weight: 300;
-        }
-        
-        .hero-quote {
-            font-size: 1.2em;
-            font-style: italic;
-            color: #777;
-            border-left: 3px solid #1a1a1a;
-            padding-left: 25px;
-            margin-top: 50px;
-        }
-        
-        .lifestyle {
-            padding: 120px 0;
-            background: #fff;
-            scroll-margin-top: 80px;
-        }
-        
-        .section-title {
-            font-size: 2.5em;
-            font-weight: 300;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #1a1a1a;
-        }
-        
-        .lifestyle-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 50px;
-            margin-top: 60px;
-        }
-        
-        .lifestyle-item {
-            padding: 40px 30px;
-            background: #fafaf8;
-            border-radius: 3px;
-            border-top: 3px solid #1a1a1a;
-        }
-        
-        .lifestyle-item h3 {
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            font-weight: 400;
-            color: #1a1a1a;
-        }
-        
-        .lifestyle-item p {
-            color: #555;
-            line-height: 1.8;
-        }
-        
-        .philosophy {
-            padding: 120px 0;
-            background: #1a1a1a;
-            color: #fafaf8;
-        }
-        
-        .philosophy .section-title {
-            color: #fafaf8;
-        }
-        
-        .philosophy-text {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.3em;
-            line-height: 2;
-            text-align: center;
-            font-weight: 300;
-        }
-        
-        .philosophy-text p {
-            margin-bottom: 30px;
-        }
-        
-        .principles {
-            padding: 120px 0;
-            background: #fafaf8;
-            scroll-margin-top: 80px;
-        }
-        
-        .principles-list {
-            max-width: 700px;
-            margin: 60px auto 0;
-        }
-        
-        .principle {
-            padding: 35px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            display: flex;
-            gap: 30px;
-            align-items: start;
-        }
-        
-        .principle:last-child {
-            border-bottom: none;
-        }
-        
-        .principle-number {
-            font-size: 2em;
-            font-weight: 300;
-            color: #1a1a1a;
-            opacity: 0.3;
-            min-width: 60px;
-        }
-        
-        .principle-content h3 {
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            font-weight: 400;
-        }
-        
-        .principle-content p {
-            color: #666;
-            line-height: 1.8;
-        }
-        
-        .cta-section {
-            padding: 120px 0;
-            background: linear-gradient(135deg, #f0ede8 0%, #e8e4dd 100%);
-            text-align: center;
-            scroll-margin-top: 80px;
-        }
-        
-        .cta-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .cta-content h2 {
-            font-size: 2.5em;
-            font-weight: 300;
-            margin-bottom: 30px;
-            color: #1a1a1a;
-        }
-        
-        .cta-content p {
-            font-size: 1.2em;
-            color: #555;
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 20px 60px;
-            background: #1a1a1a;
-            color: #fafaf8;
-            text-decoration: none;
-            border-radius: 2px;
-            font-size: 1.1em;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            border: 2px solid #1a1a1a;
-        }
-        
-        .cta-button:hover {
-            background: transparent;
-            color: #1a1a1a;
-        }
-        
-        footer {
-            background: #1a1a1a;
-            color: #fafaf8;
-            padding: 80px 0 40px;
-        }
-        
-        .footer-main {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-        
-        .footer-brand h3 {
-            font-size: 1.8em;
-            font-weight: 300;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-        }
-        
-        .footer-brand h3 .yan {
-            color: rgba(0, 80, 200, 0.7);
-        }
-        
-        .footer-brand p {
-            opacity: 0.7;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        
-        .footer-section h4 {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #fafaf8;
-            text-decoration: none;
-            opacity: 0.7;
+
+        .copy-btn .tooltip {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s;
+            border: 1px solid #3a3a3a;
         }
-        
-        .footer-links a:hover {
+
+        .copy-btn .tooltip.show {
             opacity: 1;
         }
-        
-        .footer-bottom {
-            padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
+
+        /* ---------- ОБЛАСТЬ СООБЩЕНИЙ (скроллится) ---------- */
+        .messages-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background-color: #121212;
+            scroll-behavior: smooth;
+            /* Важно: чтобы не перекрывалась шапкой и футером */
+            min-height: 0;
         }
-        
-        .footer-legal {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 0.9em;
-            opacity: 0.6;
-            line-height: 1.8;
+
+        .messages-area::-webkit-scrollbar {
+            width: 4px;
         }
-        
-        .footer-legal p {
-            margin: 10px 0;
+        .messages-area::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 10px;
         }
-        
-        .footer-legal .divider-symbol {
-            opacity: 0.4;
-            margin: 20px 0;
-            letter-spacing: 10px;
+
+        /* ---------- СТИЛИ СООБЩЕНИЙ ---------- */
+        .message-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            max-width: 100%;
+            animation: fadeIn 0.3s ease;
+            flex-shrink: 0;
         }
-        
-        .divider {
-            text-align: center;
-            padding: 60px 0;
-            font-size: 1.5em;
-            color: #1a1a1a;
-            opacity: 0.2;
-            letter-spacing: 15px;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2em;
+
+        .message-row.left {
+            justify-content: flex-start;
+        }
+        .message-row.left .bubble {
+            background-color: #262626;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+            border-bottom-left-radius: 18px;
+            color: #ececec;
+        }
+
+        .message-row.right {
+            justify-content: flex-end;
+        }
+        .message-row.right .bubble {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 18px;
+            border-bottom-left-radius: 18px;
+        }
+
+        .bubble {
+            padding: 12px 16px;
+            max-width: 90%;
+            word-wrap: break-word;
+            font-size: 15px;
+            line-height: 1.5;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .bubble .time-stamp {
+            font-size: 10px;
+            color: #6b6b6b;
+            margin-top: 6px;
+            text-align: right;
+            opacity: 0.7;
+        }
+
+        .bubble p {
+            margin-bottom: 8px;
+        }
+        .bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bubble video, .bubble audio {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 6px;
+            background-color: #000;
+        }
+
+        .bubble iframe {
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            margin-top: 6px;
+            aspect-ratio: 16 / 9;
+        }
+
+        .msg-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #2b2b2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+
+        /* ---------- ПОДВАЛ С ПОЛЕМ ВВОДА (всегда снизу) ---------- */
+        .chat-footer {
+            padding: 12px 20px;
+            background-color: #1a1a1a;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            align-items: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .chat-footer input {
+            flex: 1;
+            background-color: #2a2a2a;
+            border-radius: 25px;
+            padding: 12px 18px;
+            color: #e0e0e0;
+            font-size: 15px;
+            border: 1px solid #333;
+            outline: none;
+            transition: border 0.2s;
+            min-width: 0;
+        }
+
+        .chat-footer input:focus {
+            border-color: #3b82f6;
+        }
+
+        .chat-footer input::placeholder {
+            color: #6b6b6b;
+        }
+
+        .chat-footer button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 22px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .chat-footer button:hover {
+            background-color: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .chat-footer button:active {
+            transform: scale(0.95);
+        }
+
+        /* ---------- ИНДИКАТОР ПЕЧАТИ ---------- */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 0;
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #6b6b6b;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* ---------- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ---------- */
+        @media (max-width: 550px) {
+            body {
+                padding: 0;
             }
-            
-            .hero-subtitle {
-                font-size: 1.1em;
+            .phone-frame {
+                border-radius: 0;
+                height: 100vh;
+                max-height: 100vh;
+                border: none;
+                width: 100%;
             }
-            
-            .section-title {
-                font-size: 1.8em;
+
+            .chat-header {
+                padding: 16px 16px 10px 16px;
             }
-            
-            .philosophy-text {
-                font-size: 1.1em;
+
+            .chat-footer {
+                padding: 10px 16px;
             }
-            
-            /* кнопка адаптируется автоматически за счёт padding */
-            .program-button {
-                font-size: 0.8em;
-                padding: 6px 16px;
+
+            .chat-footer input {
+                font-size: 14px;
+                padding: 10px 14px;
             }
-            
-            .footer-main {
-                grid-template-columns: 1fr;
-                gap: 40px;
+
+            .chat-footer button {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+
+            .bubble {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+
+            .messages-area {
+                padding: 12px 12px;
+            }
+        }
+
+        /* Дополнительная защита для очень маленьких экранов */
+        @media (max-height: 600px) {
+            .chat-header {
+                padding: 10px 16px 8px 16px;
+            }
+            .chat-header .avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .chat-title {
+                font-size: 14px;
+            }
+            .chat-status {
+                font-size: 10px;
+            }
+            .chat-footer {
+                padding: 8px 16px;
+            }
+            .chat-footer input {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .chat-footer button {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            .bubble {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+            .messages-area {
+                padding: 8px 12px;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="container">
-        <div class="header-content">
-            <div class="logo">ИГОР<span class="yan">ЯН</span></div>
-            <a href="/программа-для-женщин/" class="program-button">Программа для женщин</a>
+<div class="phone-frame">
+    <!-- ШАПКА (всегда сверху) -->
+    <div class="chat-header">
+        <div class="header-left">
+            <div class="avatar">🤖</div>
+            <div>
+                <div class="chat-title">Ваш ИИ-Помощник</div>
+                <div class="chat-status">● Онлайн · Презентация проекта</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="copy-btn" id="copyBtn" title="Скопировать весь чат">
+                📋
+                <span class="tooltip" id="copyTooltip">Скопировать чат</span>
+            </button>
         </div>
     </div>
-</header>
 
-<section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1>Я выбрал путь тишины, чтобы услышать главное</h1>
-            <p class="hero-subtitle">
-                Живу осознанно. Практикую ежедневно. Делюсь тем, что работает.<br>
-                Без шума. Без обещаний. Только глубина и результат.
-            </p>
-            <div class="hero-quote">
-                «Настоящая сила — не в том, чтобы кричать громче всех,<br>
-                а в том, чтобы оставаться спокойным, когда все кричат»
-            </div>
-        </div>
+    <!-- ОБЛАСТЬ СООБЩЕНИЙ (скроллится) -->
+    <div class="messages-area" id="messagesArea">
+        <!-- Сообщения загружаются из JS -->
     </div>
-</section>
 
-<section class="lifestyle" id="lifestyle">
-    <div class="container">
-        <h2 class="section-title">Как я живу</h2>
-        <div class="lifestyle-grid">
-            <div class="lifestyle-item">
-                <h3>Режим</h3>
-                <p>
-                    Просыпаюсь до рассвета. Первые два часа — тишина, медитация, работа с картами. 
-                    Никаких уведомлений, соцсетей и суеты. День начинается из состояния покоя.
-                </p>
-            </div>
-            
-            <div class="lifestyle-item">
-                <h3>Тело</h3>
-                <p>
-                    Контрастный душ. Дыхательные практики. Простая еда. 
-                    Тело — это храм, а не мусорное ведро. Забочусь о нем, как о инструменте для духовной работы.
-                </p>
-            </div>
-            
-            <div class="lifestyle-item">
-                <h3>Практика</h3>
-                <p>
-                    Каждый день работаю с Таро. Не для гадания — для понимания архетипов и структур реальности. 
-                    Медитирую. Веду дневник. Это не хобби — это образ жизни.
-                </p>
-            </div>
-            
-            <div class="lifestyle-item">
-                <h3>Пространство</h3>
-                <p>
-                    Минимализм во всем. Меньше вещей — больше ясности. 
-                    Мой дом — это место силы, а не склад накопленного хлама.
-                </p>
-            </div>
-            
-            <div class="lifestyle-item">
-                <h3>Общение</h3>
-                <p>
-                    Говорю мало. Слушаю много. Выбираю людей осознанно. 
-                    Ценю глубину, а не количество контактов.
-                </p>
-            </div>
-            
-            <div class="lifestyle-item">
-                <h3>Работа</h3>
-                <p>
-                    Помогаю женщинам найти опору в себе. Не даю ответы — учу задавать правильные вопросы. 
-                    Работаю только с теми, кто готов меняться.
-                </p>
-            </div>
-        </div>
+    <!-- ПОДВАЛ С ПОЛЕМ ВВОДА (всегда снизу) -->
+    <div class="chat-footer">
+        <input type="text" id="userInput" placeholder="Напишите сообщение..." autofocus>
+        <button id="sendBtn">Отправить</button>
     </div>
-</section>
+</div>
 
-<div class="divider">✧ ◈ ✦ ◈ ✧</div>
+<script>
+    // ---------- КОНФИГУРАЦИЯ ----------
+    const INITIAL_MESSAGES = [
+        {
+            type: 'left',
+            avatar: '🤖',
+            html: `
+                <p>👋 Привет! Это интерактивный чат для презентаций.</p>
+                <p>Напиши что-нибудь в поле внизу, и я отвечу!</p>
+                <p>А ещё тут можно вставлять <strong>видео</strong> и <strong>аудио</strong> 👇</p>
+            `
+        },
+        {
+            type: 'left',
+            avatar: '🤖',
+            html: `
+                <p>📹 <strong>Видео-презентация</strong> (пример):</p>
+                <iframe src="https://vk.com/video_ext.php?oid=-123456789&id=456789&hash=abc123" allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" frameborder="0" loading="lazy"></iframe>
+                <div class="time-stamp">12:30</div>
+            `
+        },
+        {
+            type: 'left',
+            avatar: '🤖',
+            html: `
+                <p>🎵 <strong>Аудио-файл</strong> (пример):</p>
+                <audio controls style="width: 100%;">
+                    <source src="audio.mp3" type="audio/mpeg">
+                    Ваш браузер не поддерживает аудио.
+                </audio>
+                <div class="time-stamp">12:31</div>
+            `
+        }
+    ];
 
-<section class="philosophy">
-    <div class="container">
-        <h2 class="section-title">Почему я это делаю</h2>
-        <div class="philosophy-text">
-            <p>
-                Я вижу женщин, которые устали. Устали искать ответы снаружи. 
-                Устали от бесконечных советов, курсов и обещаний.
-            </p>
-            <p>
-                Они приходят ко мне не за предсказаниями. Они приходят за опорой. 
-                За мужским взглядом на их женские проблемы. За спокойствием, которого им не хватает.
-            </p>
-            <p>
-                Я не гуру. Я человек, который прошел через хаос и нашел путь. 
-                Теперь делюсь им с теми, кто готов идти.
-            </p>
-        </div>
-    </div>
-</section>
+    const AI_RESPONSES = [
+        'Интересная мысль! Расскажите подробнее.',
+        'Отлично! А как вы видите реализацию этого этапа?',
+        'Я понимаю. Давайте обсудим это детальнее.',
+        'Здорово! Это может стать ключевой фишкой проекта.',
+        'Хороший вопрос. В нашей концепции это решается так...',
+        'Спасибо за обратную связь! Очень ценю.',
+        'Да, вы абсолютно правы. Это важный момент.'
+    ];
 
-<section class="principles" id="principles">
-    <div class="container">
-        <h2 class="section-title">Мои принципы</h2>
-        <div class="principles-list">
-            <div class="principle">
-                <div class="principle-number">01</div>
-                <div class="principle-content">
-                    <h3>Глубина вместо ширины</h3>
-                    <p>
-                        Лучше один глубокий расклад, чем десять поверхностных. 
-                        Лучше одна медитация, которая меняет состояние, чем сто часов пустых разговоров.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="principle">
-                <div class="principle-number">02</div>
-                <div class="principle-content">
-                    <h3>Честность вместо утешения</h3>
-                    <p>
-                        Карты не врут. Я говорю то, что вижу. 
-                        Иногда это больно. Но боль от правды лучше, чем комфорт от иллюзии.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="principle">
-                <div class="principle-number">03</div>
-                <div class="principle-content">
-                    <h3>Практика вместо теории</h3>
-                    <p>
-                        Знать — не значит уметь. Я даю инструменты, которые работают в реальной жизни. 
-                        Не философию для головы, а практики для тела и души.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="principle">
-                <div class="principle-number">04</div>
-                <div class="principle-content">
-                    <h3>Ответственность вместо зависимости</h3>
-                    <p>
-                        Моя цель — не сделать вас зависимой от меня, а научить опираться на себя. 
-                        Через 2 месяца вы должны стать сильнее, а не привязаннее.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    // ---------- ЛОГИКА ЧАТА ----------
+    const messagesArea = document.getElementById('messagesArea');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyTooltip = document.getElementById('copyTooltip');
 
-<section class="cta-section" id="cta">
-    <div class="container">
-        <div class="cta-content">
-            <h2>Готовы начать путь?</h2>
-            <p>
-                Я работаю только с женщинами, которые готовы к глубоким изменениям. 
-                Не с теми, кто ищет быстрых ответов. А с теми, кто хочет настоящей трансформации.
-            </p>
-            <a href="/программа-для-женщин/" class="cta-button">Узнать о программе</a>
-        </div>
-    </div>
-</section>
+    let messageCounter = 0;
 
-<footer>
-    <div class="container">
-        <div class="footer-main">
-            <div class="footer-brand">
-                <h3>ИГОР<span class="yan">ЯН</span></h3>
-                <p>Путь осознанной жизни</p>
-                <p style="opacity: 0.5; font-size: 0.9em;">✧ тишина · глубина · трансформация</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Навигация</h4>
-                <ul class="footer-links">
-                    <li><a href="/">Главная</a></li>
-                    <li><a href="/программа-для-женщин/">Программа для женщин</a></li>
-                    <li><a href="#lifestyle">Образ жизни</a></li>
-                    <li><a href="#principles">Философия</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <ul class="footer-links">
-                    <li><a href="https://t.me/gargaross">Telegram</a></li>
-                    <li><a href="mailto:igor2000km@gmail.com">Email</a></li>
-                    <li><a href="https://max.ru/u/f9LHodD0cOKBofEOX-DxvNCKJN1IcujQNOwnMK7Wev9mD4NLzsHoQZDB9cc" target="_blank">MAX</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <p><strong>Важная информация:</strong></p>
-                <p>
-                    ✦ Все услуги носят информационно-консультационный и духовно-практический характер<br>
-                    ◈ Не являются медицинской помощью и не заменяют консультацию врача<br>
-                    ✧ Вы несёте ответственность за своё здоровье и принятые решения
-                </p>
-                <p class="divider-symbol">✧ ◈ ✦ ◈ ✧</p>
-                <p>
-                    <a href="/политика-конфиденциальности.html" style="color: #fafaf8; text-decoration: underline;">Политика конфиденциальности</a>
-                </p>
-                <p style="margin-top: 20px;">© 2026 Игорян.рф · Самозанятость · все чеки предоставляются</p>
-            </div>
-        </div>
-    </div>
-</footer>
+    function addMessage(type, avatar, htmlContent, isTyping = false) {
+        const row = document.createElement('div');
+        row.className = `message-row ${type}`;
+        row.dataset.messageId = ++messageCounter;
 
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+        if (type === 'left') {
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'msg-avatar';
+            avatarDiv.textContent = avatar;
+            row.appendChild(avatarDiv);
+        }
 
-    ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.innerHTML = htmlContent;
+        row.appendChild(bubble);
+
+        if (!isTyping) {
+            messagesArea.appendChild(row);
+            scrollToBottom();
+        } else {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `<span></span><span></span><span></span>`;
+            bubble.innerHTML = '';
+            bubble.appendChild(typingDiv);
+            row.appendChild(bubble);
+            messagesArea.appendChild(row);
+            scrollToBottom();
+            return row;
+        }
+        return row;
+    }
+
+    function scrollToBottom() {
+        setTimeout(() => {
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }, 50);
+    }
+
+    function loadInitialMessages() {
+        messagesArea.innerHTML = '';
+        INITIAL_MESSAGES.forEach(msg => {
+            addMessage(msg.type, msg.avatar, msg.html);
+        });
+        // Прокручиваем вниз после загрузки
+        scrollToBottom();
+    }
+
+    function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+
+        addMessage('right', '', `<p>${escapeHtml(text)}</p>`);
+        userInput.value = '';
+
+        const typingRow = addMessage('left', '🤖', '', true);
+
+        setTimeout(() => {
+            if (typingRow && typingRow.parentNode) {
+                typingRow.remove();
+            }
+
+            const randomResponse = AI_RESPONSES[Math.floor(Math.random() * AI_RESPONSES.length)];
+            addMessage('left', '🤖', `<p>${escapeHtml(randomResponse)}</p>`);
+
+            if (Math.random() > 0.7) {
+                setTimeout(() => {
+                    addMessage('left', '🤖', `<p>📎 Кстати, вот <a href="#" style="color:#3b82f6;">дополнительный материал</a> по теме.</p>`);
+                }, 500);
+            }
+        }, 1500);
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ---------- ФУНКЦИЯ КОПИРОВАНИЯ ----------
+    function copyChat() {
+        const messages = document.querySelectorAll('.message-row');
+        let chatText = '';
+
+        messages.forEach((row, index) => {
+            const bubble = row.querySelector('.bubble');
+            if (!bubble) return;
+
+            const isLeft = row.classList.contains('left');
+            const sender = isLeft ? '🤖 ИИ-помощник' : '👤 Пользователь';
+
+            let textContent = bubble.textContent || '';
+            textContent = textContent.replace(/\d{2}:\d{2}/g, '').trim();
+            textContent = textContent.replace(/\s+/g, ' ').trim();
+
+            if (textContent) {
+                chatText += `[${index + 1}] ${sender}: ${textContent}\n`;
+            }
+        });
+
+        if (!chatText) {
+            showTooltip('Нет сообщений для копирования', true);
+            return;
+        }
+
+        const header = `=== Чат-презентация ===\nДата: ${new Date().toLocaleString()}\n\n`;
+        chatText = header + chatText;
+
+        navigator.clipboard.writeText(chatText).then(() => {
+            showTooltip('✅ Скопировано!', false);
+        }).catch(() => {
+            const textarea = document.createElement('textarea');
+            textarea.value = chatText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showTooltip('✅ Скопировано!', false);
+        });
+    }
+
+    let tooltipTimeout;
+
+    function showTooltip(text, isError = false) {
+        copyTooltip.textContent = text;
+        copyTooltip.style.color = isError ? '#ef4444' : '#4ade80';
+        copyTooltip.classList.add('show');
+
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = setTimeout(() => {
+            copyTooltip.classList.remove('show');
+            copyTooltip.textContent = 'Скопировать чат';
+            copyTooltip.style.color = '';
+        }, 2000);
+    }
+
+    // ---------- ОБРАБОТЧИКИ ----------
+    sendBtn.addEventListener('click', sendMessage);
+
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    copyBtn.addEventListener('click', copyChat);
+
+    copyBtn.addEventListener('mouseenter', () => {
+        if (!copyTooltip.classList.contains('show')) {
+            copyTooltip.textContent = 'Скопировать чат';
+            copyTooltip.classList.add('show');
+        }
+    });
+
+    copyBtn.addEventListener('mouseleave', () => {
+        if (!copyTooltip.classList.contains('show')) return;
+        setTimeout(() => {
+            if (!copyTooltip.classList.contains('show')) return;
+            copyTooltip.classList.remove('show');
+        }, 300);
+    });
+
+    // ---------- ИНИЦИАЛИЗАЦИЯ ----------
+    loadInitialMessages();
+    userInput.focus();
+
+    // Авто-фокус при клике в любом месте
+    document.addEventListener('click', () => {
+        userInput.focus();
+    });
+
+    // Исправление для мобильных: при открытии клавиатуры не ломаем вёрстку
+    // (работает автоматически благодаря flex-контейнеру)
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 
 </body>
 </html>
