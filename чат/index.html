@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Чат-Презентация с ответами</title>
+    <style>
+        /* ---------- ГЛОБАЛЬНЫЙ СТИЛЬ (НОЧНАЯ ТЕМА) ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0e0e0e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .phone-frame {
+            max-width: 500px;
+            width: 100%;
+            height: 90vh;
+            max-height: 800px;
+            background-color: #1a1a1a;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            position: relative;
+        }
+
+        /* ---------- ШАПКА ---------- */
+        .chat-header {
+            padding: 20px 20px 10px 20px;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2b2b2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #fff;
+            border: 2px solid #404040;
+        }
+
+        .chat-title {
+            color: #e0e0e0;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .chat-status {
+            color: #6b6b6b;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        /* ---------- КНОПКА КОПИРОВАНИЯ ---------- */
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #6b6b6b;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+        }
+
+        .copy-btn:hover {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.9);
+        }
+
+        .copy-btn .tooltip {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            border: 1px solid #3a3a3a;
+        }
+
+        .copy-btn .tooltip.show {
+            opacity: 1;
+        }
+
+        /* ---------- ОБЛАСТЬ СООБЩЕНИЙ ---------- */
+        .messages-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background-color: #121212;
+            scroll-behavior: smooth;
+        }
+
+        .messages-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        .messages-area::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 10px;
+        }
+
+        /* ---------- СТИЛИ СООБЩЕНИЙ ---------- */
+        .message-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            max-width: 100%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-row.left {
+            justify-content: flex-start;
+        }
+        .message-row.left .bubble {
+            background-color: #262626;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+            border-bottom-left-radius: 18px;
+            color: #ececec;
+        }
+
+        .message-row.right {
+            justify-content: flex-end;
+        }
+        .message-row.right .bubble {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 18px;
+            border-bottom-left-radius: 18px;
+        }
+
+        .bubble {
+            padding: 12px 16px;
+            max-width: 90%;
+            word-wrap: break-word;
+            font-size: 15px;
+            line-height: 1.5;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        /* Скрываем временные метки при копировании (они добавляются отдельно) */
+        .bubble .time-stamp {
+            font-size: 10px;
+            color: #6b6b6b;
+            margin-top: 6px;
+            text-align: right;
+            opacity: 0.7;
+        }
+
+        .bubble p {
+            margin-bottom: 8px;
+        }
+        .bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bubble video, .bubble audio {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 6px;
+            background-color: #000;
+        }
+
+        .bubble iframe {
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            margin-top: 6px;
+            aspect-ratio: 16 / 9;
+        }
+
+        .msg-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #2b2b2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+
+        /* ---------- ПОДВАЛ С РЕАЛЬНЫМ ВВОДОМ ---------- */
+        .chat-footer {
+            padding: 12px 20px;
+            background-color: #1a1a1a;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            align-items: center;
+        }
+
+        .chat-footer input {
+            flex: 1;
+            background-color: #2a2a2a;
+            border-radius: 25px;
+            padding: 12px 18px;
+            color: #e0e0e0;
+            font-size: 15px;
+            border: 1px solid #333;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .chat-footer input:focus {
+            border-color: #3b82f6;
+        }
+
+        .chat-footer input::placeholder {
+            color: #6b6b6b;
+        }
+
+        .chat-footer button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 22px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .chat-footer button:hover {
+            background-color: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .chat-footer button:active {
+            transform: scale(0.95);
+        }
+
+        /* ---------- ИНДИКАТОР ПЕЧАТИ ---------- */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 0;
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #6b6b6b;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* ---------- АДАПТИВНОСТЬ ---------- */
+        @media (max-width: 550px) {
+            .phone-frame {
+                border-radius: 0;
+                height: 100vh;
+                max-height: 100vh;
+                border: none;
+            }
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone-frame">
+    <!-- ШАПКА -->
+    <div class="chat-header">
+        <div class="header-left">
+            <div class="avatar">🤖</div>
+            <div>
+                <div class="chat-title">Ваш ИИ-Помощник</div>
+                <div class="chat-status">● Онлайн · Презентация проекта</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="copy-btn" id="copyBtn" title="Скопировать весь чат">
+                📋
+                <span class="tooltip" id="copyTooltip">Скопировать чат</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ОКНО ПЕРЕПИСКИ -->
+    <div class="messages-area" id="messagesArea">
+        <!-- Стартовое приветствие (загружается из JS) -->
+    </div>
+
+    <!-- ПОДВАЛ С ПОЛЕМ ВВОДА -->
+    <div class="chat-footer">
+        <input type="text" id="userInput" placeholder="Напишите сообщение..." autofocus>
+        <button id="sendBtn">Отправить</button>
+    </div>
+</div>
+
+<script>
+    // ---------- КОНФИГУРАЦИЯ ----------
+    const INITIAL_MESSAGES = [
+        {
+            type: 'left',
+            avatar: '🤖',
+            html: `
+                <p>👋 Привет! Это интерактивный чат для презентаций.</p>
+                <p>Напиши что-нибудь в поле внизу, и я отвечу!</p>
+                <p>А ещё тут можно вставлять <strong>видео</strong> и <strong>аудио</strong> 👇</p>
+            `
+        },
+        {
+            type: 'left',
+            avatar: '🤖',
+            html: `
+                <p>📹 <strong>Видео-презентация</strong> (пример):</p>
+                <iframe src="https://vk.com/video_ext.php?oid=-123456789&id=456789&hash=abc123" allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" frameborder="0" loading="lazy"></iframe>
+                <div class="time-stamp">12:30</div>
+            `
+        },
+        {
+            type: 'left',
+            avatar: '🤖',
+            html: `
+                <p>🎵 <strong>Аудио-файл</strong> (пример):</p>
+                <audio controls style="width: 100%;">
+                    <source src="audio.mp3" type="audio/mpeg">
+                    Ваш браузер не поддерживает аудио.
+                </audio>
+                <div class="time-stamp">12:31</div>
+            `
+        }
+    ];
+
+    const AI_RESPONSES = [
+        'Интересная мысль! Расскажите подробнее.',
+        'Отлично! А как вы видите реализацию этого этапа?',
+        'Я понимаю. Давайте обсудим это детальнее.',
+        'Здорово! Это может стать ключевой фишкой проекта.',
+        'Хороший вопрос. В нашей концепции это решается так...',
+        'Спасибо за обратную связь! Очень ценю.',
+        'Да, вы абсолютно правы. Это важный момент.'
+    ];
+
+    // ---------- ЛОГИКА ЧАТА ----------
+    const messagesArea = document.getElementById('messagesArea');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyTooltip = document.getElementById('copyTooltip');
+
+    let messageCounter = 0; // Для уникальных ID сообщений
+
+    // Функция добавления сообщения в чат
+    function addMessage(type, avatar, htmlContent, isTyping = false) {
+        const row = document.createElement('div');
+        row.className = `message-row ${type}`;
+        row.dataset.messageId = ++messageCounter;
+
+        if (type === 'left') {
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'msg-avatar';
+            avatarDiv.textContent = avatar;
+            row.appendChild(avatarDiv);
+        }
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.innerHTML = htmlContent;
+        row.appendChild(bubble);
+
+        if (!isTyping) {
+            messagesArea.appendChild(row);
+            scrollToBottom();
+        } else {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `<span></span><span></span><span></span>`;
+            bubble.innerHTML = '';
+            bubble.appendChild(typingDiv);
+            row.appendChild(bubble);
+            messagesArea.appendChild(row);
+            scrollToBottom();
+            return row;
+        }
+        return row;
+    }
+
+    function scrollToBottom() {
+        setTimeout(() => {
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }, 50);
+    }
+
+    // Загрузка начальных сообщений
+    function loadInitialMessages() {
+        messagesArea.innerHTML = '';
+        INITIAL_MESSAGES.forEach(msg => {
+            addMessage(msg.type, msg.avatar, msg.html);
+        });
+    }
+
+    // Отправка сообщения
+    function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+
+        addMessage('right', '', `<p>${escapeHtml(text)}</p>`);
+        userInput.value = '';
+
+        const typingRow = addMessage('left', '🤖', '', true);
+
+        setTimeout(() => {
+            if (typingRow && typingRow.parentNode) {
+                typingRow.remove();
+            }
+
+            const randomResponse = AI_RESPONSES[Math.floor(Math.random() * AI_RESPONSES.length)];
+            addMessage('left', '🤖', `<p>${escapeHtml(randomResponse)}</p>`);
+
+            if (Math.random() > 0.7) {
+                setTimeout(() => {
+                    addMessage('left', '🤖', `<p>📎 Кстати, вот <a href="#" style="color:#3b82f6;">дополнительный материал</a> по теме.</p>`);
+                }, 500);
+            }
+        }, 1500);
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ---------- ФУНКЦИЯ КОПИРОВАНИЯ ----------
+    function copyChat() {
+        // Собираем все сообщения
+        const messages = document.querySelectorAll('.message-row');
+        let chatText = '';
+
+        messages.forEach((row, index) => {
+            const bubble = row.querySelector('.bubble');
+            if (!bubble) return;
+
+            // Определяем отправителя
+            const isLeft = row.classList.contains('left');
+            const sender = isLeft ? '🤖 ИИ-помощник' : '👤 Пользователь';
+
+            // Извлекаем текстовое содержимое (убираем HTML-теги)
+            let textContent = bubble.textContent || '';
+            // Убираем временные метки, если они есть
+            textContent = textContent.replace(/\d{2}:\d{2}/g, '').trim();
+            // Убираем лишние пробелы
+            textContent = textContent.replace(/\s+/g, ' ').trim();
+
+            if (textContent) {
+                // Добавляем номер сообщения и отправителя
+                chatText += `[${index + 1}] ${sender}: ${textContent}\n`;
+            }
+        });
+
+        // Если чат пуст
+        if (!chatText) {
+            showTooltip('Нет сообщений для копирования', true);
+            return;
+        }
+
+        // Добавляем заголовок
+        const header = `=== Чат-презентация ===\nДата: ${new Date().toLocaleString()}\n\n`;
+        chatText = header + chatText;
+
+        // Копируем в буфер обмена
+        navigator.clipboard.writeText(chatText).then(() => {
+            showTooltip('✅ Скопировано!', false);
+        }).catch(() => {
+            // fallback для старых браузеров
+            const textarea = document.createElement('textarea');
+            textarea.value = chatText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showTooltip('✅ Скопировано!', false);
+        });
+    }
+
+    // Показ тултипа
+    let tooltipTimeout;
+
+    function showTooltip(text, isError = false) {
+        copyTooltip.textContent = text;
+        copyTooltip.style.color = isError ? '#ef4444' : '#4ade80';
+        copyTooltip.classList.add('show');
+
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = setTimeout(() => {
+            copyTooltip.classList.remove('show');
+            copyTooltip.textContent = 'Скопировать чат';
+            copyTooltip.style.color = '';
+        }, 2000);
+    }
+
+    // ---------- ОБРАБОТЧИКИ ----------
+    sendBtn.addEventListener('click', sendMessage);
+
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    copyBtn.addEventListener('click', copyChat);
+
+    // Показываем подсказку при наведении
+    copyBtn.addEventListener('mouseenter', () => {
+        if (!copyTooltip.classList.contains('show')) {
+            copyTooltip.textContent = 'Скопировать чат';
+            copyTooltip.classList.add('show');
+        }
+    });
+
+    copyBtn.addEventListener('mouseleave', () => {
+        if (!copyTooltip.classList.contains('show')) return;
+        setTimeout(() => {
+            if (!copyTooltip.classList.contains('show')) return;
+            copyTooltip.classList.remove('show');
+        }, 300);
+    });
+
+    // Инициализация
+    loadInitialMessages();
+    userInput.focus();
+
+    document.addEventListener('click', () => {
+        userInput.focus();
+    });
+</script>
+
+</body>
+</html>
