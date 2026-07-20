@@ -1,680 +1,602 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Чат-Презентация с ответами</title>
-    <style>
-        /* ---------- ГЛОБАЛЬНЫЙ СТИЛЬ (НОЧНАЯ ТЕМА) ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игорян · Путь осознанной жизни</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-            background-color: #0e0e0e;
-        }
+  :root{
+    --bg:#0a0908;
+    --fg:#f4efe6;
+    --fg-dim:rgba(244,239,230,0.66);
+    --fg-faint:rgba(244,239,230,0.4);
+    --accent:#c9a15c;
+    --accent-soft:rgba(201,161,92,0.35);
+    --line:rgba(244,239,230,0.12);
+  }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-        }
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-        /* ---------- ОСНОВНОЙ КОНТЕЙНЕР (как экран телефона) ---------- */
-        .phone-frame {
-            max-width: 500px;
-            width: 100%;
-            height: 90vh;
-            max-height: 800px;
-            background-color: #1a1a1a;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #2a2a2a;
-            position: relative;
-        }
+  html{scroll-behavior:smooth;}
 
-        /* ---------- ШАПКА (всегда сверху) ---------- */
-        .chat-header {
-            padding: 20px 20px 10px 20px;
-            background-color: #1a1a1a;
-            border-bottom: 1px solid #2a2a2a;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-            z-index: 10;
-            /* Фиксируем внутри контейнера */
-            position: relative;
-        }
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'EB Garamond', Georgia, serif;
+    font-size:18px;
+    line-height:1.75;
+    overflow-x:hidden;
+  }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+  .serif-display{font-family:'Instrument Serif', serif; font-weight:400;}
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+  .container{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 30px;
+  }
 
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #2b2b2b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            color: #fff;
-            border: 2px solid #404040;
-            flex-shrink: 0;
-        }
+  a{color:inherit;}
 
-        .chat-title {
-            color: #e0e0e0;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .chat-status {
-            color: #6b6b6b;
-            font-size: 12px;
-            margin-top: 2px;
-        }
+  /* ---------- Liquid glass ---------- */
+  .liquid-glass{
+    background:rgba(255,255,255,0.02);
+    background-blend-mode:luminosity;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    border:none;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,0.08);
+    position:relative;
+    overflow:hidden;
+  }
+  .liquid-glass::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    padding:1.4px;
+    background:linear-gradient(180deg,
+      rgba(255,255,255,0.4) 0%,
+      rgba(255,255,255,0.12) 20%,
+      rgba(255,255,255,0) 40%,
+      rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.12) 80%,
+      rgba(255,255,255,0.4) 100%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+  }
 
-        /* ---------- КНОПКА КОПИРОВАНИЯ ---------- */
-        .copy-btn {
-            background: none;
-            border: none;
-            color: #6b6b6b;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 6px 8px;
-            border-radius: 8px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            position: relative;
-        }
+  /* ---------- Nav ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    padding:22px 24px;
+  }
+  .nav-inner{
+    max-width:900px;
+    margin:0 auto;
+    border-radius:999px;
+    padding:12px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-family:'Instrument Serif', serif;
+    font-size:1.35em;
+    letter-spacing:2px;
+    color:var(--fg);
+  }
+  .logo .yan{color:var(--accent);}
+  .nav-links{
+    display:none;
+    gap:34px;
+    font-size:0.92em;
+    color:var(--fg-dim);
+  }
+  .nav-links a{text-decoration:none; transition:color .25s;}
+  .nav-links a:hover{color:var(--fg);}
+  @media(min-width:768px){.nav-links{display:flex;}}
 
-        .copy-btn:hover {
-            background-color: #2a2a2a;
-            color: #e0e0e0;
-        }
+  .nav-cta{
+    text-decoration:none;
+    border-radius:999px;
+    padding:9px 22px;
+    font-size:0.88em;
+    color:var(--fg);
+    white-space:nowrap;
+  }
 
-        .copy-btn:active {
-            transform: scale(0.9);
-        }
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    overflow:hidden;
+    background:#000;
+    display:flex;
+    flex-direction:column;
+  }
+  .hero video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:translateY(17%);
+    opacity:0;
+  }
+  .hero-scrim{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.85) 100%);
+    z-index:1;
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 24px 60px;
+  }
+  .hero-content h1{
+    font-family:'Instrument Serif', serif;
+    font-style:italic;
+    font-size:2.4em;
+    line-height:1.25;
+    max-width:780px;
+    color:var(--fg);
+    margin-bottom:26px;
+  }
+  .hero-subtitle{
+    color:var(--fg-dim);
+    font-size:1.15em;
+    max-width:560px;
+    margin-bottom:36px;
+  }
+  .hero-quote{
+    font-family:'Instrument Serif', serif;
+    font-style:italic;
+    font-size:1.3em;
+    color:var(--fg-dim);
+    max-width:600px;
+    line-height:1.6;
+    border-left:1px solid var(--accent-soft);
+    padding-left:22px;
+    text-align:left;
+    margin-bottom:44px;
+  }
+  .hero-cta{
+    text-decoration:none;
+    border-radius:999px;
+    padding:15px 40px;
+    color:var(--fg);
+    font-size:0.95em;
+    letter-spacing:0.5px;
+    transition:background .25s;
+  }
+  .hero-cta:hover{background:rgba(255,255,255,0.05);}
+  @media(min-width:640px){
+    .hero-content h1{font-size:3.2em;}
+  }
 
-        .copy-btn .tooltip {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 8px;
-            background: #2a2a2a;
-            color: #e0e0e0;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-            border: 1px solid #3a3a3a;
-        }
+  .scroll-cue{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:center;
+    padding-bottom:36px;
+    color:var(--fg-faint);
+    font-size:0.78em;
+    letter-spacing:3px;
+    text-transform:uppercase;
+  }
 
-        .copy-btn .tooltip.show {
-            opacity: 1;
-        }
+  /* ---------- Sections ---------- */
+  section{padding:120px 0;}
+  .section-title{
+    font-family:'Instrument Serif', serif;
+    font-size:2.4em;
+    text-align:center;
+    margin-bottom:64px;
+    color:var(--fg);
+  }
 
-        /* ---------- ОБЛАСТЬ СООБЩЕНИЙ (скроллится) ---------- */
-        .messages-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            background-color: #121212;
-            scroll-behavior: smooth;
-            /* Важно: чтобы не перекрывалась шапкой и футером */
-            min-height: 0;
-        }
+  .divider{
+    text-align:center;
+    padding:10px 0 100px;
+    color:var(--accent-soft);
+    letter-spacing:14px;
+    font-size:1.1em;
+  }
 
-        .messages-area::-webkit-scrollbar {
-            width: 4px;
-        }
-        .messages-area::-webkit-scrollbar-thumb {
-            background: #3a3a3a;
-            border-radius: 10px;
-        }
+  /* lifestyle grid */
+  .lifestyle-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:26px;
+  }
+  .lifestyle-item{
+    border-radius:18px;
+    padding:34px 30px;
+  }
+  .lifestyle-item h3{
+    font-family:'Instrument Serif', serif;
+    font-size:1.4em;
+    margin-bottom:16px;
+    color:var(--accent);
+  }
+  .lifestyle-item p{color:var(--fg-dim); font-size:0.98em;}
 
-        /* ---------- СТИЛИ СООБЩЕНИЙ ---------- */
-        .message-row {
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            max-width: 100%;
-            animation: fadeIn 0.3s ease;
-            flex-shrink: 0;
-        }
+  /* philosophy */
+  .philosophy-text{
+    max-width:660px;
+    margin:0 auto;
+    text-align:center;
+    font-size:1.25em;
+    color:var(--fg-dim);
+    font-family:'Instrument Serif', serif;
+    line-height:1.7;
+  }
+  .philosophy-text p{margin-bottom:28px;}
+  .philosophy-text p:last-child{margin-bottom:0; color:var(--fg);}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  /* principles */
+  .principles-list{max-width:700px; margin:0 auto;}
+  .principle{
+    display:flex;
+    gap:28px;
+    align-items:flex-start;
+    padding:30px 6px;
+    border-bottom:1px solid var(--line);
+  }
+  .principle:last-child{border-bottom:none;}
+  .principle-number{
+    font-family:'Instrument Serif', serif;
+    font-size:1.8em;
+    color:var(--accent-soft);
+    min-width:52px;
+  }
+  .principle-content h3{
+    font-family:'Instrument Serif', serif;
+    font-size:1.3em;
+    margin-bottom:10px;
+  }
+  .principle-content p{color:var(--fg-dim); font-size:0.98em;}
 
-        .message-row.left {
-            justify-content: flex-start;
-        }
-        .message-row.left .bubble {
-            background-color: #262626;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 18px;
-            border-bottom-right-radius: 18px;
-            border-bottom-left-radius: 18px;
-            color: #ececec;
-        }
+  /* CTA */
+  .cta-section{text-align:center;}
+  .cta-panel{
+    max-width:620px;
+    margin:0 auto;
+    border-radius:24px;
+    padding:60px 40px;
+  }
+  .cta-panel h2{
+    font-family:'Instrument Serif', serif;
+    font-size:2.2em;
+    margin-bottom:22px;
+  }
+  .cta-panel p{color:var(--fg-dim); margin-bottom:36px;}
+  .cta-button{
+    display:inline-block;
+    text-decoration:none;
+    border-radius:999px;
+    padding:16px 44px;
+    color:var(--fg);
+    letter-spacing:0.5px;
+    transition:background .25s;
+  }
+  .cta-button:hover{background:rgba(255,255,255,0.05);}
 
-        .message-row.right {
-            justify-content: flex-end;
-        }
-        .message-row.right .bubble {
-            background-color: #3b82f6;
-            color: #ffffff;
-            border-top-left-radius: 18px;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 18px;
-            border-bottom-left-radius: 18px;
-        }
+  /* footer */
+  footer{
+    padding:80px 0 40px;
+    border-top:1px solid var(--line);
+  }
+  .footer-main{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:50px;
+    margin-bottom:60px;
+  }
+  .footer-brand h3{
+    font-family:'Instrument Serif', serif;
+    font-size:1.7em;
+    letter-spacing:2px;
+    margin-bottom:14px;
+  }
+  .footer-brand p{color:var(--fg-faint); margin-bottom:8px; font-size:0.95em;}
+  .footer-section h4{
+    font-size:0.85em;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--fg-faint);
+    margin-bottom:18px;
+  }
+  .footer-links{list-style:none;}
+  .footer-links li{margin-bottom:12px;}
+  .footer-links a{text-decoration:none; color:var(--fg-dim); font-size:0.95em; transition:color .25s;}
+  .footer-links a:hover{color:var(--fg);}
+  .footer-bottom{
+    padding-top:36px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  .footer-legal{
+    max-width:680px;
+    margin:0 auto;
+    font-size:0.85em;
+    color:var(--fg-faint);
+    line-height:1.9;
+  }
+  .footer-legal p{margin:8px 0;}
+  .footer-legal .sep{letter-spacing:10px; color:var(--accent-soft); margin:16px 0;}
 
-        .bubble {
-            padding: 12px 16px;
-            max-width: 90%;
-            word-wrap: break-word;
-            font-size: 15px;
-            line-height: 1.5;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .bubble .time-stamp {
-            font-size: 10px;
-            color: #6b6b6b;
-            margin-top: 6px;
-            text-align: right;
-            opacity: 0.7;
-        }
-
-        .bubble p {
-            margin-bottom: 8px;
-        }
-        .bubble p:last-child {
-            margin-bottom: 0;
-        }
-
-        .bubble video, .bubble audio {
-            width: 100%;
-            border-radius: 12px;
-            margin-top: 6px;
-            background-color: #000;
-        }
-
-        .bubble iframe {
-            width: 100%;
-            border-radius: 12px;
-            border: none;
-            margin-top: 6px;
-            aspect-ratio: 16 / 9;
-        }
-
-        .msg-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background-color: #2b2b2b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #aaa;
-            flex-shrink: 0;
-        }
-
-        /* ---------- ПОДВАЛ С ПОЛЕМ ВВОДА (всегда снизу) ---------- */
-        .chat-footer {
-            padding: 12px 20px;
-            background-color: #1a1a1a;
-            border-top: 1px solid #2a2a2a;
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
-            align-items: center;
-            z-index: 10;
-            position: relative;
-        }
-
-        .chat-footer input {
-            flex: 1;
-            background-color: #2a2a2a;
-            border-radius: 25px;
-            padding: 12px 18px;
-            color: #e0e0e0;
-            font-size: 15px;
-            border: 1px solid #333;
-            outline: none;
-            transition: border 0.2s;
-            min-width: 0;
-        }
-
-        .chat-footer input:focus {
-            border-color: #3b82f6;
-        }
-
-        .chat-footer input::placeholder {
-            color: #6b6b6b;
-        }
-
-        .chat-footer button {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 12px 22px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .chat-footer button:hover {
-            background-color: #2563eb;
-            transform: scale(1.02);
-        }
-
-        .chat-footer button:active {
-            transform: scale(0.95);
-        }
-
-        /* ---------- ИНДИКАТОР ПЕЧАТИ ---------- */
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 0;
-        }
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #6b6b6b;
-            border-radius: 50%;
-            display: inline-block;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-            30% { transform: translateY(-8px); opacity: 1; }
-        }
-
-        /* ---------- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ---------- */
-        @media (max-width: 550px) {
-            body {
-                padding: 0;
-            }
-            .phone-frame {
-                border-radius: 0;
-                height: 100vh;
-                max-height: 100vh;
-                border: none;
-                width: 100%;
-            }
-
-            .chat-header {
-                padding: 16px 16px 10px 16px;
-            }
-
-            .chat-footer {
-                padding: 10px 16px;
-            }
-
-            .chat-footer input {
-                font-size: 14px;
-                padding: 10px 14px;
-            }
-
-            .chat-footer button {
-                padding: 10px 18px;
-                font-size: 14px;
-            }
-
-            .bubble {
-                font-size: 14px;
-                padding: 10px 14px;
-            }
-
-            .messages-area {
-                padding: 12px 12px;
-            }
-        }
-
-        /* Дополнительная защита для очень маленьких экранов */
-        @media (max-height: 600px) {
-            .chat-header {
-                padding: 10px 16px 8px 16px;
-            }
-            .chat-header .avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 14px;
-            }
-            .chat-title {
-                font-size: 14px;
-            }
-            .chat-status {
-                font-size: 10px;
-            }
-            .chat-footer {
-                padding: 8px 16px;
-            }
-            .chat-footer input {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-            .chat-footer button {
-                padding: 8px 14px;
-                font-size: 13px;
-            }
-            .bubble {
-                font-size: 13px;
-                padding: 8px 12px;
-            }
-            .messages-area {
-                padding: 8px 12px;
-                gap: 10px;
-            }
-        }
-    </style>
+  @media(max-width:768px){
+    .hero-content h1{font-size:2em;}
+    .hero-quote{font-size:1.1em; padding-left:16px;}
+    .section-title{font-size:1.9em;}
+    .philosophy-text{font-size:1.1em;}
+    .footer-main{grid-template-columns:1fr; gap:36px;}
+  }
+</style>
 </head>
 <body>
 
-<div class="phone-frame">
-    <!-- ШАПКА (всегда сверху) -->
-    <div class="chat-header">
-        <div class="header-left">
-            <div class="avatar">🤖</div>
-            <div>
-                <div class="chat-title">Ваш ИИ-Помощник</div>
-                <div class="chat-status">● Онлайн · Презентация проекта</div>
-            </div>
-        </div>
-        <div class="header-right">
-            <button class="copy-btn" id="copyBtn" title="Скопировать весь чат">
-                📋
-                <span class="tooltip" id="copyTooltip">Скопировать чат</span>
-            </button>
-        </div>
-    </div>
+<header>
+  <div class="nav-inner liquid-glass">
+    <div class="logo">ИГОР<span class="yan">ЯН</span></div>
+    <nav class="nav-links">
+      <a href="#lifestyle">Образ жизни</a>
+      <a href="#principles">Философия</a>
+      <a href="#cta">Программа</a>
+    </nav>
+    <a href="/программа-для-женщин/" class="nav-cta liquid-glass">Программа для женщин</a>
+  </div>
+</header>
 
-    <!-- ОБЛАСТЬ СООБЩЕНИЙ (скроллится) -->
-    <div class="messages-area" id="messagesArea">
-        <!-- Сообщения загружаются из JS -->
+<section class="hero">
+  <video autoplay muted playsinline loop id="heroVideo">
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_115001_bcdaa3b4-03de-47e7-ad63-ae3e392c32d4.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <h1>Я выбрал путь тишины, чтобы услышать главное</h1>
+    <p class="hero-subtitle">
+      Живу осознанно. Практикую ежедневно. Делюсь тем, что работает.
+      Без шума. Без обещаний. Только глубина и результат.
+    </p>
+    <div class="hero-quote">
+      «Настоящая сила — не в том, чтобы кричать громче всех,
+      а в том, чтобы оставаться спокойным, когда все кричат»
     </div>
+    <a href="/программа-для-женщин/" class="hero-cta liquid-glass">Узнать о программе</a>
+  </div>
+  <div class="scroll-cue">Листайте вниз</div>
+</section>
 
-    <!-- ПОДВАЛ С ПОЛЕМ ВВОДА (всегда снизу) -->
-    <div class="chat-footer">
-        <input type="text" id="userInput" placeholder="Напишите сообщение..." autofocus>
-        <button id="sendBtn">Отправить</button>
+<section class="lifestyle" id="lifestyle">
+  <div class="container">
+    <h2 class="section-title">Как я живу</h2>
+    <div class="lifestyle-grid">
+      <div class="lifestyle-item liquid-glass">
+        <h3>Режим</h3>
+        <p>Просыпаюсь до рассвета. Первые два часа — тишина, медитация, работа с картами. Никаких уведомлений, соцсетей и суеты. День начинается из состояния покоя.</p>
+      </div>
+      <div class="lifestyle-item liquid-glass">
+        <h3>Тело</h3>
+        <p>Контрастный душ. Дыхательные практики. Простая еда. Тело — это храм, а не мусорное ведро. Забочусь о нём, как о инструменте для духовной работы.</p>
+      </div>
+      <div class="lifestyle-item liquid-glass">
+        <h3>Практика</h3>
+        <p>Каждый день работаю с Таро. Не для гадания — для понимания архетипов и структур реальности. Медитирую. Веду дневник. Это не хобби — это образ жизни.</p>
+      </div>
+      <div class="lifestyle-item liquid-glass">
+        <h3>Пространство</h3>
+        <p>Минимализм во всём. Меньше вещей — больше ясности. Мой дом — это место силы, а не склад накопленного хлама.</p>
+      </div>
+      <div class="lifestyle-item liquid-glass">
+        <h3>Общение</h3>
+        <p>Говорю мало. Слушаю много. Выбираю людей осознанно. Ценю глубину, а не количество контактов.</p>
+      </div>
+      <div class="lifestyle-item liquid-glass">
+        <h3>Работа</h3>
+        <p>Помогаю женщинам найти опору в себе. Не даю ответы — учу задавать правильные вопросы. Работаю только с теми, кто готов меняться.</p>
+      </div>
     </div>
-</div>
+  </div>
+</section>
+
+<div class="divider">✧ ◈ ✦ ◈ ✧</div>
+
+<section class="philosophy">
+  <div class="container">
+    <h2 class="section-title">Почему я это делаю</h2>
+    <div class="philosophy-text">
+      <p>Я вижу женщин, которые устали. Устали искать ответы снаружи. Устали от бесконечных советов, курсов и обещаний.</p>
+      <p>Они приходят ко мне не за предсказаниями. Они приходят за опорой. За мужским взглядом на их женские проблемы. За спокойствием, которого им не хватает.</p>
+      <p>Я не гуру. Я человек, который прошёл через хаос и нашёл путь. Теперь делюсь им с теми, кто готов идти.</p>
+    </div>
+  </div>
+</section>
+
+<section class="principles" id="principles">
+  <div class="container">
+    <h2 class="section-title">Мои принципы</h2>
+    <div class="principles-list">
+      <div class="principle">
+        <div class="principle-number">01</div>
+        <div class="principle-content">
+          <h3>Глубина вместо ширины</h3>
+          <p>Лучше один глубокий расклад, чем десять поверхностных. Лучше одна медитация, которая меняет состояние, чем сто часов пустых разговоров.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-number">02</div>
+        <div class="principle-content">
+          <h3>Честность вместо утешения</h3>
+          <p>Карты не врут. Я говорю то, что вижу. Иногда это больно. Но боль от правды лучше, чем комфорт от иллюзии.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-number">03</div>
+        <div class="principle-content">
+          <h3>Практика вместо теории</h3>
+          <p>Знать — не значит уметь. Я даю инструменты, которые работают в реальной жизни. Не философию для головы, а практики для тела и души.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-number">04</div>
+        <div class="principle-content">
+          <h3>Ответственность вместо зависимости</h3>
+          <p>Моя цель — не сделать вас зависимой от меня, а научить опираться на себя. Через 2 месяца вы должны стать сильнее, а не привязаннее.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-panel liquid-glass">
+      <h2>Готовы начать путь?</h2>
+      <p>Я работаю только с женщинами, которые готовы к глубоким изменениям. Не с теми, кто ищет быстрых ответов. А с теми, кто хочет настоящей трансформации.</p>
+      <a href="/программа-для-женщин/" class="cta-button liquid-glass">Узнать о программе</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <h3>ИГОР<span class="yan">ЯН</span></h3>
+        <p>Путь осознанной жизни</p>
+        <p style="opacity:.6;">✧ тишина · глубина · трансформация</p>
+      </div>
+      <div class="footer-section">
+        <h4>Навигация</h4>
+        <ul class="footer-links">
+          <li><a href="/">Главная</a></li>
+          <li><a href="/программа-для-женщин/">Программа для женщин</a></li>
+          <li><a href="#lifestyle">Образ жизни</a></li>
+          <li><a href="#principles">Философия</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Контакты</h4>
+        <ul class="footer-links">
+          <li><a href="https://t.me/gargaross">Telegram</a></li>
+          <li><a href="mailto:igor2000km@gmail.com">Email</a></li>
+          <li><a href="https://max.ru/u/f9LHodD0cOKBofEOX-DxvNCKJN1IcujQNOwnMK7Wev9mD4NLzsHoQZDB9cc" target="_blank" rel="noopener">MAX</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p><strong>Важная информация:</strong></p>
+        <p>
+          ✦ Все услуги носят информационно-консультационный и духовно-практический характер<br>
+          ◈ Не являются медицинской помощью и не заменяют консультацию врача<br>
+          ✧ Вы несёте ответственность за своё здоровье и принятые решения
+        </p>
+        <p class="sep">✧ ◈ ✦ ◈ ✧</p>
+        <p><a href="/политика-конфиденциальности.html" style="text-decoration:underline;">Политика конфиденциальности</a></p>
+        <p style="margin-top:16px;">© 2026 Игорян.рф · Самозанятость · все чеки предоставляются</p>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script>
-    // ---------- КОНФИГУРАЦИЯ ----------
-    const INITIAL_MESSAGES = [
-        {
-            type: 'left',
-            avatar: '🤖',
-            html: `
-                <p>👋 Привет! Это интерактивный чат для презентаций.</p>
-                <p>Напиши что-нибудь в поле внизу, и я отвечу!</p>
-                <p>А ещё тут можно вставлять <strong>видео</strong> и <strong>аудио</strong> 👇</p>
-            `
-        },
-        {
-            type: 'left',
-            avatar: '🤖',
-            html: `
-                <p>📹 <strong>Видео-презентация</strong> (пример):</p>
-                <iframe src="https://vk.com/video_ext.php?oid=-123456789&id=456789&hash=abc123" allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" frameborder="0" loading="lazy"></iframe>
-                <div class="time-stamp">12:30</div>
-            `
-        },
-        {
-            type: 'left',
-            avatar: '🤖',
-            html: `
-                <p>🎵 <strong>Аудио-файл</strong> (пример):</p>
-                <audio controls style="width: 100%;">
-                    <source src="audio.mp3" type="audio/mpeg">
-                    Ваш браузер не поддерживает аудио.
-                </audio>
-                <div class="time-stamp">12:31</div>
-            `
-        }
-    ];
+  // ---- Custom video loop fade system (rAF-based, no CSS transitions) ----
+  (function(){
+    var video = document.getElementById('heroVideo');
+    var fadingOutRef = false;
+    var rafId = null;
 
-    const AI_RESPONSES = [
-        'Интересная мысль! Расскажите подробнее.',
-        'Отлично! А как вы видите реализацию этого этапа?',
-        'Я понимаю. Давайте обсудим это детальнее.',
-        'Здорово! Это может стать ключевой фишкой проекта.',
-        'Хороший вопрос. В нашей концепции это решается так...',
-        'Спасибо за обратную связь! Очень ценю.',
-        'Да, вы абсолютно правы. Это важный момент.'
-    ];
+    function cancelFade(){
+      if (rafId !== null){
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
 
-    // ---------- ЛОГИКА ЧАТА ----------
-    const messagesArea = document.getElementById('messagesArea');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const copyTooltip = document.getElementById('copyTooltip');
+    function fadeTo(target, duration){
+      cancelFade();
+      var startOpacity = parseFloat(getComputedStyle(video).opacity) || 0;
+      var startTime = null;
 
-    let messageCounter = 0;
-
-    function addMessage(type, avatar, htmlContent, isTyping = false) {
-        const row = document.createElement('div');
-        row.className = `message-row ${type}`;
-        row.dataset.messageId = ++messageCounter;
-
-        if (type === 'left') {
-            const avatarDiv = document.createElement('div');
-            avatarDiv.className = 'msg-avatar';
-            avatarDiv.textContent = avatar;
-            row.appendChild(avatarDiv);
-        }
-
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        bubble.innerHTML = htmlContent;
-        row.appendChild(bubble);
-
-        if (!isTyping) {
-            messagesArea.appendChild(row);
-            scrollToBottom();
+      function step(ts){
+        if (startTime === null) startTime = ts;
+        var elapsed = ts - startTime;
+        var t = Math.min(elapsed / duration, 1);
+        video.style.opacity = startOpacity + (target - startOpacity) * t;
+        if (t < 1){
+          rafId = requestAnimationFrame(step);
         } else {
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'typing-indicator';
-            typingDiv.innerHTML = `<span></span><span></span><span></span>`;
-            bubble.innerHTML = '';
-            bubble.appendChild(typingDiv);
-            row.appendChild(bubble);
-            messagesArea.appendChild(row);
-            scrollToBottom();
-            return row;
+          rafId = null;
         }
-        return row;
+      }
+      rafId = requestAnimationFrame(step);
     }
 
-    function scrollToBottom() {
-        setTimeout(() => {
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-        }, 50);
+    function fadeIn(){
+      fadingOutRef = false;
+      fadeTo(1, 500);
     }
 
-    function loadInitialMessages() {
-        messagesArea.innerHTML = '';
-        INITIAL_MESSAGES.forEach(msg => {
-            addMessage(msg.type, msg.avatar, msg.html);
-        });
-        // Прокручиваем вниз после загрузки
-        scrollToBottom();
+    function fadeOut(){
+      if (fadingOutRef) return;
+      fadingOutRef = true;
+      fadeTo(0, 500);
     }
 
-    function sendMessage() {
-        const text = userInput.value.trim();
-        if (!text) return;
+    video.addEventListener('loadeddata', fadeIn);
+    video.addEventListener('play', fadeIn);
 
-        addMessage('right', '', `<p>${escapeHtml(text)}</p>`);
-        userInput.value = '';
-
-        const typingRow = addMessage('left', '🤖', '', true);
-
-        setTimeout(() => {
-            if (typingRow && typingRow.parentNode) {
-                typingRow.remove();
-            }
-
-            const randomResponse = AI_RESPONSES[Math.floor(Math.random() * AI_RESPONSES.length)];
-            addMessage('left', '🤖', `<p>${escapeHtml(randomResponse)}</p>`);
-
-            if (Math.random() > 0.7) {
-                setTimeout(() => {
-                    addMessage('left', '🤖', `<p>📎 Кстати, вот <a href="#" style="color:#3b82f6;">дополнительный материал</a> по теме.</p>`);
-                }, 500);
-            }
-        }, 1500);
-    }
-
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    // ---------- ФУНКЦИЯ КОПИРОВАНИЯ ----------
-    function copyChat() {
-        const messages = document.querySelectorAll('.message-row');
-        let chatText = '';
-
-        messages.forEach((row, index) => {
-            const bubble = row.querySelector('.bubble');
-            if (!bubble) return;
-
-            const isLeft = row.classList.contains('left');
-            const sender = isLeft ? '🤖 ИИ-помощник' : '👤 Пользователь';
-
-            let textContent = bubble.textContent || '';
-            textContent = textContent.replace(/\d{2}:\d{2}/g, '').trim();
-            textContent = textContent.replace(/\s+/g, ' ').trim();
-
-            if (textContent) {
-                chatText += `[${index + 1}] ${sender}: ${textContent}\n`;
-            }
-        });
-
-        if (!chatText) {
-            showTooltip('Нет сообщений для копирования', true);
-            return;
-        }
-
-        const header = `=== Чат-презентация ===\nДата: ${new Date().toLocaleString()}\n\n`;
-        chatText = header + chatText;
-
-        navigator.clipboard.writeText(chatText).then(() => {
-            showTooltip('✅ Скопировано!', false);
-        }).catch(() => {
-            const textarea = document.createElement('textarea');
-            textarea.value = chatText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showTooltip('✅ Скопировано!', false);
-        });
-    }
-
-    let tooltipTimeout;
-
-    function showTooltip(text, isError = false) {
-        copyTooltip.textContent = text;
-        copyTooltip.style.color = isError ? '#ef4444' : '#4ade80';
-        copyTooltip.classList.add('show');
-
-        clearTimeout(tooltipTimeout);
-        tooltipTimeout = setTimeout(() => {
-            copyTooltip.classList.remove('show');
-            copyTooltip.textContent = 'Скопировать чат';
-            copyTooltip.style.color = '';
-        }, 2000);
-    }
-
-    // ---------- ОБРАБОТЧИКИ ----------
-    sendBtn.addEventListener('click', sendMessage);
-
-    userInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
+    video.addEventListener('timeupdate', function(){
+      if (!video.duration) return;
+      var remaining = video.duration - video.currentTime;
+      if (remaining <= 0.55 && !fadingOutRef){
+        fadeOut();
+      }
     });
 
-    copyBtn.addEventListener('click', copyChat);
-
-    copyBtn.addEventListener('mouseenter', () => {
-        if (!copyTooltip.classList.contains('show')) {
-            copyTooltip.textContent = 'Скопировать чат';
-            copyTooltip.classList.add('show');
-        }
+    video.addEventListener('ended', function(){
+      video.style.opacity = 0;
+      cancelFade();
+      setTimeout(function(){
+        video.currentTime = 0;
+        video.play();
+        fadeIn();
+      }, 100);
     });
-
-    copyBtn.addEventListener('mouseleave', () => {
-        if (!copyTooltip.classList.contains('show')) return;
-        setTimeout(() => {
-            if (!copyTooltip.classList.contains('show')) return;
-            copyTooltip.classList.remove('show');
-        }, 300);
-    });
-
-    // ---------- ИНИЦИАЛИЗАЦИЯ ----------
-    loadInitialMessages();
-    userInput.focus();
-
-    // Авто-фокус при клике в любом месте
-    document.addEventListener('click', () => {
-        userInput.focus();
-    });
-
-    // Исправление для мобильных: при открытии клавиатуры не ломаем вёрстку
-    // (работает автоматически благодаря flex-контейнеру)
+  })();
 </script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(99150786, 'init', {webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99150786" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 </body>
 </html>
