@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ВЯЗАНИЕ 2026 — Бесплатный гайд за подписку</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600&family=Caveat:wght@400;700&display=swap');
+
+  :root{
+    --bg-cream:#FAF8F5; --bg-soft:#F5F1EB; --bg-warm:#EDE5D8;
+    --blush:#E8C4C4; --blush-deep:#D4A5A5; --terracotta:#C88B6B;
+    --sage:#A8B5A0; --sage-deep:#7A8F70; --burgundy:#6B3A3A;
+    --gold:#C9A96E; --text:#3A3A3A; --muted:#7A7A7A; --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Source Sans 3',sans-serif;color:var(--text);
+    background:var(--bg-cream);line-height:1.6;font-weight:300;
+    overflow-x:hidden;
+  }
+
+  /* Типографика */
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--burgundy);line-height:1.15;}
+  .eyebrow{
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;
+    letter-spacing:0.25em;color:var(--terracotta);text-transform:uppercase;
+    margin-bottom:14px;display:inline-block;
+  }
+  .eyebrow::before{content:"— ";}
+
+  /* Контейнер */
+  .container{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* Навигация */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(250,248,245,0.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(232,196,196,0.3);
+    padding:18px 0;
+  }
+  nav .container{display:flex;justify-content:space-between;align-items:center;}
+  .logo{
+    font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;
+    color:var(--burgundy);letter-spacing:0.02em;
+  }
+  .logo span{color:var(--terracotta);font-style:italic;}
+  .nav-cta{
+    background:var(--burgundy);color:var(--bg-cream);
+    padding:10px 22px;border-radius:30px;text-decoration:none;
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;
+    letter-spacing:0.1em;text-transform:uppercase;
+    transition:all 0.3s ease;
+  }
+  .nav-cta:hover{background:var(--terracotta);transform:translateY(-1px);}
+
+  /* HERO */
+  .hero{
+    padding:140px 0 80px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(ellipse at 15% 20%, rgba(232,196,196,0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 70%, rgba(200,139,107,0.15) 0%, transparent 50%),
+      repeating-linear-gradient(115deg, rgba(232,196,196,0.08) 0 2px, transparent 2px 18px),
+      var(--bg-cream);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px,5.5vw,68px);letter-spacing:-0.01em;
+    margin-bottom:20px;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--terracotta);font-weight:500;
+  }
+  .hero-sub{
+    font-size:19px;color:var(--muted);margin-bottom:32px;max-width:520px;
+    font-weight:300;line-height:1.6;
+  }
+  .hero-meta{
+    display:flex;gap:28px;margin-bottom:36px;flex-wrap:wrap;
+  }
+  .hero-meta-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);}
+  .hero-meta-item svg{flex-shrink:0;}
+  .hero-meta-item b{font-family:'Montserrat',sans-serif;font-weight:600;color:var(--burgundy);}
+
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--burgundy);color:var(--bg-cream);
+    padding:18px 36px;border-radius:40px;text-decoration:none;
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:13px;
+    letter-spacing:0.12em;text-transform:uppercase;
+    transition:all 0.3s ease;border:none;cursor:pointer;
+    box-shadow:0 10px 30px rgba(107,58,58,0.25);
+  }
+  .btn-primary:hover{
+    background:var(--terracotta);transform:translateY(-2px);
+    box-shadow:0 14px 36px rgba(200,139,107,0.35);
+  }
+  .btn-primary svg{transition:transform 0.3s ease;}
+  .btn-primary:hover svg{transform:translateX(4px);}
+
+  .hero-note{
+    margin-top:18px;font-size:13px;color:var(--muted);font-style:italic;
+    font-family:'Cormorant Garamond',serif;
+  }
+
+  /* Превью PDF */
+  .preview-wrap{position:relative;display:flex;justify-content:center;align-items:center;}
+  .preview{
+    width:340px;height:480px;border-radius:4px;position:relative;
+    background:
+      repeating-linear-gradient(115deg, rgba(232,196,196,0.2) 0 2px, transparent 2px 14px),
+      repeating-linear-gradient(65deg, rgba(200,139,107,0.12) 0 1px, transparent 1px 11px),
+      radial-gradient(ellipse at 30% 20%, #F5E3D8 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 80%, #E8C4C4 0%, transparent 50%),
+      linear-gradient(160deg, #FAF8F5 0%, #F5E3D8 45%, #E8C4C4 100%);
+    box-shadow:
+      0 30px 60px -15px rgba(107,58,58,0.3),
+      0 10px 20px -5px rgba(107,58,58,0.15),
+      inset 0 0 0 1px rgba(255,255,255,0.5);
+    transform:perspective(1200px) rotateY(-8deg) rotateX(2deg);
+    transition:transform 0.5s ease;
+    padding:40px 30px;display:flex;flex-direction:column;align-items:center;
+    justify-content:space-between;text-align:center;
+  }
+  .preview:hover{transform:perspective(1200px) rotateY(-4deg) rotateX(1deg);}
+  .preview-top{
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:9px;
+    letter-spacing:0.3em;color:var(--burgundy);text-transform:uppercase;
+    width:100%;display:flex;justify-content:space-between;
+  }
+  .preview-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .preview h2{
+    font-family:'Cormorant Garamond',serif;font-weight:700;
+    font-size:38px;color:var(--burgundy);letter-spacing:0.04em;margin-top:10px;
+  }
+  .preview .sub{
+    font-family:'Caveat',cursive;font-weight:700;font-size:20px;
+    color:var(--terracotta);margin-top:6px;
+  }
+  .preview .line{width:60%;height:1px;background:var(--blush-deep);margin:14px 0;}
+  .preview-pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+  .preview-pill{
+    border:1px solid var(--terracotta);border-radius:20px;
+    padding:3px 10px;font-family:'Montserrat',sans-serif;font-weight:600;
+    font-size:8px;letter-spacing:0.1em;color:var(--terracotta);text-transform:uppercase;
+  }
+  .preview-bottom{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:11px;color:var(--muted);
+  }
+
+  .preview-badge{
+    position:absolute;top:-18px;right:-18px;
+    background:var(--terracotta);color:var(--white);
+    width:90px;height:90px;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:'Montserrat',sans-serif;font-weight:700;
+    box-shadow:0 10px 24px rgba(200,139,107,0.4);
+    transform:rotate(-12deg);
+  }
+  .preview-badge .big{font-size:22px;line-height:1;}
+  .preview-badge .sm{font-size:8px;letter-spacing:0.15em;margin-top:2px;}
+
+  /* Секции */
+  section{padding:90px 0;}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 60px;}
+  .section-head h2{font-size:clamp(32px,4vw,48px);margin-bottom:16px;}
+  .section-head p{font-size:17px;color:var(--muted);}
+
+  /* Для кого */
+  .audience{background:var(--bg-soft);}
+  .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .audience-card{
+    background:var(--bg-cream);padding:36px 28px;border-radius:12px;
+    transition:all 0.4s ease;border:1px solid transparent;
+  }
+  .audience-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(107,58,58,0.08);
+    border-color:var(--blush);
+  }
+  .audience-icon{
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(135deg, var(--blush), var(--terracotta));
+    display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  }
+  .audience-card h3{font-size:22px;margin-bottom:10px;}
+  .audience-card p{font-size:15px;color:var(--muted);}
+
+  /* Что внутри */
+  .contents-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  .content-item{
+    background:var(--bg-cream);border:1px solid rgba(232,196,196,0.5);
+    border-radius:10px;padding:24px;transition:all 0.3s ease;
+    display:flex;gap:16px;align-items:flex-start;
+  }
+  .content-item:hover{
+    border-color:var(--terracotta);
+    background:var(--bg-soft);
+    transform:translateY(-3px);
+  }
+  .content-num{
+    font-family:'Cormorant Garamond',serif;font-weight:700;
+    font-size:32px;color:var(--terracotta);line-height:1;flex-shrink:0;
+    min-width:44px;
+  }
+  .content-item h4{
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;
+    color:var(--burgundy);margin-bottom:6px;letter-spacing:0.02em;
+  }
+  .content-item p{font-size:13.5px;color:var(--muted);line-height:1.55;}
+
+  /* Почему бесплатно */
+  .why{
+    background:
+      linear-gradient(135deg, var(--burgundy) 0%, #4a2828 100%);
+    color:var(--bg-cream);position:relative;overflow:hidden;
+  }
+  .why::before{
+    content:"";position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(115deg, rgba(232,196,196,0.04) 0 2px, transparent 2px 20px);
+    pointer-events:none;
+  }
+  .why .container{position:relative;z-index:1;}
+  .why h2{color:var(--bg-cream);}
+  .why .eyebrow{color:var(--blush);}
+  .why .section-head p{color:rgba(250,248,245,0.75);}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px;}
+  .why-item{text-align:center;}
+  .why-item .num{
+    font-family:'Cormorant Garamond',serif;font-weight:700;
+    font-size:56px;color:var(--gold);line-height:1;margin-bottom:8px;
+  }
+  .why-item h3{color:var(--bg-cream);font-size:20px;margin-bottom:10px;}
+  .why-item p{color:rgba(250,248,245,0.8);font-size:14.5px;}
+
+  /* Социальное доказательство */
+  .social{background:var(--bg-soft);}
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:30px;
+    margin-bottom:60px;text-align:center;
+  }
+  .stat .n{
+    font-family:'Cormorant Garamond',serif;font-weight:700;
+    font-size:54px;color:var(--terracotta);line-height:1;
+  }
+  .stat .l{
+    font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
+    margin-top:8px;
+  }
+  .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .testimonial{
+    background:var(--bg-cream);padding:30px;border-radius:12px;
+    position:relative;
+  }
+  .testimonial::before{
+    content:"“";position:absolute;top:-10px;left:20px;
+    font-family:'Cormorant Garamond',serif;font-size:80px;
+    color:var(--blush);line-height:1;
+  }
+  .testimonial p{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:17px;color:var(--text);line-height:1.5;margin-bottom:18px;
+    position:relative;z-index:1;
+  }
+  .testimonial-author{display:flex;align-items:center;gap:12px;}
+  .avatar{
+    width:44px;height:44px;border-radius:50%;
+    background:linear-gradient(135deg, var(--blush), var(--terracotta));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--white);font-family:'Montserrat',sans-serif;font-weight:600;font-size:16px;
+  }
+  .author-info b{
+    display:block;font-family:'Montserrat',sans-serif;font-weight:600;
+    font-size:13px;color:var(--burgundy);
+  }
+  .author-info span{font-size:12px;color:var(--muted);}
+
+  /* Форма подписки */
+  .signup{
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(232,196,196,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(168,181,160,0.2) 0%, transparent 50%),
+      var(--bg-cream);
+  }
+  .signup-card{
+    background:var(--white);border-radius:20px;padding:60px;
+    box-shadow:0 30px 80px rgba(107,58,58,0.12);
+    display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;
+    max-width:1000px;margin:0 auto;
+    border:1px solid rgba(232,196,196,0.4);
+  }
+  .signup-left h2{font-size:38px;margin-bottom:16px;}
+  .signup-left p{font-size:16px;color:var(--muted);margin-bottom:20px;}
+  .signup-benefits{list-style:none;}
+  .signup-benefits li{
+    display:flex;align-items:center;gap:12px;padding:8px 0;
+    font-size:14.5px;color:var(--text);
+  }
+  .signup-benefits svg{flex-shrink:0;color:var(--sage-deep);}
+
+  .form-group{margin-bottom:16px;}
+  .form-group label{
+    display:block;font-family:'Montserrat',sans-serif;font-weight:600;
+    font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--burgundy);margin-bottom:8px;
+  }
+  .form-group input{
+    width:100%;padding:14px 18px;border:1.5px solid var(--blush);
+    border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:15px;
+    color:var(--text);background:var(--bg-cream);
+    transition:all 0.3s ease;
+  }
+  .form-group input:focus{
+    outline:none;border-color:var(--terracotta);
+    background:var(--white);box-shadow:0 0 0 4px rgba(200,139,107,0.1);
+  }
+  .form-group input.error{border-color:#c85a5a;background:#fff5f5;}
+  .error-msg{
+    color:#c85a5a;font-size:12px;margin-top:6px;display:none;
+    font-family:'Montserrat',sans-serif;font-weight:500;
+  }
+  .error-msg.show{display:block;}
+
+  .form-submit{
+    width:100%;background:var(--burgundy);color:var(--bg-cream);
+    padding:18px;border-radius:40px;border:none;cursor:pointer;
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:13px;
+    letter-spacing:0.12em;text-transform:uppercase;
+    transition:all 0.3s ease;margin-top:8px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .form-submit:hover:not(:disabled){background:var(--terracotta);transform:translateY(-2px);}
+  .form-submit:disabled{opacity:0.7;cursor:not-allowed;}
+  .spinner{
+    width:16px;height:16px;border:2px solid rgba(250,248,245,0.3);
+    border-top-color:var(--bg-cream);border-radius:50%;
+    animation:spin 0.8s linear infinite;display:none;
+  }
+  .form-submit.loading .spinner{display:block;}
+  .form-submit.loading .btn-text{display:none;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .form-privacy{
+    font-size:12px;color:var(--muted);margin-top:14px;text-align:center;
+    line-height:1.5;
+  }
+  .form-privacy a{color:var(--terracotta);text-decoration:none;}
+
+  .success-state{
+    display:none;text-align:center;padding:20px 0;
+  }
+  .success-state.show{display:block;}
+  .success-state .check{
+    width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg, var(--sage), var(--sage-deep));
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 20px;
+  }
+  .success-state h3{font-size:28px;margin-bottom:10px;color:var(--burgundy);}
+  .success-state p{color:var(--muted);font-size:15px;}
+
+  /* FAQ */
+  .faq-list{max-width:780px;margin:0 auto;}
+  .faq-item{
+    border-bottom:1px solid rgba(232,196,196,0.6);
+    padding:22px 0;cursor:pointer;
+  }
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:21px;
+    color:var(--burgundy);
+  }
+  .faq-q .plus{
+    width:28px;height:28px;border-radius:50%;
+    border:1.5px solid var(--terracotta);color:var(--terracotta);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;
+    transition:all 0.3s ease;flex-shrink:0;
+  }
+  .faq-item.open .plus{background:var(--terracotta);color:var(--white);transform:rotate(45deg);}
+  .faq-a{
+    max-height:0;overflow:hidden;transition:max-height 0.4s ease, margin 0.4s ease;
+    color:var(--muted);font-size:15px;line-height:1.6;
+  }
+  .faq-item.open .faq-a{max-height:300px;margin-top:14px;}
+
+  /* Футер */
+  footer{
+    background:var(--burgundy);color:var(--bg-cream);
+    padding:50px 0 30px;text-align:center;
+  }
+  footer .logo{color:var(--bg-cream);margin-bottom:12px;display:inline-block;}
+  footer .logo span{color:var(--blush);}
+  footer p{font-size:13px;color:rgba(250,248,245,0.6);margin-bottom:6px;}
+  footer .foot-line{
+    width:60px;height:1px;background:var(--blush-deep);
+    margin:20px auto;opacity:0.5;
+  }
+
+  /* Анимации появления */
+  .reveal{opacity:0;transform:translateY(30px);transition:all 0.8s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* Адаптивность */
+  @media (max-width: 900px){
+    .hero-grid{grid-template-columns:1fr;gap:50px;}
+    .preview-wrap{order:-1;}
+    .preview{width:280px;height:400px;}
+    .preview h2{font-size:30px;}
+    .audience-grid,.contents-grid,.why-grid,.testimonials{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);gap:30px 20px;}
+    .signup-card{grid-template-columns:1fr;padding:40px 28px;gap:30px;}
+    section{padding:60px 0;}
+    .hero{padding:110px 0 60px;}
+    .preview-badge{width:75px;height:75px;top:-14px;right:-14px;}
+    .preview-badge .big{font-size:18px;}
+  }
+  @media (max-width: 500px){
+    .hero-meta{gap:16px;}
+    .nav-cta{padding:8px 16px;font-size:11px;}
+    .logo{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav>
+  <div class="container">
+    <div class="logo">Knitting<span>Guide</span> · 2026</div>
+    <a href="#signup" class="nav-cta">Получить гайд</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text reveal">
+        <span class="eyebrow">Бесплатный PDF-гайд · 15 страниц</span>
+        <h1>Вязание 2026.<br>Искусство <em>создавать себя</em>.</h1>
+        <p class="hero-sub">Современный гайд о вязании как способе самовыражения, медитации, создания стильного гардероба и даже монетизации хобби. Всё, что нужно знать в 2026 году — в одном красиво оформленном PDF.</p>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C88B6B" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span><b>15</b> страниц</span>
+          </div>
+          <div class="hero-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C88B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Чтение за <b>20 минут</b></span>
+          </div>
+          <div class="hero-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C88B6B" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span><b>100%</b> бесплатно</span>
+          </div>
+        </div>
+
+        <a href="#signup" class="btn-primary">
+          <span>Скачать бесплатно</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <p class="hero-note">Отправим на почту сразу после подписки. Без спама — обещаем.</p>
+      </div>
+
+      <div class="preview-wrap reveal">
+        <div class="preview">
+          <div class="preview-top">
+            <span>Knitting Guide</span>
+            <span>№01</span>
+          </div>
+          <div class="preview-center">
+            <svg viewBox="0 0 200 200" width="110" height="110" style="filter:drop-shadow(0 4px 10px rgba(107,58,58,0.2));">
+              <defs>
+                <radialGradient id="yarn2" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stop-color="#E8C4C4"/>
+                  <stop offset="100%" stop-color="#C88B6B"/>
+                </radialGradient>
+              </defs>
+              <circle cx="100" cy="110" r="50" fill="url(#yarn2)"/>
+              <path d="M60 100 Q100 80 140 105" stroke="#6B3A3A" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M65 120 Q100 105 135 125" stroke="#6B3A3A" stroke-width="1" fill="none" opacity="0.5"/>
+              <line x1="40" y1="50" x2="160" y2="160" stroke="#C9A96E" stroke-width="4" stroke-linecap="round"/>
+              <line x1="160" y1="50" x2="40" y2="160" stroke="#C9A96E" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="40" cy="50" r="5" fill="#C9A96E"/>
+              <circle cx="160" cy="50" r="5" fill="#C9A96E"/>
+            </svg>
+            <h2>ВЯЗАНИЕ 2026</h2>
+            <div class="sub">Искусство создавать себя</div>
+            <div class="line"></div>
+            <div class="preview-pills">
+              <span class="preview-pill">Тренды</span>
+              <span class="preview-pill">Техники</span>
+              <span class="preview-pill">Стиль</span>
+            </div>
+          </div>
+          <div class="preview-bottom">Современный гайд · 2026</div>
+        </div>
+        <div class="preview-badge">
+          <span class="big">FREE</span>
+          <span class="sm">PDF · 15 стр.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Для кого -->
+<section class="audience">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Для кого этот гайд</span>
+      <h2>Если вы узнали себя — он для вас</h2>
+      <p>Неважно, берёте ли вы спицы впервые или уже связали десяток свитеров. В «Вязании 2026» каждый найдёт что-то своё.</p>
+    </div>
+
+    <div class="audience-grid">
+      <div class="audience-card reveal">
+        <div class="audience-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Для начинающих</h3>
+        <p>Пошаговые техники, разбор частых ошибок, три проекта, с которых можно начать прямо сегодня. Без воды и сложных терминов.</p>
+      </div>
+      <div class="audience-card reveal">
+        <div class="audience-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3>Для опытных мастериц</h3>
+        <p>Продвинутые техники, актуальные тренды 2026 года, цветовая палитра сезона и digital-инструменты, о которых вы могли не знать.</p>
+      </div>
+      <div class="audience-card reveal">
+        <div class="audience-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Для тех, кто хочет монетизировать</h3>
+        <p>Реальные способы превратить хобби в доход: от продажи изделий до онлайн-курсов. С конкретными цифрами и формулой ценообразования.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Что внутри -->
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Что внутри</span>
+      <h2>15 страниц, 13 разделов, 0 воды</h2>
+      <p>Каждая глава — это концентрат практической информации, актуальной именно в 2026 году.</p>
+    </div>
+
+    <div class="contents-grid">
+      <div class="content-item reveal"><div class="content-num">01</div><div><h4>Тренды 2026</h4><p>Slow fashion, texture play, sustainable yarn и digital knitting — что определяет год.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">02</div><div><h4>Материалы будущего</h4><p>6 типов пряжи нового поколения и инструменты с Bluetooth-подсветкой.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">03</div><div><h4>Основы с нуля</h4><p>6 шагов от набора петель до готовой вещи + разбор 5 частых ошибок.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">04</div><div><h4>Мастерство</h4><p>Араны, жаккард, тунисское вязание, энтрелак — и где этому учиться.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">05</div><div><h4>Терапия петлями</h4><p>Почему вязание снижает тревожность на 34% — и 4 практики осознанности.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">06</div><div><h4>Капсульный гардероб</h4><p>8 базовых вещей + советы стилиста по сочетанию вязаного с готовым.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">07</div><div><h4>Уют в деталях</h4><p>12 идей аксессуаров и декора для дома — от сережек до абажуров.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">08</div><div><h4>Для детей</h4><p>8 идей по возрастам + гайд по безопасной пряже с сертификатом Oeko-Tex.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">09</div><div><h4>Эко-вязание</h4><p>6 принципов осознанного рукоделия и реальный вклад в экологию.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">10</div><div><h4>От хобби к бизнесу</h4><p>6 способов монетизации с реальными цифрами дохода и формула цены.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">11</div><div><h4>Digital-инструменты</h4><p>5 must-have приложений + 6 онлайн-сообществ, где тусуются мастера.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">12</div><div><h4>Проекты на сегодня</h4><p>3 пошаговых проекта: шарф-снуд, шапка, плед. С точным расходом и схемой.</p></div></div>
+      <div class="content-item reveal"><div class="content-num">13</div><div><h4>Полезные ресурсы</h4><p>Книги, сообщества, магазины пряжи — проверенный список на 2026 год.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Почему бесплатно -->
+<section class="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Честно о главном</span>
+      <h2 style="color:var(--bg-cream);">Почему мы раздаём гайд бесплатно</h2>
+      <p>Никаких скрытых платежей. Никаких «премиум-версий». Мы верим: качественная информация должна быть доступна всем.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="num">01</div>
+        <h3>Мы строим сообщество</h3>
+        <p>Чем больше людей вяжет осознанно — тем сильнее наше комьюнити. Гайд — это наш способ пригласить вас.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="num">02</div>
+        <h3>Подписка — это всё</h3>
+        <p>Оставив email, вы получаете не только PDF, но и еженедельную рассылку с трендами, схемами и подборками пряжи.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="num">03</div>
+        <h3>Отписаться — в один клик</h3>
+        <p>Не понравится — уйдёте без вопросов. Мы не держим людей силой. Но 94% остаются.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Социальное доказательство -->
+<section class="social">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Нам доверяют</span>
+      <h2>Уже с нами тысячи вязальщиц</h2>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><div class="n">12 400+</div><div class="l">Скачиваний</div></div>
+      <div class="stat"><div class="n">4.9 / 5</div><div class="l">Средняя оценка</div></div>
+      <div class="stat"><div class="n">94%</div><div class="l">Остаются в рассылке</div></div>
+      <div class="stat"><div class="n">20 мин</div><div class="l">На прочтение</div></div>
+    </div>
+
+    <div class="testimonials">
+      <div class="testimonial reveal">
+        <p>Наконец-то гайд без воды! Особенно понравилась глава про монетизацию — впервые увидела реальные цифры, а не «мечтайте больше».</p>
+        <div class="testimonial-author">
+          <div class="avatar">А</div>
+          <div class="author-info"><b>Анна К.</b><span>Москва · вяжет 3 года</span></div>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <p>Я думала, что уже всё знаю про вязание. Оказалось — нет. Глава про digital-инструменты открыла мне Stitch Fiddle, теперь рисую узоры сама.</p>
+        <div class="testimonial-author">
+          <div class="avatar">М</div>
+          <div class="author-info"><b>Мария Л.</b><span>СПб · вяжет 12 лет</span></div>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <p>Начала вязать месяц назад по этому гайду. Уже связала снуд и шапку! Пошаговые инструкции — просто спасение для новичка.</p>
+        <div class="testimonial-author">
+          <div class="avatar">Е</div>
+          <div class="author-info"><b>Екатерина В.</b><span>Казань · новичок</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Форма подписки -->
+<section class="signup" id="signup">
+  <div class="container">
+    <div class="signup-card reveal">
+      <div class="signup-left">
+        <span class="eyebrow">Получить гайд</span>
+        <h2>Заберите свой PDF за 30 секунд</h2>
+        <p>Оставьте email — и мы сразу пришлём гайд «Вязание 2026» + бонусный чек-лист «10 ошибок, которые убивают ваше полотно».</p>
+        <ul class="signup-benefits">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            PDF-гайд на 15 страниц в высоком качестве
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Бонусный чек-лист «10 ошибок новичка»
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Еженедельная рассылка с трендами и схемами
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Отписка в один клик — без вопросов
+          </li>
+        </ul>
+      </div>
+
+      <div class="signup-right">
+        <form id="signupForm" novalidate>
+          <div class="form-group">
+            <label for="name">Ваше имя</label>
+            <input type="text" id="name" name="name" placeholder="Например, Анна" autocomplete="given-name">
+            <div class="error-msg" id="nameError">Пожалуйста, представьтесь</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <div class="error-msg" id="emailError">Введите корректный email</div>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">
+            <span class="btn-text">Получить гайд бесплатно</span>
+            <div class="spinner"></div>
+          </button>
+          <p class="form-privacy">Нажимая кнопку, вы соглашаетесь с <a href="#">политикой конфиденциальности</a>. Мы не передаём данные третьим лицам.</p>
+        </form>
+
+        <div class="success-state" id="successState">
+          <div class="check">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Готово! Проверьте почту</h3>
+          <p>Гайд уже летит к вам. Если письма нет в течение 5 минут — загляните в «Спам».</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Частые вопросы</span>
+      <h2>Отвечаем на всё сразу</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Это действительно бесплатно? В чём подвох?<span class="plus">+</span></div>
+        <div class="faq-a">Никакого подвоха. Гайд — наш способ сказать «спасибо» сообществу и привлечь новых читателей в рассылку. Вы получаете PDF, мы — ваш email и шанс показать, что наши письма тоже стоят вашего внимания. Если нет — отписываетесь в один клик.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Что ещё я буду получать по подписке?<span class="plus">+</span></div>
+        <div class="faq-a">Раз в неделю — письмо с подборкой актуальных схем, обзором новой пряжи, трендами и полезными ссылками. Никакого спама, никаких «купи срочно». Только то, что действительно интересно вязальщицам в 2026 году.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">А если я уже вяжу 10 лет — мне это нужно?<span class="plus">+</span></div>
+        <div class="faq-a">Да. Главы про тренды 2026, digital-инструменты, монетизацию и эко-вязание написаны именно для опытных. Многие мастерицы с 15-летним стажем говорят, что нашли в гайде что-то новое.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">В каком формате придёт гайд?<span class="plus">+</span></div>
+        <div class="faq-a">PDF высокого качества, оптимизированный для чтения с экрана и для печати на A4. Откроется на любом устройстве: компьютере, планшете, телефоне. Можно распечатать и читать как журнал.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Как быстро я получу гайд?<span class="plus">+</span></div>
+        <div class="faq-a">Сразу после подтверждения email. Обычно письмо приходит в течение 1–2 минут. Если его нет — загляните в папку «Спам» или «Промоакции» в Gmail.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Можно ли переслать гайд подруге?<span class="plus">+</span></div>
+        <div class="faq-a">Конечно! Мы только за. Пусть подруга тоже подпишется по ссылке — и вы обе получите гайд + бонусный чек-лист.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Футер -->
+<footer>
+  <div class="container">
+    <div class="logo">Knitting<span>Guide</span> · 2026</div>
+    <p>Современный гайд о вязании как искусстве создавать себя.</p>
+    <div class="foot-line"></div>
+    <p>© 2026 Knitting Guide · Создано с любовью к рукоделию</p>
+  </div>
+</footer>
+
+<script>
+  // Анимации появления
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ аккордеон
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+
+  // Форма подписки
+  const form = document.getElementById('signupForm');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+  const submitBtn = document.getElementById('submitBtn');
+  const successState = document.getElementById('successState');
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function clearErrors() {
+    nameInput.classList.remove('error');
+    emailInput.classList.remove('error');
+    nameError.classList.remove('show');
+    emailError.classList.remove('show');
+  }
+
+  [nameInput, emailInput].forEach(input => {
+    input.addEventListener('input', () => {
+      input.classList.remove('error');
+      const errorEl = input === nameInput ? nameError : emailError;
+      errorEl.classList.remove('show');
+    });
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors();
+    let valid = true;
+
+    if (!nameInput.value.trim()) {
+      nameInput.classList.add('error');
+      nameError.classList.add('show');
+      valid = false;
+    }
+    if (!validateEmail(emailInput.value.trim())) {
+      emailInput.classList.add('error');
+      emailError.classList.add('show');
+      valid = false;
+    }
+    if (!valid) return;
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    // Имитация отправки (здесь должен быть реальный запрос на бэкенд / Mailchimp / SendPulse)
+    setTimeout(() => {
+      form.style.display = 'none';
+      successState.classList.add('show');
+      // Прокрутка к успеху на мобильных
+      successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1400);
+  });
+
+  // Плавный скролл для якорей
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
