@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор массы тела (ИМТ) — Warm Dark</title>
+<style>
+    :root {
+        --bg: #141210;
+        --bg-elev-1: #1c1917;
+        --bg-elev-2: #242019;
+        --border: #3a322a;
+        --border-soft: #2a251f;
+
+        --text: #f5ede3;
+        --text-muted: #a89b8a;
+        --text-dim: #6f6659;
+
+        --copper: #c98a4b;
+        --copper-hi: #e0a163;
+        --copper-dim: #8a5e33;
+        --amber: #e0b26a;
+        --glow: rgba(201, 138, 75, 0.25);
+
+        --c-deficit: #7fa8c9;
+        --c-under: #8fb8a8;
+        --c-norm: #8bbf7a;
+        --c-over: #e0b26a;
+        --c-ob1: #d98b4a;
+        --c-ob2: #c96a4a;
+        --c-ob3: #a8453a;
+
+        --radius-sm: 8px;
+        --radius: 14px;
+        --radius-lg: 20px;
+
+        --shadow-card: 0 1px 0 rgba(255,255,255,0.03) inset, 0 10px 30px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { background: var(--bg); }
+
+    body {
+        font-family: "Inter", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        color: var(--text);
+        line-height: 1.6;
+        padding: 24px 20px 48px;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        font-feature-settings: "tnum" 1;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    /* Медная аура на фоне */
+    body::before {
+        content: "";
+        position: fixed;
+        top: -220px;
+        right: -180px;
+        width: 620px;
+        height: 620px;
+        background: radial-gradient(closest-side, rgba(201,138,75,0.14), rgba(201,138,75,0.04) 55%, transparent 75%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .container {
+        max-width: 760px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ---------- HEADER ---------- */
+    header.page-header {
+        position: relative;
+        padding: 28px 24px 26px;
+        margin-bottom: 22px;
+        border-radius: var(--radius-lg);
+        background:
+            linear-gradient(180deg, rgba(201,138,75,0.06), rgba(201,138,75,0) 60%),
+            var(--bg-elev-1);
+        border: 1px solid var(--border-soft);
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+    }
+
+    /* декоративная сетка */
+    header.page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(201,138,75,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(201,138,75,0.05) 1px, transparent 1px);
+        background-size: 32px 32px;
+        mask-image: linear-gradient(180deg, #000, transparent 85%);
+        -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%);
+        pointer-events: none;
+    }
+
+    .header-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+    }
+
+    .header-text { flex: 1; min-width: 0; }
+
+    h1 {
+        font-size: 1.7rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin-bottom: 6px;
+        color: var(--text);
+    }
+
+    .subtitle {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .header-illus {
+        flex: 0 0 auto;
+        width: 96px;
+        height: 96px;
+        display: block;
+    }
+
+    /* ---------- CARDS ---------- */
+    .card {
+        background: var(--bg-elev-1);
+        border: 1px solid var(--border-soft);
+        border-radius: var(--radius);
+        padding: 26px;
+        box-shadow: var(--shadow-card);
+        margin-bottom: 20px;
+    }
+
+    .card h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .card h2 .h2-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ---------- INPUTS ---------- */
+    .inputs-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+
+    .input-group label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-bottom: 7px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+    }
+
+    .input-group label svg { flex: 0 0 auto; }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: inherit;
+        color: var(--text);
+        background: var(--bg-elev-2);
+        transition: border-color .18s, box-shadow .18s, background .18s;
+    }
+
+    .input-group input::placeholder { color: var(--text-dim); }
+
+    .input-group input:hover { border-color: var(--copper-dim); }
+
+    .input-group input:focus {
+        outline: none;
+        border-color: var(--copper);
+        box-shadow: 0 0 0 3px var(--glow);
+        background: #26211a;
+    }
+
+    .input-group .unit {
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        margin-top: 4px;
+        letter-spacing: 0.02em;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn-row { display: flex; gap: 12px; }
+
+    button {
+        flex: 1;
+        padding: 13px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: transform .15s, box-shadow .2s, background .2s, color .2s, border-color .2s;
+    }
+
+    .btn-primary {
+        color: #1a1208;
+        background: linear-gradient(180deg, var(--copper-hi), var(--copper));
+        box-shadow: 0 0 0 1px rgba(201,138,75,0.35), 0 6px 20px rgba(201,138,75,0.18);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 0 1px rgba(224,161,99,0.55), 0 10px 26px rgba(201,138,75,0.28);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+        border-color: var(--copper-dim);
+        color: var(--text);
+    }
+
+    button:focus-visible {
+        outline: 2px solid var(--amber);
+        outline-offset: 2px;
+    }
+
+    /* ---------- RESULTS ---------- */
+    .results { display: none; }
+    .results.active { display: block; }
+
+    .result-header {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    .bmi-value {
+        font-size: 2.6rem;
+        font-weight: 700;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.02em;
+    }
+
+    .bmi-category {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-bottom: 26px;
+    }
+
+    .metric {
+        background: var(--bg-elev-2);
+        padding: 14px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--border-soft);
+    }
+
+    .metric-label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 5px;
+        letter-spacing: 0.02em;
+    }
+
+    .metric-value {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* ---------- SCALE ---------- */
+    .scale-section { margin-top: 8px; }
+
+    .scale-section h3 {
+        font-size: 0.92rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+        color: var(--text);
+        letter-spacing: 0.01em;
+    }
+
+    .scale-svg { width: 100%; height: auto; display: block; }
+
+    #marker {
+        transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    /* ---------- RECOMMENDATION ---------- */
+    .recommendation {
+        background: linear-gradient(135deg, rgba(201,138,75,0.10), rgba(224,178,106,0.04));
+        border-left: 3px solid var(--copper);
+        padding: 16px 18px;
+        border-radius: 10px;
+        margin-top: 24px;
+    }
+
+    .recommendation h4 {
+        font-size: 0.92rem;
+        margin-bottom: 8px;
+        color: var(--amber);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    .recommendation p {
+        font-size: 0.9rem;
+        color: var(--text);
+        opacity: 0.92;
+    }
+
+    /* ---------- TABLE ---------- */
+    .ref-intro {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+    }
+
+    .ref-intro strong { color: var(--text); }
+
+    .table-wrap { overflow-x: auto; border-radius: 10px; }
+
+    .reference-table {
+        width: 100%;
+        min-width: 640px;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+    }
+
+    .reference-table th {
+        text-align: left;
+        padding: 11px 12px;
+        background: var(--bg-elev-2);
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.03em;
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    .reference-table td {
+        padding: 10px 12px;
+        border-top: 1px solid var(--border-soft);
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .reference-table tbody tr:hover { background: rgba(201,138,75,0.04); }
+
+    .dot {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        margin-right: 8px;
+        vertical-align: middle;
+        box-shadow: 0 0 8px currentColor;
+    }
+
+    /* ---------- DISCLAIMER ---------- */
+    .disclaimer {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        text-align: center;
+        padding: 20px 16px 0;
+        font-style: italic;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 600px) {
+        body { padding: 14px 12px 32px; }
+        header.page-header { padding: 22px 18px; }
+        h1 { font-size: 1.4rem; }
+        .subtitle { font-size: 0.88rem; }
+        .header-illus { display: none; }
+        .card { padding: 20px; }
+        .inputs-grid { grid-template-columns: 1fr; gap: 12px; }
+        .bmi-value { font-size: 2.1rem; }
+        .btn-row { flex-direction: column; }
+        button { flex: none; }
+        .card h2 { font-size: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; animation: none !important; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="page-header">
+        <div class="header-row">
+            <div class="header-text">
+                <h1>Калькулятор индекса массы тела</h1>
+                <p class="subtitle">Рассчитайте свой ИМТ с учётом возраста и получите персональные рекомендации</p>
+            </div>
+            <svg class="header-illus" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+                <circle cx="48" cy="48" r="44" stroke="#8a5e33" stroke-width="1.25" opacity="0.7"/>
+                <circle cx="48" cy="48" r="34" stroke="#8a5e33" stroke-width="1" opacity="0.45"/>
+                <circle cx="48" cy="34" r="9" stroke="#c98a4b" stroke-width="1.4"/>
+                <path d="M30 74 C32 56, 40 50, 48 50 C56 50, 64 56, 66 74"
+                      stroke="#c98a4b" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M48 22 L48 12" stroke="#e0b26a" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="48" cy="9" r="2" fill="#e0b26a"/>
+                <path d="M22 60 L30 68" stroke="#8a5e33" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                <path d="M74 60 L66 68" stroke="#8a5e33" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+        </div>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Ваши параметры <span class="h2-line"></span></h2>
+            <div class="inputs-grid">
+                <div class="input-group">
+                    <label for="age">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a89b8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="5" width="18" height="16" rx="2"/>
+                            <path d="M3 10h18M8 3v4M16 3v4"/>
+                        </svg>
+                        Возраст
+                    </label>
+                    <input type="number" id="age" value="30" min="14" max="120">
+                    <div class="unit">лет</div>
+                </div>
+                <div class="input-group">
+                    <label for="height">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a89b8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 21h18M6 21V8M10 21V5M14 21V8M18 21V5"/>
+                        </svg>
+                        Рост
+                    </label>
+                    <input type="number" id="height" value="175" min="120" max="230">
+                    <div class="unit">см</div>
+                </div>
+                <div class="input-group">
+                    <label for="weight">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a89b8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 3v3"/>
+                            <path d="M5 21h14l-2-11a4 4 0 0 0-4-3h-2a4 4 0 0 0-4 3z"/>
+                            <circle cx="12" cy="9" r="1.4"/>
+                        </svg>
+                        Вес
+                    </label>
+                    <input type="number" id="weight" value="70" min="30" max="300">
+                    <div class="unit">кг</div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button class="btn-primary" onclick="calculate()">Рассчитать ИМТ</button>
+                <button class="btn-secondary" onclick="resetForm()">Сбросить</button>
+            </div>
+        </section>
+
+        <section class="results" id="results" aria-live="polite">
+            <div class="card">
+                <div class="result-header">
+                    <span class="bmi-value" id="bmiValue">—</span>
+                    <span class="bmi-category" id="bmiCategory">—</span>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <div class="metric-label">Норма веса</div>
+                        <div class="metric-value" id="normWeight">—</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label" id="diffLabel">До нормы</div>
+                        <div class="metric-value" id="diffWeight">—</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Возрастная группа</div>
+                        <div class="metric-value" id="ageGroup">—</div>
+                    </div>
+                </div>
+
+                <div class="scale-section">
+                    <h3>Ваше положение на шкале ИМТ</h3>
+                    <svg class="scale-svg" viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg" id="scaleSvg" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="scaleGradient" x1="0" x2="1">
+                                <stop offset="0%"   stop-color="#7fa8c9"/>
+                                <stop offset="20%"  stop-color="#8fb8a8"/>
+                                <stop offset="35%"  stop-color="#8bbf7a"/>
+                                <stop offset="55%"  stop-color="#8bbf7a"/>
+                                <stop offset="70%"  stop-color="#e0b26a"/>
+                                <stop offset="85%"  stop-color="#d98b4a"/>
+                                <stop offset="100%" stop-color="#a8453a"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="30" y="45" width="540" height="18" rx="9" fill="url(#scaleGradient)"/>
+                        <g font-family="Inter, -apple-system, sans-serif" font-size="11" fill="#a89b8a" text-anchor="middle">
+                            <text x="30" y="38">16</text>
+                            <text x="30" y="80">Дефицит</text>
+                            <text x="127" y="38">18.5</text>
+                            <text x="261" y="38">25</text>
+                            <text x="261" y="80">Норма</text>
+                            <text x="371" y="38">30</text>
+                            <text x="371" y="80">Избыток</text>
+                            <text x="453" y="38">35</text>
+                            <text x="453" y="80">Ожирение I</text>
+                            <text x="535" y="38">40+</text>
+                            <text x="535" y="80">Ожирение II–III</text>
+                        </g>
+                        <g id="marker" transform="translate(0, 0)">
+                            <polygon points="0,45 -7,28 7,28" fill="#f5ede3"/>
+                            <text x="0" y="22" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-weight="700" font-size="13" fill="#f5ede3" id="markerText">—</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="recommendation" id="recommendation">
+                    <h4>Рекомендации</h4>
+                    <p id="recText">Заполните данные, чтобы получить персональные рекомендации.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Справка: нормы ИМТ по возрасту <span class="h2-line"></span></h2>
+                <p class="ref-intro">
+                    Формула: <strong>ИМТ = вес (кг) ÷ рост² (м)</strong>. Нормы немного смещаются с возрастом.
+                </p>
+                <div class="table-wrap">
+                    <table class="reference-table" id="refTable">
+                        <thead>
+                            <tr>
+                                <th>Категория</th>
+                                <th>19–24</th>
+                                <th>25–34</th>
+                                <th>35–44</th>
+                                <th>45–54</th>
+                                <th>55–64</th>
+                                <th>65+</th>
+                            </tr>
+                        </thead>
+                        <tbody id="refTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p class="disclaimer">
+                Результат — это ориентир, а не медицинский диагноз. Для точной оценки здоровья обратитесь к врачу.
+            </p>
+        </section>
+    </main>
+</div>
+
+<script>
+const BMI_TABLE = [
+    {
+        name: "Выраженный дефицит массы",
+        color: "#7fa8c9",
+        ranges: [[0, 17], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22]],
+        general: "< 16"
+    },
+    {
+        name: "Недостаточная масса",
+        color: "#8fb8a8",
+        ranges: [[17, 19], [18, 20], [19, 21], [20, 22], [21, 23], [22, 24]],
+        general: "16 – 18.5"
+    },
+    {
+        name: "Норма",
+        color: "#8bbf7a",
+        ranges: [[19, 24], [20, 25], [21, 26], [22, 27], [23, 28], [24, 29]],
+        general: "18.5 – 25"
+    },
+    {
+        name: "Избыточная масса",
+        color: "#e0b26a",
+        ranges: [[24, 29], [25, 30], [26, 31], [27, 32], [28, 33], [29, 34]],
+        general: "25 – 30"
+    },
+    {
+        name: "Ожирение I степени",
+        color: "#d98b4a",
+        ranges: [[29, 34], [30, 35], [31, 36], [32, 37], [33, 38], [34, 39]],
+        general: "30 – 35"
+    },
+    {
+        name: "Ожирение II степени",
+        color: "#c96a4a",
+        ranges: [[34, 39], [35, 40], [36, 41], [37, 42], [38, 43], [39, 44]],
+        general: "35 – 40"
+    },
+    {
+        name: "Ожирение III степени",
+        color: "#a8453a",
+        ranges: [[39, 999], [40, 999], [41, 999], [42, 999], [43, 999], [44, 999]],
+        general: "> 40"
+    }
+];
+
+const AGE_GROUPS = ["19–24", "25–34", "35–44", "45–54", "55–64", "65+"];
+
+function getAgeGroupIndex(age) {
+    if (age <= 24) return 0;
+    if (age <= 34) return 1;
+    if (age <= 44) return 2;
+    if (age <= 54) return 3;
+    if (age <= 64) return 4;
+    return 5;
+}
+
+function getCategory(bmi, ageGroupIdx) {
+    for (let i = 0; i < BMI_TABLE.length; i++) {
+        const [min, max] = BMI_TABLE[i].ranges[ageGroupIdx];
+        if (bmi >= min && bmi < max) {
+            return { index: i, ...BMI_TABLE[i] };
+        }
+    }
+    return { index: BMI_TABLE.length - 1, ...BMI_TABLE[BMI_TABLE.length - 1] };
+}
+
+function calculate() {
+    const age = parseFloat(document.getElementById('age').value);
+    const heightCm = parseFloat(document.getElementById('height').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+
+    if (!age || !heightCm || !weight || age < 14 || heightCm < 120 || weight < 30) {
+        alert('Пожалуйста, заполните все поля корректными значениями');
+        return;
+    }
+
+    const heightM = heightCm / 100;
+    const bmi = weight / (heightM * heightM);
+    const ageIdx = getAgeGroupIndex(age);
+    const category = getCategory(bmi, ageIdx);
+
+    const [normMin, normMax] = BMI_TABLE[2].ranges[ageIdx];
+    const minNormWeight = normMin * heightM * heightM;
+    const maxNormWeight = normMax * heightM * heightM;
+
+    document.getElementById('bmiValue').textContent = bmi.toFixed(1);
+    document.getElementById('bmiValue').style.color = category.color;
+    document.getElementById('bmiCategory').textContent = category.name;
+    document.getElementById('bmiCategory').style.color = category.color;
+    document.getElementById('normWeight').textContent =
+        Math.round(minNormWeight) + ' – ' + Math.round(maxNormWeight) + ' кг';
+    document.getElementById('ageGroup').textContent = AGE_GROUPS[ageIdx] + ' лет';
+
+    const diffLabel = document.getElementById('diffLabel');
+    const diffWeight = document.getElementById('diffWeight');
+    if (weight < minNormWeight) {
+        diffLabel.textContent = 'Добор до нормы';
+        diffWeight.textContent = (minNormWeight - weight).toFixed(1) + ' кг';
+        diffWeight.style.color = '#7fa8c9';
+    } else if (weight > maxNormWeight) {
+        diffLabel.textContent = 'Сбросить до нормы';
+        diffWeight.textContent = (weight - maxNormWeight).toFixed(1) + ' кг';
+        diffWeight.style.color = '#c96a4a';
+    } else {
+        diffLabel.textContent = 'Статус';
+        diffWeight.textContent = 'В норме ✓';
+        diffWeight.style.color = '#8bbf7a';
+    }
+
+    updateMarker(bmi);
+    document.getElementById('recText').textContent = getRecommendation(category.index, age);
+    buildReferenceTable(ageIdx);
+
+    document.getElementById('results').classList.add('active');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateMarker(bmi) {
+    const MIN = 16, MAX = 40;
+    const clampedBmi = Math.max(MIN, Math.min(MAX, bmi));
+    const percent = (clampedBmi - MIN) / (MAX - MIN);
+    const x = 30 + percent * 540;
+
+    const marker = document.getElementById('marker');
+    marker.setAttribute('transform', `translate(${x}, 0)`);
+    document.getElementById('markerText').textContent = bmi.toFixed(1);
+}
+
+function getRecommendation(catIndex, age) {
+    const ageNote = age >= 55 ?
+        " В вашем возрасте небольшая прибавка массы тела может быть физиологичной." :
+        age < 25 ?
+        " В молодом организме обмен веществ работает активно — изменения заметны быстро." :
+        "";
+
+    const recs = [
+        "У вас выраженный дефицит массы тела. Это может быть опасно для здоровья: страдает иммунитет, нарушается гормональный фон, снижается плотность костей." + ageNote + " Рекомендуем проконсультироваться с врачом и диетологом для выяснения причин и составления плана питания с повышенной калорийностью.",
+        "Масса тела ниже нормы. Возможно, вы недополучаете калории или у вас высокий уровень активности." + ageNote + " Попробуйте увеличить калорийность рациона на 300–500 ккал в день за счёт полезных жиров, белков и сложных углеводов. Силовые тренировки помогут набрать мышечную массу.",
+        "Ваш вес в норме — отличное соотношение роста и массы тела!" + ageNote + " Поддерживайте текущий образ жизни: сбалансированное питание, регулярная физическая активность (минимум 150 минут умеренных нагрузок в неделю) и достаточный сон (7–8 часов).",
+        "Масса тела выше нормы. Это повышает риск развития сердечно-сосудистых заболеваний и диабета 2 типа." + ageNote + " Постепенно снижайте суточную калорийность на 300–500 ккал, добавьте ежедневную активность (прогулки по 30–40 минут). Безопасный темп снижения — 0.5–1 кг в неделю.",
+        "Ожирение I степени. Рекомендуется обратиться к эндокринологу для исключения гормональных нарушений." + ageNote + " Составьте план снижения веса вместе с врачом: умеренный дефицит калорий, регулярные кардионагрузки и силовые тренировки 2–3 раза в неделю.",
+        "Ожирение II степени — серьёзный фактор риска для сердечно-сосудистой системы и суставов." + ageNote + " Настоятельно рекомендуем консультацию врача. Снижение веса должно быть постепенным и контролируемым, с учётом сопутствующих заболеваний.",
+        "Ожирение III степени (морбидное). Требуется обязательная медицинская помощь." + ageNote + " Обратитесь к эндокринологу, диетологу и кардиологу. В ряде случаев может быть рассмотрено медикаментозное лечение или бариатрическая хирургия."
+    ];
+    return recs[catIndex];
+}
+
+function buildReferenceTable(currentAgeIdx) {
+    const tbody = document.getElementById('refTableBody');
+    tbody.innerHTML = '';
+
+    BMI_TABLE.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><span class="dot" style="background: ${row.color}; color: ${row.color}"></span>${row.name}</td>
+            ${row.ranges.map(([min, max]) => {
+                const maxText = max === 999 ? '' : ' – ' + max;
+                return `<td>${min}${maxText}</td>`;
+            }).join('')}
+        `;
+        tbody.appendChild(tr);
+    });
+
+    const rows = tbody.querySelectorAll('tr');
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells[currentAgeIdx + 1]) {
+            cells[currentAgeIdx + 1].style.background = 'rgba(201,138,75,0.08)';
+            cells[currentAgeIdx + 1].style.fontWeight = '600';
+            cells[currentAgeIdx + 1].style.color = '#f5ede3';
+        }
+    });
+}
+
+function resetForm() {
+    document.getElementById('age').value = 30;
+    document.getElementById('height').value = 175;
+    document.getElementById('weight').value = 70;
+    document.getElementById('results').classList.remove('active');
+}
+
+document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && document.activeElement.tagName === 'INPUT') {
+        calculate();
+    }
+});
+</script>
+</body>
+</html>
