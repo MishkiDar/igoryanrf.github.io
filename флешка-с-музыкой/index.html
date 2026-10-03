@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Готовая флешка с музыкой для автомагнитолы — купить с доставкой</title>
+<meta name="description" content="Продаю готовые USB-флешки 16 ГБ с музыкой для машины: хиты 90-х, шансон, рок, зарубежная классика. Новая флешка. Оплата при получении через Ozon.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #0f1419;
+    color: #ffffff;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* HERO */
+  .hero {
+    padding: 60px 0 80px;
+    text-align: center;
+    background: linear-gradient(180deg, #0f1419 0%, #1a2028 100%);
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ff8c00;
+    line-height: 1.2;
+  }
+  .hero .subtitle {
+    font-size: 1.25rem;
+    color: #b8c1cc;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .hero-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+  }
+  .hero-feature .icon {
+    width: 40px; height: 40px;
+    background: #ff8c00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: #ff8c00;
+    color: #0f1419;
+    padding: 18px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .btn-primary:hover { background: #ffa033; transform: translateY(-2px); }
+
+  /* CATALOG */
+  .catalog { padding: 60px 0; }
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #ff8c00;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: #b8c1cc;
+    margin-bottom: 40px;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  .card {
+    background: #1a2028;
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid #2a323d;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { transform: translateY(-4px); border-color: #ff8c00; }
+  .card-icon { font-size: 2.5rem; margin-bottom: 15px; }
+  .card-title { font-size: 1.3rem; margin-bottom: 10px; color: #ffffff; }
+  .card-desc {
+    color: #b8c1cc;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    flex-grow: 1;
+  }
+  .card-specs {
+    font-size: 0.85rem;
+    color: #8892a0;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #2a323d;
+  }
+  .card-price {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ff8c00;
+    margin-bottom: 15px;
+  }
+  .btn-card {
+    background: #ff8c00;
+    color: #0f1419;
+    padding: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+  .btn-card:hover { background: #ffa033; }
+
+  /* STEPS */
+  .steps { padding: 60px 0; background: #1a2028; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .step { text-align: center; padding: 20px; }
+  .step-number {
+    width: 60px; height: 60px;
+    background: #ff8c00;
+    color: #0f1419;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+  }
+  .step-title { font-size: 1.2rem; margin-bottom: 10px; }
+  .step-desc { color: #b8c1cc; font-size: 0.95rem; }
+
+  /* TRUST */
+  .trust { padding: 60px 0; }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .trust-item {
+    text-align: center;
+    padding: 25px;
+    background: #1a2028;
+    border-radius: 12px;
+  }
+  .trust-icon { font-size: 3rem; margin-bottom: 15px; }
+  .trust-title { font-size: 1.1rem; margin-bottom: 8px; }
+  .trust-desc { color: #b8c1cc; font-size: 0.9rem; }
+
+  /* COMPATIBILITY */
+  .compatibility { padding: 60px 0; background: #1a2028; }
+  .compat-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  .compat-tag {
+    background: #0f1419;
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: 1px solid #2a323d;
+    font-size: 0.95rem;
+  }
+
+  /* FAQ */
+  .faq { padding: 60px 0; }
+  .faq-list { max-width: 800px; margin: 40px auto 0; }
+  .faq-item {
+    background: #1a2028;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .faq-question:hover { background: #232b36; }
+  .faq-question::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: #ff8c00;
+    transition: transform 0.3s;
+  }
+  .faq-item.active .faq-question::after { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    color: #b8c1cc;
+  }
+  .faq-answer-inner { padding: 0 25px 20px; }
+  .faq-item.active .faq-answer { max-height: 300px; }
+
+  /* FORM */
+  .form-section { padding: 60px 0; background: #1a2028; }
+  .form-wrap {
+    max-width: 500px;
+    margin: 40px auto 0;
+    background: #0f1419;
+    padding: 35px;
+    border-radius: 12px;
+    border: 1px solid #2a323d;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #b8c1cc;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 14px;
+    background: #1a2028;
+    border: 1px solid #2a323d;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  .form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #ff8c00;
+  }
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: #ff8c00;
+    color: #0f1419;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .form-submit:hover { background: #ffa033; }
+  .form-divider {
+    text-align: center;
+    margin: 20px 0 15px;
+    color: #8892a0;
+    font-size: 0.9rem;
+  }
+
+  /* MESSENGER BUTTONS */
+  .messenger-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .btn-messenger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 10px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-messenger:hover { opacity: 0.9; transform: translateY(-2px); }
+  .btn-messenger svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .btn-max { background: #0077FF; }
+  .btn-telegram { background: #229ED9; }
+  .btn-vk { background: #0077FF; }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: #8892a0;
+    font-size: 0.9rem;
+    border-top: 1px solid #2a323d;
+  }
+  footer a { color: #ff8c00; text-decoration: none; }
+  .footer-messengers {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  .footer-messengers a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #1a2028;
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .footer-messengers a:hover { background: #232b36; }
+
+  /* MODAL */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal.active { display: flex; }
+  .modal-content {
+    background: #1a2028;
+    padding: 35px;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+  }
+  .modal-content h3 { color: #ff8c00; margin-bottom: 15px; }
+  .modal-content p { color: #b8c1cc; margin-bottom: 20px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .cards-grid, .steps-grid, .trust-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .hero h1 { font-size: 2rem; }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 40px 0 60px; }
+    .hero h1 { font-size: 1.6rem; }
+    .hero .subtitle { font-size: 1.05rem; }
+    .hero-features { flex-direction: column; gap: 15px; }
+    .section-title { font-size: 1.5rem; }
+    .cards-grid, .steps-grid, .trust-grid {
+      grid-template-columns: 1fr;
+    }
+    .form-wrap { padding: 25px 20px; }
+    .messenger-grid { grid-template-columns: 1fr; }
+    .catalog, .steps, .trust, .compatibility, .faq, .form-section {
+      padding: 40px 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Готовая флешка с музыкой для вашей автомагнитолы</h1>
+    <p class="subtitle">Вставил — и слушай. Не нужно ничего скачивать, настраивать и разбираться в компьютерах. Новая флешка с записанными хитами.</p>
+    <div class="hero-features">
+      <div class="hero-feature">
+        <div class="icon">💾</div>
+        <span>Новая флешка 16 ГБ</span>
+      </div>
+      <div class="hero-feature">
+        <div class="icon">🎵</div>
+        <span>500+ треков в качестве 320 kbps</span>
+      </div>
+      <div class="hero-feature">
+        <div class="icon">🛡️</div>
+        <span>Оплата при получении через Ozon</span>
+      </div>
+    </div>
+    <a href="#catalog" class="btn-primary">Выбрать флешку</a>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section class="catalog" id="catalog">
+  <div class="container">
+    <h2 class="section-title">Выберите свою флешку</h2>
+    <p class="section-subtitle">7 готовых подборок — от ностальгических хитов до установочной Windows</p>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-icon">🎤</div>
+        <h3 class="card-title">Хиты 90-х</h3>
+        <p class="card-desc">Русская поп-классика: Руки Вверх, Иванушки, Кар-Мэн, Комбинация и другие.</p>
+        <div class="card-specs">500+ треков · USB 16 ГБ · Папки по годам</div>
+        <div class="card-price">990 ₽</div>
+        <button class="btn-card" onclick="openForm('Хиты 90-х')">Заказать</button>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎸</div>
+        <h3 class="card-title">Русский шансон</h3>
+        <p class="card-desc">Душевные песни для дороги: Михаил Круг, Александр Новиков, Владимир Асмолов.</p>
+        <div class="card-specs">450+ треков · USB 16 ГБ · Отсортировано по исполнителям</div>
+        <div class="card-price">990 ₽</div>
+        <button class="btn-card" onclick="openForm('Русский шансон')">Заказать</button>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🤘</div>
+        <h3 class="card-title">Рок-классика</h3>
+        <p class="card-desc">Лучшее от Кино, Алисы, Арии, ДДТ, Наутилуса, Машины Времени.</p>
+        <div class="card-specs">400+ треков · USB 16 ГБ · Папки по группам</div>
+        <div class="card-price">990 ₽</div>
+        <button class="btn-card" onclick="openForm('Рок-классика')">Заказать</button>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔥</div>
+        <h3 class="card-title">Для души</h3>
+        <p class="card-desc">Дворовые и бардовские песни: Трофим, Стас Михайлов, Александр Буйнов.</p>
+        <div class="card-specs">500+ треков · USB 16 ГБ · Пронумерованы</div>
+        <div class="card-price">990 ₽</div>
+        <button class="btn-card" onclick="openForm('Для души')">Заказать</button>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">💃</div>
+        <h3 class="card-title">Танцевальные хиты</h3>
+        <p class="card-desc">Клубная классика 2000-х: Руки Вверх, Дискотка Авария, Винтаж, Звери.</p>
+        <div class="card-specs">400+ треков · USB 16 ГБ · Высокое качество</div>
+        <div class="card-price">990 ₽</div>
+        <button class="btn-card" onclick="openForm('Танцевальные хиты')">Заказать</button>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3 class="card-title">Зарубежные хиты 80–90-х</h3>
+        <p class="card-desc">Modern Talking, C.C.Catch, Bad Boys Blue, Sandra и другие.</p>
+        <div class="card-specs">450+ треков · USB 16 ГБ · Папки по исполнителям</div>
+        <div class="card-price">990 ₽</div>
+        <button class="btn-card" onclick="openForm('Зарубежные хиты 80-90-х')">Заказать</button>
+      </div>
+
+      <div class="card" style="background: linear-gradient(135deg, #1a2028 0%, #2a1810 100%); border-color: #ff8c00;">
+        <div class="card-icon">💻</div>
+        <h3 class="card-title">Windows 10/11 Pro</h3>
+        <p class="card-desc">Загрузочная флешка с чистой Windows 10 или 11 Pro + пакет драйверов и базовых программ.</p>
+        <div class="card-specs">16 ГБ · Загрузочная · Инструкция в подарок</div>
+        <div class="card-price">1290 ₽</div>
+        <button class="btn-card" onclick="openForm('Windows 10/11 Pro')">Заказать</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps">
+  <div class="container">
+    <h2 class="section-title">Как это работает</h2>
+    <p class="section-subtitle">Три простых шага — и музыка у вас в машине</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Оставляете заявку</h3>
+        <p class="step-desc">Выбираете флешку, указываете город и телефон. Никакой предоплаты.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Отправляем через Ozon</h3>
+        <p class="step-desc">Мы оформляем доставку в ваш город. Вы получаете трек-номер для отслеживания.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Забираете и оплачиваете</h3>
+        <p class="step-desc">Приходите в пункт выдачи Ozon, проверяете флешку и оплачиваете на месте.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="container">
+    <h2 class="section-title">Почему это безопасно</h2>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🔒</div>
+        <h3 class="trust-title">Без предоплаты</h3>
+        <p class="trust-desc">Вы платите только когда забираете посылку в пункте выдачи.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📦</div>
+        <h3 class="trust-title">Проверка на месте</h3>
+        <p class="trust-desc">В пункте выдачи Ozon можно открыть посылку и проверить флешку до оплаты.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">✅</div>
+        <h3 class="trust-title">Гарантия Ozon</h3>
+        <p class="trust-desc">Сервис Ozon защищает сделку. Если что-то не так — возврат денег.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPATIBILITY -->
+<section class="compatibility">
+  <div class="container">
+    <h2 class="section-title">Совместимость</h2>
+    <p class="section-subtitle">Флешки работают с любыми устройствами с USB-портом</p>
+    <div class="compat-list">
+      <div class="compat-tag">🚗 Штатные автомагнитолы</div>
+      <div class="compat-tag">📻 Aftermarket магнитолы</div>
+      <div class="compat-tag">🔊 Портативные колонки</div>
+      <div class="compat-tag">💻 Домашние ПК и ноутбуки</div>
+      <div class="compat-tag">📺 Телевизоры с USB</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <h2 class="section-title">Частые вопросы</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">Как происходит оплата?</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Вы оплачиваете посылку только когда забираете её в пункте выдачи Ozon в вашем городе. Никакой предоплаты на карту — это безопасно.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Сколько идет посылка?</div>
+        <div class="faq-answer"><div class="faq-answer-inner">От 3 до 10 дней в зависимости от вашего региона. После отправки вы получите трек-номер для отслеживания.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Можно ли проверить флешку до оплаты?</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Да, в пункте выдачи Ozon вы можете вскрыть посылку и проверить, что флешка на месте, прежде чем оплачивать заказ.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Что если флешка не заработает?</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Все флешки проверяются перед отправкой. Если в течение 14 дней обнаружится брак — бесплатная замена или возврат денег.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Можно ли собрать флешку под свой вкус?</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Да, напишите мне в Telegram, Max или ВКонтакте — обсудим индивидуальную подборку треков под ваши предпочтения.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="order">
+  <div class="container">
+    <h2 class="section-title">Оформить заказ</h2>
+    <p class="section-subtitle">Оставьте заявку — я свяжусь с вами в течение часа</p>
+    <div class="form-wrap">
+      <form onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" required placeholder="Иван">
+        </div>
+        <div class="form-group">
+          <label for="phone">Телефон</label>
+          <input type="tel" id="phone" required placeholder="+7 (___) ___-__-__">
+        </div>
+        <div class="form-group">
+          <label for="city">Город</label>
+          <input type="text" id="city" required placeholder="Москва">
+        </div>
+        <div class="form-group">
+          <label for="product">Какая флешка интересует?</label>
+          <select id="product" required>
+            <option value="">Выберите вариант</option>
+            <option>Хиты 90-х — 990 ₽</option>
+            <option>Русский шансон — 990 ₽</option>
+            <option>Рок-классика — 990 ₽</option>
+            <option>Для души — 990 ₽</option>
+            <option>Танцевальные хиты — 990 ₽</option>
+            <option>Зарубежные хиты 80-90-х — 990 ₽</option>
+            <option>Windows 10/11 Pro — 1290 ₽</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Оформить заказ</button>
+      </form>
+      <div class="form-divider">или напишите напрямую в удобный мессенджер</div>
+      <div class="messenger-grid">
+        <!-- MAX -->
+        <a href="https://max.ru/YOUR_NICKNAME" class="btn-messenger btn-max" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 7.5l-3 6-1.5-3-3 3-1.5-6h2l.75 3 1.5-1.5 1.5 3 2-4.5h1.8z"/></svg>
+          <span>Max</span>
+        </a>
+        <!-- TELEGRAM -->
+        <a href="https://t.me/YOUR_NICKNAME" class="btn-messenger btn-telegram" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          <span>Telegram</span>
+        </a>
+        <!-- VK -->
+        <a href="https://vk.com/YOUR_NICKNAME" class="btn-messenger btn-vk" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.068.587-.954c-.043-.072-.308-.656-1.588-1.85-1.34-1.248-1.16-1.044.453-3.21.983-1.317 1.376-2.122 1.253-2.465-.117-.327-.84-.24-.84-.24l-2.406.015s-.178-.025-.31.054c-.13.077-.212.257-.212.257s-.382 1.02-.89 1.886c-1.074 1.832-1.503 1.928-1.678 1.814-.407-.265-.305-1.066-.305-1.634 0-1.78.268-2.521-.522-2.713-.263-.063-.456-.105-1.128-.112-.86-.009-1.587.003-1.997.206-.274.135-.485.437-.356.454.159.021.519.098.71.36.247.338.238 1.098.238 1.098s.142 2.093-.332 2.352c-.326.178-.773-.185-1.728-1.846-.49-.85-.86-1.79-.86-1.79s-.07-.174-.197-.268c-.153-.113-.368-.149-.368-.149l-2.286.015s-.343.01-.47.159c-.112.133-.009.407-.009.407s1.79 4.193 3.817 6.306c1.858 1.936 3.968 1.81 3.968 1.81h.955z"/></svg>
+          <span>ВКонтакте</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2026 · Самозанятый · ИНН указан в чеках</p>
+    <div class="footer-messengers">
+      <a href="https://max.ru/YOUR_NICKNAME" target="_blank">💬 Max</a>
+      <a href="https://t.me/YOUR_NICKNAME" target="_blank">✈️ Telegram</a>
+      <a href="https://vk.com/YOUR_NICKNAME" target="_blank">🔵 ВКонтакте</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>✅ Заявка принята!</h3>
+    <p>Спасибо! Я свяжусь с вами в течение часа для уточнения деталей и оформления доставки через Ozon.</p>
+    <button class="btn-primary" onclick="closeModal()">Хорошо</button>
+  </div>
+</div>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      item.classList.toggle('active');
+    });
+  });
+
+  // Pre-fill form from card
+  function openForm(productName) {
+    document.getElementById('product').value = productName + ' — ' + (productName === 'Windows 10/11 Pro' ? '1290 ₽' : '990 ₽');
+    document.getElementById('order').scrollIntoView({behavior: 'smooth'});
+  }
+
+  // Phone mask
+  document.getElementById('phone').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.startsWith('8')) v = '7' + v.slice(1);
+    if (!v.startsWith('7')) v = '7' + v;
+    v = v.slice(0, 11);
+    let formatted = '+7';
+    if (v.length > 1) formatted += ' (' + v.slice(1, 4);
+    if (v.length >= 5) formatted += ') ' + v.slice(4, 7);
+    if (v.length >= 8) formatted += '-' + v.slice(7, 9);
+    if (v.length >= 10) formatted += '-' + v.slice(9, 11);
+    e.target.value = formatted;
+  });
+
+  // Form submit
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('modal').classList.add('active');
+    e.target.reset();
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+  }
+</script>
+
+</body>
+</html>
