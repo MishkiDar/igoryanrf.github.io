@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Голос и вибрации - ИгорЯН</title>
+  <meta name="description" content="Аудиомедитации, пение, саунд-дизайн состояний. Голос как пространство, где спонтанная речь сужается, а записанный звук расширяется." />
+  <meta name="theme-color" content="#1a1d2a" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="canonical" href="https://игорян.рф/голос/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="игорян.рф" />
+  <meta property="og:title" content="Голос и вибрации - ИгорЯН" />
+  <meta property="og:description" content="Аудиомедитации, пение, саунд-дизайн состояний. Голос как пространство." />
+  <meta property="og:url" content="https://игорян.рф/голос/" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Preconnect + Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Голос и вибрации",
+    "url": "https://игорян.рф/голос/",
+    "description": "Аудиомедитации, пение, саунд-дизайн состояний. Голос как пространство.",
+    "inLanguage": "ru",
+    "isPartOf": {
+      "@type": "WebSite",
+      "url": "https://игорян.рф/",
+      "name": "игорян.рф"
+    },
+    "about": {
+      "@type": "Person",
+      "name": "ИгорЯН",
+      "url": "https://игорян.рф/"
+    }
+  }
+  </script>
+
+  <style>
+    @layer base, tokens, layout, components, motion;
+
+    @layer base {
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-kerning: normal;
+      }
+      img, svg, canvas { display: block; max-width: 100%; }
+      a { color: inherit; text-underline-offset: 0.25em; }
+      button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+    }
+
+    @layer tokens {
+      :root {
+        --bg:       light-dark(oklch(97% 0.008 90),  oklch(15% 0.02 270));
+        --bg-soft:  light-dark(oklch(94% 0.012 90),  oklch(18% 0.022 270));
+        --ink:      light-dark(oklch(20% 0.02 270),  oklch(92% 0.01 90));
+        --ink-soft: light-dark(oklch(35% 0.02 270),  oklch(78% 0.015 90));
+        --line:     light-dark(oklch(20% 0.02 270 / 0.12), oklch(92% 0.01 90 / 0.14));
+        --accent:   oklch(70% 0.15 70);
+        --accent-soft: oklch(70% 0.15 70 / 0.15);
+
+        --f-display: "Fraunces", ui-serif, Georgia, serif;
+        --f-body:    "Inter", ui-sans-serif, system-ui, sans-serif;
+        --f-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+        --fs-hero: clamp(2.2rem, 3vw + 0.8rem, 3.2rem);
+        --fs-h2:   clamp(1.5rem, 2vw + 0.7rem, 2rem);
+        --fs-body: clamp(1rem, 1.05vw + 0.9rem, 1.15rem);
+        --fs-meta: clamp(0.75rem, 0.6vw + 0.7rem, 0.85rem);
+
+        --lh-body: 1.6;
+        --lh-display: 1.15;
+
+        --measure: 65ch;
+        --pad-x: clamp(1.25rem, 5vw, 4rem);
+
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      @media (prefers-contrast: more) {
+        :root {
+          --ink: light-dark(oklch(10% 0.02 270), oklch(98% 0.01 90));
+          --line: light-dark(oklch(10% 0.02 270 / 0.4), oklch(98% 0.01 90 / 0.4));
+        }
+      }
+    }
+
+    @layer layout {
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--f-body);
+        font-size: var(--fs-body);
+        line-height: var(--lh-body);
+        font-optical-sizing: auto;
+        font-variation-settings: "opsz" 20;
+      }
+
+      .shell {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-inline: var(--pad-x);
+      }
+
+      header.site {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(14px) saturate(1.2);
+        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        background: color-mix(in oklch, var(--bg) 78%, transparent);
+        border-bottom: 1px solid var(--line);
+      }
+      header.site .inner {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1rem;
+      }
+      .brand {
+        font-family: var(--f-display);
+        font-weight: 400;
+        font-size: clamp(1.1rem, 1.2vw + 0.9rem, 1.35rem);
+        letter-spacing: -0.01em;
+        text-decoration: none;
+        font-variation-settings: "opsz" 72, "SOFT" 50;
+      }
+      .brand em { font-style: italic; color: var(--accent); }
+
+      nav.primary ul {
+        list-style: none;
+        display: flex;
+        gap: clamp(1rem, 2.4vw, 2rem);
+        padding: 0;
+        margin: 0;
+        font-family: var(--f-mono);
+        font-size: var(--fs-meta);
+        text-transform: lowercase;
+      }
+      nav.primary a {
+        text-decoration: none;
+        position: relative;
+        padding-block: 0.25rem;
+      }
+      nav.primary a::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 1px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 400ms var(--ease);
+      }
+      nav.primary a:hover::after,
+      nav.primary a:focus-visible::after { transform: scaleX(1); }
+
+      /* HERO */
+      .hero {
+        padding-block: clamp(4rem, 12dvh, 8rem);
+        position: relative;
+      }
+      .hero-content {
+        max-width: var(--measure);
+      }
+      .margin-note {
+        font-family: var(--f-mono);
+        font-size: var(--fs-meta);
+        color: var(--ink-soft);
+        letter-spacing: 0.02em;
+        margin-bottom: 1.5rem;
+      }
+      .margin-note::before {
+        content: "- ";
+        color: var(--accent);
+      }
+
+      .hero h1 {
+        font-family: var(--f-display);
+        font-weight: 300;
+        font-size: var(--fs-hero);
+        line-height: var(--lh-display);
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+        margin: 0 0 1rem;
+        font-variation-settings: "opsz" 144, "SOFT" 100;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      .hero-subtitle {
+        font-family: var(--f-display);
+        font-style: italic;
+        font-size: clamp(1.1rem, 1.3vw + 0.8rem, 1.4rem);
+        color: var(--ink-soft);
+        line-height: 1.4;
+        margin: 0 0 2.5rem;
+        text-wrap: pretty;
+      }
+
+      /* CONTENT SECTIONS */
+      .content {
+        padding-block: clamp(3rem, 8dvh, 6rem);
+      }
+      .content-section {
+        max-width: var(--measure);
+        margin-bottom: clamp(3rem, 6dvh, 5rem);
+      }
+      .content-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .content-section h2 {
+        font-family: var(--f-display);
+        font-weight: 400;
+        font-size: var(--fs-h2);
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        margin: 0 0 1.25rem;
+        text-wrap: balance;
+      }
+
+      .content-section p {
+        color: var(--ink-soft);
+        text-wrap: pretty;
+        margin: 0 0 1.25rem;
+        line-height: 1.65;
+      }
+      .content-section p:last-child {
+        margin-bottom: 0;
+      }
+
+      .content-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .content-section li {
+        padding-left: 1.5rem;
+        position: relative;
+        color: var(--ink-soft);
+        line-height: 1.6;
+      }
+      .content-section li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.7em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .content-section li strong {
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      /* Audio player */
+      .audio {
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 1.5rem;
+        display: grid;
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+      .audio-head {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .play {
+        width: 56px; height: 56px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: var(--bg);
+        display: grid;
+        place-items: center;
+        transition: transform 300ms var(--ease), background 300ms var(--ease);
+        flex-shrink: 0;
+      }
+      .play:hover { transform: scale(1.04); background: var(--accent-soft); }
+      .play svg { width: 20px; height: 20px; fill: var(--ink); }
+      .audio-meta {
+        font-family: var(--f-mono);
+        font-size: var(--fs-meta);
+        color: var(--ink-soft);
+        line-height: 1.5;
+      }
+      .audio-meta b {
+        font-family: var(--f-display);
+        font-weight: 500;
+        font-style: italic;
+        color: var(--ink);
+        font-size: 1.05rem;
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      canvas.wave {
+        width: 100%;
+        height: 60px;
+        border-radius: 8px;
+        background:
+          repeating-linear-gradient(90deg,
+            var(--line) 0 1px, transparent 1px 8px);
+      }
+
+      /* CTA */
+      .cta {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(3rem, 8dvh, 5rem);
+      }
+      .cta-content {
+        max-width: var(--measure);
+      }
+      .cta h2 {
+        font-family: var(--f-display);
+        font-weight: 300;
+        font-size: var(--fs-h2);
+        line-height: 1.2;
+        margin: 0 0 1.25rem;
+        text-wrap: balance;
+      }
+      .cta h2 em { font-style: italic; color: var(--accent); }
+      .cta p {
+        color: var(--ink-soft);
+        text-wrap: pretty;
+        margin: 0 0 1.5rem;
+      }
+      .channels {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .channels a {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        text-decoration: none;
+        font-family: var(--f-display);
+        font-size: 1.1rem;
+        font-style: italic;
+        transition: border-color 300ms var(--ease), background 300ms var(--ease);
+      }
+      .channels a:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+      .channels .kind {
+        font-family: var(--f-mono);
+        font-style: normal;
+        font-size: var(--fs-meta);
+        color: var(--ink-soft);
+        margin-left: auto;
+      }
+
+      /* FOOTER */
+      footer.site {
+        border-top: 1px solid var(--line);
+        padding-block: 2rem;
+        font-family: var(--f-mono);
+        font-size: var(--fs-meta);
+        color: var(--ink-soft);
+      }
+      footer .inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      /* Back link */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--f-mono);
+        font-size: var(--fs-meta);
+        color: var(--ink-soft);
+        text-decoration: none;
+        margin-bottom: 2rem;
+        transition: color 300ms var(--ease);
+      }
+      .back-link:hover {
+        color: var(--accent);
+      }
+      .back-link svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 300ms var(--ease);
+      }
+      .back-link:hover svg {
+        transform: translateX(-3px);
+      }
+    }
+
+    @layer motion {
+      @media (prefers-reduced-motion: no-preference) {
+        .reveal {
+          opacity: 0;
+          transform: translateY(18px);
+          animation: rise 700ms var(--ease) both;
+          animation-timeline: view();
+          animation-range: entry 5% cover 35%;
+        }
+        @keyframes rise {
+          to { opacity: 1; transform: none; }
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .reveal { opacity: 1; transform: none; }
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="shell inner">
+      <a class="brand" href="/" aria-label="ИгорЯН - на главную">
+        Игор<em>ЯН</em>
+      </a>
+      <nav class="primary" aria-label="Основная навигация">
+        <ul>
+          <li><a href="/#frequencies">частоты</a></li>
+          <li><a href="/#practice">практика</a></li>
+          <li><a href="/#contact">связь</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero shell">
+      <div class="hero-content reveal">
+        <a href="/" class="back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          назад к частотам
+        </a>
+        <p class="margin-note">01 - голос</p>
+        <h1>Голос как <em>пространство</em>.</h1>
+        <p class="hero-subtitle">Там, где спонтанная речь сужается, записанный звук расширяется.</p>
+      </div>
+    </section>
+
+    <section class="content shell">
+
+      <article class="content-section reveal">
+        <p>Спонтанная устная речь - моё узкое горлышко. Поток мыслей опережает артикуляцию, и смыслы теряются в шуме момента. Но когда я говорю в микрофон - я собираю себя заново.</p>
+        <p>Здесь нет вебинаров и прямых эфиров. Здесь - законченные звуковые ландшафты. Я использую голос не для передачи информации, а для передачи состояния. Вибрация, пауза, тембр - это инструменты настройки нервной системы.</p>
+      </article>
+
+      <article class="content-section reveal">
+        <h2>Что здесь есть:</h2>
+        <ul>
+          <li>
+            <strong>Аудиомедитации.</strong> Короткие (5-15 минут) практики моим голосом. Без фоновой «музыки для спа», только честный звук и тишина.
+          </li>
+          <li>
+            <strong>Саунд-дизайн состояний.</strong> Звуковые слои для фокуса, засыпания или заземления при перегрузке.
+          </li>
+          <li>
+            <strong>Голосовые заметки.</strong> Архив мыслей, оформленных как законченные аудиоэссе.
+          </li>
+        </ul>
+      </article>
+
+      <article class="content-section reveal">
+        <h2>Как этим пользоваться:</h2>
+        <p>Только в наушниках. В состоянии, когда нужна не новая информация, а изменение внутренней частоты.</p>
+        
+        <div class="audio" role="region" aria-label="Пример аудио-практики">
+          <div class="audio-head">
+            <button class="play" id="playBtn" aria-label="Воспроизвести аудио" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path id="playIcon" d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+            <div class="audio-meta">
+              <b>Заземление через дыхание</b>
+              8:24 - практика для перегруженной нервной системы
+            </div>
+          </div>
+          <canvas class="wave" id="wave" width="600" height="60" aria-hidden="true"></canvas>
+          <audio id="practice" preload="metadata" src="/голос/grounding.mp3" crossorigin="anonymous"></audio>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="cta shell">
+      <div class="cta-content reveal">
+        <h2>Если тебе нужен <em>персональный звуковой ландшафт</em> или ты хочешь поделиться откликом - напиши мне.</h2>
+        <p>Текстом или голосовым. Я слушаю и отвечаю в своём ритме.</p>
+
+        <ul class="channels">
+          <li>
+            <a href="https://t.me/gargaross" rel="me noopener">
+              <span>@gargaross</span>
+              <span class="kind">telegram</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://max.ru/u/f9LHodD0cOKBofEOX-DxvNCKJN1IcujQNOwnMK7Wev9mD4NLzsHoQZDB9cc" rel="me noopener">
+              <span>Профиль на Max</span>
+              <span class="kind">max.ru</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://vk.ru/im/convo/332422" rel="me noopener">
+              <span>Личное сообщение</span>
+              <span class="kind">vk.ru</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site">
+    <div class="shell inner">
+      <span>© <time datetime="2026">2026</time> · ИгорЯН</span>
+    </div>
+  </footer>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100000000, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/100000000" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <script>
+    (function () {
+      const btn   = document.getElementById('playBtn');
+      const icon  = document.getElementById('playIcon');
+      const audio = document.getElementById('practice');
+      const canvas= document.getElementById('wave');
+      const ctx   = canvas.getContext('2d');
+
+      const PLAY  = 'M8 5v14l11-7z';
+      const PAUSE = 'M7 5h4v14H7zM13 5h4v14h-4z';
+
+      let actx, analyser, src, raf, data;
+
+      function drawIdle(t) {
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = getComputedStyle(document.documentElement)
+                            .getPropertyValue('--accent').trim() || '#c98a4b';
+        ctx.lineWidth = 1.5;
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 4) {
+          const y = h/2 + Math.sin((x + t*0.03) * 0.035) * 6
+                         + Math.sin((x + t*0.05) * 0.08) * 2;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        if (!audio || audio.paused) raf = requestAnimationFrame(drawIdle);
+      }
+
+      function resizeCanvas() {
+        const ratio = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width  = Math.max(200, Math.floor(rect.width  * ratio));
+        canvas.height = Math.max(40,  Math.floor(rect.height * ratio));
+      }
+      window.addEventListener('resize', resizeCanvas, { passive: true });
+      resizeCanvas();
+      raf = requestAnimationFrame(drawIdle);
+
+      function drawWave() {
+        if (!analyser) return;
+        analyser.getByteTimeDomainData(data);
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = getComputedStyle(document.documentElement)
+                            .getPropertyValue('--accent').trim() || '#c98a4b';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        const step = w / data.length;
+        for (let i = 0; i < data.length; i++) {
+          const v = (data[i] - 128) / 128;
+          const y = h/2 + v * (h/2 - 4);
+          i === 0 ? ctx.moveTo(0, y) : ctx.lineTo(i * step, y);
+        }
+        ctx.stroke();
+        raf = requestAnimationFrame(drawWave);
+      }
+
+      btn.addEventListener('click', async () => {
+        try {
+          if (!actx) {
+            actx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = actx.createAnalyser();
+            analyser.fftSize = 1024;
+            data = new Uint8Array(analyser.fftSize);
+            src = actx.createMediaElementSource(audio);
+            src.connect(analyser);
+            analyser.connect(actx.destination);
+          }
+          if (actx.state === 'suspended') await actx.resume();
+
+          if (audio.paused) {
+            await audio.play();
+            icon.setAttribute('d', PAUSE);
+            btn.setAttribute('aria-pressed', 'true');
+            btn.setAttribute('aria-label', 'Поставить на паузу');
+            cancelAnimationFrame(raf);
+            drawWave();
+          } else {
+            audio.pause();
+            icon.setAttribute('d', PLAY);
+            btn.setAttribute('aria-pressed', 'false');
+            btn.setAttribute('aria-label', 'Воспроизвести аудио');
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(drawIdle);
+          }
+        } catch (e) {
+          console.warn('audio error', e);
+        }
+      });
+
+      audio.addEventListener('ended', () => {
+        icon.setAttribute('d', PLAY);
+        btn.setAttribute('aria-pressed', 'false');
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(drawIdle);
+      });
+    })();
+  </script>
+</body>
+</html>
