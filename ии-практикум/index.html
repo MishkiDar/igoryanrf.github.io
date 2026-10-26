@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Премиум-набор для цифрового творчества — Купить на GoGa.zone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b12;
+    --bg-soft:#12121c;
+    --card:#171724;
+    --ink:#f4f4f8;
+    --muted:#9a9ab0;
+    --accent:#7c5cff;
+    --accent-2:#00e0b8;
+    --hot:#ff4d6d;
+    --line:rgba(255,255,255,.08);
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Unbounded',sans-serif;line-height:1.12;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.55;pointer-events:none;z-index:0}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(11,11,18,.7);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Unbounded';font-weight:800;font-size:19px}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 18px var(--accent)}
+  .nav-links{display:flex;gap:28px;font-size:14px;color:var(--muted)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{
+    background:linear-gradient(135deg,var(--accent),#5b3cff);
+    color:#fff;padding:11px 22px;border-radius:100px;font-weight:600;font-size:14px;
+    box-shadow:0 8px 24px rgba(124,92,255,.35);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.5)}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:96px 0 80px;overflow:hidden}
+  .hero .glow.g1{width:520px;height:520px;background:var(--accent);top:-160px;right:-120px}
+  .hero .glow.g2{width:420px;height:420px;background:var(--accent-2);bottom:-180px;left:-120px;opacity:.35}
+  .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(124,92,255,.14);
+    border:1px solid rgba(124,92,255,.35);
+    color:#cfc4ff;padding:7px 16px;border-radius:100px;
+    font-size:13px;font-weight:600;margin-bottom:26px;
+  }
+  .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 0 rgba(0,224,184,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,224,184,.6)}70%{box-shadow:0 0 0 12px rgba(0,224,184,0)}100%{box-shadow:0 0 0 0 rgba(0,224,184,0)}}
+  .hero h1{font-size:clamp(38px,5vw,62px);font-weight:800;margin-bottom:22px}
+  .hero h1 .grad{background:linear-gradient(100deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p.lead{font-size:18px;color:var(--muted);max-width:520px;margin-bottom:34px}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+  .btn-buy{
+    position:relative;
+    display:inline-flex;align-items:center;gap:12px;
+    background:linear-gradient(135deg,#ff4d6d 0%,#ff7a45 55%,#ffb020 100%);
+    color:#fff;font-weight:700;font-size:17px;
+    padding:18px 34px;border-radius:100px;border:none;cursor:pointer;
+    box-shadow:0 10px 34px rgba(255,77,109,.4), inset 0 1px 0 rgba(255,255,255,.35);
+    transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
+    animation:breathe 3.4s ease-in-out infinite;
+  }
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  .btn-buy:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 44px rgba(255,77,109,.55)}
+  .btn-buy .arrow{transition:transform .2s}
+  .btn-buy:hover .arrow{transform:translateX(4px)}
+  .btn-buy small{display:block;font-size:11px;font-weight:500;opacity:.85;letter-spacing:.3px}
+  .btn-buy .ico{width:22px;height:22px;flex:none}
+  .btn-buy-wrap{display:flex;flex-direction:column;gap:10px}
+  .safe-note{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .safe-note svg{width:15px;height:15px;color:var(--accent-2);flex:none}
+  .hero-visual{position:relative;z-index:1}
+  .mockup{
+    background:linear-gradient(160deg,#1b1b2b,#101019);
+    border:1px solid var(--line);border-radius:24px;
+    padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(124,92,255,.08);
+    transform:rotate(-2deg);
+  }
+  .mockup-bar{display:flex;gap:7px;margin-bottom:18px}
+  .mockup-bar span{width:11px;height:11px;border-radius:50%;background:#2c2c40}
+  .mockup-bar span:nth-child(1){background:#ff5f56}
+  .mockup-bar span:nth-child(2){background:#ffbd2e}
+  .mockup-bar span:nth-child(3){background:#27c93f}
+  .mockup-row{display:flex;gap:12px;margin-bottom:12px;align-items:center}
+  .mockup-thumb{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));flex:none}
+  .mockup-lines{flex:1}
+  .mockup-lines i{display:block;height:9px;border-radius:6px;background:#252538;margin-bottom:7px}
+  .mockup-lines i:nth-child(2){width:65%;background:#1e1e2e}
+  .mockup-lines i:nth-child(3){width:80%;background:#1e1e2e}
+  .mockup-tag{display:inline-block;font-size:11px;color:var(--accent-2);background:rgba(0,224,184,.1);padding:4px 10px;border-radius:6px;margin-top:6px}
+  .float-chip{
+    position:absolute;background:var(--card);border:1px solid var(--line);
+    padding:12px 16px;border-radius:14px;font-size:13px;font-weight:600;
+    box-shadow:0 14px 34px rgba(0,0,0,.5);display:flex;align-items:center;gap:9px;
+    animation:float 5s ease-in-out infinite;
+  }
+  .float-chip.c1{top:-18px;left:-26px;animation-delay:.2s}
+  .float-chip.c2{bottom:-20px;right:-18px;animation-delay:1.2s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .dot-green{width:9px;height:9px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 10px var(--accent-2)}
+
+  /* ---------- LOGOS / TRUST ---------- */
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;background:var(--bg-soft)}
+  .trust-inner{display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:center;color:var(--muted);font-size:14px;font-weight:600}
+  .trust-inner span{display:flex;align-items:center;gap:8px}
+
+  /* ---------- SECTION COMMON ---------- */
+  section.block{padding:88px 0;position:relative}
+  .sec-head{text-align:center;max-width:720px;margin:0 auto 56px}
+  .sec-tag{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);margin-bottom:14px;display:block}
+  .sec-head h2{font-size:clamp(28px,3.6vw,44px);font-weight:800;margin-bottom:16px}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* ---------- FEATURES ---------- */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .feat{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;transition:transform .25s,border-color .25s,box-shadow .25s;
+  }
+  .feat:hover{transform:translateY(-6px);border-color:rgba(124,92,255,.4);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+  .feat-ico{
+    width:48px;height:48px;border-radius:13px;display:grid;place-items:center;
+    background:linear-gradient(135deg,rgba(124,92,255,.2),rgba(0,224,184,.14));
+    border:1px solid rgba(124,92,255,.3);margin-bottom:18px;
+  }
+  .feat-ico svg{width:24px;height:24px;color:#cfc4ff}
+  .feat h3{font-size:19px;font-weight:600;margin-bottom:10px}
+  .feat p{color:var(--muted);font-size:15px}
+
+  /* ---------- BENEFITS (split) ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .split h2{font-size:clamp(28px,3.4vw,40px);font-weight:800;margin-bottom:22px}
+  .split h2 .grad{background:linear-gradient(100deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .check{list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:26px}
+  .check li{display:flex;gap:14px;align-items:flex-start;font-size:16px}
+  .check .box{
+    width:26px;height:26px;border-radius:8px;flex:none;display:grid;place-items:center;
+    background:rgba(0,224,184,.14);border:1px solid rgba(0,224,184,.4);color:var(--accent-2);margin-top:2px;
+  }
+  .check .box svg{width:14px;height:14px}
+  .price-card{
+    background:linear-gradient(160deg,#1a1a2a,#111119);
+    border:1px solid var(--line);border-radius:24px;padding:38px 34px;position:relative;
+    box-shadow:0 30px 70px rgba(0,0,0,.5);
+  }
+  .price-card .ribbon{
+    position:absolute;top:-14px;left:34px;background:linear-gradient(135deg,var(--hot),#ff9a3c);
+    color:#fff;font-size:12px;font-weight:700;padding:6px 14px;border-radius:100px;letter-spacing:.05em;
+  }
+  .price-card h3{font-size:22px;font-weight:700;margin-bottom:6px}
+  .price-card .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .price-line{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .price-line .old{color:var(--muted);text-decoration:line-through;font-size:18px}
+  .price-line .new{font-family:'Unbounded';font-size:42px;font-weight:800;background:linear-gradient(135deg,var(--accent-2),var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .price-card .save{color:var(--accent-2);font-size:13px;font-weight:600;margin-bottom:26px}
+  .btn-buy.full{width:100%;justify-content:center;font-size:18px;padding:19px 24px}
+  .price-card .safe-note{justify-content:center;margin-top:16px}
+  .mini-list{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:11px;font-size:14px;color:var(--muted)}
+  .mini-list li{display:flex;gap:9px;align-items:center}
+  .mini-list svg{width:15px;height:15px;color:var(--accent-2);flex:none}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+  .step-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 26px;position:relative;overflow:hidden}
+  .step-card::before{
+    counter-increment:step;content:"0" counter(step);
+    font-family:'Unbounded';font-weight:800;font-size:72px;line-height:1;
+    position:absolute;top:12px;right:18px;color:rgba(124,92,255,.12);
+  }
+  .step-card h3{font-size:19px;font-weight:600;margin-bottom:10px;position:relative;z-index:1}
+  .step-card p{color:var(--muted);font-size:15px;position:relative;z-index:1}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .tst{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px 26px}
+  .stars{color:#ffb020;letter-spacing:2px;font-size:15px;margin-bottom:14px}
+  .tst p{font-size:15px;color:#d6d6e2;margin-bottom:18px}
+  .tst .who{display:flex;align-items:center;gap:12px}
+  .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff}
+  .tst .who b{font-size:14px;display:block}
+  .tst .who span{font-size:12px;color:var(--muted)}
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 24px;overflow:hidden}
+  details[open]{border-color:rgba(124,92,255,.35)}
+  summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary .plus{width:24px;height:24px;flex:none;border-radius:7px;background:rgba(124,92,255,.18);display:grid;place-items:center;color:var(--accent);transition:transform .25s;font-weight:700}
+  details[open] summary .plus{transform:rotate(45deg)}
+  details p{color:var(--muted);font-size:15px;padding-bottom:22px;max-width:95%}
+
+  /* ---------- FINAL CTA ---------- */
+  .final{position:relative;padding:100px 0;text-align:center;overflow:hidden}
+  .final .glow{width:560px;height:420px;background:var(--accent);top:-120px;left:50%;transform:translateX(-50%);opacity:.4}
+  .final .inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+  .final h2{font-size:clamp(30px,4.4vw,50px);font-weight:800;margin-bottom:20px}
+  .final p{color:var(--muted);font-size:18px;margin-bottom:38px}
+  .final .btn-buy{font-size:19px;padding:21px 44px}
+  .final .safe-note{justify-content:center;margin-top:18px}
+  .guarantee{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px;font-size:13px;color:var(--muted)}
+  .guarantee span{display:flex;align-items:center;gap:7px}
+  .guarantee svg{width:15px;height:15px;color:var(--accent-2)}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-soft)}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;font-size:14px;color:var(--muted)}
+  .foot .logo{font-size:17px}
+  .foot-links{display:flex;gap:24px}
+  .foot-links a:hover{color:var(--ink)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr;gap:48px}
+    .hero-visual{max-width:440px;margin:0 auto}
+    .feat-grid,.steps,.tst-grid{grid-template-columns:1fr}
+    .split{grid-template-columns:1fr;gap:36px}
+    .nav-links{display:none}
+    .trust-inner{gap:20px;font-size:13px}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 18px}
+    .hero{padding:64px 0 56px}
+    .hero-actions{flex-direction:column;align-items:stretch}
+    .btn-buy{justify-content:center}
+    section.block{padding:64px 0}
+    .float-chip{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><span class="dot"></span>NeuroKit</a>
+    <nav class="nav-links">
+      <a href="#features">Возможности</a>
+      <a href="#benefits">Выгода</a>
+      <a href="#steps">Как это работает</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#buy" class="nav-cta">Купить на GoGa.zone</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="badge"><span class="pulse"></span>Цифровой набор 2026 · мгновенный доступ</span>
+      <h1>Создавай <span class="grad">фото, видео и тексты</span> на уровне профи — без навыков и бюджета</h1>
+      <p class="lead">Готовый премиум-набор промптов, шаблонов и связок нейросетей. Один клик — и у тебя в руках система, которая экономит часы работы каждый день.</p>
+      <div class="hero-actions">
+        <div class="btn-buy-wrap">
+          <a href="#buy" class="btn-buy">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span>Купить на GoGa.zone<span class="arrow"> →</span><small>Безопасная сделка</small></span>
+          </a>
+          <span class="safe-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Оплата защищена · возврат в течение 14 дней
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="mockup">
+        <div class="mockup-bar"><span></span><span></span><span></span></div>
+        <div class="mockup-row">
+          <div class="mockup-thumb"></div>
+          <div class="mockup-lines"><i></i><i></i><i></i></div>
+        </div>
+        <div class="mockup-row">
+          <div class="mockup-thumb" style="background:linear-gradient(135deg,#ff4d6d,#ffb020)"></div>
+          <div class="mockup-lines"><i></i><i></i><i></i></div>
+        </div>
+        <div class="mockup-row">
+          <div class="mockup-thumb" style="background:linear-gradient(135deg,#00e0b8,#7c5cff)"></div>
+          <div class="mockup-lines"><i></i><i></i><i></i></div>
+        </div>
+        <span class="mockup-tag">✓ 120+ готовых промптов</span>
+      </div>
+      <div class="float-chip c1"><span class="dot-green"></span>Результат за 5 минут</div>
+      <div class="float-chip c2">⚡ Экономия 12 часов/нед</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="wrap trust-inner">
+    <span>⭐ 4.9/5 · 2 400+ покупателей</span>
+    <span>🔒 Безопасная сделка GoGa.zone</span>
+    <span>⚡ Мгновенная доставка на почту</span>
+    <span>♾️ Пожизненный доступ</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="block" id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Что внутри</span>
+      <h2>Всё, чтобы создавать контент быстрее и лучше</h2>
+      <p>Не просто файлы — цельная система, собранная из реальных рабочих сценариев.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <h3>120+ промптов для изображений</h3>
+        <p>Структурированные формулы для реалистичных фото, арта и коммерческого визуала.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3>Оживление статики в видео</h3>
+        <p>Пошаговые связки анимации фото в трендовые ролики для соцсетей и рекламы.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg></div>
+        <h3>Тексты и презентации</h3>
+        <p>Формулы запросов, которые выдают продающий текст без «пластикового» стиля.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Дизайн и интерьеры</h3>
+        <p>Визуализация идей для дома, логотипов и лендингов за пару минут.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Экономия времени</h3>
+        <p>Сценарии, которые убирают рутину и освобождают 10–15 часов в неделю.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Монетизация навыка</h3>
+        <p>3 проверенных направления, как превратить набор в первый доход уже на этой неделе.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS / PRICE -->
+<section class="block" id="benefits" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap split">
+    <div>
+      <span class="sec-tag">Почему это работает</span>
+      <h2>Не покупай «ещё один курс». Купи <span class="grad">готовую систему</span></h2>
+      <ul class="check">
+        <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><div><b>Без воды и теории.</b> Только рабочие промпты, связки и шаблоны, которые можно применить сразу.</div></li>
+        <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><div><b>Обновления бесплатно.</b> Набор пополняется новыми инструментами и промптами каждый месяц.</div></li>
+        <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><div><b>Подходит новичку.</b> Никакого программирования — только понятные действия по шагам.</div></li>
+        <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><div><b>Окупается с первого заказа.</b> Одна карточка товара или рекламный ролик уже отбивает стоимость.</div></li>
+      </ul>
+    </div>
+    <div class="price-card" id="buy">
+      <span class="ribbon">Скидка 60% сегодня</span>
+      <h3>Полный набор NeuroKit</h3>
+      <p class="sub">Мгновенный доступ · пожизненно · обновления включены</p>
+      <div class="price-line">
+        <span class="old">4 990 ₽</span>
+        <span class="new">1 990 ₽</span>
+      </div>
+      <p class="save">Экономия 3 000 ₽ · цена вырастет после запуска</p>
+      <a href="https://goga.zone" target="_blank" rel="noopener" class="btn-buy full">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Купить на GoGa.zone<span class="arrow"> →</span><small>Безопасная сделка</small></span>
+      </a>
+      <span class="safe-note">
+        <svg viewBox="0 
