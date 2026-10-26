@@ -18,6 +18,7 @@
             --accent-gold: #D4AF37;
             --accent-soft: #38BDF8;
             --accent-green: #34D399;
+            --accent-violet: #A78BFA;
             --font-head: 'Cormorant Garamond', serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -92,6 +93,10 @@
             z-index: 10;
         }
 
+        .month-block.has-month-note {
+            border-color: rgba(167, 139, 250, 0.25);
+        }
+
         .month-header {
             display: flex;
             justify-content: space-between;
@@ -105,6 +110,34 @@
             font-family: var(--font-head);
             font-size: 1.4rem;
             font-weight: 600;
+        }
+
+        /* Кликабельный заголовок месяца */
+        .month-name.clickable {
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .month-name.clickable::after {
+            content: 'i';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 15px;
+            height: 15px;
+            margin-left: 7px;
+            border-radius: 50%;
+            border: 1px solid rgba(167, 139, 250, 0.6);
+            color: var(--accent-violet);
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 600;
+            line-height: 1;
+            vertical-align: middle;
+            transform: translateY(-2px);
+        }
+        .month-name.clickable:hover {
+            color: var(--accent-violet);
         }
 
         .phase-label {
@@ -208,6 +241,9 @@
         #info-panel.visible {
             transform: translateY(0);
         }
+        #info-panel.month-mode {
+            border-color: var(--accent-violet);
+        }
 
         /* На мобильных — панель выезжает СВЕРХУ */
         @media (max-width: 768px) {
@@ -235,6 +271,9 @@
             font-size: 1.2rem;
             color: var(--accent-gold);
             margin-bottom: 5px;
+        }
+        #info-panel.month-mode .ip-date {
+            color: var(--accent-violet);
         }
         .ip-week {
             font-size: 0.8rem;
@@ -278,6 +317,18 @@
             white-space: pre-wrap;
         }
 
+        /* Текст заметки месяца */
+        .ip-month-note {
+            font-size: 0.92rem;
+            color: #E9D5FF;
+            line-height: 1.6;
+            padding: 12px 14px;
+            background: rgba(167, 139, 250, 0.08);
+            border-left: 3px solid var(--accent-violet);
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+
         /* Секция "сделано" */
         .ip-section-title {
             font-size: 0.75rem;
@@ -293,6 +344,9 @@
         }
         .ip-section-title.planned-title {
             color: var(--accent-gold);
+        }
+        .ip-section-title.month-title {
+            color: var(--accent-violet);
         }
         .ip-done ul {
             list-style: none;
@@ -340,6 +394,7 @@
         <div class="legend">
             <div class="legend-item"><span class="dot" style="background:var(--accent-gold)"></span> Есть дела</div>
             <div class="legend-item"><span class="dot" style="background:var(--accent-green)"></span> Есть сделанное</div>
+            <div class="legend-item"><span class="dot" style="background:var(--accent-violet)"></span> Заметка месяца</div>
             <div class="legend-item"><span class="dot" style="background:#fff"></span> Сегодня</div>
             <div class="legend-item"><span class="dot" style="background:#FCA5A5"></span> Выходной</div>
         </div>
@@ -352,6 +407,12 @@
     <span class="close-ip" onclick="hideInfo()">×</span>
     <div class="ip-date" id="ip-date-display">Дата</div>
     <div class="ip-week" id="ip-week-display">Неделя</div>
+
+    <!-- Блок для заметки месяца -->
+    <div id="ip-month-wrap" style="display:none;">
+        <div class="ip-section-title month-title">Заметка месяца</div>
+        <div class="ip-month-note" id="ip-month-display"></div>
+    </div>
 
     <div id="ip-done-wrap" style="display:none;">
         <div class="ip-section-title done-title">Сделано</div>
@@ -373,8 +434,9 @@
     const RANGE_START = { year: 2026, month: 9 };   // 9 = октябрь
     const RANGE_END   = { year: 2027, month: 4 };   // 4 = май
 
-    const NOTES = {};   // запланированные дела
-    const DONE  = {};   // сделанные дела
+    const NOTES = {};       // запланированные дела по дням
+    const DONE  = {};       // сделанные дела по дням
+    const MONTH_NOTES = {}; // заметки по месяцам: ключ "YYYY-MM"
 
     function addTask(dateStr, task) {
         if (!NOTES[dateStr]) NOTES[dateStr] = { tasks: [] };
@@ -385,6 +447,16 @@
         if (!DONE[dateStr]) DONE[dateStr] = { tasks: [] };
         DONE[dateStr].tasks.push(task);
     }
+
+    function setMonthNote(monthKey, text) {
+        MONTH_NOTES[monthKey] = text;
+    }
+
+    // ---------- ЗАМЕТКИ МЕСЯЦЕВ ----------
+    setMonthNote('2026-10',
+        'До конца октября нужно завершить эпопею с Димой и желательно внести платёж, ' +
+        'чтобы с ноября спокойно работать дальше и наводить порядки.'
+    );
 
     // ---------- 24 ОКТЯБРЯ 2026 — СДЕЛАНО ----------
     [
@@ -411,7 +483,14 @@
         'Сделал этот календарь'
     ].forEach(t => addDone('2026-10-26', t));
 
-    // ---------- ОКТЯБРЬ 2026 (26–31.10): «закончить в октябре» ----------
+    // ---------- ОКТЯБРЬ 2026: задачи на каждый день ----------
+    // Базовые ежедневные задачи октября
+    const octoberDaily = [
+        'Купить аккаунт фэйсбука',
+        'Перевыложить объявл на авито'
+    ];
+
+    // 26–31 октября: «закончить в октябре»
     const octoberLate = [
         'Картошку перебрать и опустить',
         'Крыша на бане починить',
@@ -420,10 +499,15 @@
         'Кабачки увезти в Пушкин',
         'Посмотреть диаметр трубы на 3 чердаке'
     ];
-    for (let d = 26; d <= 31; d++) {
+
+    for (let d = 1; d <= 31; d++) {
         const key = `2026-10-${String(d).padStart(2, '0')}`;
-        octoberLate.forEach(t => addTask(key, t));
-        addTask(key, 'Со 2 этажа спустить технику (до 5 ноября)');
+        octoberDaily.forEach(t => addTask(key, t));
+
+        if (d >= 26) {
+            octoberLate.forEach(t => addTask(key, t));
+            addTask(key, 'Со 2 этажа спустить технику (до 5 ноября)');
+        }
     }
 
     // ---------- 1 НОЯБРЯ 2026 ----------
@@ -485,6 +569,7 @@
 
     function pad(n) { return n < 10 ? '0' + n : '' + n; }
     function dateKey(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
+    function monthKey(y, m) { return y + '-' + pad(m + 1); }
     function getMonthName(date) { return date.toLocaleDateString('ru-RU', { month: 'long' }); }
     function isSameDay(d1, d2) {
         return d1.getDate() === d2.getDate() &&
@@ -503,6 +588,7 @@
     }
     function getNote(date) { return NOTES[keyOf(date)] || null; }
     function getDone(date) { return DONE[keyOf(date)] || null; }
+    function getMonthNote(y, m) { return MONTH_NOTES[monthKey(y, m)] || null; }
 
     function renderCalendar() {
         const root = document.getElementById('calendar-root');
@@ -519,15 +605,33 @@
             const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
             const firstDayOfWeek = firstOfMonth.getDay();
             const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+            const mNote = getMonthNote(curYear, curMonth);
 
             const monthBlock = document.createElement('div');
             monthBlock.className = 'month-block';
-            monthBlock.innerHTML = `
-                <div class="month-header">
-                    <span class="month-name">${getMonthName(firstOfMonth)} ${curYear}</span>
-                    <span class="phase-label">${daysInMonth} дн.</span>
-                </div>
-            `;
+            if (mNote) monthBlock.classList.add('has-month-note');
+
+            // Заголовок: если есть заметка месяца — делаем название кликабельным
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'month-header';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'month-name';
+            nameSpan.innerText = `${getMonthName(firstOfMonth)} ${curYear}`;
+            if (mNote) {
+                nameSpan.classList.add('clickable');
+                nameSpan.dataset.monthKey = monthKey(curYear, curMonth);
+                nameSpan.dataset.monthLabel = `${getMonthName(firstOfMonth)} ${curYear}`;
+                nameSpan.title = 'Показать заметку месяца';
+            }
+
+            const phaseSpan = document.createElement('span');
+            phaseSpan.className = 'phase-label';
+            phaseSpan.innerText = `${daysInMonth} дн.`;
+
+            headerDiv.appendChild(nameSpan);
+            headerDiv.appendChild(phaseSpan);
+            monthBlock.appendChild(headerDiv);
 
             const gridDiv = document.createElement('div');
             gridDiv.className = 'days-grid';
@@ -570,8 +674,11 @@
         }
     }
 
-    function showInfo(dateStr) {
+    // -------- ПАНЕЛЬ: ДЕНЬ --------
+    function showDayInfo(dateStr) {
         const panel = document.getElementById('info-panel');
+        panel.classList.remove('month-mode');
+
         const [y, m, d] = dateStr.split('-').map(Number);
         const dateObj = new Date(y, m - 1, d);
         const note = getNote(dateObj);
@@ -583,6 +690,9 @@
 
         document.getElementById('ip-date-display').innerText = `${weekday}, ${d} ${monthName} ${y}`;
         document.getElementById('ip-week-display').innerText = `Неделя ${week}`;
+
+        // Заметка месяца скрыта в режиме дня
+        document.getElementById('ip-month-wrap').style.display = 'none';
 
         // --- СДЕЛАНО ---
         const doneWrap = document.getElementById('ip-done-wrap');
@@ -602,7 +712,6 @@
             taskEl.innerHTML = '<ul>' + note.tasks.map(t => `<li>${t}</li>`).join('') + '</ul>';
             plannedWrap.style.display = 'block';
         } else if (done && done.tasks && done.tasks.length) {
-            // Если есть только сделанное — прячем блок планов
             taskEl.innerHTML = '';
             plannedWrap.style.display = 'none';
         } else {
@@ -614,14 +723,50 @@
         panel.classList.add('visible');
     }
 
+    // -------- ПАНЕЛЬ: МЕСЯЦ --------
+    function showMonthInfo(mKey, label) {
+        const panel = document.getElementById('info-panel');
+        panel.classList.add('month-mode');
+
+        const text = MONTH_NOTES[mKey] || '';
+
+        document.getElementById('ip-date-display').innerText = label;
+        document.getElementById('ip-week-display').innerText = 'Заметка месяца';
+
+        // Заметка месяца
+        const monthWrap = document.getElementById('ip-month-wrap');
+        const monthEl = document.getElementById('ip-month-display');
+        if (text) {
+            monthEl.innerText = text;
+            monthWrap.style.display = 'block';
+        } else {
+            monthWrap.style.display = 'none';
+        }
+
+        // Скрываем блоки дня
+        document.getElementById('ip-done-wrap').style.display = 'none';
+        document.getElementById('ip-planned-wrap').style.display = 'none';
+        document.getElementById('ip-detail-display').innerText = '';
+
+        panel.classList.add('visible');
+    }
+
     function hideInfo() {
-        document.getElementById('info-panel').classList.remove('visible');
+        const panel = document.getElementById('info-panel');
+        panel.classList.remove('visible');
+        panel.classList.remove('month-mode');
     }
 
     document.addEventListener('click', (e) => {
+        // Клик по названию месяца
+        if (e.target.classList.contains('month-name') && e.target.classList.contains('clickable')) {
+            showMonthInfo(e.target.dataset.monthKey, e.target.dataset.monthLabel);
+            return;
+        }
+        // Клик по дню
         if (e.target.classList.contains('day-cell') && !e.target.classList.contains('empty')) {
             const isoDate = e.target.dataset.date;
-            if (isoDate) showInfo(isoDate);
+            if (isoDate) showDayInfo(isoDate);
         }
     });
 
