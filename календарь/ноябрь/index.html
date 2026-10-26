@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь 2026 — Октябрь и Ноябрь</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #090A0F;
+            --bg-card: #12141C;
+            --text-white: #E2E8F0;
+            --text-gray: #94A3B8;
+            --accent-gold: #D4AF37;
+            --accent-soft: #38BDF8;
+            --font-head: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .year-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .month-block {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .month-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .month-name {
+            font-family: var(--font-head);
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .phase-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-gray);
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+        }
+
+        .day-name {
+            font-size: 0.7rem;
+            color: var(--text-gray);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .day-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .day-cell:hover {
+            background: rgba(56, 189, 248, 0.12);
+        }
+
+        .day-cell.empty {
+            visibility: hidden;
+        }
+
+        .day-cell.has-note::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+        }
+
+        .day-cell.today {
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .day-cell.weekend {
+            color: #FCA5A5;
+        }
+
+        #info-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: #1E293B;
+            border: 1px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            transform: translateY(150%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+        }
+        #info-panel.visible {
+            transform: translateY(0);
+        }
+        .ip-date {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+        .ip-week {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .ip-task {
+            font-size: 0.95rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+            font-weight: 500;
+            white-space: pre-wrap;
+        }
+        .ip-detail {
+            font-size: 0.85rem;
+            color: #CBD5E1;
+            font-style: italic;
+            white-space: pre-wrap;
+        }
+        .close-ip {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: var(--text-gray);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .year-grid {
+                grid-template-columns: 1fr;
+            }
+            #info-panel {
+                width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Календарь 2026</h1>
+        <p style="color:var(--text-gray)">Заметки на каждый день · Октябрь — Ноябрь 2026</p>
+
+        <div class="legend">
+            <div class="legend-item"><span class="dot" style="background:var(--accent-gold)"></span> Есть заметка</div>
+            <div class="legend-item"><span class="dot" style="background:#fff"></span> Сегодня</div>
+            <div class="legend-item"><span class="dot" style="background:#FCA5A5"></span> Выходной</div>
+        </div>
+    </header>
+
+    <main id="calendar-root" class="year-grid"></main>
+</div>
+
+<div id="info-panel">
+    <span class="close-ip" onclick="hideInfo()">×</span>
+    <div class="ip-date" id="ip-date-display">Дата</div>
+    <div class="ip-week" id="ip-week-display">Неделя</div>
+    <div class="ip-task" id="ip-task-display">Задача дня</div>
+    <div class="ip-detail" id="ip-detail-display">Детали...</div>
+</div>
+
+<script>
+    const YEAR = 2026;
+    const START_MONTH = 9;   // 9 = октябрь
+    const END_MONTH = 10;    // 10 = ноябрь
+
+    // =====================================================================
+    // ЗАМЕТКИ: ключ 'YYYY-MM-DD' → { task, detail }
+    // Пример:
+    // '2026-10-26': { task: 'Закаливание', detail: 'Контрастный душ 30 сек' },
+    // =====================================================================
+    const NOTES = {
+    };
+
+    const PLACEHOLDER_TASK = 'Заметка не заполнена';
+    const PLACEHOLDER_DETAIL = 'Нажмите, чтобы увидеть день. Заполните объект NOTES в коде, чтобы добавить свой план.';
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function dateKey(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
+    function getMonthName(date) { return date.toLocaleDateString('ru-RU', { month: 'long' }); }
+    function isSameDay(d1, d2) {
+        return d1.getDate() === d2.getDate() &&
+               d1.getMonth() === d2.getMonth() &&
+               d1.getFullYear() === d2.getFullYear();
+    }
+    function getISOWeek(date) {
+        const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        const dayNum = tmp.getUTCDay() || 7;
+        tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+        return Math.ceil(((tmp - yearStart) / 86400000 + 1) / 7);
+    }
+    function getNote(date) {
+        return NOTES[dateKey(date.getFullYear(), date.getMonth(), date.getDate())] || null;
+    }
+
+    function renderCalendar() {
+        const root = document.getElementById('calendar-root');
+        root.innerHTML = '';
+
+        for (let monthIndex = START_MONTH; monthIndex <= END_MONTH; monthIndex++) {
+            const firstOfMonth = new Date(YEAR, monthIndex, 1);
+            const daysInMonth = new Date(YEAR, monthIndex + 1, 0).getDate();
+            const firstDayOfWeek = firstOfMonth.getDay();
+            const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+
+            const monthBlock = document.createElement('div');
+            monthBlock.className = 'month-block';
+            monthBlock.innerHTML = `
+                <div class="month-header">
+                    <span class="month-name">${getMonthName(firstOfMonth)} ${YEAR}</span>
+                    <span class="phase-label">${daysInMonth} дн.</span>
+                </div>
+            `;
+
+            const gridDiv = document.createElement('div');
+            gridDiv.className = 'days-grid';
+
+            ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(day => {
+                const el = document.createElement('div');
+                el.className = 'day-name';
+                el.innerText = day;
+                gridDiv.appendChild(el);
+            });
+
+            for (let i = 0; i < offset; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'day-cell empty';
+                gridDiv.appendChild(empty);
+            }
+
+            for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
+                const cellDate = new Date(YEAR, monthIndex, dayNum);
+                const dow = cellDate.getDay();
+
+                const cell = document.createElement('div');
+                cell.className = 'day-cell';
+                cell.innerText = dayNum;
+                cell.dataset.date = dateKey(YEAR, monthIndex, dayNum);
+
+                if (dow === 0 || dow === 6) cell.classList.add('weekend');
+                if (getNote(cellDate)) cell.classList.add('has-note');
+                if (isSameDay(cellDate, new Date())) cell.classList.add('today');
+
+                gridDiv.appendChild(cell);
+            }
+
+            monthBlock.appendChild(gridDiv);
+            root.appendChild(monthBlock);
+        }
+    }
+
+    function showInfo(dateStr) {
+        const panel = document.getElementById('info-panel');
+        const [y, m, d] = dateStr.split('-').map(Number);
+        const dateObj = new Date(y, m - 1, d);
+        const note = getNote(dateObj);
+
+        const weekday = dateObj.toLocaleDateString('ru-RU', { weekday: 'long' });
+        const monthName = dateObj.toLocaleDateString('ru-RU', { month: 'long' });
+        const week = getISOWeek(dateObj);
+
+        document.getElementById('ip-date-display').innerText = `${weekday}, ${d} ${monthName} ${y}`;
+        document.getElementById('ip-week-display').innerText = `Неделя ${week}`;
+        document.getElementById('ip-task-display').innerText = note && note.task ? note.task : PLACEHOLDER_TASK;
+        document.getElementById('ip-detail-display').innerText = note && note.detail ? note.detail : PLACEHOLDER_DETAIL;
+
+        panel.classList.add('visible');
+    }
+
+    function hideInfo() {
+        document.getElementById('info-panel').classList.remove('visible');
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('day-cell') && !e.target.classList.contains('empty')) {
+            const isoDate = e.target.dataset.date;
+            if (isoDate) showInfo(isoDate);
+        }
+    });
+
+    renderCalendar();
+</script>
+</body>
+</html>
