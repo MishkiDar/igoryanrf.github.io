@@ -17,6 +17,7 @@
             --text-gray: #94A3B8;
             --accent-gold: #D4AF37;
             --accent-soft: #38BDF8;
+            --accent-green: #34D399;
             --font-head: 'Cormorant Garamond', serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -164,6 +165,18 @@
             background: var(--accent-gold);
         }
 
+        /* Точка "сделано" — зелёная, справа */
+        .day-cell.has-done::before {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: calc(50% + 7px);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent-green);
+        }
+
         .day-cell.today {
             outline: 2px solid #fff;
             outline-offset: -2px;
@@ -264,6 +277,47 @@
             font-style: italic;
             white-space: pre-wrap;
         }
+
+        /* Секция "сделано" */
+        .ip-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin: 18px 0 8px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .ip-section-title.done-title {
+            color: var(--accent-green);
+        }
+        .ip-section-title.planned-title {
+            color: var(--accent-gold);
+        }
+        .ip-done ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ip-done li {
+            padding: 5px 0 5px 20px;
+            position: relative;
+            font-weight: 400;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: #D1FAE5;
+        }
+        .ip-done li:last-child {
+            border-bottom: none;
+        }
+        .ip-done li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+
         .close-ip {
             position: absolute;
             top: 10px;
@@ -285,6 +339,7 @@
 
         <div class="legend">
             <div class="legend-item"><span class="dot" style="background:var(--accent-gold)"></span> Есть дела</div>
+            <div class="legend-item"><span class="dot" style="background:var(--accent-green)"></span> Есть сделанное</div>
             <div class="legend-item"><span class="dot" style="background:#fff"></span> Сегодня</div>
             <div class="legend-item"><span class="dot" style="background:#FCA5A5"></span> Выходной</div>
         </div>
@@ -297,7 +352,17 @@
     <span class="close-ip" onclick="hideInfo()">×</span>
     <div class="ip-date" id="ip-date-display">Дата</div>
     <div class="ip-week" id="ip-week-display">Неделя</div>
-    <div class="ip-task" id="ip-task-display">Дела дня</div>
+
+    <div id="ip-done-wrap" style="display:none;">
+        <div class="ip-section-title done-title">Сделано</div>
+        <div class="ip-done" id="ip-done-display"></div>
+    </div>
+
+    <div id="ip-planned-wrap">
+        <div class="ip-section-title planned-title">Дела дня</div>
+        <div class="ip-task" id="ip-task-display">Дела дня</div>
+    </div>
+
     <div class="ip-detail" id="ip-detail-display"></div>
 </div>
 
@@ -308,12 +373,28 @@
     const RANGE_START = { year: 2026, month: 9 };   // 9 = октябрь
     const RANGE_END   = { year: 2027, month: 4 };   // 4 = май
 
-    const NOTES = {};
+    const NOTES = {};   // запланированные дела
+    const DONE  = {};   // сделанные дела
 
     function addTask(dateStr, task) {
         if (!NOTES[dateStr]) NOTES[dateStr] = { tasks: [] };
         NOTES[dateStr].tasks.push(task);
     }
+
+    function addDone(dateStr, task) {
+        if (!DONE[dateStr]) DONE[dateStr] = { tasks: [] };
+        DONE[dateStr].tasks.push(task);
+    }
+
+    // ---------- 24 ОКТЯБРЯ 2026 — СДЕЛАНО ----------
+    [
+        'Привезли воды 4 раза',
+        'Антоша приехал, уазик пытались вытянуть',
+        'Стоплена баня',
+        'Постирал вручную до х',
+        'Сварил рис правильно',
+        'В магаз съездили и озон'
+    ].forEach(t => addDone('2026-10-24', t));
 
     // ---------- ОКТЯБРЬ 2026 (26–31.10): «закончить в октябре» ----------
     const octoberLate = [
@@ -402,15 +483,16 @@
         const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
         return Math.ceil(((tmp - yearStart) / 86400000 + 1) / 7);
     }
-    function getNote(date) {
-        return NOTES[dateKey(date.getFullYear(), date.getMonth(), date.getDate())] || null;
+    function keyOf(date) {
+        return dateKey(date.getFullYear(), date.getMonth(), date.getDate());
     }
+    function getNote(date) { return NOTES[keyOf(date)] || null; }
+    function getDone(date) { return DONE[keyOf(date)] || null; }
 
     function renderCalendar() {
         const root = document.getElementById('calendar-root');
         root.innerHTML = '';
 
-        // Итерируемся по (year, month), начиная с RANGE_START и до RANGE_END включительно
         let curYear = RANGE_START.year;
         let curMonth = RANGE_START.month;
 
@@ -459,6 +541,7 @@
 
                 if (dow === 0 || dow === 6) cell.classList.add('weekend');
                 if (getNote(cellDate)) cell.classList.add('has-note');
+                if (getDone(cellDate)) cell.classList.add('has-done');
                 if (isSameDay(cellDate, new Date())) cell.classList.add('today');
 
                 gridDiv.appendChild(cell);
@@ -467,7 +550,6 @@
             monthBlock.appendChild(gridDiv);
             root.appendChild(monthBlock);
 
-            // Следующий месяц
             curMonth++;
             if (curMonth > 11) { curMonth = 0; curYear++; }
         }
@@ -478,6 +560,7 @@
         const [y, m, d] = dateStr.split('-').map(Number);
         const dateObj = new Date(y, m - 1, d);
         const note = getNote(dateObj);
+        const done = getDone(dateObj);
 
         const weekday = dateObj.toLocaleDateString('ru-RU', { weekday: 'long' });
         const monthName = dateObj.toLocaleDateString('ru-RU', { month: 'long' });
@@ -486,11 +569,30 @@
         document.getElementById('ip-date-display').innerText = `${weekday}, ${d} ${monthName} ${y}`;
         document.getElementById('ip-week-display').innerText = `Неделя ${week}`;
 
+        // --- СДЕЛАНО ---
+        const doneWrap = document.getElementById('ip-done-wrap');
+        const doneEl = document.getElementById('ip-done-display');
+        if (done && done.tasks && done.tasks.length) {
+            doneEl.innerHTML = '<ul>' + done.tasks.map(t => `<li>${t}</li>`).join('') + '</ul>';
+            doneWrap.style.display = 'block';
+        } else {
+            doneEl.innerHTML = '';
+            doneWrap.style.display = 'none';
+        }
+
+        // --- ПЛАНЫ ---
+        const plannedWrap = document.getElementById('ip-planned-wrap');
         const taskEl = document.getElementById('ip-task-display');
         if (note && note.tasks && note.tasks.length) {
             taskEl.innerHTML = '<ul>' + note.tasks.map(t => `<li>${t}</li>`).join('') + '</ul>';
+            plannedWrap.style.display = 'block';
+        } else if (done && done.tasks && done.tasks.length) {
+            // Если есть только сделанное — прячем блок планов
+            taskEl.innerHTML = '';
+            plannedWrap.style.display = 'none';
         } else {
             taskEl.innerText = PLACEHOLDER_TASK;
+            plannedWrap.style.display = 'block';
         }
 
         document.getElementById('ip-detail-display').innerText = '';
