@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>План Д — Google Календарь</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #1e1e2e;
+    color: #e0e0f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: background 0.4s;
+  }
+  .card {
+    background: #2a2a3e;
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    border-top: 6px solid #7aa2f7;
+    transition: border-color 0.4s;
+  }
+  .step-num {
+    color: #8888aa;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .task {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 26px;
+    min-height: 60px;
+  }
+  .task.done {
+    text-decoration: line-through;
+    color: #4caf7d;
+  }
+  .iter {
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #8888aa;
+    margin-bottom: 8px;
+  }
+  .iter span {
+    color: #7aa2f7;
+    font-weight: 700;
+    font-size: 16px;
+    transition: color 0.4s;
+  }
+  .timer {
+    font-size: 56px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #7aa2f7;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+  .timer.flash {
+    color: #e0af68;
+    animation: pulse 0.4s 2;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .step-limit {
+    font-size: 13px;
+    color: #8888aa;
+    margin-bottom: 30px;
+  }
+  .check {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #8888aa;
+    margin-bottom: 30px;
+    user-select: none;
+  }
+  .check input {
+    width: 22px;
+    height: 22px;
+    accent-color: #4caf7d;
+    cursor: pointer;
+  }
+  .check.done span { color: #4caf7d; }
+  .nav {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  .nav button {
+    background: #7aa2f7;
+    color: #1e1e2e;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s, background 0.4s;
+  }
+  .nav button:hover { transform: translateY(-1px); }
+  .nav button:active { transform: translateY(1px); }
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .comment {
+    margin-top: 26px;
+    padding: 14px 16px;
+    background: #22222f;
+    border-left: 3px solid #7aa2f7;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #c0c0d8;
+    text-align: left;
+  }
+  .comment .who {
+    color: #7aa2f7;
+    font-weight: 700;
+    margin-right: 4px;
+  }
+  .audio-row {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .audio-tip {
+    font-size: 12px;
+    color: #8888aa;
+    font-style: italic;
+    transition: opacity 0.4s;
+    width: 100%;
+  }
+  .audio-tip.hidden { opacity: 0; }
+  .small-btn {
+    background: none;
+    border: 1px solid #44445a;
+    color: #8888aa;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .small-btn:hover { color: #e0e0f0; border-color: #8888aa; }
+  #errorBox {
+    display: none;
+    margin-top: 20px;
+    padding: 12px;
+    background: #3a1e1e;
+    border: 1px solid #e06c75;
+    border-radius: 8px;
+    color: #e06c75;
+    font-size: 13px;
+    text-align: left;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="step-num" id="stepNum">ШАГ 1 ИЗ 7</div>
+  <div class="task" id="taskText">Задача загружается…</div>
+  <div class="iter">КРУГ: <span id="iterCount">0</span></div>
+  <div class="timer" id="timer">02:00</div>
+  <div class="step-limit" id="stepLimit">лимит шага: 2 мин</div>
+  <label class="check" id="checkLabel">
+    <input type="checkbox" id="doneCheck">
+    <span>Исполнил</span>
+  </label>
+  <div class="nav">
+    <button id="prevBtn">← Назад</button>
+    <button id="nextBtn">Далее →</button>
+  </div>
+  <div class="comment" id="comment">
+    <span class="who">Д:</span><span id="commentText"></span>
+  </div>
+  <div class="audio-row">
+    <div class="audio-tip" id="audioTip">Кликни в любом месте страницы один раз — браузер разрешит звук</div>
+    <button class="small-btn" id="testSoundBtn">Проверить звук</button>
+    <button class="small-btn" id="resetBtn">Сбросить все галочки</button>
+  </div>
+  <div id="errorBox"></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  function showError(msg) {
+    var box = document.getElementById("errorBox");
+    if (box) {
+      box.style.display = "block";
+      box.textContent = "ОШИБКА: " + msg;
+    }
+  }
+
+  try {
+    var STORAGE_KEY = "planD_google_calendar_v3";
+
+    var steps = [
+      {
+        text: "Открыть Google Календарь на компьютере",
+        minutes: 2,
+        color: "#7aa2f7",
+        bg: "#1e1e2e",
+        comment: "Компьютер, не телефон. Импорт на телефоне не работает. Одна вкладка, тот аккаунт, куда нужен план."
+      },
+      {
+        text: "Создать отдельный календарь «План Д»",
+        minutes: 3,
+        color: "#9ece6a",
+        bg: "#1a2418",
+        comment: "Отдельный календарь — это контейнер. Если план сломается, удалишь контейнер, а не будешь чистить события по одному."
+      },
+      {
+        text: "Найти «Импорт и экспорт» в Настройках",
+        minutes: 1,
+        color: "#e0af68",
+        bg: "#2a2418",
+        comment: "Одна кнопка, никаких решений. Шестерёнка справа сверху → слева «Импорт и экспорт»."
+      },
+      {
+        text: "Выбрать .ics-файл с компьютера",
+        minutes: 1,
+        color: "#bb9af7",
+        bg: "#241a2a",
+        comment: "Файл должен заканчиваться на .ics. Если браузер сохранил как .txt — переименуй, иначе календарь его не примет."
+      },
+      {
+        text: "Импортировать в календарь «План Д»",
+        minutes: 1,
+        color: "#f7768e",
+        bg: "#2a1a1e",
+        comment: "Выбери именно «План Д». Иначе события упадут в основной календарь и смешаются с личным."
+      },
+      {
+        text: "Проверить, что события появились в «План Д»",
+        minutes: 2,
+        color: "#73daca",
+        bg: "#1a262a",
+        comment: "Не проверяй всё — проверь, что события вообще есть. Детали потом. Это шаг «контейнер не пустой»."
+      },
+      {
+        text: "Проверить напоминание на одном событии",
+        minutes: 3,
+        color: "#c0caf5",
+        bg: "#1e1e2e",
+        comment: "Напоминание — это внешний сигнал. Он снимает с тебя обязанность помнить. Проверил одно — работает система."
+      }
+    ];
+
+    var current = 0;
+    var secondsLeft = 0;
+    var stepSeconds = 0;
+    var iterations = 0;
+    var intervalId = null;
+    var audioCtx = null;
+
+    var doneState = {};
+
+    function loadDone() {
+      try {
+        var raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          doneState = parsed;
+        }
+      } catch (e) {
+        console.warn("Не удалось прочитать сохранённые галочки:", e);
+        doneState = {};
+      }
+    }
+
+    function saveDone() {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(doneState));
+      } catch (e) {
+        console.warn("Не удалось сохранить галочки:", e);
+      }
+    }
+
+    function isDone(i) { return doneState[i] === true; }
+
+    function setDone(i, val) {
+      if (val) { doneState[i] = true; } else { delete doneState[i]; }
+      saveDone();
+    }
+
+    var stepNumEl  = document.getElementById("stepNum");
+    var taskTextEl = document.getElementById("taskText");
+    var timerEl    = document.getElementById("timer");
+    var iterEl     = document.getElementById("iterCount");
+    var stepLimitEl= document.getElementById("stepLimit");
+    var checkEl    = document.getElementById("doneCheck");
+    var checkLabel = document.getElementById("checkLabel");
+    var prevBtn    = document.getElementById("prevBtn");
+    var nextBtn    = document.getElementById("nextBtn");
+    var cardEl     = document.getElementById("card");
+    var commentEl  = document.getElementById("commentText");
+    var audioTipEl = document.getElementById("audioTip");
+    var resetBtn   = document.getElementById("resetBtn");
+    var testBtn    = document.getElementById("testSoundBtn");
+
+    if (!stepNumEl || !taskTextEl || !timerEl || !iterEl || !checkEl || !prevBtn || !nextBtn || !cardEl || !commentEl) {
+      showError("не найдены элементы страницы. Файл повреждён при сохранении?");
+      return;
+    }
+
+    // ---- звук: создаём ТОЛЬКО после первого жеста пользователя ----
+    function initAudio() {
+      try {
+        if (!audioCtx) {
+          var Ctx = window.AudioContext || window.webkitAudioContext;
+          if (!Ctx) {
+            console.warn("AudioContext не поддерживается браузером");
+            return null;
+          }
+          audioCtx = new Ctx();
+        }
+        return audioCtx;
+      } catch (e) {
+        console.warn("Не удалось создать AudioContext:", e);
+        return null;
+      }
+    }
+
+    function unlockAudio() {
+      var ctx = initAudio();
+      if (!ctx) return;
+      if (ctx.state === "suspended") {
+        ctx.resume().then(function () {
+          if (audioTipEl) audioTipEl.classList.add("hidden");
+        }).catch(function (e) {
+          console.warn("resume не удался:", e);
+        });
+      } else {
+        if (audioTipEl) audioTipEl.classList.add("hidden");
+      }
+    }
+
+    document.addEventListener("pointerdown", unlockAudio, { once: false });
+    document.addEventListener("keydown", unlockAudio, { once: false });
+
+    function beepOnce() {
+      var ctx = initAudio();
+      if (!ctx) return;
+      var doBeep = function () {
+        try {
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = "sine";
+          osc.frequency.value = 880;
+          var now = ctx.currentTime;
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.exponentialRampToValueAtTime(0.3, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+          osc.start(now);
+          osc.stop(now + 0.42);
+        } catch (e) {
+          console.warn("Бип не сработал:", e);
+        }
+      };
+
+      if (ctx.state === "suspended") {
+        ctx.resume().then(doBeep).catch(function (e) {
+          console.warn("resume перед бипом не удался:", e);
+          doBeep();
+        });
+      } else {
+        doBeep();
+      }
+    }
+
+    if (testBtn) {
+      testBtn.addEventListener("click", function () {
+        unlockAudio();
+        beepOnce();
+      });
+    }
+
+    function formatTime(s) {
+      var m = Math.floor(s / 60).toString();
+      if (m.length < 2) m = "0" + m;
+      var sec = (s % 60).toString();
+      if (sec.length < 2) sec = "0" + sec;
+      return m + ":" + sec;
+    }
+
+    function startTimer() {
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(function () {
+        secondsLeft--;
+        timerEl.textContent = formatTime(Math.max(secondsLeft, 0));
+        if (secondsLeft <= 0) {
+          beepOnce();
+          iterations++;
+          iterEl.textContent = iterations;
+          timerEl.classList.add("flash");
+          setTimeout(function () { timerEl.classList.remove("flash"); }, 900);
+          secondsLeft = stepSeconds;
+          timerEl.textContent = formatTime(secondsLeft);
+        }
+      }, 1000);
+    }
+
+    function applyCheckVisual(checked) {
+      if (checked) {
+        checkEl.checked = true;
+        checkLabel.classList.add("done");
+        taskTextEl.classList.add("done");
+      } else {
+        checkEl.checked = false;
+        checkLabel.classList.remove("done");
+        taskTextEl.classList.remove("done");
+      }
+    }
+
+    function render() {
+      var s = steps[current];
+      stepSeconds = s.minutes * 60;
+
+      stepNumEl.textContent = "ШАГ " + (current + 1) + " ИЗ " + steps.length;
+      taskTextEl.textContent = s.text;
+      commentEl.textContent = s.comment;
+      stepLimitEl.textContent = "лимит шага: " + s.minutes + " мин";
+
+      applyCheckVisual(isDone(current));
+
+      document.body.style.background = s.bg;
+      cardEl.style.borderTopColor = s.color;
+      timerEl.style.color = s.color;
+      iterEl.style.color = s.color;
+      prevBtn.style.background = s.color;
+      nextBtn.style.background = s.color;
+      checkEl.style.accentColor = s.color;
+      document.getElementById("comment").style.borderLeftColor = s.color;
+
+      prevBtn.disabled = (current === 0);
+      nextBtn.disabled = (current === steps.length - 1);
+
+      iterations = 0;
+      iterEl.textContent = "0";
+      secondsLeft = stepSeconds;
+      timerEl.textContent = formatTime(secondsLeft);
+      timerEl.classList.remove("flash");
+
+      startTimer();
+    }
+
+    function goPrev() { if (current > 0) { current--; render(); } }
+    function goNext() { if (current < steps.length - 1) { current++; render(); } }
+
+    prevBtn.addEventListener("click", goPrev);
+    nextBtn.addEventListener("click", goNext);
+
+    checkEl.addEventListener("change", function () {
+      setDone(current, checkEl.checked);
+      applyCheckVisual(checkEl.checked);
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function () {
+        if (!window.confirm("Сбросить все галочки «Исполнил»?")) return;
+        doneState = {};
+        saveDone();
+        applyCheckVisual(false);
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+    });
+
+    loadDone();
+    render();
+  } catch (err) {
+    showError(err && err.message ? err.message : String(err));
+    if (window.console) console.error(err);
+  }
+})();
+</script>
+</body>
+</html>
