@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Календарь 2026 — Заметки на каждый день</title>
+    <title>Календарь 2026–2027 — Октябрь 2026 – Май 2027 · Дела по дням</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -175,11 +175,14 @@
             color: #FCA5A5;
         }
 
+        /* ================= ПАНЕЛЬ ================= */
         #info-panel {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 320px;
+            width: 340px;
+            max-height: 70vh;
+            overflow-y: auto;
             background: #1E293B;
             border: 1px solid var(--accent-gold);
             border-radius: 8px;
@@ -192,6 +195,28 @@
         #info-panel.visible {
             transform: translateY(0);
         }
+
+        /* На мобильных — панель выезжает СВЕРХУ */
+        @media (max-width: 768px) {
+            #info-panel {
+                top: 0;
+                bottom: auto;
+                left: 10px;
+                right: 10px;
+                width: auto;
+                max-height: 70vh;
+                border-radius: 0 0 12px 12px;
+                padding-top: 30px;
+                transform: translateY(-150%);
+            }
+            #info-panel.visible {
+                transform: translateY(0);
+            }
+            .year-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .ip-date {
             font-family: var(--font-head);
             font-size: 1.2rem;
@@ -210,7 +235,28 @@
             color: var(--text-white);
             margin-bottom: 10px;
             font-weight: 500;
-            white-space: pre-wrap;
+        }
+        .ip-task ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ip-task li {
+            padding: 5px 0 5px 16px;
+            position: relative;
+            font-weight: 400;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .ip-task li:last-child {
+            border-bottom: none;
+        }
+        .ip-task li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: 700;
         }
         .ip-detail {
             font-size: 0.85rem;
@@ -221,21 +267,12 @@
         .close-ip {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 12px;
             cursor: pointer;
             color: var(--text-gray);
-            font-size: 1.2rem;
-        }
-
-        @media (max-width: 768px) {
-            .year-grid {
-                grid-template-columns: 1fr;
-            }
-            #info-panel {
-                width: calc(100% - 40px);
-                left: 20px;
-                right: 20px;
-            }
+            font-size: 1.4rem;
+            line-height: 1;
+            z-index: 2;
         }
     </style>
 </head>
@@ -243,11 +280,11 @@
 
 <div class="container">
     <header>
-        <h1>Календарь 2026</h1>
-        <p style="color:var(--text-gray)">Заметки на каждый день · Январь — Декабрь 2026</p>
+        <h1>Календарь 2026–2027</h1>
+        <p style="color:var(--text-gray)">Дела по дням · Октябрь 2026 — Май 2027</p>
 
         <div class="legend">
-            <div class="legend-item"><span class="dot" style="background:var(--accent-gold)"></span> Есть заметка</div>
+            <div class="legend-item"><span class="dot" style="background:var(--accent-gold)"></span> Есть дела</div>
             <div class="legend-item"><span class="dot" style="background:#fff"></span> Сегодня</div>
             <div class="legend-item"><span class="dot" style="background:#FCA5A5"></span> Выходной</div>
         </div>
@@ -260,25 +297,95 @@
     <span class="close-ip" onclick="hideInfo()">×</span>
     <div class="ip-date" id="ip-date-display">Дата</div>
     <div class="ip-week" id="ip-week-display">Неделя</div>
-    <div class="ip-task" id="ip-task-display">Задача дня</div>
-    <div class="ip-detail" id="ip-detail-display">Детали...</div>
+    <div class="ip-task" id="ip-task-display">Дела дня</div>
+    <div class="ip-detail" id="ip-detail-display"></div>
 </div>
 
 <script>
-    const YEAR = 2026;
-    const START_MONTH = 0;
-    const END_MONTH = 11;
+    // =====================================================================
+    // ДИАПАЗОН: с октября 2026 по май 2027 включительно
+    // =====================================================================
+    const RANGE_START = { year: 2026, month: 9 };   // 9 = октябрь
+    const RANGE_END   = { year: 2027, month: 4 };   // 4 = май
+
+    const NOTES = {};
+
+    function addTask(dateStr, task) {
+        if (!NOTES[dateStr]) NOTES[dateStr] = { tasks: [] };
+        NOTES[dateStr].tasks.push(task);
+    }
+
+    // ---------- ОКТЯБРЬ 2026 (26–31.10): «закончить в октябре» ----------
+    const octoberLate = [
+        'Картошку перебрать и опустить',
+        'Крыша на бане починить',
+        'Яблоки собрать остатки',
+        'Засолки с Пушкина привезти',
+        'Кабачки увезти в Пушкин',
+        'Посмотреть диаметр трубы на 3 чердаке'
+    ];
+    for (let d = 26; d <= 31; d++) {
+        const key = `2026-10-${String(d).padStart(2, '0')}`;
+        octoberLate.forEach(t => addTask(key, t));
+        addTask(key, 'Со 2 этажа спустить технику (до 5 ноября)');
+    }
+
+    // ---------- 1 НОЯБРЯ 2026 ----------
+    addTask('2026-11-01', 'Предбанничек дома убрать, вынести холодильник');
+    addTask('2026-11-01', 'Кошек переселить, лотки поменять');
+    addTask('2026-11-01', 'Убраться на веранде нов. дом (Дима уехал)');
+    addTask('2026-11-01', 'Распределить конвекторы по домам');
+    addTask('2026-11-01', 'Комната левая очистить (ноябрь)');
+    addTask('2026-11-01', 'Дрова запасти, пилу починить');
+    addTask('2026-11-01', 'Со 2 этажа спустить технику (до 5 ноября)');
+
+    // 2 ноября
+    addTask('2026-11-02', 'Распределить конвекторы по домам');
+    addTask('2026-11-02', 'Комната левая очистить (ноябрь)');
+    addTask('2026-11-02', 'Дрова запасти, пилу починить');
+    addTask('2026-11-02', 'Со 2 этажа спустить технику (до 5 ноября)');
+
+    // 3 ноября
+    addTask('2026-11-03', 'Топинамбур: сходить до поля, выкопать');
+    addTask('2026-11-03', 'Распределить конвекторы по домам');
+    addTask('2026-11-03', 'Комната левая очистить (ноябрь)');
+    addTask('2026-11-03', 'Дрова запасти, пилу починить');
+    addTask('2026-11-03', 'Со 2 этажа спустить технику (до 5 ноября)');
+
+    // 4 ноября
+    addTask('2026-11-04', 'Топинамбур: сходить до поля, выкопать');
+    addTask('2026-11-04', 'Распределить конвекторы по домам (последний день)');
+    addTask('2026-11-04', 'Комната левая очистить (ноябрь)');
+    addTask('2026-11-04', 'Дрова запасти, пилу починить');
+    addTask('2026-11-04', 'Со 2 этажа спустить технику (до 5 ноября)');
+
+    // 5 ноября
+    addTask('2026-11-05', 'Топинамбур: сходить до поля, выкопать');
+    addTask('2026-11-05', 'Теплицу вычистить, укроп на еду');
+    addTask('2026-11-05', 'Комната левая очистить (ноябрь)');
+    addTask('2026-11-05', 'Дрова запасти, пилу починить');
+    addTask('2026-11-05', 'Со 2 этажа спустить технику (последний день)');
+
+    // 6–10 ноября
+    for (let d = 6; d <= 10; d++) {
+        const key = `2026-11-${String(d).padStart(2, '0')}`;
+        addTask(key, 'Топинамбур: сходить до поля, выкопать');
+        addTask(key, 'Теплицу вычистить, укроп на еду');
+        addTask(key, 'Комната левая очистить (ноябрь)');
+        addTask(key, 'Дрова запасти, пилу починить');
+    }
+
+    // 11–30 ноября
+    for (let d = 11; d <= 30; d++) {
+        const key = `2026-11-${String(d).padStart(2, '0')}`;
+        addTask(key, 'Комната левая очистить (ноябрь)');
+        addTask(key, 'Дрова запасти, пилу починить');
+    }
 
     // =====================================================================
-    // ЗАМЕТКИ: ключ 'YYYY-MM-DD' → { task, detail }
-    // Добавьте свои даты сюда. Пример:
-    // '2026-01-01': { task: 'Отдых', detail: 'Ничего не делаем' },
+    // УТИЛИТЫ
     // =====================================================================
-    const NOTES = {
-    };
-
-    const PLACEHOLDER_TASK = 'Заметка не заполнена';
-    const PLACEHOLDER_DETAIL = 'Нажмите, чтобы увидеть день. Заполните объект NOTES в коде, чтобы добавить свой план.';
+    const PLACEHOLDER_TASK = 'Дел на этот день нет';
 
     function pad(n) { return n < 10 ? '0' + n : '' + n; }
     function dateKey(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
@@ -303,9 +410,16 @@
         const root = document.getElementById('calendar-root');
         root.innerHTML = '';
 
-        for (let monthIndex = START_MONTH; monthIndex <= END_MONTH; monthIndex++) {
-            const firstOfMonth = new Date(YEAR, monthIndex, 1);
-            const daysInMonth = new Date(YEAR, monthIndex + 1, 0).getDate();
+        // Итерируемся по (year, month), начиная с RANGE_START и до RANGE_END включительно
+        let curYear = RANGE_START.year;
+        let curMonth = RANGE_START.month;
+
+        while (
+            curYear < RANGE_END.year ||
+            (curYear === RANGE_END.year && curMonth <= RANGE_END.month)
+        ) {
+            const firstOfMonth = new Date(curYear, curMonth, 1);
+            const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
             const firstDayOfWeek = firstOfMonth.getDay();
             const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
 
@@ -313,7 +427,7 @@
             monthBlock.className = 'month-block';
             monthBlock.innerHTML = `
                 <div class="month-header">
-                    <span class="month-name">${getMonthName(firstOfMonth)} ${YEAR}</span>
+                    <span class="month-name">${getMonthName(firstOfMonth)} ${curYear}</span>
                     <span class="phase-label">${daysInMonth} дн.</span>
                 </div>
             `;
@@ -335,13 +449,13 @@
             }
 
             for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
-                const cellDate = new Date(YEAR, monthIndex, dayNum);
+                const cellDate = new Date(curYear, curMonth, dayNum);
                 const dow = cellDate.getDay();
 
                 const cell = document.createElement('div');
                 cell.className = 'day-cell';
                 cell.innerText = dayNum;
-                cell.dataset.date = dateKey(YEAR, monthIndex, dayNum);
+                cell.dataset.date = dateKey(curYear, curMonth, dayNum);
 
                 if (dow === 0 || dow === 6) cell.classList.add('weekend');
                 if (getNote(cellDate)) cell.classList.add('has-note');
@@ -352,6 +466,10 @@
 
             monthBlock.appendChild(gridDiv);
             root.appendChild(monthBlock);
+
+            // Следующий месяц
+            curMonth++;
+            if (curMonth > 11) { curMonth = 0; curYear++; }
         }
     }
 
@@ -367,9 +485,15 @@
 
         document.getElementById('ip-date-display').innerText = `${weekday}, ${d} ${monthName} ${y}`;
         document.getElementById('ip-week-display').innerText = `Неделя ${week}`;
-        document.getElementById('ip-task-display').innerText = note && note.task ? note.task : PLACEHOLDER_TASK;
-        document.getElementById('ip-detail-display').innerText = note && note.detail ? note.detail : PLACEHOLDER_DETAIL;
 
+        const taskEl = document.getElementById('ip-task-display');
+        if (note && note.tasks && note.tasks.length) {
+            taskEl.innerHTML = '<ul>' + note.tasks.map(t => `<li>${t}</li>`).join('') + '</ul>';
+        } else {
+            taskEl.innerText = PLACEHOLDER_TASK;
+        }
+
+        document.getElementById('ip-detail-display').innerText = '';
         panel.classList.add('visible');
     }
 
