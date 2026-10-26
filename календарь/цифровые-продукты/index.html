@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гид по цифровым продуктам | Master Resell Rights & PLR (Электронная книга) - Игорян.рф</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Graphik', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #222;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* ===== ШАПКА ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-bottom: 1px solid #e1e3df;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+        }
+
+        .header-logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #F1641E;
+            font-family: 'Georgia', serif;
+            margin-right: 16px;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        .header-categories {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #222;
+            cursor: pointer;
+            margin-right: 16px;
+            white-space: nowrap;
+        }
+
+        .header-categories svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 700px;
+            position: relative;
+            margin: 0 16px;
+        }
+
+        .header-search input {
+            width: 100%;
+            padding: 12px 50px 12px 16px;
+            border: 2px solid #222;
+            border-radius: 24px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .header-search input:focus {
+            border-color: #F1641E;
+        }
+
+        .header-search-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #F1641E;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-search-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            background: none;
+            border: none;
+        }
+
+        .header-icon:hover {
+            background: #f0f0f0;
+        }
+
+        .header-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .header-icon-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #222;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .header-icon-text:hover {
+            background: #f0f0f0;
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 12px 24px;
+            border-bottom: 1px solid #e1e3df;
+            font-size: 14px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #222;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .nav-bar a:hover {
+            color: #F1641E;
+        }
+
+        .nav-bar a.active {
+            font-weight: 700;
+        }
+
+        /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
+        .breadcrumbs {
+            padding: 16px 24px;
+            font-size: 13px;
+            color: #595959;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .breadcrumbs a {
+            color: #222;
+            text-decoration: underline;
+        }
+
+        .breadcrumbs a:hover {
+            color: #F1641E;
+        }
+
+        .breadcrumbs span {
+            margin: 0 4px;
+        }
+
+        /* ===== ССЫЛКА НАЗАД ===== */
+        .back-link {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8px 24px 16px;
+        }
+
+        .back-link a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #222;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            color: #F1641E;
+        }
+
+        /* ===== ОСНОВНАЯ РАЗМЕТКА ===== */
+        .product-full {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 48px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 48px;
+        }
+
+        .product-left {
+            min-width: 0;
+        }
+
+        .product-right {
+            min-width: 0;
+        }
+
+        /* ===== ГАЛЕРЕЯ ===== */
+        .gallery-section {
+            display: flex;
+            gap: 16px;
+            position: relative;
+        }
+
+        .gallery-thumbs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 56px;
+            flex-shrink: 0;
+        }
+
+        .gallery-thumb {
+            width: 56px;
+            height: 56px;
+            border: 2px solid #e1e3df;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s;
+            padding: 0;
+        }
+
+        .gallery-thumb.active {
+            border-color: #222;
+        }
+
+        .gallery-thumb:hover {
+            border-color: #888;
+        }
+
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-main {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            background: #fafafa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .gallery-main-img {
+            max-width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #e1e3df;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 2;
+            transition: background 0.2s;
+        }
+
+        .gallery-nav-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .gallery-nav-btn.prev {
+            left: 12px;
+        }
+
+        .gallery-nav-btn.next {
+            right: 12px;
+        }
+
+        .bestseller-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #FDEBD0;
+            border: 1px solid #F1641E;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #222;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .bestseller-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #e1e3df;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .wishlist-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .wishlist-btn.active svg {
+            fill: #e74c3c;
+            stroke: #e74c3c;
+        }
+
+        .slide-counter {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 12px;
+            z-index: 2;
+        }
+
+        /* ===== ИНФО О ТОВАРЕ ===== */
+        .product-info {
+            position: sticky;
+            top: 80px;
+            align-self: start;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .product-in-carts {
+            font-size: 13px;
+            color: #c0392b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .price-current {
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .price-original {
+            font-size: 16px;
+            color: #595959;
+            text-decoration: line-through;
+        }
+
+        .product-discount {
+            font-size: 14px;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        .product-discount strong {
+            font-weight: 700;
+        }
+
+        .product-seller {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .seller-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #222;
+            text-decoration: none;
+        }
+
+        .seller-name:hover {
+            text-decoration: underline;
+        }
+
+        .seller-verified {
+            width: 16px;
+            height: 16px;
+            background: #7B61FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .seller-verified svg {
+            width: 10px;
+            height: 10px;
+            fill: white;
+        }
+
+        .seller-stars {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .seller-stars svg {
+            width: 14px;
+            height: 14px;
+            fill: #F1641E;
+        }
+
+        .btn-buy {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #222;
+            border-radius: 24px;
+            background: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-buy:hover {
+            background: #f5f5f5;
+        }
+
+        .btn-cart {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 24px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-cart:hover {
+            background: #444;
+        }
+
+        .btn-collection {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 24px;
+            background: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .btn-collection svg {
+            width: 20px;
+            height: 20px;
+            fill: #e74c3c;
+        }
+
+        .star-seller-badge {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .star-seller-icon {
+            width: 40px;
+            height: 40px;
+            background: #7B61FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .star-seller-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .star-seller-text {
+            font-size: 13px;
+            color: #595959;
+            line-height: 1.4;
+        }
+
+        .star-seller-text strong {
+            color: #222;
+        }
+
+        /* ===== ДЕТАЛИ ТОВАРА ===== */
+        .item-details {
+            border-top: 1px solid #e1e3df;
+            padding-top: 16px;
+        }
+
+        .detail-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            user-select: none;
+        }
+
+        .detail-toggle svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+
+        .detail-toggle.open svg {
+            transform: rotate(180deg);
+        }
+
+        .detail-content {
+            padding-bottom: 16px;
+        }
+
+        .detail-content h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            margin-top: 12px;
+        }
+
+        .detail-content h4:first-child {
+            margin-top: 0;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .detail-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .detail-item strong {
+            font-weight: 600;
+        }
+
+        .product-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #595959;
+            margin-top: 16px;
+        }
+
+        .report-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #222;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 24px;
+            font-weight: 500;
+        }
+
+        .report-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ===== ОТЗЫВЫ ===== */
+        .reviews-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 48px;
+        }
+
+        .reviews-header {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .ai-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            color: #595959;
+            align-items: center;
+        }
+
+        .ai-summary strong {
+            color: #222;
+        }
+
+        .ai-tag {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ai-tag svg {
+            width: 16px;
+            height: 16px;
+            fill: #4CAF50;
+        }
+
+        .ratings-overview {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .rating-big {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-big-number {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .rating-big-star {
+            width: 32px;
+            height: 32px;
+            fill: #F1641E;
+        }
+
+        .rating-big-label {
+            font-size: 13px;
+            color: #595959;
+        }
+
+        .rating-big-label strong {
+            display: block;
+            color: #222;
+            font-size: 14px;
+        }
+
+        .rating-circles {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .rating-circle-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 3px solid #F1641E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .rating-circle-label {
+            font-size: 13px;
+            color: #595959;
+        }
+
+        .rating-circle-label strong {
+            display: block;
+            color: #222;
+            font-size: 14px;
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .review-filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #e1e3df;
+            border-radius: 20px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .review-filter-btn.active {
+            background: #f0f0f0;
+            border-color: #222;
+        }
+
+        /* ===== КАРТОЧКА ОТЗЫВА ===== */
+        .review-card {
+            padding: 20px 0;
+            border-bottom: 1px solid #e1e3df;
+        }
+
+        .review-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .review-stars {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .review-stars svg {
+            width: 16px;
+            height: 16px;
+            fill: #F1641E;
+        }
+
+        .review-stars svg.empty {
+            fill: #e1e3df;
+        }
+
+        .review-score {
+            font-size: 16px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .review-this-item {
+            font-size: 12px;
+            border: 1px solid #e1e3df;
+            border-radius: 12px;
+            padding: 2px 8px;
+            margin-left: 8px;
+            color: #595959;
+            white-space: nowrap;
+        }
+
+        .review-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .review-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e1e3df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .review-author {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: #595959;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .review-response {
+            margin-top: 12px;
+            padding-left: 16px;
+            border-left: 3px solid #e1e3df;
+        }
+
+        .review-response-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .review-response-title svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .review-response-text {
+            font-size: 13px;
+            color: #595959;
+        }
+
+        /* ===== БОКОВЫЕ СЕКЦИИ ===== */
+        .sidebar-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            border-top: 1px solid #e1e3df;
+            user-select: none;
+        }
+
+        .sidebar-toggle svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+
+        .sidebar-toggle.open svg {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-toggle-content {
+            padding-bottom: 16px;
+        }
+
+        .delivery-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .delivery-info p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .delivery-info a {
+            color: #222;
+            text-decoration: underline;
+        }
+
+        .protection-badge {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .protection-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        .protection-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .protection-text strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .protection-text a {
+            text-decoration: underline;
+            color: #222;
+        }
+
+        .btn-policies {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #222;
+            border-radius: 24px;
+            background: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-policies:hover {
+            background: #f5f5f5;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 900px) {
+            .product-full {
+                grid-template-columns: 1fr;
+            }
+
+            .product-info {
+                position: static;
+            }
+
+            .nav-bar {
+                overflow-x: auto;
+                justify-content: flex-start;
+                gap: 20px;
+            }
+
+            .header {
+                flex-wrap: wrap;
+            }
+
+            .header-search {
+                order: 3;
+                max-width: 100%;
+                margin: 8px 0 0;
+            }
+
+            .gallery-main {
+                min-height: 380px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-section {
+                flex-direction: column-reverse;
+            }
+
+            .gallery-thumbs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .gallery-thumb {
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <a href="#" class="header-logo">Игорян.рф</a>
+        <div class="header-categories">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            Категории
+        </div>
+        <div class="header-search">
+            <input type="text" placeholder="Искать что угодно">
+            <button class="header-search-btn">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </button>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <button class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </button>
+            <button class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </button>
+            <span class="header-icon-text">Игорян ▾</span>
+            <button class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="nav-bar">
+        <a href="#">🎁 Подарки</a>
+        <a href="#">Топ-100 подарков</a>
+        <a href="#">Домашние фавориты</a>
+        <a href="#">Модные находки</a>
+        <a href="#">Винтаж</a>
+        <a href="#">Свадебный гид</a>
+    </nav>
+
+    <!-- ХЛЕБНЫЕ КРОШКИ -->
+    <div class="breadcrumbs">
+        <a href="#">Главная</a> <span>›</span>
+        <a href="#">Книги, фильмы и музыка</a> <span>›</span>
+        <a href="#">Книги</a> <span>›</span>
+        <a href="#">Гиды и инструкции</a>
+    </div>
+
+    <!-- ССЫЛКА НАЗАД -->
+    <div class="back-link">
+        <a href="#">← Назад к результатам поиска</a>
+    </div>
+
+    <!-- ОСНОВНОЙ БЛОК ТОВАРА -->
+    <div class="product-full">
+        <!-- ЛЕВАЯ КОЛОНКА: Галерея + Отзывы -->
+        <div class="product-left">
+            <!-- Галерея -->
+            <div class="gallery-section">
+                <div class="gallery-thumbs" id="galleryThumbs"></div>
+
+                <div class="gallery-main">
+                    <div class="bestseller-badge">
+                        <svg viewBox="0 0 24 24" fill="#F1641E"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        Хит продаж
+                    </div>
+
+                    <button class="wishlist-btn" id="wishlistBtn" aria-label="Добавить в избранное">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+
+                    <img class="gallery-main-img" id="mainImage" src="" alt="Изображение товара">
+
+                    <span class="slide-counter" id="slideCounter">1 / 5</span>
+
+                    <button class="gallery-nav-btn prev" id="prevBtn" aria-label="Предыдущее изображение">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="gallery-nav-btn next" id="nextBtn" aria-label="Следующее изображение">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Пожаловаться на объявление -->
+            <div style="text-align:right;margin-top:16px;">
+                <span class="report-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    Пожаловаться на объявление
+                </span>
+            </div>
+
+            <!-- Отзывы -->
+            <div style="margin-top:40px;">
+                <h2 class="reviews-header">Отзывы о товаре</h2>
+
+                <div class="ai-summary">
+                    <strong>Что говорят покупатели — кратко от ИИ:</strong>
+                    <span class="ai-tag"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Отличное качество</span>
+                    <span class="ai-tag"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> В восторге</span>
+                    <span class="ai-tag"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Отзывчивый продавец</span>
+                    <span class="ai-tag"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Соответствует описанию</span>
+                    <span class="ai-tag"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Быстрая доставка</span>
+                </div>
+
+                <div class="ratings-overview">
+                    <div class="rating-big">
+                        <span class="rating-big-number">4.7</span>
+                        <svg class="rating-big-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <div class="rating-big-label">
+                            <strong>Средняя оценка</strong>
+                            (63 отзыва)
+                        </div>
+                    </div>
+                    <div class="rating-circles">
+                        <div class="rating-circle-item">
+                            <div class="rating-circle">4.7</div>
+                            <div class="rating-circle-label"><strong>Качество</strong></div>
+                        </div>
+                        <div class="rating-circle-item">
+                            <div class="rating-circle">4.9</div>
+                            <div class="rating-circle-label"><strong>Доставка</strong></div>
+                        </div>
+                        <div class="rating-circle-item">
+                            <div class="rating-circle">4.8</div>
+                            <div class="rating-circle-label"><strong>Поддержка</strong></div>
+                        </div>
+                        <div class="rating-circle-item">
+                            <div class="rating-circle">91%</div>
+                            <div class="rating-circle-label"><strong>Рекомендуют</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-filters">
+                    <button class="review-filter-btn active">По умолчанию ▾</button>
+                    <button class="review-filter-btn">Качество (24)</button>
+                    <button class="review-filter-btn">Удобство (11)</button>
+                    <button class="review-filter-btn">Точность описания (7)</button>
+                    <button class="review-filter-btn">Сервис (7)</button>
+                    <button class="review-filter-btn">Цена/качество (5)</button>
+                </div>
+
+                <!-- Отзыв 1 -->
+                <div class="review-card">
+                    <div class="review-card-header">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span class="review-score">5</span>
+                            <span class="review-this-item">этот товар</span>
+                        </div>
+                        <div class="review-meta">
+                            <div class="review-avatar" style="background:#8B7355;color:white;">Ф</div>
+                            <span class="review-author">Флорин</span>
+                            <span class="review-date">18 окт. 2026</span>
+                        </div>
+                    </div>
+                    <div class="review-text">Отличная работа, с нетерпением жду других ваших продуктов.</div>
+                </div>
+
+                <!-- Отзыв 2 -->
+                <div class="review-card">
+                    <div class="review-card-header">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="empty" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span class="review-score">4</span>
+                            <span class="review-this-item">этот товар</span>
+                        </div>
+                        <div class="review-meta">
+                            <div class="review-avatar" style="background:#4A90D9;color:white;">М</div>
+                            <span class="review-author">Милли</span>
+                            <span class="review-date">18 окт. 2026</span>
+                        </div>
+                    </div>
+                    <div class="review-text">Товар хороший, спасибо!</div>
+                </div>
+
+                <!-- Отзыв 3 -->
+                <div class="review-card">
+                    <div class="review-card-header">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="empty" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span class="review-score">4</span>
+                            <span class="review-this-item">этот товар</span>
+                        </div>
+                        <div class="review-meta">
+                            <div class="review-avatar" style="background:#E8A87C;color:white;">А</div>
+                            <span class="review-author">Ари</span>
+                            <span class="review-date">13 окт. 2026</span>
+                        </div>
+                    </div>
+                    <div class="review-text">Хорошее руководство для новичков.</div>
+                    <div class="review-response">
+                        <div class="review-response-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Ответ продавца Кэролайн
+                        </div>
+                        <div class="review-response-text">Спасибо вам.</div>
+                    </div>
+                </div>
+
+                <!-- Отзыв 4 -->
+                <div class="review-card">
+                    <div class="review-card-header">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span class="review-score">5</span>
+                            <span class="review-this-item">этот товар</span>
+                        </div>
+                        <div class="review-meta">
+                            <div class="review-avatar" style="background:#D4A5D4;color:white;">С</div>
+                            <span class="review-author">София</span>
+                            <span class="review-date">9 окт. 2026</span>
+                        </div>
+                    </div>
+                    <div class="review-text">Очень информативно и полезно, спасибо!</div>
+                    <div class="review-response">
+                        <div class="review-response-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Ответ продавца Кэролайн
+                        </div>
+                        <div class="review-response-text">Большое спасибо за тёплый отзыв.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА: Инфо о товаре -->
+        <div class="product-right">
+            <div class="product-info">
+                <h1 class="product-title">Гид по цифровым продуктам | Master Resell Rights & PLR (Электронная книга)</h1>
+
+                <div class="product-in-carts">В корзине у 20+ человек</div>
+
+                <div class="product-price">
+                    <span class="price-current">1,17 $</span>
+                    <span class="price-original">2,35 $</span>
+                </div>
+
+                <div class="product-discount"><strong>Скидка 50%</strong> • Ограниченное время</div>
+
+                <div class="product-seller">
+                    <a href="#" class="seller-name">Игорян.рф</a>
+                    <span class="seller-verified">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </span>
+                    <div class="seller-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                </div>
+
+                <button class="btn-buy">Купить сейчас</button>
+                <button class="btn-cart">Добавить в корзину</button>
+                <button class="btn-collection">
+                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    Добавить в коллекцию
+                </button>
+
+                <div class="star-seller-badge">
+                    <div class="star-seller-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="star-seller-text">
+                        <strong>Звёздный продавец.</strong> Этот продавец стабильно получал 5 звёзд, отправлял заказы вовремя и быстро отвечал на сообщения.
+                    </div>
+                </div>
+
+                <!-- Детали товара -->
+                <div class="item-details">
+                    <div class="detail-toggle open" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.classList.contains('open') ? 'block' : 'none';">
+                        <span>Детали товара</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="detail-content">
+                        <h4>Особенности</h4>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                            Автор — <strong>Игорян.рф</strong>
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Цифровая загрузка
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Тип файлов: 3 PDF
+                        </div>
+
+                        <div class="product-description">
+                            Этот готовый гид «Как создавать и продавать цифровые продукты» создан для тех, кто хочет сделать первый шаг к освоению навыка создания и продажи цифровых продуктов для пассивного дохода. Гид также включает права на мастер-перепродажу (MRR) и частные права на маркировку (PLR).
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align:center;margin:16px 0;">
+                    <a href="#" style="font-size:14px;font-weight:600;color:#222;">Узнать больше о товаре</a>
+                </div>
+
+                <!-- Доставка -->
+                <div class="sidebar-toggle open" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.classList.contains('open') ? 'block' : 'none';">
+                    <span>Доставка</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="sidebar-toggle-content delivery-info">
+                    <h3>Мгновенная загрузка</h3>
+                    <p>Файлы будут доступны для скачивания после подтверждения оплаты. <a href="#">Вот как это работает.</a></p>
+                    <p>Цифровые загрузки не подлежат возврату, обмену или отмене. Если у вас возникли проблемы с заказом, свяжитесь с продавцом.</p>
+                </div>
+
+                <!-- Знаете ли вы? -->
+                <div class="sidebar-toggle open" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.classList.contains('open') ? 'block' : 'none';">
+                    <span>Знаете ли вы?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="sidebar-toggle-content">
+                    <div class="protection-badge">
+                        <svg class="protection-icon" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="20" fill="#E8F4FD" stroke="#4A90D9" stroke-width="2"/>
+                            <path d="M16 24l6 6 12-12" stroke="#4A90D9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="protection-text">
+                            <strong>Защита покупок Игорян.рф</strong>
+                            Покупайте уверенно: если что-то пойдёт не так с заказом, мы вас прикроем для всех подходящих покупок — <a href="#">см. условия программы</a>
+                        </div>
+                    </div>
+                    <button class="btn-policies">Правила магазина</button>
+                </div>
+
+                <!-- Вопросы и ответы -->
+                <div class="sidebar-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.classList.contains('open') ? 'block' : 'none';">
+                    <span>Вопросы и ответы</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="sidebar-toggle-content" style="display:none;">
+                    <p style="font-size:14px;color:#595959;">Пока нет вопросов. Задайте первый!</p>
+                </div>
+
+                <!-- Продавец -->
+                <div class="sidebar-toggle" onclick="this.classList.toggle('open'); this.nextElementSibling.style.display = this.classList.contains('open') ? 'block' : 'none';">
+                    <span>Познакомьтесь с продавцом</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="sidebar-toggle-content" style="display:none;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                        <div style="width:48px;height:48px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">И</div>
+                        <div>
+                            <div style="font-weight:700;">Игорян</div>
+                            <div style="font-size:13px;color:#595959;">Владелец магазина Игорян.рф</div>
+                        </div>
+                    </div>
+                    <p style="font-size:14px;color:#595959;line-height:1.5;">
+                        Привет! Я Игорян. Создаю цифровые продукты, которые помогают начать онлайн-бизнес.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== Галерея =====
+        // Генерируем 5 слайдов с разными фонами и подписями
+        var slides = [
+            {
+                bg: '#fafafa',
+                badge: 'Обложка гида',
+                title: 'КАК СОЗДАВАТЬ',
+                subtitle: 'Цифровые продукты',
+                text: 'Это идеальный гид для тех, кто хочет научиться зарабатывать онлайн с помощью цифровых продуктов. Изучайте сами или перепродавайте своим клиентам — гид поставляется с правами PLR/MRR.',
+                accent: '#222',
+                accentText: '#fff'
+            },
+            {
+                bg: '#e8f0fe',
+                badge: 'Страница 1',
+                title: 'Шаг 1',
+                subtitle: 'Выбор ниши',
+                text: 'Узнайте, как выбрать прибыльную нишу для вашего первого цифрового продукта и проверить спрос.',
+                accent: '#4d6bfe',
+                accentText: '#fff'
+            },
+            {
+                bg: '#fef3e8',
+                badge: 'Страница 2',
+                title: 'Шаг 2',
+                subtitle: 'Создание продукта',
+                text: 'Пошаговое руководство по созданию качественного цифрового продукта без технического опыта.',
+                accent: '#F1641E',
+                accentText: '#fff'
+            },
+            {
+                bg: '#e8fef0',
+                badge: 'Страница 3',
+                title: 'Шаг 3',
+                subtitle: 'Платформа и запуск',
+                text: 'Какую платформу выбрать для продажи, как настроить страницу и запустить продажи в первый день.',
+                accent: '#2e8b57',
+                accentText: '#fff'
+            },
+            {
+                bg: '#f5e8fe',
+                badge: 'Бонус',
+                title: 'Бонусные права',
+                subtitle: 'PLR & MRR',
+                text: 'Полное объяснение прав на мастер-перепродажу и частных прав на маркировку — что можно и что нельзя делать с продуктом.',
+                accent: '#7B61FF',
+                accentText: '#fff'
+            }
+        ];
+
+        var currentIndex = 0;
+        var thumbsContainer = document.getElementById('galleryThumbs');
+        var mainImage = document.getElementById('mainImage');
+        var counter = document.getElementById('slideCounter');
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+
+        // Создание миниатюр
+        function buildThumbs() {
+            thumbsContainer.innerHTML = '';
+            slides.forEach(function (slide, i) {
+                var thumb = document.createElement('button');
+                thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+                thumb.type = 'button';
+                thumb.setAttribute('aria-label', 'Слайд ' + (i + 1));
+
+                // Миниатюра — маленький цветной блок с текстом
+                var inner = document.createElement('div');
+                inner.style.cssText = 'width:100%;height:100%;background:' + slide.bg +
+                    ';display:flex;align-items:center;justify-content:center;font-size:9px;color:' + slide.accent +
+                    ';font-weight:700;text-align:center;padding:2px;line-height:1.1;';
+                inner.textContent = slide.subtitle;
+                thumb.appendChild(inner);
+
+                thumb.addEventListener('click', function () {
+                    goToSlide(i);
+                });
+
+                thumbsContainer.appendChild(thumb);
+            });
+        }
+
+        // Основное изображение — генерируем SVG-data-URL для слайда
+        function makeSlideImage(slide) {
+            var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">' +
+                '<rect width="600" height="600" fill="' + slide.bg + '"/>' +
+                '<rect x="120" y="150" width="360" height="120" rx="10" fill="' + slide.accent + '"/>' +
+                '<text x="300" y="190" text-anchor="middle" fill="' + slide.accentText + '" font-family="Georgia,serif" font-size="16" opacity="0.7">' + slide.badge + '</text>' +
+                '<text x="300" y="225" text-anchor="middle" fill="' + slide.accentText + '" font-family="Georgia,serif" font-size="22" font-weight="bold">' + slide.title + '</text>' +
+                '<text x="300" y="255" text-anchor="middle" fill="' + slide.accentText + '" font-family="Georgia,serif" font-size="14">' + slide.subtitle + '</text>' +
+                '<text x="300" y="310" text-anchor="middle" fill="' + slide.accent + '" font-family="Georgia,serif" font-size="28" font-weight="bold">' + slide.title + '</text>' +
+                '<text x="300" y="350" text-anchor="middle" fill="' + slide.accent + '" font-family="Georgia,serif" font-size="34" font-style="italic">' + slide.subtitle + '</text>' +
+                '<foreignObject x="120" y="400" width="360" height="120">' +
+                '<div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Arial,sans-serif;font-size:13px;line-height:1.5;color:#555;text-align:center;padding:0 10px;">' +
+                slide.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+                '</div></foreignObject>' +
+                '</svg>';
+            return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+        }
+
+        // Переключение слайда
+        function goToSlide(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            currentIndex = index;
+
+            mainImage.src = makeSlideImage(slides[currentIndex]);
+            counter.textContent = (currentIndex + 1) + ' / ' + slides.length;
+
+            // Подсветка активной миниатюры
+            Array.prototype.forEach.call(thumbsContainer.children, function (thumb, i) {
+                thumb.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        prevBtn.addEventListener('click', function () { goToSlide(currentIndex - 1); });
+        nextBtn.addEventListener('click', function () { goToSlide(currentIndex + 1); });
+
+        // Избранное
+        var wishlistBtn = document.getElementById('wishlistBtn');
+        wishlistBtn.addEventListener('click', function () {
+            this.classList.toggle('active');
+        });
+
+        // Свайпы для тача
+        var touchStartX = 0;
+        var galleryMain = document.querySelector('.gallery-main');
+        galleryMain.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        galleryMain.addEventListener('touchend', function (e) {
+            var dx = e.changedTouches[0].screenX - touchStartX;
+            if (Math.abs(dx) > 40) {
+                goToSlide(currentIndex + (dx < 0 ? 1 : -1));
+            }
+        }, { passive: true });
+
+        // Инициализация
+        buildThumbs();
+        goToSlide(0);
+    </script>
+</body>
+</html>
