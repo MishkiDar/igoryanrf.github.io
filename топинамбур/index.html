@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Топинамбур: гайд в мир здоровья · Гайд + 500 г топинамбура в подарок за 299 ₽</title>
+<meta name="description" content="Осеннее предложение: PDF-гайд о топинамбуре от Игоря + 500 г свежего топинамбура с плантации в подарок. Всего 299 ₽.">
+<meta property="og:title" content="Топинамбур: гайд + подарок">
+<meta property="og:description" content="Гайд о топинамбуре и 500 г настоящего клубня с плантации — 299 ₽">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5EDE0;
+  --bg-deep:#EADFCB;
+  --bg-soft:#F9F3E8;
+  --ink:#2A2420;
+  --ink-soft:#5E554E;
+  --terracotta:#B8593E;
+  --terracotta-dark:#9A4732;
+  --wine:#6B2C2C;
+  --amber:#D4A574;
+  --khaki:#7A8254;
+  --line:#D9C9AD;
+  --shadow: 0 4px 20px rgba(107,44,44,.06), 0 2px 8px rgba(42,36,32,.04);
+  --shadow-hover: 0 10px 40px rgba(107,44,44,.12), 0 4px 14px rgba(42,36,32,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Manrope',sans-serif;
+  font-size:18px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* Лёгкая бумажная текстура */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image: radial-gradient(circle at 20% 30%, rgba(184,89,62,.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(122,130,84,.04) 0%, transparent 50%);
+}
+.container{max-width:1180px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+
+/* === ШАПКА === */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,237,224,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--wine);letter-spacing:.3px}
+.brand em{font-style:italic;color:var(--khaki);font-weight:400}
+.topbar-cta{
+  font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;
+  background:var(--wine);color:#fff;padding:10px 22px;border-radius:50px;
+  text-decoration:none;transition:all .2s;
+}
+.topbar-cta:hover{background:var(--terracotta-dark);transform:translateY(-1px)}
+
+/* === HERO === */
+.hero{padding:80px 0 100px;position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;top:-80px;right:-120px;width:460px;height:460px;
+  background:radial-gradient(circle,rgba(212,165,116,.25) 0%,transparent 70%);
+  border-radius:50%;z-index:0;
+}
+.hero::after{
+  content:"";position:absolute;bottom:-140px;left:-80px;width:520px;height:520px;
+  background:radial-gradient(circle,rgba(184,89,62,.12) 0%,transparent 65%);
+  border-radius:50%;z-index:0;
+}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative;z-index:1}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--terracotta);font-size:20px;letter-spacing:1px;
+  margin-bottom:24px;
+}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--terracotta)}
+.hero h1{
+  font-family:'Playfair Display',serif;font-weight:500;
+  font-size:64px;line-height:1.05;color:var(--ink);
+  margin-bottom:24px;letter-spacing:-1px;
+}
+.hero h1 em{font-style:italic;color:var(--wine);font-weight:400}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:24px;color:var(--ink-soft);line-height:1.45;
+  margin-bottom:36px;max-width:540px;
+}
+/* Оффер-карточка */
+.offer{
+  background:linear-gradient(135deg,#fff 0%,var(--bg-soft) 100%);
+  border:1px solid var(--line);
+  border-radius:8px;padding:28px 30px;margin-bottom:36px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.offer::before{
+  content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:var(--terracotta);
+}
+.offer-head{display:flex;align-items:baseline;gap:18px;margin-bottom:12px;flex-wrap:wrap}
+.price{font-family:'Playfair Display',serif;font-size:52px;font-weight:600;color:var(--wine);line-height:1}
+.price-old{font-size:22px;color:var(--ink-soft);text-decoration:line-through;font-weight:400}
+.offer-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink);line-height:1.35;margin-bottom:6px}
+.offer-title strong{color:var(--terracotta)}
+.offer-desc{font-size:16px;color:var(--ink-soft);line-height:1.6}
+
+/* CTA */
+.cta-group{display:flex;flex-direction:column;gap:14px;max-width:420px}
+.cta-primary{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:22px 28px;border-radius:6px;
+  background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-dark) 100%);
+  color:#fff;text-decoration:none;font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:500;letter-spacing:.3px;
+  box-shadow:0 8px 24px rgba(184,89,62,.35), inset 0 1px 0 rgba(255,255,255,.2);
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.cta-primary::after{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transition:left .6s;
+}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(184,89,62,.45)}
+.cta-primary:hover::after{left:100%}
+.cta-primary small{font-family:'Manrope',sans-serif;font-size:12px;font-weight:400;opacity:.85;margin-top:4px;letter-spacing:1.5px;text-transform:uppercase}
+.cta-secondary{
+  padding:16px 24px;border-radius:6px;border:1.5px solid var(--wine);
+  color:var(--wine);text-decoration:none;font-family:'Playfair Display',serif;
+  font-size:18px;text-align:center;transition:all .2s;background:transparent;
+}
+.cta-secondary:hover{background:var(--wine);color:#fff}
+
+/* Визуал hero */
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:520px}
+.book-mock{
+  width:340px;height:460px;border-radius:4px 12px 12px 4px;
+  background:linear-gradient(135deg,#FBF7F2 0%,#F0E6D8 100%);
+  box-shadow: 0 20px 60px rgba(107,44,44,.25), -10px 0 30px rgba(42,36,32,.08);
+  padding:48px 36px;position:relative;transform:rotate(-3deg);
+  transition:transform .4s;
+}
+.book-mock:hover{transform:rotate(-1deg)}
+.book-mock::before{
+  content:"";position:absolute;left:8px;top:10%;bottom:10%;width:2px;
+  background:rgba(0,0,0,.06);border-radius:2px;
+}
+.book-eyebrow{font-family:'Cormorant Garamond',serif;font-style:italic;color:#8B6F4E;font-size:15px;letter-spacing:1.5px;margin-bottom:20px}
+.book-title{font-family:'Playfair Display',serif;font-size:34px;line-height:1.05;color:#2C2826;margin-bottom:14px;font-weight:500}
+.book-title em{color:#6B8E4E;font-style:italic;font-weight:400}
+.book-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:#6B615A;font-size:17px;margin-bottom:36px}
+.book-ornament{width:80px;height:2px;background:#D4A574;margin:30px 0}
+.book-author{font-family:'Playfair Display',serif;font-size:20px;color:#2C2826;letter-spacing:2px;position:absolute;bottom:40px;left:36px;right:36px}
+.book-author-note{font-family:'Cormorant Garamond',serif;font-style:italic;color:#6B615A;font-size:13px;margin-top:6px}
+
+/* Бейдж "500 г" */
+.badge-gift{
+  position:absolute;top:40px;right:-10px;width:130px;height:130px;
+  border-radius:50%;background:linear-gradient(135deg,var(--amber) 0%,#C88F5C 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;box-shadow:0 10px 30px rgba(212,165,116,.5);
+  transform:rotate(8deg);z-index:2;
+}
+.badge-gift .b-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:600;line-height:1}
+.badge-gift .b-unit{font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.badge-gift .b-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;margin-top:6px}
+
+/* Листочки декор */
+.leaf-deco{position:absolute;z-index:0;opacity:.6}
+.leaf-1{top:10%;left:-20px;width:90px;transform:rotate(-20deg)}
+.leaf-2{bottom:5%;right:-30px;width:110px;transform:rotate(35deg);opacity:.4}
+
+/* === МЕТРИКИ === */
+.metrics{padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-deep);position:relative;z-index:1}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
+.metric-num{font-family:'Playfair Display',serif;font-size:38px;font-weight:600;color:var(--wine);margin-bottom:4px}
+.metric-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:18px}
+
+/* === СЕКЦИИ === */
+.section{padding:100px 0;position:relative;z-index:1}
+.section-head{text-align:center;margin-bottom:64px;max-width:720px;margin-left:auto;margin-right:auto}
+.section-eyebrow{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--terracotta);font-size:20px;letter-spacing:1px;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.section-eyebrow::before,.section-eyebrow::after{content:"";width:28px;height:1px;background:var(--terracotta)}
+.section h2{
+  font-family:'Playfair Display',serif;font-weight:500;
+  font-size:48px;line-height:1.15;color:var(--ink);margin-bottom:20px;letter-spacing:-.5px;
+}
+.section h2 em{font-style:italic;color:var(--wine)}
+.section-lead{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--ink-soft);line-height:1.5}
+
+/* === ЧТО ВНУТРИ === */
+.chapters{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.chapter-card{
+  background:var(--bg-soft);border:1px solid var(--line);
+  border-radius:8px;padding:32px 28px;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.chapter-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--amber)}
+.chapter-num{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--terracotta);font-size:16px;letter-spacing:2px;
+  margin-bottom:12px;text-transform:uppercase;
+}
+.chapter-card h3{
+  font-family:'Playfair Display',serif;font-weight:500;
+  font-size:22px;color:var(--ink);margin-bottom:12px;line-height:1.3;
+}
+.chapter-card p{font-size:16px;color:var(--ink-soft);line-height:1.6}
+.chapter-card::after{
+  content:"";position:absolute;top:0;left:0;width:0;height:3px;
+  background:var(--terracotta);transition:width .3s;
+}
+.chapter-card:hover::after{width:100%}
+
+/* === ЧТО ПОЛУЧИТЕ === */
+.get-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:40px;align-items:stretch}
+.get-card{
+  background:var(--bg-soft);border:1px solid var(--line);
+  border-radius:8px;padding:40px 36px;box-shadow:var(--shadow);
+}
+.get-card-label{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--terracotta);font-size:17px;letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.get-card h3{
+  font-family:'Playfair Display',serif;font-size:30px;font-weight:500;
+  color:var(--ink);margin-bottom:10px;line-height:1.2;
+}
+.get-card h3 em{color:var(--khaki);font-style:italic}
+.get-card-desc{font-size:17px;color:var(--ink-soft);margin-bottom:24px;line-height:1.55}
+.get-list{list-style:none}
+.get-list li{padding:10px 0 10px 32px;position:relative;font-size:16px;color:var(--ink);border-bottom:1px dashed var(--line)}
+.get-list li:last-child{border-bottom:none}
+.get-list li::before{
+  content:"";position:absolute;left:0;top:14px;width:18px;height:18px;
+  background:var(--bg);border:1.5px solid var(--khaki);border-radius:50%;
+}
+.get-list li::after{
+  content:"";position:absolute;left:5px;top:20px;width:8px;height:4px;
+  border-left:1.5px solid var(--khaki);border-bottom:1.5px solid var(--khaki);
+  transform:rotate(-45deg);
+}
+.get-divider{
+  display:flex;align-items:center;justify-content:center;
+  min-width:60px;
+}
+.get-divider-inner{
+  width:60px;height:60px;border-radius:50%;
+  background:var(--amber);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:24px;font-weight:600;
+  box-shadow:0 6px 20px rgba(212,165,116,.4);
+}
+
+/* === АВТОР === */
+.author{background:var(--bg-deep)}
+.author-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:center}
+.author-photo{
+  aspect-ratio:4/5;border-radius:8px;
+  background: linear-gradient(135deg,#D4A574 0%,#B8593E 60%,#6B2C2C 100%);
+  position:relative;overflow:hidden;box-shadow:var(--shadow);
+}
+.author-photo::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.15) 0%, transparent 50%);
+}
+.author-photo-inner{
+  position:absolute;inset:20px;border:1px solid rgba(255,255,255,.3);
+  border-radius:4px;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:28px;color:#fff;
+}
+.author-photo-name{font-family:'Playfair Display',serif;font-size:32px;font-weight:500;margin-bottom:4px}
+.author-photo-role{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;opacity:.9}
+.author-text h2{font-family:'Playfair Display',serif;font-weight:500;font-size:42px;line-height:1.2;color:var(--ink);margin-bottom:24px}
+.author-text h2 em{font-style:italic;color:var(--khaki)}
+.author-text p{font-size:18px;color:var(--ink);margin-bottom:18px;line-height:1.7}
+.author-quote{
+  border-left:3px solid var(--terracotta);padding:4px 0 4px 24px;
+  margin:28px 0;font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:22px;color:var(--wine);line-height:1.45;
+}
+
+/* === ОТЗЫВЫ === */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.review{
+  background:var(--bg-soft);border:1px solid var(--line);
+  border-radius:8px;padding:32px 28px;position:relative;
+  transform:rotate(-.5deg);transition:transform .3s;
+  box-shadow:var(--shadow);
+}
+.review:nth-child(2){transform:rotate(.5deg)}
+.review:nth-child(3){transform:rotate(-.8deg)}
+.review:hover{transform:rotate(0)}
+.review::before{
+  content:"“";position:absolute;top:-8px;left:20px;
+  font-family:'Playfair Display',serif;font-size:80px;color:var(--terracotta);
+  line-height:1;opacity:.3;
+}
+.review-text{font-size:17px;color:var(--ink);line-height:1.65;margin-bottom:20px;position:relative;z-index:1}
+.review-author{display:flex;align-items:center;gap:12px}
+.review-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--amber),var(--terracotta));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'Playfair Display',serif;font-size:18px;font-weight:500;
+}
+.review-name{font-family:'Playfair Display',serif;font-size:17px;color:var(--ink);font-weight:500}
+.review-meta{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--ink-soft)}
+
+/* === FAQ === */
+.faq{max-width:820px;margin:0 auto}
+.faq-item{
+  border-bottom:1px solid var(--line);
+  padding:4px 0;
+}
+.faq-item:first-child{border-top:1px solid var(--line)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px 8px;cursor:pointer;user-select:none;
+  font-family:'Playfair Display',serif;font-size:21px;color:var(--ink);
+  font-weight:500;gap:20px;
+}
+.faq-q:hover{color:var(--terracotta)}
+.faq-icon{
+  flex-shrink:0;width:32px;height:32px;border-radius:50%;
+  border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--terracotta);transition:all .25s;font-family:'Playfair Display',serif;
+}
+.faq-item.open .faq-icon{background:var(--terracotta);color:#fff;border-color:var(--terracotta);transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  font-size:17px;color:var(--ink-soft);line-height:1.7;
+}
+.faq-a-inner{padding:0 8px 24px}
+.faq-item.open .faq-a{max-height:400px}
+
+/* === ФИНАЛЬНЫЙ CTA === */
+.final-cta{
+  padding:110px 0;text-align:center;
+  background:linear-gradient(180deg,var(--bg-deep) 0%,var(--bg) 100%);
+  position:relative;overflow:hidden;
+}
+.final-cta::before{
+  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,165,116,.2) 0%,transparent 60%);
+}
+.final-cta-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 24px}
+.final-cta h2{
+  font-family:'Playfair Display',serif;font-weight:500;
+  font-size:54px;line-height:1.1;color:var(--ink);margin-bottom:20px;letter-spacing:-.5px;
+}
+.final-cta h2 em{font-style:italic;color:var(--terracotta)}
+.final-cta-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:22px;color:var(--ink-soft);margin-bottom:44px;line-height:1.5;
+}
+.final-cta .cta-group{align-items:center;max-width:480px;margin:0 auto}
+.timer-box{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:14px 24px;background:rgba(255,255,255,.7);
+  border:1px solid var(--line);border-radius:50px;
+  margin-bottom:32px;font-size:16px;color:var(--ink);
+  backdrop-filter:blur(6px);
+}
+.timer-dot{width:8px;height:8px;border-radius:50%;background:var(--terracotta);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.3)}}
+
+.guarantee{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:36px;font-size:15px;color:var(--ink-soft);
+}
+.guarantee-icon{width:32px;height:32px;flex-shrink:0;color:var(--khaki)}
+
+/* === ФУТЕР === */
+.footer{
+  background:var(--wine);color:#fff;padding:64px 0 32px;position:relative;z-index:1;
+}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:16px;font-weight:500}
+.footer-brand em{color:var(--amber);font-style:italic;font-weight:400}
+.footer-desc{font-size:16px;opacity:.85;line-height:1.6;max-width:320px}
+.footer h4{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:18px;color:var(--amber);margin-bottom:16px;letter-spacing:1px;
+}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:10px}
+.footer-links a{color:#fff;text-decoration:none;font-size:16px;opacity:.85;transition:opacity .2s}
+.footer-links a:hover{opacity:1;color:var(--amber)}
+.footer-socials{display:flex;flex-direction:column;gap:10px}
+.footer-socials a{
+  display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;
+  font-size:16px;opacity:.85;transition:all .2s;padding:6px 0;
+}
+.footer-socials a:hover{opacity:1;color:var(--amber)}
+.footer-socials svg{width:18px;height:18px;flex-shrink:0}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.15);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:14px;opacity:.7;flex-wrap:wrap;gap:12px;
+}
+.footer-bottom a{color:#fff;text-decoration:none;opacity:1}
+.footer-bottom a:hover{color:var(--amber)}
+
+/* === STICKY MOBILE CTA === */
+.sticky-cta{
+  position:fixed;bottom:0;left:0;right:0;z-index:40;
+  background:rgba(245,237,224,.97);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding:14px 16px;
+  display:none;transform:translateY(100%);transition:transform .3s;
+}
+.sticky-cta.show{transform:translateY(0)}
+.sticky-inner{display:flex;align-items:center;gap:14px}
+.sticky-info{flex:1;min-width:0}
+.sticky-price{font-family:'Playfair Display',serif;font-size:20px;color:var(--wine);font-weight:600}
+.sticky-sub{font-size:13px;color:var(--ink-soft);line-height:1.3}
+.sticky-btn{
+  flex-shrink:0;padding:14px 20px;border-radius:6px;
+  background:var(--terracotta);color:#fff;text-decoration:none;
+  font-family:'Playfair Display',serif;font-size:15px;font-weight:500;
+}
+
+/* === АНИМАЦИЯ ПОЯВЛЕНИЯ === */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* === АДАПТИВ === */
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:50px}
+  .hero h1{font-size:48px}
+  .hero-sub{font-size:20px}
+  .chapters{grid-template-columns:repeat(2,1fr)}
+  .get-grid{grid-template-columns:1fr;gap:24px}
+  .get-divider{min-height:1px;width:100%}
+  .get-divider-inner{width:44px;height:44px;font-size:18px}
+  .author-grid{grid-template-columns:1fr;gap:40px}
+  .reviews{grid-template-columns:1fr;gap:20px}
+  .section h2{font-size:38px}
+  .final-cta h2{font-size:40px}
+  .footer-grid{grid-template-columns:1fr;gap:32px}
+  .section{padding:70px 0}
+  .hero{padding:50px 0 70px}
+  .sticky-cta{display:block}
+  .footer{padding-bottom:100px}
+}
+@media (max-width:600px){
+  body{font-size:17px}
+  .container{padding:0 20px}
+  .hero h1{font-size:40px}
+  .price{font-size:44px}
+  .offer{padding:22px 22px 22px 26px}
+  .book-mock{width:260px;height:360px;padding:36px 26px}
+  .book-title{font-size:26px}
+  .chapters{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr;gap:16px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .section h2{font-size:32px}
+  .final-cta h2{font-size:32px}
+  .cta-primary{font-size:19px;padding:20px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">Топинамбур <em>· осенний сбор</em></div>
+    <a href="#buy" class="topbar-cta">Забрать гайд + подарок</a>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <!-- Декоративные листья -->
+    <svg class="leaf-deco leaf-1" viewBox="0 0 100 140" fill="none">
+      <path d="M50 0 C 30 30, 20 60, 30 90 C 40 120, 50 130, 50 140 C 50 130, 60 120, 70 90 C 80 60, 70 30, 50 0 Z" fill="#7A8254" opacity=".6"/>
+      <path d="M50 10 L50 130" stroke="#5E6A3F" stroke-width="1" opacity=".5"/>
+    </svg>
+    <svg class="leaf-deco leaf-2" viewBox="0 0 100 140" fill="none">
+      <path d="M50 0 C 30 30, 20 60, 30 90 C 40 120, 50 130, 50 140 C 50 130, 60 120, 70 90 C 80 60, 70 30, 50 0 Z" fill="#B8593E" opacity=".5"/>
+      <path d="M50 10 L50 130" stroke="#9A4732" stroke-width="1" opacity=".5"/>
+    </svg>
+
+    <div class="hero-grid">
+      <div class="hero-content reveal">
+        <div class="eyebrow">Осенний сбор · 2026</div>
+        <h1>Топинамбур:<br><em>гайд в мир здоровья</em></h1>
+        <p class="hero-sub">Тёплый разговор о корне, который я выращиваю семь лет. Без обещаний чудес — только проверенное опытом, рецепты и забота.</p>
+
+        <div class="offer">
+          <div class="offer-head">
+            <span class="price">299 ₽</span>
+            <span class="price-old">1 200 ₽</span>
+          </div>
+          <div class="offer-title">PDF-гайд + <strong>500 г топинамбура в подарок</strong></div>
+          <div class="offer-desc">Свежие немытые клубни с моей плантации для длительного хранения. После оплаты пришлите адрес — и я отправлю посылку.</div>
+        </div>
+
+        <div class="cta-group">
+          <a href="https://goga.zone" target="_blank" rel="noopener" class="cta-primary" id="buy">
+            Оплатить на GoGa.zone
+            <small>Безопасная сделка</small>
+          </a>
+          <a href="https://t.me/gargaross" target="_blank" rel="noopener" class="cta-secondary">Задать вопрос Игорю</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="book-mock">
+          <div class="book-eyebrow">ГАЙД · ОСЕНЬ</div>
+          <div class="book-title">Топинамбур:<br><em>гайд в мир здоровья</em></div>
+          <div class="book-sub">Собираю и рассказываю для вас</div>
+          <div class="book-ornament"></div>
+          <div class="book-author">
+            ИГОРЬ
+            <div class="book-author-note">с плантации, которой семь лет</div>
+          </div>
+        </div>
+        <div class="badge-gift">
+          <div class="b-num">500</div>
+          <div class="b-unit">грамм</div>
+          <div class="b-lbl">в подарок</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== МЕТРИКИ ===== -->
+<section class="metrics">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="reveal">
+        <div class="metric-num">7 лет</div>
+        <div class="metric-lbl">полю топинамбура без химии</div>
+      </div>
+      <div class="reveal">
+        <div class="metric-num">200+</div>
+        <div class="metric-lbl">довольных клиентов в этом сезоне</div>
+      </div>
+      <div class="reveal">
+        <div class="metric-num">100%</div>
+        <div class="metric-lbl">натуральный продукт с поля</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ЧТО ВНУТРИ ГАЙДА ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Что внутри</div>
+      <h2>Семь глав <em>тёплого опыта</em></h2>
+      <p class="section-lead">Всё, что я знаю о топинамбуре — от посадки до сиропа на вашей кухне. Без воды и маркетинговых обещаний.</p>
+    </div>
+
+    <div class="chapters">
+      <div class="chapter-card reveal">
+        <div class="chapter-num">Глава I</div>
+        <h3>Что такое топинамбур</h3>
+        <p>Земляная груша, родственник подсолнечника. Почему он растёт сам и не требует ухода.</p>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">Глава II</div>
+        <h3>Состав и польза</h3>
+        <p>Инулин, витамины группы B, калий и магний. Честно, без обещаний чудес.</p>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">Глава III</div>
+        <h3>Как выбирать</h3>
+        <p>Признаки свежего клубня, с чем сочетать и когда копать, чтобы получить максимум вкуса.</p>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">Глава IV</div>
+        <h3>4 способа хранения</h3>
+        <p>В холодильнике, в погребе, в морозилке, в сушёном виде и прямо в земле до весны.</p>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">Глава V</div>
+        <h3>Рецепты</h3>
+        <p>Салат, смузи, пюре, запечённый топинамбур, суп и щадящий сироп без кипячения.</p>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">Приложения</div>
+        <h3>Таблицы и календарь</h3>
+        <p>Порции, способы употребления и сезонный календарь работ с топинамбуром.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ЧТО ПОЛУЧИТЕ ===== -->
+<section class="section" style="background:var(--bg-deep)">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Что вы получите</div>
+      <h2>Два продукта <em>по цене одного</em></h2>
+      <p class="section-lead">Вы платите только за знания — а физический топинамбур приходит как подарок к покупке.</p>
+    </div>
+
+    <div class="get-grid">
+      <div class="get-card reveal">
+        <div class="get-card-label">Цифровой продукт</div>
+        <h3>PDF-гайд <em>о топинамбуре</em></h3>
+        <p class="get-card-desc">30+ страниц тёплого экспертного текста, проверенного семью годами работы с полем.</p>
+        <ul class="get-list">
+          <li>7 глав от пользы до рецептов</li>
+          <li>Пошаговые пропорции приготовления</li>
+          <li>Чек-лист «от поля до стола»</li>
+          <li>Календарь сезонности</li>
+          <li>Таблица порций и способов</li>
+          <li>Честные ответы на частые вопросы</li>
+        </ul>
+      </div>
+
+      <div class="get-divider">
+        <div class="get-divider-inner">+</div>
+      </div>
+
+      <div class="get-card reveal">
+        <div class="get-card-label">Подарок · бесплатно</div>
+        <h3>500 г <em>настоящего</em> топинамбура</h3>
+        <p class="get-card-desc">Свежие немытые клубни с моей плантации — специально для длительного хранения.</p>
+        <ul class="get-list">
+          <li>Собраны в конце октября — пик вкуса</li>
+          <li>Немытые — хранятся до 2 месяцев</li>
+          <li>В дышащем бумажном пакете</li>
+          <li>Выращены без химии семь лет подряд</li>
+          <li>Отправка после получения адреса</li>
+          <li>Упаковано с заботой, как для друга</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ОБ АВТОРЕ ===== -->
+<section class="section author">
+  <div class="container">
+    <div class="author-grid">
+      <div class="author-photo reveal">
+        <div class="author-photo-inner">
+          <div class="author-photo-name">Игорь</div>
+          <div class="author-photo-role">фермер, семь лет с топинамбуром</div>
+        </div>
+      </div>
+      <div class="author-text reveal">
+        <div class="section-eyebrow" style="justify-content:flex-start">Обо мне</div>
+        <h2>Я копаю <em>честно</em> и рассказываю как есть</h2>
+        <p>Поле топинамбура было посажено около семи лет назад. За это время оно стало для меня не просто участком, а живым примером того, как природа даёт чистый продукт без лишнего вмешательства.</p>
+        <p>В этом году я решил поделиться не только знаниями, но и самим растением. Его клубнями — с огромной пользой и отличным настроением.</p>
+        <div class="author-quote">Для меня важно сказать об этом честно, без обещаний чудес. Топинамбур — не лекарство. Это продукт, который может стать хорошим дополнением к рациону.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ОТЗЫВЫ ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Отзывы</div>
+      <h2>Что говорят те, <em>кто уже попробовал</em></h2>
+    </div>
+
+    <div class="reviews">
+      <div class="review reveal">
+        <p class="review-text">Купила гайд ради сиропа — получилось с первого раза. А топинамбур в подарок довёз такой свежий, что я его запекла и теперь фанатею. Спасибо, Игорь!</p>
+        <div class="review-author">
+          <div class="review-avatar">А</div>
+          <div>
+            <div class="review-name">Анна</div>
+            <div class="review-meta">38 лет · Санкт-Петербург</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal">
+        <p class="review-text">Понравилось, что без «волшебных свойств». Просто честный рассказ человека, который любит своё дело. Рецепты простые, пюре стало хитом у мужа.</p>
+        <div class="review-author">
+          <div class="review-avatar">М</div>
+          <div>
+            <div class="review-name">Марина</div>
+            <div class="review-meta">45 лет · Москва</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal">
+        <p class="review-text">Подарила маме — она в восторге. И гайд красивый, и клубни отличные. Уже сделала сироп по рецепту, теперь добавляю в чай вместо сахара.</p>
+        <div class="review-author">
+          <div class="review-avatar">Е</div>
+          <div>
+            <div class="review-name">Екатерина</div>
+            <div class="review-meta">29 лет · Казань</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section" style="background:var(--bg-deep)">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Частые вопросы</div>
+      <h2>Отвечаю <em>на главное</em></h2>
+    </div>
+
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">Как я получу гайд?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">После оплаты на GoGa.zone вы получите ссылку для скачивания PDF-файла. Он откроется на любом устройстве и останется у вас навсегда.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Как и когда придёт топинамбур?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">После оплаты пришлите мне адрес доставки любым удобным способом (Telegram, Max, VK). Я отправляю посылки в течение 2–3 рабочих дней. Доставка по России — СДЭК или Почта.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Можно ли отправить подарок другому человеку?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Конечно. Пришлите имя получателя, адрес и телефон — я упакую посылку как подарок. По желанию могу добавить открытку с вашим текстом.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Сколько клубней примерно в 500 граммах?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">От 8 до 15 штук в зависимости от размера. Я отбираю ровные, целые клубни — те, которые лучше всего хранятся и вкуснее всего запекаются.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">А если клубни придут повреждённые?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Напишите мне с фото — я всегда добавлю бонус к следующему заказу или отправлю замену. Это мой принцип: вы должны получить то, что ожидаете.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Безопасна ли оплата?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">GoGa.zone — это защищённый платёжный сервис с подтверждённой сделкой. Деньги поступают мне только после того, как вы подтвердите получение.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Куда писать вопросы после покупки?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Я всегда на связи: пишите в Telegram (@gargaross), VK или на Max. Отвечаю асинхронно — структурой и смыслом, без спешки и созвонов.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ФИНАЛЬНЫЙ CTA ===== -->
+<section class="final-cta" id="final">
+  <div class="final-cta-inner">
+    <div class="reveal">
+      <div class="timer-box">
+        <span class="timer-dot"></span>
+        <span>Предложение действует до конца сбора · <strong id="days-left">—</strong></span>
+      </div>
+    </div>
+    <h2 class="reveal">Забрать гайд + подарок <em>за 299 ₽</em></h2>
+    <p class="final-cta-sub reveal">Пока на поле есть урожай этого сезона, я отправляю топинамбур в подарок. Дальше — только гайд.</p>
+
+    <div class="cta-group reveal">
+      <a href="https://goga.zone" target="_blank" rel="noopener" class="cta-primary">
+        Оплатить на GoGa.zone
+        <small>Безопасная сделка</small>
+      </a>
+      <a href="https://t.me/gargaross" target="_blank" rel="noopener" class="cta-secondary">Задать вопрос Игорю</a>
+    </div>
+
+    <div class="guarantee reveal">
+      <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+      <span>Асинхронная связь с автором по любым вопросам</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ФУТЕР ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Топинамбур <em>от Игоря</em></div>
+        <p class="footer-desc">Гайд о корне, который я выращиваю семь лет. Без химии, без маркетинговых обещаний. С любовью и заботой о каждом клиенте.</p>
+      </div>
+      <div>
+        <h4>Документы</h4>
+        <ul class="footer-links">
+          <li><a href="#">Политика конфиденциальности</a></li>
+          <li><a href="#">Оферта</a></li>
+          <li><a href="#">Условия возврата</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <div class="footer-socials">
+          <a href="https://max.ru/u/f9LHodD0cOKBofEOX-DxvNCKJN1IcujQNOwnMK7Wev9mD4NLzsHoQZDB9cc" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5c-.3.2-2.5-.8-4.1-2.2-1.3-1.1-2.3-2.4-2.9-3.4-.5-.9-.1-1.4.3-1.4.3 0 .5 0 .8.5.3.5 1.1 2 1.4 2.4.2.2.3.3.5.2.2-.1 1-.8 1.3-1.2.3-.4.1-.6-.1-.8-.2-.2-.5-.4-.7-.6-.2-.2-.4-.4-.3-.7.1-.3.9-2.2 1-2.5.1-.2 0-.4-.1-.5l-.8-.1c-.3-.1-.6 0-.8.3-.8 1-1.8 3.2-1.9 3.4-.4.5-.8 0-1.5-1-.4-.6-.8-1.2-1.1-1.6-.3-.3-.6-.5-1-.5-.4 0-.9.1-.9.1s.1 1.3 1.3 3.2c1.2 1.9 2.8 3.4 4.5 4.3 1.8.9 3.5 1.2 4.6 1.2 1 0 1.4-.5 1.4-1.1-.1-.6-.2-.8-.3-.9z"/></svg>
+            Профиль на Max
+          </a>
+          <a href="https://t.me/gargaross" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.56 7.36c-.12.52-.42.65-.85.4l-2.36-1.74-1.14 1.1c-.13.13-.24.24-.48.24l.17-2.42 4.4-3.98c.19-.17-.04-.26-.3-.1L9.06 13.3 6.7 12.56c-.51-.16-.52-.51.11-.76l9.2-3.55c.43-.16.8.1.66.76z"/></svg>
+            @gargaross
+          </a>
+          <a href="https://vk.ru/im/convo/332422" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.8 13.3c-.3.7-1.4 1.8-2.1 2.3-.5.4-.8.5-1.2.3-.5-.2-.7-.7-.8-1.4-.2-1-.5-2.1-1-2.2-.2 0-.5.2-.9.5-.5.4-.6 1-.7 1.5 0 .4-.3.5-.7.4-.5-.1-1.2-.5-1.7-1.2-.9-1.1-1.7-2.9-2-3.7-.1-.3 0-.5.3-.5h.8c.3 0 .5.2.6.5.4 1.1 1 2.2 1.5 2.4.2.1.3 0 .4-.2.1-.8.2-2.1.2-2.4 0-.3 0-.6-.4-.7-.2-.1-.1-.2 0-.3.1-.1.3-.2.5-.2h1.3c.3 0 .4.2.4.4v2.6c0 .2.1.4.2.4.2 0 .3-.1.5-.3.5-.6.9-1.5 1.1-2.5.1-.2 0-.4-.2-.4h-1.6c-.3 0-.4-.2-.3-.5.2-.5.5-1.2.7-1.8.1-.3.3-.5.6-.5h2.5c.3 0 .4.2.4.4v2.8c0 .2.1.4.2.4.2 0 .3-.1.5-.3.5-.6.9-1.5 1.1-2.5.1-.3 0-.5-.3-.5h-1.2c-.3 0-.4-.2-.3-.5.2-.5.5-1.2.7-1.8.1-.3.3-.5.6-.5h2.5c.3 0 .4.2.4.4v2.8c0 .2.1.4.3.4.1 0 .3-.1.5-.3.4-.5.8-1.3 1-2.1.1-.3 0-.4-.3-.4h-1c-.3 0-.4-.2-.3-.5.2-.5.5-1.2.7-1.8.1-.3.3-.5.6-.5H19c.3 0 .5.2.5.5-.2 1.6-.7 3.2-1.5 4.5-.5.9-1.1 1.7-1.8 2.4.7.6 1.3 1.3 1.8 2.1.7 1 1.2 2.1 1.5 3.3.1.3 0 .5-.3.5h-2.2c-.3 0-.5-.2-.6-.5-.2-.7-.5-1.4-.8-2-.3-.5-.7-1-1.1-1.4z"/></svg>
+            Личное сообщение
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 · С любовью, Игорь · с плантации, которой уже семь лет</span>
+      <span>Все материалы защищены авторским правом</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== STICKY MOBILE CTA ===== -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-inner">
+    <div class="sticky-info">
+      <div class="sticky-price">299 ₽</div>
+      <div class="sticky-sub">Гайд + 500 г топинамбура в подарок</div>
+    </div>
+    <a href="https://goga.zone" target="_blank" rel="noopener" class="sticky-btn">Купить</a>
+  </div>
+</div>
+
+<script>
+// ===== FAQ Accordion =====
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ===== Reveal on scroll =====
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12, rootMargin: '0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===== Sticky mobile CTA =====
+const sticky = document.getElementById('stickyCta');
+let stickyShown = false;
+window.addEventListener('scroll', () => {
+  if (window.innerWidth <= 960) {
+    if (window.scrollY > 500 && !stickyShown) {
+      sticky.classList.add('show');
+      stickyShown = true;
+    } else if (window.scrollY < 300 && stickyShown) {
+      sticky.classList.remove('show');
+      stickyShown = false;
+    }
+  }
+});
+
+// ===== Days left until end of season (Nov 15) =====
+const end = new Date(new Date().getFullYear(), 10, 15, 23, 59, 59);
+const now = new Date();
+const diff = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
+const el = document.getElementById('days-left');
+if (el) {
+  if (diff === 0) el.textContent = 'сегодня — последний день';
+  else if (diff === 1) el.textContent = 'остался 1 день';
+  else el.textContent = `осталось ${diff} ${diff < 5 ? 'дня' : 'дней'}`;
+}
+</script>
+
+</body>
+</html>
