@@ -50,7 +50,6 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
-/* Лёгкая бумажная текстура */
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
   background-image: radial-gradient(circle at 20% 30%, rgba(184,89,62,.04) 0%, transparent 50%),
@@ -104,24 +103,8 @@ body::before{
 .hero-sub{
   font-family:'Cormorant Garamond',serif;font-style:italic;
   font-size:24px;color:var(--ink-soft);line-height:1.45;
-  margin-bottom:36px;max-width:540px;
+  margin-bottom:40px;max-width:540px;
 }
-/* Оффер-карточка */
-.offer{
-  background:linear-gradient(135deg,#fff 0%,var(--bg-soft) 100%);
-  border:1px solid var(--line);
-  border-radius:8px;padding:28px 30px;margin-bottom:36px;
-  box-shadow:var(--shadow);position:relative;overflow:hidden;
-}
-.offer::before{
-  content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:var(--terracotta);
-}
-.offer-head{display:flex;align-items:baseline;gap:18px;margin-bottom:12px;flex-wrap:wrap}
-.price{font-family:'Playfair Display',serif;font-size:52px;font-weight:600;color:var(--wine);line-height:1}
-.price-old{font-size:22px;color:var(--ink-soft);text-decoration:line-through;font-weight:400}
-.offer-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink);line-height:1.35;margin-bottom:6px}
-.offer-title strong{color:var(--terracotta)}
-.offer-desc{font-size:16px;color:var(--ink-soft);line-height:1.6}
 
 /* CTA */
 .cta-group{display:flex;flex-direction:column;gap:14px;max-width:420px}
@@ -146,8 +129,10 @@ body::before{
   padding:16px 24px;border-radius:6px;border:1.5px solid var(--wine);
   color:var(--wine);text-decoration:none;font-family:'Playfair Display',serif;
   font-size:18px;text-align:center;transition:all .2s;background:transparent;
+  display:inline-block;
 }
 .cta-secondary:hover{background:var(--wine);color:#fff}
+.hero .cta-secondary{max-width:420px}
 
 /* Визуал hero */
 .hero-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:520px}
@@ -171,7 +156,6 @@ body::before{
 .book-author{font-family:'Playfair Display',serif;font-size:20px;color:#2C2826;letter-spacing:2px;position:absolute;bottom:40px;left:36px;right:36px}
 .book-author-note{font-family:'Cormorant Garamond',serif;font-style:italic;color:#6B615A;font-size:13px;margin-top:6px}
 
-/* Бейдж "500 г" */
 .badge-gift{
   position:absolute;top:40px;right:-10px;width:130px;height:130px;
   border-radius:50%;background:linear-gradient(135deg,var(--amber) 0%,#C88F5C 100%);
@@ -183,7 +167,6 @@ body::before{
 .badge-gift .b-unit{font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
 .badge-gift .b-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;margin-top:6px}
 
-/* Листочки декор */
 .leaf-deco{position:absolute;z-index:0;opacity:.6}
 .leaf-1{top:10%;left:-20px;width:90px;transform:rotate(-20deg)}
 .leaf-2{bottom:5%;right:-30px;width:110px;transform:rotate(35deg);opacity:.4}
@@ -278,12 +261,9 @@ body::before{
 /* === АВТОР === */
 .author{background:var(--bg-deep)}
 .author-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:center}
-
-/* ФОТО АВТОРА — igor.png */
 .author-photo{
   aspect-ratio:4/5;border-radius:8px;
   position:relative;overflow:hidden;box-shadow:var(--shadow);
-  /* Фолбэк-градиент, если картинки нет */
   background: linear-gradient(135deg,#D4A574 0%,#B8593E 60%,#6B2C2C 100%);
 }
 .author-photo-img{
@@ -291,7 +271,6 @@ body::before{
   object-fit:cover;object-position:center;
   display:block;
 }
-/* Затемнение снизу для читаемости подписи */
 .author-photo::before{
   content:"";position:absolute;inset:0;z-index:1;
   background:linear-gradient(180deg, rgba(42,36,32,0) 55%, rgba(42,36,32,.55) 100%);
@@ -342,10 +321,7 @@ body::before{
 
 /* === FAQ === */
 .faq{max-width:820px;margin:0 auto}
-.faq-item{
-  border-bottom:1px solid var(--line);
-  padding:4px 0;
-}
+.faq-item{border-bottom:1px solid var(--line);padding:4px 0}
 .faq-item:first-child{border-top:1px solid var(--line)}
 .faq-q{
   display:flex;justify-content:space-between;align-items:center;
@@ -406,9 +382,7 @@ body::before{
 .guarantee-icon{width:32px;height:32px;flex-shrink:0;color:var(--khaki)}
 
 /* === ФУТЕР === */
-.footer{
-  background:var(--wine);color:#fff;padding:64px 0 32px;position:relative;z-index:1;
-}
+.footer{background:var(--wine);color:#fff;padding:64px 0 32px;position:relative;z-index:1}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:48px}
 .footer-brand{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:16px;font-weight:500}
 .footer-brand em{color:var(--amber);font-style:italic;font-weight:400}
@@ -476,25 +450,28 @@ body::before{
   .hero{padding:60px 0 70px}
   .sticky-cta{display:block}
   .footer{padding-bottom:100px}
+
+  /* ШАПКА НА МОБИЛЬНЫХ: не липнет, не наезжает */
+  .topbar{
+    position:relative;
+    top:auto;
+  }
 }
 
-/* МОБИЛЬНАЯ ШАПКА И ОТСТУПЫ */
 @media (max-width:600px){
   body{font-size:17px}
   .container{padding:0 20px}
 
-  /* Компактная шапка, чтобы не наезжала на контент */
-  .topbar-inner{padding:10px 0;gap:10px}
+  .topbar-inner{padding:12px 0;gap:10px}
   .brand{font-size:17px;letter-spacing:0}
-  .brand em{display:none} /* скрываем длинную часть на мобильных */
+  .brand em{display:none}
   .topbar-cta{font-size:12px;padding:8px 14px}
 
-  /* Увеличенный отступ между шапкой и заголовком */
-  .hero{padding:36px 0 56px}
+  /* Большой отступ сверху для hero */
+  .hero{padding:40px 0 60px}
   .hero h1{font-size:40px;line-height:1.1;margin-bottom:20px}
 
   .price{font-size:44px}
-  .offer{padding:22px 22px 22px 26px}
   .book-mock{width:260px;height:360px;padding:36px 26px}
   .book-title{font-size:26px}
   .chapters{grid-template-columns:1fr}
@@ -505,7 +482,6 @@ body::before{
   .cta-primary{font-size:19px;padding:20px 24px}
 }
 
-/* Очень узкие экраны */
 @media (max-width:360px){
   .topbar-inner{flex-wrap:wrap;justify-content:center;text-align:center}
   .brand{font-size:16px}
@@ -526,7 +502,6 @@ body::before{
 <!-- ===== HERO ===== -->
 <section class="hero">
   <div class="container">
-    <!-- Декоративные листья -->
     <svg class="leaf-deco leaf-1" viewBox="0 0 100 140" fill="none">
       <path d="M50 0 C 30 30, 20 60, 30 90 C 40 120, 50 130, 50 140 C 50 130, 60 120, 70 90 C 80 60, 70 30, 50 0 Z" fill="#7A8254" opacity=".6"/>
       <path d="M50 10 L50 130" stroke="#5E6A3F" stroke-width="1" opacity=".5"/>
@@ -542,20 +517,7 @@ body::before{
         <h1>Топинамбур:<br><em>гайд в мир здоровья</em></h1>
         <p class="hero-sub">Тёплый разговор о корне, который я выращиваю семь лет. Без обещаний чудес — только проверенное опытом, рецепты и забота.</p>
 
-        <div class="offer">
-          <div class="offer-head">
-            <span class="price">299 ₽</span>
-            <span class="price-old">1 200 ₽</span>
-          </div>
-          <div class="offer-title">PDF-гайд + <strong>500 г топинамбура в подарок</strong></div>
-          <div class="offer-desc">Свежие клубни с моей плантации для длительного хранения. После оплаты пришлите адрес — и я отправлю посылку.</div>
-        </div>
-
         <div class="cta-group">
-          <a href="https://goga.zone" target="_blank" rel="noopener" class="cta-primary" id="buy">
-            Оплатить на GoGa.zone
-            <small>Безопасная сделка</small>
-          </a>
           <a href="https://t.me/gargaross" target="_blank" rel="noopener" class="cta-secondary">Задать вопрос Игорю</a>
         </div>
       </div>
@@ -694,7 +656,6 @@ body::before{
 <section class="section author">
   <div class="container">
     <div class="author-grid">
-      <!-- ФОТО АВТОРА -->
       <div class="author-photo reveal">
         <img src="igor.png" alt="Игорь — фермер, выращивает топинамбур семь лет" class="author-photo-img">
         <div class="author-photo-inner">
@@ -704,7 +665,7 @@ body::before{
       </div>
       <div class="author-text reveal">
         <div class="section-eyebrow" style="justify-content:flex-start">Обо мне</div>
-        <h2>Я копаю и <em>честно</em> рассказываю как есть</h2>
+        <h2>Я копаю <em>честно</em> и рассказываю как есть</h2>
         <p>Поле топинамбура было посажено около семи лет назад. За это время оно стало для меня не просто участком, а живым примером того, как природа даёт чистый продукт без лишнего вмешательства.</p>
         <p>В этом году я решил поделиться не только знаниями, но и самим растением. Его клубнями — с огромной пользой и отличным настроением.</p>
         <div class="author-quote">Для меня важно сказать об этом честно, без обещаний чудес. Топинамбур — не лекарство. Это продукт, который может стать хорошим дополнением к рациону.</div>
@@ -806,7 +767,7 @@ body::before{
         <span>Предложение действует до конца сбора · <strong id="days-left">—</strong></span>
       </div>
     </div>
-    <h2 class="reveal">Забрать гайд + подарок <em>за 299 ₽</em></h2>
+    <h2 class="reveal" id="buy">Забрать гайд + подарок <em>за 299 ₽</em></h2>
     <p class="final-cta-sub reveal">Пока на поле есть урожай этого сезона, я отправляю топинамбур в подарок. Дальше — только гайд.</p>
 
     <div class="cta-group reveal">
@@ -880,7 +841,6 @@ body::before{
 </div>
 
 <script>
-// ===== FAQ Accordion =====
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => {
     const item = q.parentElement;
@@ -890,7 +850,6 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// ===== Reveal on scroll =====
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -901,7 +860,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, {threshold: 0.12, rootMargin: '0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// ===== Sticky mobile CTA =====
 const sticky = document.getElementById('stickyCta');
 let stickyShown = false;
 window.addEventListener('scroll', () => {
@@ -916,7 +874,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// ===== Days left until end of season (Nov 15) =====
 const end = new Date(new Date().getFullYear(), 10, 15, 23, 59, 59);
 const now = new Date();
 const diff = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
